@@ -1,0 +1,157 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:opencv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0099cc"
+    tools:context="com.todobom.opennotescanner.OpenNoteScanner">
+
+    <!-- The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc. -->
+
+    <org.opencv.android.JavaCameraView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="gone"
+        android:id="@+id/HelloOpenCvView"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <!-- This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows. -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:id="@+id/fullscreen_content_controls"
+            style="?metaButtonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/black_overlay"
+            android:orientation="vertical">
+            <!--
+            <Button
+                android:id="@+id/dummy_button"
+                style="?metaButtonBarButtonStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/dummy_button" />
+             -->
+        </FrameLayout>
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left|center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_marginLeft="0px"
+            android:layout_marginBottom="0px"
+            android:id="@+id/quadranttl"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="#32ffffff"
+            android:background="#ffffff" />
+
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_marginLeft="0px"
+            android:layout_marginBottom="0px"
+            android:id="@+id/quadranttr"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="#32ffffff"
+            android:background="#ffffff" />
+
+
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_marginLeft="0px"
+            android:layout_marginBottom="0px"
+            android:id="@+id/quadrantbl"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="#32ffffff"
+            android:background="#ffffff" />
+
+
+        <ImageView
+            android:layout_width="20px"
+            android:layout_height="20px"
+            android:layout_marginLeft="0px"
+            android:layout_marginBottom="0px"
+            android:id="@+id/quadrantbr"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:backgroundTint="#32ffffff"
+            android:background="#ffffff" />
+
+        <Button
+            android:id="@+id/scanDocButton"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:background="@drawable/ic_camera_aqua"
+            android:gravity="center"
+            android:enabled="true"
+            />
+
+        <Button
+            android:id="@+id/colorModeButton"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_palette"
+            android:gravity="center"
+            android:enabled="true"
+            android:backgroundTint="#7fffffff"
+            />
+
+        <Button
+            android:id="@+id/autoModeButton"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/ic_find_in_page"
+            android:gravity="center"
+            android:enabled="true"
+            android:backgroundTint="#7fffffff"
+            />
+
+        <Button
+            android:id="@+id/settingsButton"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="100dp"
+            android:background="@drawable/ic_settings"
+            android:gravity="center"
+            android:enabled="true"
+            android:backgroundTint="#7fffffff"
+            />
+
+    </RelativeLayout>
+
+</FrameLayout>
