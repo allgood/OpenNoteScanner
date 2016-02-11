@@ -21,10 +21,9 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--
-    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    -->
 
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--     <android:uses-permission android:name="android.permission.READ_PHONE_STATE" /> -->
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,18 +34,34 @@
             android:name=".OpenNoteScanner"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_open_note_scanner"
-            android:theme="@style/FullscreenTheme"
             android:screenOrientation="landscape"
-            >
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.media.action.IMAGE_CAPTURE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Gallery"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_gallery"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FullImageActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_full_image"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

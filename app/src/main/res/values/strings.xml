@@ -9,4 +9,7 @@
     <string name="title_activity_open_note_scanner">Open Note Scanner</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_gallery">Gallery</string>
+
+    <string name="title_activity_full_image">FullImageActivity</string>
 </resources>
