@@ -260,6 +260,18 @@ public class OpenNoteScanner extends Activity
             }
         });
 
+        final Button galleryButton = (Button) findViewById(R.id.settingsButton);
+
+        galleryButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext() , Gallery.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     @Override
