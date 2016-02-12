@@ -3,9 +3,12 @@ package com.todobom.opennotescanner;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -58,6 +61,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -145,7 +149,9 @@ public class OpenNoteScanner extends Activity
     };
 
     private static final String TAG = "OpenNoteScannerActivity";
+    private MediaPlayer _shootMP = null;
 
+    private HashMap<String,Long> pageHistory = new HashMap<String,Long>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +179,7 @@ public class OpenNoteScanner extends Activity
 
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.HelloOpenCvView);
+        mOpenCvCameraView = (OpenNoteCameraView) findViewById(R.id.HelloOpenCvView);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
@@ -237,7 +243,6 @@ public class OpenNoteScanner extends Activity
             }
         });
 
-
         final Button colorModeButton = (Button) findViewById(R.id.colorModeButton);
 
         colorModeButton.setOnClickListener(new View.OnClickListener() {
@@ -246,6 +251,8 @@ public class OpenNoteScanner extends Activity
             public void onClick(View v) {
                 colorMode = !colorMode;
                 v.setBackgroundTintList(ColorStateList.valueOf(colorMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+
+                // mOpenCvCameraView.setEffect((nativeMono&&!colorMode)?"mono":"none");
             }
         });
 
@@ -270,7 +277,6 @@ public class OpenNoteScanner extends Activity
                 startActivity(intent);
             }
         });
-
 
     }
 
@@ -351,7 +357,7 @@ public class OpenNoteScanner extends Activity
     }
 
 
-    private CameraBridgeViewBase mOpenCvCameraView;
+    private OpenNoteCameraView mOpenCvCameraView;
     private Mat mIntermediateMat;
     private Mat mRgba;
     private Mat mGray;
@@ -362,9 +368,10 @@ public class OpenNoteScanner extends Activity
     private boolean colorMode = false;
     private boolean autoMode = false;
 
-    private String lastScanedQR = "";
     private String currentQR = "";
     private boolean qrOk = false;
+
+    private boolean nativeMono = false;
 
     @Override
     public void onPause() {
@@ -384,6 +391,10 @@ public class OpenNoteScanner extends Activity
         mIntermediateMat = new Mat(height, width, CvType.CV_8UC4);
         mGray = new Mat(height, width, CvType.CV_8UC4);
         mCanned = new Mat(height, width, CvType.CV_8UC1);
+
+        nativeMono = mOpenCvCameraView.isEffectSupported("mono");
+        // mOpenCvCameraView.setEffect((nativeMono&&!colorMode)?"mono":"none");
+
     }
 
     public void onCameraViewStopped() {
@@ -426,7 +437,7 @@ public class OpenNoteScanner extends Activity
 
         for (Result result: results) {
             String qrText = result.getText();
-            if ( isMatch(qrText,"^P.. V.. S[0-9]+") && !qrText.equals(lastScanedQR)) {
+            if ( isMatch(qrText,"^P.. V.. S[0-9]+") && checkQR(currentQR)) {
                 qrOk = true;
                 currentQR = qrText;
                 break;
@@ -469,13 +480,20 @@ public class OpenNoteScanner extends Activity
         if ( (qrOk || scanClicked ) && detectDocument()) {
             saveDocument();
 
-            lastScanedQR = currentQR;
-            Log.d(TAG,"qrcode scanned "+lastScanedQR);
+            pageHistory.put(currentQR,new Date().getTime()/1000);
+
+            Log.d(TAG,"qrcode scanned "+currentQR);
 
         }
 
-
         return mRgba;
+    }
+
+    private boolean checkQR(String qrCode) {
+
+        return ! ( pageHistory.containsKey(qrCode) &&
+                pageHistory.get(qrCode) > new Date().getTime()/1000-15) ;
+
     }
 
     private void saveDocument() {
@@ -509,11 +527,29 @@ public class OpenNoteScanner extends Activity
             Imgproc.cvtColor(endDoc, endDoc, Imgproc.COLOR_GRAY2BGR, 4);
         }
         Imgcodecs.imwrite(fileName, endDoc);
+        shootSound();
         Log.d(TAG,"wrote: "+fileName);
         endDoc.release();
         if (isIntent) {
             setResult(RESULT_OK, intent);
             finish();
+        }
+    }
+
+
+    public void shootSound()
+    {
+        AudioManager meng = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int volume = meng.getStreamVolume( AudioManager.STREAM_NOTIFICATION);
+
+        if (volume != 0)
+        {
+            if (_shootMP == null) {
+                _shootMP = MediaPlayer.create(this, Uri.parse("file:///system/media/audio/ui/camera_click.ogg"));
+            }
+            if (_shootMP != null) {
+                _shootMP.start();
+            }
         }
     }
 
