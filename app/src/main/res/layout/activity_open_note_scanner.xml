@@ -129,11 +129,23 @@
             />
 
         <Button
-            android:id="@+id/autoModeButton"
+            android:id="@+id/flashModeButton"
             android:layout_gravity="right|center_vertical"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginLeft="50dp"
+            android:background="@drawable/ic_flash_on_24dp"
+            android:gravity="center"
+            android:enabled="true"
+            android:backgroundTint="#7fffffff"
+            />
+
+        <Button
+            android:id="@+id/autoModeButton"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="100dp"
             android:background="@drawable/ic_find_in_page"
             android:gravity="center"
             android:enabled="true"
@@ -141,12 +153,12 @@
             />
 
         <Button
-            android:id="@+id/settingsButton"
+            android:id="@+id/galleryButton"
             android:layout_gravity="right|center_vertical"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="100dp"
-            android:background="@drawable/ic_settings"
+            android:layout_marginLeft="150dp"
+            android:background="@drawable/ic_menu_gallery"
             android:gravity="center"
             android:enabled="true"
             android:backgroundTint="#7fffffff"

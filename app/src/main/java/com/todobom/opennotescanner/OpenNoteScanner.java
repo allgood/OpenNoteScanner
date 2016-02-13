@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -189,9 +190,6 @@ public class OpenNoteScanner extends Activity
         int width = Math.max(size.x, size.y);
         int height = Math.min(size.x, size.y);
 
-        // int width = mContentView.getWidth();
-        // int height = mContentView.getHeight();
-
         int hotAreaHeight = height / 4;
         int hotAreaWidth = width / 2 - hotAreaHeight;
 
@@ -256,6 +254,19 @@ public class OpenNoteScanner extends Activity
             }
         });
 
+        final Button flashModeButton = (Button) findViewById(R.id.flashModeButton);
+
+        flashModeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                flashMode = !flashMode;
+                v.setBackgroundTintList(ColorStateList.valueOf(flashMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+                mOpenCvCameraView.setFlash(flashMode);
+            }
+        });
+
+
         final Button autoModeButton = (Button) findViewById(R.id.autoModeButton);
 
         autoModeButton.setOnClickListener(new View.OnClickListener() {
@@ -267,7 +278,7 @@ public class OpenNoteScanner extends Activity
             }
         });
 
-        final Button galleryButton = (Button) findViewById(R.id.settingsButton);
+        final Button galleryButton = (Button) findViewById(R.id.galleryButton);
 
         galleryButton.setOnClickListener(new View.OnClickListener() {
 
@@ -353,6 +364,9 @@ public class OpenNoteScanner extends Activity
     @Override
     public void onResume() {
         super.onResume();
+        flashMode=false;
+        findViewById(R.id.colorModeButton).setBackgroundTintList(ColorStateList.valueOf(0x7FFFFFFF));
+
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
     }
 
@@ -365,8 +379,14 @@ public class OpenNoteScanner extends Activity
     private Mat mDocument = null;
 
     private boolean scanClicked = false;
+
     private boolean colorMode = false;
+    double colorGain = 1.5;       // contrast
+    double colorBias = 0;         // bright
+    int colorThresh = 150;        // threshold
+
     private boolean autoMode = false;
+    private boolean flashMode = false;
 
     private String currentQR = "";
     private boolean qrOk = false;
@@ -376,25 +396,32 @@ public class OpenNoteScanner extends Activity
     @Override
     public void onPause() {
         super.onPause();
-        if (mOpenCvCameraView != null)
+        if (mOpenCvCameraView != null) {
             mOpenCvCameraView.disableView();
+        }
     }
 
     public void onDestroy() {
         super.onDestroy();
-        if (mOpenCvCameraView != null)
+        if (mOpenCvCameraView != null) {
             mOpenCvCameraView.disableView();
+        }
     }
 
     public void onCameraViewStarted(int width, int height) {
-        mRgba = new Mat(height, width, CvType.CV_8UC4);
-        mIntermediateMat = new Mat(height, width, CvType.CV_8UC4);
-        mGray = new Mat(height, width, CvType.CV_8UC4);
-        mCanned = new Mat(height, width, CvType.CV_8UC1);
+
+        mOpenCvCameraView.setMaxResolution();
+        Camera.Size camResolution = mOpenCvCameraView.getResolution();
+
+        int camHeight = camResolution.height;
+        int camWidth = camResolution.width;
+
+        mRgba = new Mat(camHeight, camWidth , CvType.CV_8UC4);
+        mIntermediateMat = new Mat(camHeight, camWidth, CvType.CV_8UC4);
+        mGray = new Mat(camHeight, camWidth, CvType.CV_8UC4);
+        mCanned = new Mat(camHeight, camWidth, CvType.CV_8UC1);
 
         nativeMono = mOpenCvCameraView.isEffectSupported("mono");
-        // mOpenCvCameraView.setEffect((nativeMono&&!colorMode)?"mono":"none");
-
     }
 
     public void onCameraViewStopped() {
@@ -402,6 +429,9 @@ public class OpenNoteScanner extends Activity
         mIntermediateMat.release();
         mGray.release();
         mCanned.release();
+
+        // mOpenCvCameraView.setFlash(false);
+
     }
 
     private static boolean isMatch(String s, String pattern) {
@@ -416,6 +446,8 @@ public class OpenNoteScanner extends Activity
 
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
+
+        Log.d(TAG,"received frame width: "+inputFrame.rgba().size().width);
 
         mRgba = inputFrame.rgba();
 
@@ -618,7 +650,8 @@ public class OpenNoteScanner extends Activity
 
     private void enhanceDocument( Mat src ) {
         if (colorMode) {
-            Imgproc.threshold(src, src, 127, 255, Imgproc.THRESH_BINARY);
+            src.convertTo(src,-1, colorGain , colorBias);
+            Imgproc.threshold(src, src, colorThresh, 255, Imgproc.THRESH_BINARY);
         } else {
             Imgproc.adaptiveThreshold(src,src,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY,15,15);
         }
