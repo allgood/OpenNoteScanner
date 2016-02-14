@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#0099cc"
-    tools:context="com.todobom.opennotescanner.OpenNoteScanner">
+    tools:context=".OpenNoteScannerActivity">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
          TextureView, etc. -->
 
-    <com.todobom.opennotescanner.OpenNoteCameraView
+    <com.todobom.opennotescanner.views.OpenNoteCameraView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:visibility="gone"

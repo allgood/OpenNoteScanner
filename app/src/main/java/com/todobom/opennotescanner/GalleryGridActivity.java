@@ -11,17 +11,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.todobom.opennotescanner.helpers.Utils;
+
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
-public class Gallery extends Activity {
+public class GalleryGridActivity extends Activity {
 
     public class ImageAdapter extends BaseAdapter {
 
@@ -68,6 +67,10 @@ public class Gallery extends Activity {
             Bitmap bm = decodeSampledBitmapFromUri(itemList.get(position), 220, 220);
 
             imageView.setImageBitmap(bm);
+
+            // image view click listener
+            imageView.setOnClickListener(new OnImageClickListener(position));
+
             return imageView;
         }
 
@@ -142,40 +145,34 @@ public class Gallery extends Activity {
         // Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
         File targetDirector = new File(targetPath);
 
-        File[] files = targetDirector.listFiles();
-        Arrays.sort(files, new Comparator<File>() {
-            public int compare(File f1, File f2) {
-                return Long.valueOf(f2.lastModified()).compareTo(f1.lastModified());
-            }
-        });
+        ArrayList<String> files = new Utils(getApplicationContext()).getFilePaths();
 
-        for (File file : files){
-            myImageAdapter.add(file.getAbsolutePath());
+        for (String file : files){
+            myImageAdapter.add(file);
         }
-
-        gridview.setOnItemClickListener(myOnItemClickListener);
 
     }
 
-    AdapterView.OnItemClickListener myOnItemClickListener
-            = new AdapterView.OnItemClickListener(){
+    class OnImageClickListener implements View.OnClickListener {
+
+        int _postion;
+
+        // constructor
+        public OnImageClickListener(int position) {
+            this._postion = position;
+        }
 
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            String prompt = (String)parent.getItemAtPosition(position);
+        public void onClick(View v) {
 
-            Intent intent = new Intent(view.getContext() , FullImageActivity.class);
-            intent.putExtra("filename",prompt);
-            startActivity(intent);
+            // on selecting grid view image
+            // launch full screen activity
+            GalleryGridActivity activity = GalleryGridActivity.this;
+            Intent i = new Intent(GalleryGridActivity.this, FullScreenViewActivity.class);
+            i.putExtra("position", _postion);
+            activity.startActivity(i);
+        }
 
-            /*
-            Toast.makeText(getApplicationContext(),
-                    prompt,
-                    Toast.LENGTH_LONG).show();
-            // */
-
-
-        }};
+    }
 
 }

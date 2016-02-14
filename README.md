@@ -33,3 +33,15 @@ Roadmap
 * enhance the image gallery of scanned documents
 * register a share action in order to obtain documents already pictured through standard camera apps
 * implement automatic action based on the RocketBook Wave marking of the page
+
+License
+-------
+
+Copyright 2016 - Claudemir Todo Bom
+
+Software licensed under the GPL version 2 available in GPLv2.TXT and
+online on http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
+Use parts from other developers, sometimes with small changes,
+references on autorship and specific licenses are on individual
+source files.

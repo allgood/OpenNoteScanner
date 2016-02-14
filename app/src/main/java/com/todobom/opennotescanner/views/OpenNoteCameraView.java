@@ -1,4 +1,4 @@
-package com.todobom.opennotescanner;
+package com.todobom.opennotescanner.views;
 
 import android.content.Context;
 import android.hardware.Camera;

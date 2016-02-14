@@ -31,7 +31,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">
         <activity
-            android:name=".OpenNoteScanner"
+            android:name=".OpenNoteScannerActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_open_note_scanner"
             android:screenOrientation="landscape"
@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Gallery"
+            android:name=".GalleryGridActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_gallery"
             android:screenOrientation="portrait"
@@ -62,6 +62,11 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_full_image"
             android:theme="@style/FullscreenTheme"></activity>
+        <activity
+            android:name=".FullScreenViewActivity"
+            android:theme="@style/FullscreenTheme">
+        </activity>
+
     </application>
 
 </manifest>

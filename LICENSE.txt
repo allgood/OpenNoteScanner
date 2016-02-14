@@ -1,0 +1,8 @@
+Copyright 2016 - Claudemir Todo Bom
+
+Software licensed under the GPL version 2 available in GPLv2.TXT and
+online on http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+
+Use parts from other developers, sometimes with small changes,
+references on autorship and specific licenses are on individual
+source files.

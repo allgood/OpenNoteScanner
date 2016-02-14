@@ -37,6 +37,7 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.multi.qrcode.QRCodeMultiReader;
+import com.todobom.opennotescanner.views.OpenNoteCameraView;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -70,7 +71,7 @@ import java.util.regex.Pattern;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class OpenNoteScanner extends Activity
+public class OpenNoteScannerActivity extends Activity
         implements NavigationView.OnNavigationItemSelectedListener , CameraBridgeViewBase.CvCameraViewListener2 {
     /**
      * Whether or not the system UI should be auto-hidden after
@@ -284,7 +285,7 @@ public class OpenNoteScanner extends Activity
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext() , Gallery.class);
+                Intent intent = new Intent(v.getContext() , GalleryGridActivity.class);
                 startActivity(intent);
             }
         });
