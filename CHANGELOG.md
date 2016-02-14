@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+GIT Head
+--------
+
+* Animation of the scanned document
+
 version 1.0.3
 -------------
 

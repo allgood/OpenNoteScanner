@@ -7,8 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +26,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -57,6 +65,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -394,6 +403,8 @@ public class OpenNoteScannerActivity extends Activity
 
     private boolean nativeMono = false;
 
+    private Point[] documentPoints = null;
+
     @Override
     public void onPause() {
         super.onPause();
@@ -560,8 +571,11 @@ public class OpenNoteScannerActivity extends Activity
             Imgproc.cvtColor(endDoc, endDoc, Imgproc.COLOR_GRAY2BGR, 4);
         }
         Imgcodecs.imwrite(fileName, endDoc);
+
+        animateDocument(fileName);
+
         shootSound();
-        Log.d(TAG,"wrote: "+fileName);
+        Log.d(TAG, "wrote: " + fileName);
         endDoc.release();
         if (isIntent) {
             setResult(RESULT_OK, intent);
@@ -569,8 +583,133 @@ public class OpenNoteScannerActivity extends Activity
         }
     }
 
+    class MyRunnable implements Runnable {
 
-    public void shootSound()
+        public String fileName = null;
+        public int top;
+        public int left;
+        public int width;
+        public int height;
+
+        public double hipotenuse( Point a , Point b) {
+            return Math.sqrt( Math.pow(a.x - b.x , 2 ) + Math.pow(a.y - b.y , 2 ));
+        };
+
+        @Override
+        public void run() {
+            final ImageView imageView = (ImageView) findViewById(R.id.scannedAnimation);
+
+
+            Bitmap bitmap = BitmapFactory.decodeFile(fileName);
+            ExifInterface exif = null;
+            int orientation = ExifInterface.ORIENTATION_UNDEFINED;
+            try {
+                exif = new ExifInterface(fileName);
+                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Matrix matrix = new Matrix();
+            switch (orientation) {
+                case ExifInterface.ORIENTATION_ROTATE_90:
+                    matrix.postRotate(180);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_180:
+                    matrix.postRotate(270);
+                    break;
+                case ExifInterface.ORIENTATION_ROTATE_270:
+                    break;
+                default:
+                    matrix.postRotate(270);
+                    break;
+            }
+
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+
+            imageView.setImageBitmap(bitmap);
+
+            Display display = getWindowManager().getDefaultDisplay();
+            android.graphics.Point size = new android.graphics.Point();
+            display.getRealSize(size);
+            int width = Math.max(size.x, size.y);
+            int height = Math.min(size.x, size.y);
+
+            Size imageSize = mRgba.size();
+            double imageWidth = imageSize.width;
+            double imageHeight = imageSize.height;
+
+            double documentTopWidth = hipotenuse( documentPoints[0], documentPoints[1]);
+            double documentLeftHeight = hipotenuse( documentPoints[0], documentPoints[3]);
+            double documentRightHeight = hipotenuse( documentPoints[1], documentPoints[2]);
+            double documentBottomWidth = hipotenuse( documentPoints[3], documentPoints[0]);
+
+            double documentWidth = Math.max(documentTopWidth,documentBottomWidth);
+            double documentHeight = Math.max(documentLeftHeight,documentRightHeight);
+
+            Log.d(TAG, "device: "+width+"x"+height+" image: "+imageWidth+"x"+imageHeight+" document: "+documentWidth+"x"+documentHeight);
+
+
+            Log.d(TAG, "documentPoints[0] x="+documentPoints[0].x+" y="+documentPoints[0].y);
+            Log.d(TAG, "documentPoints[1] x="+documentPoints[1].x+" y="+documentPoints[1].y);
+            Log.d(TAG, "documentPoints[2] x="+documentPoints[2].x+" y="+documentPoints[2].y);
+            Log.d(TAG, "documentPoints[3] x="+documentPoints[3].x+" y="+documentPoints[3].y);
+
+
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+            params.topMargin = (int) (documentPoints[0].y/imageHeight*height);
+            params.leftMargin = (int) (documentPoints[0].x/imageWidth*width);
+            params.width = (int) (documentWidth*width/imageWidth);
+            params.height = (int) (documentHeight*height/imageHeight);
+
+            imageView.setVisibility(View.VISIBLE);
+
+            TranslateAnimation translateAnimation = new TranslateAnimation(
+                    0, width, 0, height);
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0, 1, 0);
+
+            AnimationSet animationSet = new AnimationSet(true);
+
+            animationSet.addAnimation(scaleAnimation);
+            animationSet.addAnimation(translateAnimation);
+
+            animationSet.setDuration(300);
+            animationSet.setInterpolator(new AccelerateInterpolator());
+
+            animationSet.setAnimationListener(new Animation.AnimationListener() {
+                @Override
+                public void onAnimationStart(Animation animation) {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    imageView.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation) {
+
+                }
+            });
+
+
+            imageView.startAnimation(animationSet);
+
+        }
+    }
+
+    private void animateDocument(String filename) {
+
+        MyRunnable runnable = new MyRunnable();
+        runnable.fileName = filename;
+
+        runOnUiThread(runnable);
+
+    }
+
+    private void shootSound()
     {
         AudioManager meng = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
         int volume = meng.getStreamVolume( AudioManager.STREAM_NOTIFICATION);
@@ -590,7 +729,7 @@ public class OpenNoteScannerActivity extends Activity
 
         ArrayList<MatOfPoint> contours = findDocument(mRgba);
 
-        Point[] rp = null;
+        documentPoints = null;
 
         int count = 0;
         for ( MatOfPoint c: contours ) {
@@ -605,9 +744,9 @@ public class OpenNoteScannerActivity extends Activity
             if ( points.length == 4 ) {
                 ArrayList<MatOfPoint> lmp = new ArrayList<MatOfPoint>();
 
-                rp = sortPoints(points);
+                documentPoints = sortPoints(points);
 
-                if (insideArea(rp,mRgba.size())) {
+                if (insideArea(documentPoints,mRgba.size())) {
 
                     lmp.add(c);
                     Imgproc.drawContours(mRgba, lmp, -1, new Scalar(0, 255, 0), 5);
@@ -615,7 +754,7 @@ public class OpenNoteScannerActivity extends Activity
                     /* */
                     Log.d(TAG, points[0].toString() + " , " + points[1].toString() + " , " + points[2].toString() + " , " + points[3].toString());
 
-                    fourPointTransform(mIntermediateMat, rp);
+                    fourPointTransform(mIntermediateMat, documentPoints);
                     enhanceDocument(mDocument);
 
                     scanClicked = false;
