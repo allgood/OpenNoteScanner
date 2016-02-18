@@ -13,6 +13,14 @@ It is also possible to launch the application from any other application that as
 
 **TODO:** place some screenshots here
 
+How to Install
+--------------
+
+It is possible to install it directly from Google Play Store through [this link](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner).
+
+Binary APK file is available in the [releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. If you install the binary manually you will need also the OpenCV Manager. The best way on doing this manually is downloading the [OpenCV SDK for Android](http://sourceforge.net/projects/opencvlibrary/files/opencv-android/3.1.0/OpenCV-3.1.0-android-sdk.zip/download) on a computer, unzip it and pick the correct APK for your device in the ```apk``` folder. Normally for phone devices, the armeabi-v7a is the correct one. If you have Play Store access, Open Note Scanner will direct you to it in order to download OpenCV Manager if it is not found in the device.
+
+
 Instructions for building
 -------------------------
 

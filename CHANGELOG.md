@@ -1,10 +1,12 @@
 Change Log
 ==========
 
-GIT Head
---------
+version 1.0.4
+-------------
 
 * Animation of the scanned document
+* Toolbars on gallery and image viewer
+* Share images to other applications from gallery and image viewer
 
 version 1.0.3
 -------------
