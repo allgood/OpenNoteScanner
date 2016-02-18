@@ -66,8 +66,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:backgroundTint="#32ffffff"
-            android:background="#ffffff" />
+            android:backgroundTint="#6fafafaf"
+            android:background="#7fffff" />
 
         <ImageView
             android:layout_width="20px"
@@ -78,8 +78,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:backgroundTint="#32ffffff"
-            android:background="#ffffff" />
+            android:backgroundTint="#6fafafaf"
+            android:background="#7fffff" />
 
 
         <ImageView
@@ -91,8 +91,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:backgroundTint="#32ffffff"
-            android:background="#ffffff" />
+            android:backgroundTint="#6fafafaf"
+            android:background="#7fffff" />
 
 
         <ImageView
@@ -104,8 +104,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:backgroundTint="#32ffffff"
-            android:background="#ffffff" />
+            android:backgroundTint="#6fafafaf"
+            android:background="#7fffff" />
 
         <ImageView
             android:layout_width="0px"

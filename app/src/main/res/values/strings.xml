@@ -12,4 +12,7 @@
     <string name="title_activity_gallery">Gallery</string>
 
     <string name="title_activity_full_image">FullImageActivity</string>
+    <string name="images_scanned">Images Scanned</string>
+    <string name="action_search">Search</string>
+    <string name="action_share">Share</string>
 </resources>

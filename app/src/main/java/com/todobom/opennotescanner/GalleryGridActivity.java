@@ -2,13 +2,20 @@ package com.todobom.opennotescanner;
 
 // based on http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,7 +27,12 @@ import com.todobom.opennotescanner.helpers.Utils;
 import java.io.File;
 import java.util.ArrayList;
 
-public class GalleryGridActivity extends Activity {
+public class GalleryGridActivity extends AppCompatActivity {
+
+    private boolean selectionStarted = false;
+    private ArrayList<ImageView> selection;
+    private Toolbar mToolbar;
+    private MenuItem mShare;
 
     public class ImageAdapter extends BaseAdapter {
 
@@ -70,6 +82,8 @@ public class GalleryGridActivity extends Activity {
 
             // image view click listener
             imageView.setOnClickListener(new OnImageClickListener(position));
+
+            imageView.setOnLongClickListener(new OnImageLongClickListener(position));
 
             return imageView;
         }
@@ -132,6 +146,25 @@ public class GalleryGridActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
+        /*
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        this.setSupportActionBar(mToolbar);
+
+        */
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle(null);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66ffffff")));
+
+        // */
+
+        selection = new ArrayList<ImageView>();
+
         GridView gridview = (GridView) findViewById(R.id.gridview);
         myImageAdapter = new ImageAdapter(this);
         gridview.setAdapter(myImageAdapter);
@@ -153,25 +186,101 @@ public class GalleryGridActivity extends Activity {
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_gallery, menu);
+
+        mShare = menu.findItem(R.id.action_share);
+        mShare.setVisible(false);
+        invalidateOptionsMenu();
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch(id) {
+            case android.R.id.home:
+                finish();
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    class OnImageLongClickListener implements View.OnLongClickListener {
+
+
+        int _position;
+
+        // constructor
+        public OnImageLongClickListener(int position) {
+            this._position = position;
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            GalleryGridActivity.this.selectionToggle(_position, (ImageView) v);
+
+            return true;
+        }
+
+    }
+
+    public void selectionToggle( int position , ImageView v ) {
+
+        boolean oldState = selection.size()>0;
+
+        if (selection.contains(v)) {
+            selection.remove(v);
+            v.setColorFilter(Color.argb(0, 0, 0, 0));
+        } else {
+            selection.add(v);
+            v.setColorFilter(Color.argb(140, 0, 0, 255));
+        }
+
+        boolean newState = selection.size()>0;
+
+        Log.d("gallery", "oldstate " + oldState + " newstate " + newState);
+
+        if (newState != oldState) {
+            mShare.setVisible(newState);
+        }
+
+    }
+
     class OnImageClickListener implements View.OnClickListener {
 
-        int _postion;
+        int _position;
 
         // constructor
         public OnImageClickListener(int position) {
-            this._postion = position;
+            this._position = position;
         }
 
         @Override
         public void onClick(View v) {
 
-            // on selecting grid view image
-            // launch full screen activity
-            GalleryGridActivity activity = GalleryGridActivity.this;
-            Intent i = new Intent(GalleryGridActivity.this, FullScreenViewActivity.class);
-            i.putExtra("position", _postion);
-            activity.startActivity(i);
+
+            if (GalleryGridActivity.this.selection.size()>0) {
+                GalleryGridActivity.this.selectionToggle(_position, (ImageView) v);
+            } else {
+                GalleryGridActivity activity = GalleryGridActivity.this;
+                Intent i = new Intent(GalleryGridActivity.this, FullScreenViewActivity.class);
+                i.putExtra("position", _position);
+                activity.startActivity(i);
+            }
         }
+
+
 
     }
 

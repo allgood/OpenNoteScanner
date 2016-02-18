@@ -1,20 +1,24 @@
 package com.todobom.opennotescanner;
 
-import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.todobom.opennotescanner.helpers.Utils;
 
-public class FullScreenViewActivity extends Activity{
+public class FullScreenViewActivity extends AppCompatActivity {
 
     private Utils utils;
     private FullScreenImageAdapter adapter;
     private ViewPager viewPager;
+    // private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,22 @@ public class FullScreenViewActivity extends Activity{
         setContentView(R.layout.activity_fullscreen_view);
 
         viewPager = (ViewPager) findViewById(R.id.pager);
+
+        // mToolbar = (Toolbar) findViewById(R.id.FullImageViewToolbar);
+
+        // setDisplayHomeAsUpEnabled(true);
+
+        // setSupportActionBar(mToolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setTitle(null);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66ffffff")));
+
+
+        /*
 
         // close button click event
         Button btnClose = (Button) findViewById(R.id.btnClose);
@@ -32,7 +52,7 @@ public class FullScreenViewActivity extends Activity{
             }
         });
 
-
+        // */
 
         utils = new Utils(getApplicationContext());
 
@@ -71,4 +91,31 @@ public class FullScreenViewActivity extends Activity{
 
         });
     }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_imagepager, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        switch(id) {
+            case android.R.id.home:
+                finish();
+            default:
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }
