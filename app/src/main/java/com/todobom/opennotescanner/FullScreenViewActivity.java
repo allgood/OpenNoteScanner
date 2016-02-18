@@ -3,6 +3,7 @@ package com.todobom.opennotescanner;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -12,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.todobom.opennotescanner.helpers.Utils;
+
+import java.io.File;
 
 public class FullScreenViewActivity extends AppCompatActivity {
 
@@ -72,20 +75,17 @@ public class FullScreenViewActivity extends AppCompatActivity {
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.d("fullview", "scrolled position "+position+" offset "+positionOffset);
                 Log.d("fullview", "pager "+FullScreenViewActivity.this.viewPager.getCurrentItem());
-
             }
 
             @Override
             public void onPageSelected(int position) {
                 Log.d("fullview", "selected");
                 Log.d("fullview", "item" + FullScreenViewActivity.this.viewPager.getCurrentItem());
-
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
                 Log.d("fullview", "state changed");
-
             }
 
 
@@ -111,11 +111,28 @@ public class FullScreenViewActivity extends AppCompatActivity {
         switch(id) {
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.action_share:
+                shareImage();
+                return true;
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void shareImage() {
+
+        ViewPager pager = FullScreenViewActivity.this.viewPager;
+        int item = pager.getCurrentItem();
+
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("image/jpg");
+        final File photoFile = new File(adapter.getPath(item));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(photoFile));
+        Log.d("Fullscreen","uri "+Uri.fromFile(photoFile));
+        startActivity(Intent.createChooser(shareIntent, "Share image using"));
     }
 
 }

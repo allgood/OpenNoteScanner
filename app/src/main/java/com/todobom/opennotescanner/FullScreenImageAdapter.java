@@ -59,10 +59,13 @@ public class FullScreenImageAdapter extends PagerAdapter {
         return viewLayout;
     }
 
+    public String getPath(int position) {
+        return _imagePaths.get(position);
+    }
+
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         ((ViewPager) container).removeView((RelativeLayout) object);
-
     }
 
 

@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 public class GalleryGridActivity extends AppCompatActivity {
 
     private boolean selectionStarted = false;
-    private ArrayList<ImageView> selection;
+    private ArrayList<String> selection;
     private Toolbar mToolbar;
     private MenuItem mShare;
 
@@ -163,7 +164,7 @@ public class GalleryGridActivity extends AppCompatActivity {
 
         // */
 
-        selection = new ArrayList<ImageView>();
+        selection = new ArrayList<String>();
 
         GridView gridview = (GridView) findViewById(R.id.gridview);
         myImageAdapter = new ImageAdapter(this);
@@ -209,12 +210,31 @@ public class GalleryGridActivity extends AppCompatActivity {
         switch(id) {
             case android.R.id.home:
                 finish();
+            case R.id.action_share:
+                shareImages();
+                return true;
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void shareImages() {
+
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        shareIntent.setType("image/jpg");
+
+        ArrayList<Uri> filesUris = new ArrayList<Uri>();
+
+        for ( String i: selection ) {
+            filesUris.add(Uri.parse("file://"+i));
+        }
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
+
+        startActivity(Intent.createChooser(shareIntent, "Share images using"));
+    }
+
 
     class OnImageLongClickListener implements View.OnLongClickListener {
 
@@ -239,11 +259,13 @@ public class GalleryGridActivity extends AppCompatActivity {
 
         boolean oldState = selection.size()>0;
 
-        if (selection.contains(v)) {
-            selection.remove(v);
+        String filePath = (String) myImageAdapter.getItem(position);
+
+        if (selection.contains(filePath)) {
+            selection.remove(filePath);
             v.setColorFilter(Color.argb(0, 0, 0, 0));
         } else {
-            selection.add(v);
+            selection.add(filePath);
             v.setColorFilter(Color.argb(140, 0, 0, 255));
         }
 
