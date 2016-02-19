@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Git Head
+--------
+
+* Deletion of images on gallery and image viewer
+* More information on README.md
+
 version 1.0.4
 -------------
 

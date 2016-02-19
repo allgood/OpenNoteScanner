@@ -1,5 +1,7 @@
 package com.todobom.opennotescanner;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -21,6 +23,7 @@ public class FullScreenViewActivity extends AppCompatActivity {
     private Utils utils;
     private FullScreenImageAdapter adapter;
     private ViewPager viewPager;
+    private AlertDialog.Builder deleteConfirmBuilder;
     // private Toolbar mToolbar;
 
     @Override
@@ -73,8 +76,8 @@ public class FullScreenViewActivity extends AppCompatActivity {
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.d("fullview", "scrolled position "+position+" offset "+positionOffset);
-                Log.d("fullview", "pager "+FullScreenViewActivity.this.viewPager.getCurrentItem());
+                Log.d("fullview", "scrolled position " + position + " offset " + positionOffset);
+                Log.d("fullview", "pager " + FullScreenViewActivity.this.viewPager.getCurrentItem());
             }
 
             @Override
@@ -90,6 +93,29 @@ public class FullScreenViewActivity extends AppCompatActivity {
 
 
         });
+
+        deleteConfirmBuilder = new AlertDialog.Builder(this);
+
+        deleteConfirmBuilder.setTitle(getString(R.string.confirm_title));
+        deleteConfirmBuilder.setMessage(getString(R.string.confirm_delete_text));
+
+        deleteConfirmBuilder.setPositiveButton(getString(R.string.answer_yes), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                deleteImage();
+                dialog.dismiss();
+            }
+
+        });
+
+        deleteConfirmBuilder.setNegativeButton(getString(R.string.answer_no), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
     }
 
 
@@ -115,11 +141,32 @@ public class FullScreenViewActivity extends AppCompatActivity {
             case R.id.action_share:
                 shareImage();
                 return true;
+            case R.id.action_delete:
+                deleteConfirmBuilder.create().show();
+                return true;
             default:
                 break;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteImage() {
+        ViewPager pager = FullScreenViewActivity.this.viewPager;
+        int item = pager.getCurrentItem();
+
+        final File photoFile = new File(adapter.getPath(item));
+
+        // pager.removeViewAt(item);
+
+        photoFile.delete();
+
+        pager.setAdapter(null);
+        adapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
+                utils.getFilePaths());
+
+        pager.setAdapter(adapter);
+
     }
 
     public void shareImage() {

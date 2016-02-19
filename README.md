@@ -24,9 +24,24 @@ Binary APK file is available in the [releases section](https://github.com/ctodob
 Instructions for building
 -------------------------
 
-For building is needed to import the OpenCV library on the project.
+Open Note Scanner needs to include the java library for OpenCV. This library is responsible in interfacing the services from OpenCV Manager (see Installation) with the Android Java code.
 
-**TODO:** place better instructions here.
+### Android Studio
+
+Import the project from GitHub using File -> New -> Project from Version Control -> GitHub, fill the URL https://github.com/ctodobom/OpenNoteScanner.git
+
+It will ask for a base directory, normally AndroidStudioProjects, you can change it to your preference.
+
+Repeat the process and import also the OpenCV for Android project, giving this time the URL https://github.com/ctodobom/OpenCV-3.1.0-Android.git
+
+Having both projects imported on Android Studio, on the Open Note Scanner project go to File -> Project Structure, click on the + sign, select Import Gradle Project, on the source directory select the other imported project path.
+
+After this the Open Note Scanner can be built.
+
+
+### Command Line
+
+TODO: Include instructions for command line building
 
 History
 -------

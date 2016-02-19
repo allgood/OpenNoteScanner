@@ -2,7 +2,9 @@ package com.todobom.opennotescanner;
 
 // based on http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,7 +15,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,18 +31,24 @@ import java.util.ArrayList;
 
 public class GalleryGridActivity extends AppCompatActivity {
 
-    private boolean selectionStarted = false;
     private ArrayList<String> selection;
-    private Toolbar mToolbar;
     private MenuItem mShare;
+    private MenuItem mDelete;
+    private GridView gridview;
+    private AlertDialog.Builder deleteConfirmBuilder;
 
     public class ImageAdapter extends BaseAdapter {
 
         private Context mContext;
         ArrayList<String> itemList = new ArrayList<String>();
 
-        public ImageAdapter(Context c) {
+        public ImageAdapter(Context c, ArrayList<String> files) {
             mContext = c;
+
+            for (String file : files){
+                add(file);
+            }
+
         }
 
         void add(String path){
@@ -166,8 +173,9 @@ public class GalleryGridActivity extends AppCompatActivity {
 
         selection = new ArrayList<String>();
 
-        GridView gridview = (GridView) findViewById(R.id.gridview);
-        myImageAdapter = new ImageAdapter(this);
+        gridview = (GridView) findViewById(R.id.gridview);
+
+        myImageAdapter = new ImageAdapter(this, new Utils(getApplicationContext()).getFilePaths());
         gridview.setAdapter(myImageAdapter);
 
         String ExternalStorageDirectoryPath = Environment
@@ -179,12 +187,47 @@ public class GalleryGridActivity extends AppCompatActivity {
         // Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
         File targetDirector = new File(targetPath);
 
-        ArrayList<String> files = new Utils(getApplicationContext()).getFilePaths();
 
-        for (String file : files){
-            myImageAdapter.add(file);
+
+        deleteConfirmBuilder = new AlertDialog.Builder(this);
+
+        deleteConfirmBuilder.setTitle(getString(R.string.confirm_title));
+        deleteConfirmBuilder.setMessage(getString(R.string.confirm_delete_multiple_text));
+
+        deleteConfirmBuilder.setPositiveButton(getString(R.string.answer_yes), new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                deleteImage();
+                dialog.dismiss();
+            }
+
+        });
+
+        deleteConfirmBuilder.setNegativeButton(getString(R.string.answer_no), new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
+
+    private void deleteImage() {
+        for ( String filePath: selection ) {
+            final File photoFile = new File(filePath);
+            photoFile.delete();
         }
 
+        selection.clear();
+        selection = new ArrayList<String>();
+
+        gridview.setAdapter(null);
+        myImageAdapter = new ImageAdapter(this,new Utils(getApplicationContext()).getFilePaths());
+
+        gridview.setAdapter(myImageAdapter);
+        gridview.invalidate();
     }
 
 
@@ -195,6 +238,10 @@ public class GalleryGridActivity extends AppCompatActivity {
 
         mShare = menu.findItem(R.id.action_share);
         mShare.setVisible(false);
+
+        mDelete = menu.findItem(R.id.action_delete);
+        mDelete.setVisible(false);
+
         invalidateOptionsMenu();
 
         return true;
@@ -210,8 +257,12 @@ public class GalleryGridActivity extends AppCompatActivity {
         switch(id) {
             case android.R.id.home:
                 finish();
+                break;
             case R.id.action_share:
                 shareImages();
+                return true;
+            case R.id.action_delete:
+                deleteConfirmBuilder.create().show();
                 return true;
             default:
                 break;
@@ -228,7 +279,7 @@ public class GalleryGridActivity extends AppCompatActivity {
         ArrayList<Uri> filesUris = new ArrayList<Uri>();
 
         for ( String i: selection ) {
-            filesUris.add(Uri.parse("file://"+i));
+            filesUris.add(Uri.parse("file://" + i));
         }
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
 
@@ -275,6 +326,7 @@ public class GalleryGridActivity extends AppCompatActivity {
 
         if (newState != oldState) {
             mShare.setVisible(newState);
+            mDelete.setVisible(newState);
         }
 
     }
