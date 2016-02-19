@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Git Head
---------
+version 1.0.5
+-------------
 
 * Deletion of images on gallery and image viewer
 * More information on README.md
