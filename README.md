@@ -13,6 +13,12 @@ It is also possible to launch the application from any other application that as
 
 **TODO:** place some screenshots here
 
+Requirements
+------------
+
+Because of the version of OpenCV that is used in the project it needs to run on Android 5.0 (lollipop) or newer.
+
+
 How to Install
 --------------
 
@@ -80,6 +86,15 @@ If you think that any information you obtained here is worth of some money and a
 | Paypal | Bitcoin | Dogecoin |
 | ------ | ------- | -------- |
 | [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://todobom.com/images/bitcoin-donations.png)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> | <center> ![DFBaP724XR3rfs9wFahBd353yFkgkqatvd](http://todobom.com/images/dogecoin-donations.png)<br />DFBaP724XR3rfs9wFahBd353yFkgkqatvd</center> |
+
+
+Contributing
+------------
+
+If you have any idea, feel free to fork it and submit your changes back to me.
+
+It is possible to backport this project to [OpenCV 2.4.8](https://github.com/vRallev/OpenCV) in a way that it can run on Android 4.4.2 (KitKat), this will demand a lot of rework on user interface code. If you know how to do it, it is a great contribution.
+
 
 License
 -------
