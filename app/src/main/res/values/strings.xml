@@ -1,19 +1,11 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="action_settings">Settings</string>
-
-    <string name="title_activity_open_note_scanner">Open Note Scanner</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Gallery</string>
 
-    <string name="title_activity_full_image">FullImageActivity</string>
+    <string name="title_activity_full_image">Scanned Image Viewer</string>
     <string name="images_scanned">Images Scanned</string>
-    <string name="action_search">Search</string>
     <string name="action_share">Share</string>
     <string name="action_delete">Delete</string>
     <string name="confirm_title">Confirm</string>
@@ -21,4 +13,5 @@
     <string name="answer_yes">Yes</string>
     <string name="answer_no">No</string>
     <string name="confirm_delete_multiple_text">Do you want to delete the selected images?</string>
+    <string name="share_snackbar">Share images through</string>
 </resources>

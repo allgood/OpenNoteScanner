@@ -18,6 +18,7 @@ import com.todobom.opennotescanner.helpers.Utils;
 
 import java.io.File;
 
+
 public class FullScreenViewActivity extends AppCompatActivity {
 
     private Utils utils;
@@ -179,7 +180,7 @@ public class FullScreenViewActivity extends AppCompatActivity {
         final File photoFile = new File(adapter.getPath(item));
         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(photoFile));
         Log.d("Fullscreen","uri "+Uri.fromFile(photoFile));
-        startActivity(Intent.createChooser(shareIntent, "Share image using"));
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
     }
 
 }

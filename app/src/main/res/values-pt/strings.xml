@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Open Note Scanner</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="answer_no">Não</string>
+    <string name="answer_yes">Sim</string>
+    <string name="confirm_delete_multiple_text">Deseja deletar as imagens selecionadas?</string>
+    <string name="confirm_delete_text">Deseja deletar esta imagem?</string>
+    <string name="confirm_title">Confirme</string>
+    <string name="images_scanned">Imagens capturadas</string>
+    <string name="title_activity_full_image">Visualisador de imagens capturadas</string>
+    <string name="title_activity_gallery">Galeria</string>
+    <string name="share_snackbar">Compartilhar usando</string>
+</resources>

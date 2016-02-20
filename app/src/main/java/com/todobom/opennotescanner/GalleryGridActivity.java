@@ -283,7 +283,7 @@ public class GalleryGridActivity extends AppCompatActivity {
         }
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
 
-        startActivity(Intent.createChooser(shareIntent, "Share images using"));
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
     }
 
 
