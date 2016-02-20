@@ -32,16 +32,27 @@ Import the project from GitHub using File -> New -> Project from Version Control
 
 It will ask for a base directory, normally AndroidStudioProjects, you can change it to your preference.
 
-Repeat the process and import also the OpenCV for Android project, giving this time the URL https://github.com/ctodobom/OpenCV-3.1.0-Android.git
-
-Having both projects imported on Android Studio, on the Open Note Scanner project go to File -> Project Structure, click on the + sign, select Import Gradle Project, on the source directory select the other imported project path.
-
 After this the Open Note Scanner can be built.
 
 
 ### Command Line
 
-TODO: Include instructions for command line building
+Go to your base folder and import it using ```git```:
+
+```
+$ git clone https://github.com/ctodobom/OpenNoteScanner.git
+```
+
+This should import the Open Note Scanner repository in OpenNoteScanner folder
+
+You need to point the environment variable ```ANDROID_HOME``` to your Android SDK folder and run ```gradle``` to build the project:
+
+```
+$ cd OpenNoteScanner
+$ export ANDROID_HOME=~/android-sdk-linux
+$ ./gradlew assembleDebug
+```
+
 
 History
 -------
