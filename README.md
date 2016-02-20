@@ -75,12 +75,11 @@ My job is on enterprise servers administration and some development consulting. 
 
 For being part of open source projects and documenting my work here I really do not charge anything. I am trying to avoid any type of ads also.
 
-If you think that any information you obtained here is worth of some money and are willing to pay for it, feel free to send any amount through paypal or bitcoin.
+If you think that any information you obtained here is worth of some money and are willing to pay for it, feel free to send any amount through paypal or bitcoin, or dogecoin (wow!).
 
-| Paypal | Bitcoin |
-| ------ | ------- |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) | <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://todobom.com/images/bitcoin-donations.png)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> |
-
+| Paypal | Bitcoin | Dogecoin |
+| ------ | ------- | -------- |
+| <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="X6XHVCPMRQEL4"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/pt_BR/i/scr/pixel.gif" width="1" height="1"></form> |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](/images/bitcoin-donations.png)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> | <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](/images/dogecoin-donations.png)<br />DFBaP724XR3rfs9wFahBd353yFkgkqatvd</center> |
 
 License
 -------
