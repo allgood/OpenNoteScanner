@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
 
 import java.io.File;
@@ -145,9 +147,15 @@ public class FullScreenViewActivity extends AppCompatActivity {
             case R.id.action_delete:
                 deleteConfirmBuilder.create().show();
                 return true;
+            case R.id.action_about:
+                FragmentManager fm = getSupportFragmentManager();
+                AboutFragment aboutDialog = AboutFragment.newInstance("title");
+                aboutDialog.show(fm, "about_view");
+                break;
             default:
                 break;
         }
+
 
         return super.onOptionsItemSelected(item);
     }

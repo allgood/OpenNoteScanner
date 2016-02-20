@@ -1,5 +1,9 @@
 package com.todobom.opennotescanner;
 
+/*
+ * based on code originaly at http://www.androidhive.info/2013/09/android-fullscreen-image-slider-with-swipe-and-pinch-zoom-gestures/
+ */
+
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;

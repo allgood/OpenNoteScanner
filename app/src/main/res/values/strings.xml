@@ -14,4 +14,6 @@
     <string name="answer_no">No</string>
     <string name="confirm_delete_multiple_text">Do you want to delete the selected images?</string>
     <string name="share_snackbar">Share images through</string>
+    <string name="action_about">About</string>
+    <string name="about_filename">about.md</string>
 </resources>

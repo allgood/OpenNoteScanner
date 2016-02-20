@@ -79,7 +79,7 @@ If you think that any information you obtained here is worth of some money and a
 
 | Paypal | Bitcoin | Dogecoin |
 | ------ | ------- | -------- |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://todobom.com/images/bitcoin-donations.png)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> | <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://todobom.com/images/dogecoin-donations.png)<br />DFBaP724XR3rfs9wFahBd353yFkgkqatvd</center> |
+| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://todobom.com/images/bitcoin-donations.png)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> | <center> ![DFBaP724XR3rfs9wFahBd353yFkgkqatvd](http://todobom.com/images/dogecoin-donations.png)<br />DFBaP724XR3rfs9wFahBd353yFkgkqatvd</center> |
 
 License
 -------
