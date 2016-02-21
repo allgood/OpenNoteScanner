@@ -6,7 +6,7 @@ android {
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 7
         versionName '1.0.6'
     }
