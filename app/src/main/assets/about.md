@@ -33,7 +33,7 @@ Third party parts and requirements
 Binary builds includes this external codes:
 
 * [OpenCV Library for Android](http://www.opencv.org)
-* [MarkdownView from Kevin Le Perf](https://github.com/codlab/bypass_gradle)
+* [MarkdownView from Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
 * [TouchImageView from Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
 
 Thanks

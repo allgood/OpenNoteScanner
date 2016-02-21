@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+version 1.0.8
+-------------
+
+* changed the markdown component used in About window
+
 version 1.0.7
 -------------
 

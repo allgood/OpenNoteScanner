@@ -10,12 +10,7 @@ import android.view.Window;
 
 import com.todobom.opennotescanner.R;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
-import eu.codlab.markdown.MarkdownView;
+import us.feras.mdv.MarkdownView;
 
 /**
  * Created by allgood on 20/02/16.
@@ -47,6 +42,9 @@ public class AboutFragment extends DialogFragment {
 
         MarkdownView markdownView = (MarkdownView) view.findViewById(R.id.about_markdown);
 
+        markdownView.loadMarkdownFile("file:///android_asset/"+getString(R.string.about_filename));
+
+        /*
 
         StringBuilder aboutBuffer=new StringBuilder();
         BufferedReader in;
@@ -65,6 +63,8 @@ public class AboutFragment extends DialogFragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        /* */
 
     }
 

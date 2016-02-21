@@ -32,7 +32,7 @@ Código de terceiros e dependências
 O aplicativo inclui código das seguintes fontes:
 
 * [Biblioteca OpenCV para Android](http://www.opencv.org)
-* [MarkdownView de Kevin Le Perf](https://github.com/codlab/bypass_gradle)
+* [MarkdownView de Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
 * [TouchImageView de Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
 
 Agradecimento
