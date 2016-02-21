@@ -1,8 +1,14 @@
 Change Log
 ==========
 
-version 1.0.6
+version 1.0.7
 -------------
+
+* Compatibility with android 6.0
+
+
+version 1.0.6 (failed)
+----------------------
 
 * Compatibility with Android 6.0 (Marshmallow)
 * About dialog
