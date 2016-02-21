@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/about_view"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:layout_gravity="center" android:orientation="vertical"  >
-
-    <TextView
-        android:id="@+id/lbl_about_title" android:text="About"
-        android:layout_width="match_parent" android:layout_height="wrap_content" />
+    android:layout_width="fill_parent" android:layout_height="fill_parent"
+    android:layout_gravity="center" android:orientation="vertical">
 
     <eu.codlab.markdown.MarkdownView
         xmlns:md="http://schemas.android.com/apk/res-auto"
         android:id="@+id/about_markdown"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
 
-        />
+        android:layout_margin="15dp" />
 
 </LinearLayout>

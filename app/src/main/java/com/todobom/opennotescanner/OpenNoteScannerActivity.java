@@ -1,10 +1,12 @@
 package com.todobom.opennotescanner;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,6 +21,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
@@ -99,6 +103,12 @@ public class OpenNoteScannerActivity extends Activity
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
+
+    private static final int CREATE_PERMISSIONS_REQUEST_CAMERA = 1;
+    private static final int MY_PERMISSIONS_REQUEST_WRITE = 3;
+
+    private static final int RESUME_PERMISSIONS_REQUEST_CAMERA = 11;
+
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -125,6 +135,7 @@ public class OpenNoteScannerActivity extends Activity
             */
         }
     };
+
     private View mControlsView;
     private final Runnable mShowPart2Runnable = new Runnable() {
         @Override
@@ -163,6 +174,7 @@ public class OpenNoteScannerActivity extends Activity
     private MediaPlayer _shootMP = null;
 
     private HashMap<String,Long> pageHistory = new HashMap<String,Long>();
+    private boolean haveCameraPermission = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,16 +195,9 @@ public class OpenNoteScannerActivity extends Activity
             }
         });
 
-        // Upon interacting with UI controls, delay any scheduled hide()
-        // operations to prevent the jarring behavior of controls going away
-        // while interacting with the UI.
-        // findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-
+        checkCreatePermissions();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mOpenCvCameraView = (OpenNoteCameraView) findViewById(R.id.HelloOpenCvView);
-        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-        mOpenCvCameraView.setCvCameraViewListener(this);
 
         Display display = getWindowManager().getDefaultDisplay();
         android.graphics.Point size = new android.graphics.Point();
@@ -305,6 +310,89 @@ public class OpenNoteScannerActivity extends Activity
 
     }
 
+    private void checkResumePermissions() {
+        if (ContextCompat.checkSelfPermission( this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    RESUME_PERMISSIONS_REQUEST_CAMERA);
+
+        } else {
+            enableCameraView();
+        }
+    }
+
+    private void checkCreatePermissions() {
+
+        if (ContextCompat.checkSelfPermission( this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_REQUEST_WRITE);
+
+        }
+
+    }
+
+
+    public void turnCameraOn() {
+        mOpenCvCameraView = (OpenNoteCameraView) findViewById(R.id.HelloOpenCvView);
+        mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
+        mOpenCvCameraView.setCvCameraViewListener(this);
+
+        haveCameraPermission = true;
+
+    }
+
+    public void enableCameraView() {
+        if (mOpenCvCameraView == null) {
+            turnCameraOn();
+        }
+        mOpenCvCameraView.enableView();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case CREATE_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    turnCameraOn();
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            case RESUME_PERMISSIONS_REQUEST_CAMERA: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    enableCameraView();
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
+    }
+
+
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -361,7 +449,7 @@ public class OpenNoteScannerActivity extends Activity
         public void onManagerConnected(int status) {
             switch (status) {
                 case LoaderCallbackInterface.SUCCESS: {
-                    mOpenCvCameraView.enableView();
+                    checkResumePermissions();
                 }
                 break;
                 default: {

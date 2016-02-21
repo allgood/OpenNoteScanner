@@ -6,6 +6,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.todobom.opennotescanner.R;
 
@@ -25,23 +26,11 @@ public class AboutFragment extends DialogFragment {
 
     }
 
-    public static AboutFragment newInstance(String title) {
-        AboutFragment frag = new AboutFragment();
-        /*
-        Bundle args = new Bundle();
-        args.putString("title", title);
-        frag.setArguments(args);
-        */
-        return frag;
-    }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View aboutView = inflater.inflate(R.layout.about_view, container);
-
-
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
         return aboutView;
     }
@@ -70,7 +59,9 @@ public class AboutFragment extends DialogFragment {
             }
             aboutString = aboutBuffer.toString();
             in.close();
+
             markdownView.setStringContent(aboutString);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

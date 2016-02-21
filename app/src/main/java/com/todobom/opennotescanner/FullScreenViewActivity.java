@@ -149,7 +149,7 @@ public class FullScreenViewActivity extends AppCompatActivity {
                 return true;
             case R.id.action_about:
                 FragmentManager fm = getSupportFragmentManager();
-                AboutFragment aboutDialog = AboutFragment.newInstance("title");
+                AboutFragment aboutDialog = new AboutFragment();
                 aboutDialog.show(fm, "about_view");
                 break;
             default:

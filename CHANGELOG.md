@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+version 1.0.6
+-------------
+
+* Compatibility with Android 6.0 (Marshmallow)
+* About dialog
+* Translation for Portuguese
+
 version 1.0.5
 -------------
 

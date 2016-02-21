@@ -12,4 +12,6 @@
     <string name="title_activity_full_image">Visualisador de imagens capturadas</string>
     <string name="title_activity_gallery">Galeria</string>
     <string name="share_snackbar">Compartilhar usando</string>
+    <string name="action_about">Sobre</string>
+    <string name="about_filename">about-pt.md</string>
 </resources>

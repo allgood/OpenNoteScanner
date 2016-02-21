@@ -20,6 +20,8 @@ If you think that this application or any of my contributions is worth of some m
 
 [Donate through Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
+**ATENTION:** Link to cryptocoins works only if you have the app for that coin installed!
+
 [Donate through Bitcoin](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
 
 [Donate through Dogecoin](dogecoin:DFBaP724XR3rfs9wFahBd353yFkgkqatvd)
