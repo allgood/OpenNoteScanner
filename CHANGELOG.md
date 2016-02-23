@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+version 1.0.9
+-------------
+
+* Download and install OpenCV Manager if needed on systems without the Play Store 
+
 version 1.0.8
 -------------
 

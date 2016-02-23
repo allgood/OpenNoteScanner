@@ -16,4 +16,9 @@
     <string name="share_snackbar">Share images through</string>
     <string name="action_about">About</string>
     <string name="about_filename">about.md</string>
+    <string name="install_opencv">Install OpenCV Manager</string>
+    <string name="confirm_install_opencv">Do you want to download OpenCV Manager from GitHub?</string>
+    <string name="answer_cancel">Cancel</string>
+    <string name="downloading">Downloading</string>
+    <string name="downloading_opencv">Downloading OpenCV Manager</string>
 </resources>

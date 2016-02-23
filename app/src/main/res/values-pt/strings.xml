@@ -14,4 +14,9 @@
     <string name="share_snackbar">Compartilhar usando</string>
     <string name="action_about">Sobre</string>
     <string name="about_filename">about-pt.md</string>
+    <string name="answer_cancel">Cancelar</string>
+    <string name="confirm_install_opencv">Deseja baixar o OpenCV Manager a partir do GitHub?</string>
+    <string name="downloading">Baixando</string>
+    <string name="downloading_opencv">Baixando OpenCV Manager</string>
+    <string name="install_opencv">Instalar OpenCV Manager</string>
 </resources>
