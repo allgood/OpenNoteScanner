@@ -1,6 +1,7 @@
 package com.todobom.opennotescanner.helpers;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
@@ -40,6 +41,26 @@ public class CustomOpenCVLoader extends OpenCVLoader {
         }
     };
     private static long myDownloadReference;
+    private static LoaderCallbackInterface Callback;
+    private static String Version;
+
+
+    public static boolean isFDroidInstalled(Context context) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed = false;
+        try
+        {
+            PackageInfo info = pm.getPackageInfo("org.fdroid.fdroid", PackageManager.GET_ACTIVITIES);
+            String label = (String) info.applicationInfo.loadLabel(pm);
+            app_installed = (label != null);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            app_installed = false;
+        }
+        return app_installed;
+    }
+
 
 
     public static boolean isGooglePlayInstalled(Context context) {
@@ -112,6 +133,8 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             intent.setDataAndType(dm.getUriForDownloadedFile(id),
                                     dm.getMimeTypeForDownloadedFile(id));
+
+                            waitOpenCVDialog.dismiss();
                             AppContext.startActivity(intent);
                             AppContext.unregisterReceiver(onComplete);
                             break;
@@ -134,12 +157,17 @@ public class CustomOpenCVLoader extends OpenCVLoader {
         }
     };
 
-    static AlertDialog.Builder cancelInstallOpenCV;
+    static AlertDialog.Builder waitInstallOpenCV;
+    static Dialog waitOpenCVDialog;
 
-    public static boolean initAsync(String Version, final Context AppContext, LoaderCallbackInterface Callback) {
+
+    public static boolean initAsync(String version, final Context AppContext, LoaderCallbackInterface callback) {
+
+        Version = version;
+        Callback = callback;
 
         // if don't have google play, check for OpenCV before trying to init
-        if (!isOpenCVInstalled(Version,AppContext) && !isGooglePlayInstalled(AppContext)) {
+        if (!isOpenCVInstalled(Version,AppContext) && ( isFDroidInstalled(AppContext) || !isGooglePlayInstalled(AppContext))) {
 
             AlertDialog.Builder askInstallOpenCV = new AlertDialog.Builder(AppContext);
 
@@ -165,13 +193,13 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
                     dialog.dismiss();
 
-                    cancelInstallOpenCV = new AlertDialog.Builder(AppContext);
+                    waitInstallOpenCV = new AlertDialog.Builder(AppContext);
 
-                    cancelInstallOpenCV.setTitle(AppContext.getString(R.string.downloading));
-                    cancelInstallOpenCV.setMessage(AppContext.getString(R.string.downloading_opencv));
+                    waitInstallOpenCV.setTitle(AppContext.getString(R.string.downloading));
+                    waitInstallOpenCV.setMessage(AppContext.getString(R.string.downloading_opencv));
 
-                    cancelInstallOpenCV.setCancelable(false);
-                    cancelInstallOpenCV.setOnCancelListener( new DialogInterface.OnCancelListener() {
+                    waitInstallOpenCV.setCancelable(false);
+                    waitInstallOpenCV.setOnCancelListener(new DialogInterface.OnCancelListener() {
 
                         @Override
                         public void onCancel(DialogInterface dialog) {
@@ -181,7 +209,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                         }
                     });
 
-                    cancelInstallOpenCV.setNegativeButton(AppContext.getString(R.string.answer_cancel), new DialogInterface.OnClickListener() {
+                    waitInstallOpenCV.setNegativeButton(AppContext.getString(R.string.answer_cancel), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dm.remove(myDownloadReference);
@@ -190,7 +218,8 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                         }
                     });
 
-                    cancelInstallOpenCV.create().show();
+                    waitOpenCVDialog = waitInstallOpenCV.create();
+                    waitOpenCVDialog.show();
 
                 }
 
@@ -201,6 +230,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
+                    OpenCVLoader.initAsync(Version, AppContext, Callback);
                 }
             });
 

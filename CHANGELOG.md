@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+version 1.0.10 - a.k.a. f-droid debut
+-------------------------------------
+
+* removed unnecessary maven references
+* changed license to GPLv3
+* enhancements on downloading OpenCV binaries
+
+
 version 1.0.9
 -------------
 

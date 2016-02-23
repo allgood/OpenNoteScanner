@@ -18,13 +18,15 @@ Requirements
 
 Because of the version of OpenCV that is used in the project it needs to run on Android 5.0 (lollipop) or newer.
 
+In order to capture and manipulate images Open Note Scanner depends on having the OpenCV Manager application installed. If not installed Open Note Scanner will ask to download it from https://github.com/ctodobom/OpenCV-3.1.0-Android or from Google Play Store.
+
 
 How to Install
 --------------
 
 It is possible to install it directly from Google Play Store through [this link](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner).
 
-Binary APK file is available in the [releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. If you install the binary manually you will need also the OpenCV Manager. The best way on doing this manually is downloading the [OpenCV SDK for Android](http://sourceforge.net/projects/opencvlibrary/files/opencv-android/3.1.0/OpenCV-3.1.0-android-sdk.zip/download) on a computer, unzip it and pick the correct APK for your device in the ```apk``` folder. Normally for phone devices, the armeabi-v7a is the correct one. If you have Play Store access, Open Note Scanner will direct you to it in order to download OpenCV Manager if it is not found in the device.
+Binary APK file is available in the [releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. 
 
 
 Instructions for building
@@ -101,8 +103,8 @@ License
 
 Copyright 2016 - Claudemir Todo Bom
 
-Software licensed under the GPL version 2 available in GPLv2.TXT and
-online on http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt.
+Software licensed under the GPL version 2 available in GPLv3.TXT and
+online on http://www.gnu.org/licenses/gpl.txt.
 
 Use parts from other developers, sometimes with small changes,
 references on autorship and specific licenses are on individual
