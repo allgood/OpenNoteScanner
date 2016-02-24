@@ -24,7 +24,7 @@ In order to capture and manipulate images Open Note Scanner depends on having th
 How to Install
 --------------
 
-It is possible to install it directly from Google Play Store through [this link](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner).
+Open Note Scanner is available for simplified installation on [Google Play Store](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner) and also from [F-Droid Android Open Source Repository](https://f-droid.org/repository/browse/?fdfilter=open+note+scanner&fdid=com.todobom.opennotescanner).
 
 Binary APK file is available in the [releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. 
 
