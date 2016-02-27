@@ -175,8 +175,7 @@ public class OpenNoteScannerActivity extends Activity
     private static final String TAG = "OpenNoteScannerActivity";
     private MediaPlayer _shootMP = null;
 
-    private HashMap<String,Long> pageHistory = new HashMap<String,Long>();
-    private boolean haveCameraPermission = false;
+    private HashMap<String,Long> pageHistory = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -345,9 +344,6 @@ public class OpenNoteScannerActivity extends Activity
         mOpenCvCameraView = (OpenNoteCameraView) findViewById(R.id.HelloOpenCvView);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-
-        haveCameraPermission = true;
-
     }
 
     public void enableCameraView() {
@@ -367,12 +363,8 @@ public class OpenNoteScannerActivity extends Activity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     turnCameraOn();
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
-                return;
+                break;
             }
 
             case RESUME_PERMISSIONS_REQUEST_CAMERA: {
@@ -381,12 +373,8 @@ public class OpenNoteScannerActivity extends Activity
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     enableCameraView();
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
                 }
-                return;
+                break;
             }
 
             // other 'case' lines to check for other
@@ -513,8 +501,6 @@ public class OpenNoteScannerActivity extends Activity
     private String currentQR = "";
     private boolean qrOk = false;
 
-    private boolean nativeMono = false;
-
     private Point[] documentPoints = null;
 
     @Override
@@ -545,7 +531,6 @@ public class OpenNoteScannerActivity extends Activity
         mGray = new Mat(camHeight, camWidth, CvType.CV_8UC4);
         mCanned = new Mat(camHeight, camWidth, CvType.CV_8UC1);
 
-        nativeMono = mOpenCvCameraView.isEffectSupported("mono");
     }
 
     public void onCameraViewStopped() {
@@ -580,10 +565,7 @@ public class OpenNoteScannerActivity extends Activity
         if (autoMode) {
             try {
                 results = zxing();
-            } catch (ChecksumException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (FormatException e) {
+            } catch (ChecksumException | FormatException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
@@ -633,13 +615,12 @@ public class OpenNoteScannerActivity extends Activity
 
         }
 
-        if ( (qrOk || scanClicked ) && detectDocument()) {
+        if ( (qrOk || scanClicked ) && detectPreviewDocument(mRgba)) {
             saveDocument();
 
-            pageHistory.put(currentQR,new Date().getTime()/1000);
+            pageHistory.put(currentQR, new Date().getTime() / 1000);
 
-            Log.d(TAG,"qrcode scanned "+currentQR);
-
+            Log.d(TAG, "qrcode scanned " + currentQR);
         }
 
         return mRgba;
@@ -654,7 +635,7 @@ public class OpenNoteScannerActivity extends Activity
 
     private void saveDocument() {
         Intent intent = getIntent();
-        String fileName = null;
+        String fileName;
         boolean isIntent = false;
         if (intent.getAction().equals("android.media.action.IMAGE_CAPTURE")) {
             Uri fileUri = ((Uri) intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT));
@@ -672,8 +653,8 @@ public class OpenNoteScannerActivity extends Activity
                     + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())
                     + ".jpg";
         }
-        Mat endDoc = new Mat(new Double(mDocument.size().width).intValue(),
-                new Double(mDocument.size().height).intValue(), CvType.CV_8UC4);
+        Mat endDoc = new Mat(Double.valueOf(mDocument.size().width).intValue(),
+                Double.valueOf(mDocument.size().height).intValue(), CvType.CV_8UC4);
 
         Core.flip(mDocument.t(), endDoc, 1);
 
@@ -698,14 +679,12 @@ public class OpenNoteScannerActivity extends Activity
     class MyRunnable implements Runnable {
 
         public String fileName = null;
-        public int top;
-        public int left;
         public int width;
         public int height;
 
         public double hipotenuse( Point a , Point b) {
             return Math.sqrt( Math.pow(a.x - b.x , 2 ) + Math.pow(a.y - b.y , 2 ));
-        };
+        }
 
         @Override
         public void run() {
@@ -837,42 +816,62 @@ public class OpenNoteScannerActivity extends Activity
         }
     }
 
-    private boolean detectDocument() {
+    private class Quadrilateral {
+        MatOfPoint contour;
+        Point[] points;
 
-        ArrayList<MatOfPoint> contours = findDocument(mRgba);
+        public Quadrilateral(MatOfPoint contour, Point[] points) {
+            this.contour = contour;
+            this.points = points;
+        }
+    }
 
-        documentPoints = null;
+    private Quadrilateral getQuadrilateral( ArrayList<MatOfPoint> contours , Mat inputRgba ) {
 
-        int count = 0;
         for ( MatOfPoint c: contours ) {
             MatOfPoint2f c2f = new MatOfPoint2f(c.toArray());
-            double peri = Imgproc.arcLength(c2f , true);
+            double peri = Imgproc.arcLength(c2f, true);
             MatOfPoint2f approx = new MatOfPoint2f();
-            Imgproc.approxPolyDP(c2f, approx , 0.02*peri , true );
+            Imgproc.approxPolyDP(c2f, approx, 0.02 * peri, true);
 
             Point[] points = approx.toArray();
 
             // select biggest 4 angles polygon
-            if ( points.length == 4 ) {
-                ArrayList<MatOfPoint> lmp = new ArrayList<MatOfPoint>();
+            if (points.length == 4) {
+                Point[] foundPoints = sortPoints(points);
 
-                documentPoints = sortPoints(points);
-
-                if (insideArea(documentPoints,mRgba.size())) {
-
-                    lmp.add(c);
-                    Imgproc.drawContours(mRgba, lmp, -1, new Scalar(0, 255, 0), 5);
-
-                    /* */
-                    Log.d(TAG, points[0].toString() + " , " + points[1].toString() + " , " + points[2].toString() + " , " + points[3].toString());
-
-                    fourPointTransform(mIntermediateMat, documentPoints);
-                    enhanceDocument(mDocument);
-
-                    scanClicked = false;
-                    return true;
+                if (insideArea(foundPoints, inputRgba.size())) {
+                    return new Quadrilateral( c , foundPoints );
                 }
             }
+        }
+
+        return null;
+    }
+
+    private boolean detectPreviewDocument(Mat inputRgba) {
+
+        ArrayList<MatOfPoint> contours = findContours(inputRgba);
+
+        Quadrilateral quad = getQuadrilateral(contours, inputRgba);
+
+        if (quad != null) {
+
+            MatOfPoint c = quad.contour;
+
+            ArrayList<MatOfPoint> lmp = new ArrayList<MatOfPoint>();
+
+            lmp.add(c);
+            Imgproc.drawContours(inputRgba, lmp, -1, new Scalar(0, 255, 0), 5);
+            Log.d(TAG, quad.points[0].toString() + " , " + quad.points[1].toString() + " , " + quad.points[2].toString() + " , " + quad.points[3].toString());
+
+            fourPointTransform(mIntermediateMat, quad.points);
+            enhanceDocument(mDocument);
+
+            documentPoints = quad.points;
+            scanClicked = false;
+            return true;
+
         }
 
         return false;
@@ -881,8 +880,8 @@ public class OpenNoteScannerActivity extends Activity
 
     private boolean insideArea(Point[] rp, Size size) {
 
-        int width = new Double(size.width).intValue();
-        int height = new Double(size.height).intValue();
+        int width = Double.valueOf(size.width).intValue();
+        int height = Double.valueOf(size.height).intValue();
         int baseMeasure = height/4;
 
         int bottomPos = height-baseMeasure;
@@ -919,14 +918,14 @@ public class OpenNoteScannerActivity extends Activity
         double widthB = Math.sqrt(Math.pow(tr.x - tl.x, 2) + Math.pow(tr.y - tl.y, 2));
 
         double dw = Math.max(widthA, widthB);
-        int maxWidth = new Double(dw).intValue();
+        int maxWidth = Double.valueOf(dw).intValue();
 
 
         double heightA = Math.sqrt(Math.pow(tr.x - br.x, 2) + Math.pow(tr.y - br.y, 2));
         double heightB = Math.sqrt(Math.pow(tl.x - bl.x, 2) + Math.pow(tl.y - bl.y, 2));
 
         double dh = Math.max(heightA, heightB);
-        int maxHeight = new Double(dh).intValue();
+        int maxHeight = Double.valueOf(dh).intValue();
 
         if (mDocument != null) {
             mDocument.release();
@@ -951,10 +950,10 @@ public class OpenNoteScannerActivity extends Activity
         Mat docCorner=null;
         Size s = mDocument.size();
         try {
-            docCorner = mRgba.submat(0, new Double(s.height).intValue(), 0, new Double(s.width).intValue());
+            docCorner = mRgba.submat(0, Double.valueOf(s.height).intValue(), 0, Double.valueOf(s.width).intValue());
             mDocument.copyTo(docCorner);
         } catch (CvException e) {
-            Log.d(TAG, "stacktrace: " + e.getStackTrace().toString());
+            Log.d(TAG, "stacktrace: " + Arrays.toString(e.getStackTrace()));
         };
 
         if (docCorner != null)
@@ -964,14 +963,14 @@ public class OpenNoteScannerActivity extends Activity
 
     private Point[] sortPoints( Point[] src ) {
 
-        ArrayList<Point> srcPoints = new ArrayList<Point>(Arrays.asList(src));
+        ArrayList<Point> srcPoints = new ArrayList<>(Arrays.asList(src));
 
         Point[] result = { null , null , null , null };
 
         Comparator<Point> sumComparator = new Comparator<Point>() {
             @Override
             public int compare(Point lhs, Point rhs) {
-                return new Double(lhs.y + lhs.x).compareTo(new Double(rhs.y + rhs.x));
+                return Double.valueOf(lhs.y + lhs.x).compareTo(rhs.y + rhs.x);
             }
         };
 
@@ -979,7 +978,7 @@ public class OpenNoteScannerActivity extends Activity
 
             @Override
             public int compare(Point lhs, Point rhs) {
-                return new Double(lhs.y - lhs.x).compareTo(new Double(rhs.y - rhs.x));
+                return Double.valueOf(lhs.y - lhs.x).compareTo(rhs.y - rhs.x);
             }
         };
 
@@ -998,7 +997,7 @@ public class OpenNoteScannerActivity extends Activity
         return result;
     }
 
-    private ArrayList<MatOfPoint> findDocument(Mat src) {
+    private ArrayList<MatOfPoint> findContours(Mat src) {
 
         Imgproc.cvtColor(src, mGray, Imgproc.COLOR_RGBA2GRAY, 4);
         Imgproc.Canny(mGray, mCanned, 75, 200);
@@ -1014,7 +1013,7 @@ public class OpenNoteScannerActivity extends Activity
 
             @Override
             public int compare(MatOfPoint lhs, MatOfPoint rhs) {
-                return new Double(Imgproc.contourArea( rhs )).compareTo(new Double(Imgproc.contourArea(lhs)));
+                return Double.valueOf(Imgproc.contourArea(rhs)).compareTo(Imgproc.contourArea(lhs));
             }
         });
 
