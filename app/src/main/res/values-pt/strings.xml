@@ -19,4 +19,9 @@
     <string name="downloading">Baixando</string>
     <string name="downloading_opencv">Baixando OpenCV Manager</string>
     <string name="install_opencv">Instalar OpenCV Manager</string>
+    <string name="scanningToast">Buscando documento\nClique novamente para capturar imagem inteira</string>
+    <string name="colorMode">Modo em cores</string>
+    <string name="bwMode"><![CDATA[Modo preto & branco]]></string>
+    <string name="autoMode">Modo Automático</string>
+    <string name="manualMode">Modo manual</string>
 </resources>

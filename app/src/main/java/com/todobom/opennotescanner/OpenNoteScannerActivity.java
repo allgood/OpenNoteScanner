@@ -39,6 +39,7 @@ import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -87,7 +88,7 @@ import java.util.regex.Pattern;
  * status bar and navigation/system bar) with user interaction.
  */
 public class OpenNoteScannerActivity extends Activity
-        implements NavigationView.OnNavigationItemSelectedListener , CameraBridgeViewBase.CvCameraViewListener2 {
+        implements NavigationView.OnNavigationItemSelectedListener , CameraBridgeViewBase.CvCameraViewListener2 , Camera.PictureCallback {
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
@@ -176,6 +177,10 @@ public class OpenNoteScannerActivity extends Activity
     private MediaPlayer _shootMP = null;
 
     private HashMap<String,Long> pageHistory = new HashMap<>();
+    private boolean safeToTakePicture;
+    private Button scanDocButton;
+    private Point[] previewPoints;
+    private Size previewSize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,19 +246,26 @@ public class OpenNoteScannerActivity extends Activity
         paramsBl.width = hotAreaWidth;
         qBottomLeft.setLayoutParams(paramsBl);
 
-        Button scanDocButton = (Button) findViewById(R.id.scanDocButton);
+        scanDocButton = (Button) findViewById(R.id.scanDocButton);
         RelativeLayout.LayoutParams paramsBt = (RelativeLayout.LayoutParams) scanDocButton.getLayoutParams();
         paramsBt.leftMargin = width - width / 10 - width / 20;
         paramsBt.topMargin = height / 2 - width / 20;
         paramsBt.height = width / 10;
         paramsBt.width = width / 10;
+
         scanDocButton.setLayoutParams(paramsBt);
 
         scanDocButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                scanClicked = true;
+                if (scanClicked) {
+                    scanDoubleClicked = true;
+                } else {
+                    scanClicked = true;
+                    Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
+                    v.setBackgroundTintList(ColorStateList.valueOf(0x7FFF00FF));
+                }
             }
         });
 
@@ -266,6 +278,8 @@ public class OpenNoteScannerActivity extends Activity
             public void onClick(View v) {
                 colorMode = !colorMode;
                 v.setBackgroundTintList(ColorStateList.valueOf(colorMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+
+                Toast.makeText(getApplicationContext(), colorMode?R.string.colorMode:R.string.bwMode, Toast.LENGTH_SHORT).show();
 
                 // mOpenCvCameraView.setEffect((nativeMono&&!colorMode)?"mono":"none");
             }
@@ -294,6 +308,7 @@ public class OpenNoteScannerActivity extends Activity
             public void onClick(View v) {
                 autoMode = !autoMode;
                 v.setBackgroundTintList(ColorStateList.valueOf(autoMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+                Toast.makeText(getApplicationContext(), autoMode?R.string.autoMode:R.string.manualMode, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -489,6 +504,7 @@ public class OpenNoteScannerActivity extends Activity
     private Mat mDocument = null;
 
     private boolean scanClicked = false;
+    private boolean scanDoubleClicked = false;
 
     private boolean colorMode = false;
     double colorGain = 1.5;       // contrast
@@ -531,6 +547,8 @@ public class OpenNoteScannerActivity extends Activity
         mGray = new Mat(camHeight, camWidth, CvType.CV_8UC4);
         mCanned = new Mat(camHeight, camWidth, CvType.CV_8UC1);
 
+        safeToTakePicture = true;
+
     }
 
     public void onCameraViewStopped() {
@@ -553,6 +571,32 @@ public class OpenNoteScannerActivity extends Activity
         }
     }
 
+
+
+    @Override
+    public void onPictureTaken(byte[] data, Camera camera) {
+
+        // reinicia a prévia
+        camera.startPreview();
+        camera.setPreviewCallback(mOpenCvCameraView);
+
+        android.hardware.Camera.Size pictureSize = camera.getParameters().getPictureSize();
+
+        Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
+        mat.put(0, 0, data);
+
+        Mat img = Imgcodecs.imdecode(mat, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+
+        ScannedDocument doc = detectDocument(img);
+        saveDocument(doc);
+        doc.release();
+
+        scanDocButton.setBackgroundTintList(ColorStateList.valueOf(0xFF00FFFF));
+
+        scanClicked = false;
+        safeToTakePicture = true;
+
+    }
 
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
 
@@ -584,14 +628,6 @@ public class OpenNoteScannerActivity extends Activity
             }
         }
 
-        if ( qrOk || scanClicked ) {
-            if (colorMode) {
-                mRgba.copyTo(mIntermediateMat);
-                // Imgproc.GaussianBlur(mRgba, mIntermediateMat, new Size(5, 5), 0);
-            } else {
-                Imgproc.cvtColor(mRgba, mIntermediateMat, Imgproc.COLOR_RGBA2GRAY, 4);
-            }
-        }
 
         int width = mRgba.width();
         int height = mRgba.height();
@@ -615,8 +651,13 @@ public class OpenNoteScannerActivity extends Activity
 
         }
 
-        if ( (qrOk || scanClicked ) && detectPreviewDocument(mRgba)) {
-            saveDocument();
+        if ( (qrOk || scanClicked ) && ( detectPreviewDocument(mRgba) || scanDoubleClicked ) ) {
+
+            if (safeToTakePicture) {
+                safeToTakePicture = false;
+                mOpenCvCameraView.takePicture(this);
+                scanDoubleClicked = false;
+            }
 
             pageHistory.put(currentQR, new Date().getTime() / 1000);
 
@@ -633,7 +674,10 @@ public class OpenNoteScannerActivity extends Activity
 
     }
 
-    private void saveDocument() {
+    private void saveDocument(ScannedDocument scannedDocument) {
+
+        Mat doc = (scannedDocument.processed != null) ? scannedDocument.processed : scannedDocument.original;
+
         Intent intent = getIntent();
         String fileName;
         boolean isIntent = false;
@@ -653,19 +697,22 @@ public class OpenNoteScannerActivity extends Activity
                     + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())
                     + ".jpg";
         }
-        Mat endDoc = new Mat(Double.valueOf(mDocument.size().width).intValue(),
-                Double.valueOf(mDocument.size().height).intValue(), CvType.CV_8UC4);
+        Mat endDoc = new Mat(Double.valueOf(doc.size().width).intValue(),
+                Double.valueOf(doc.size().height).intValue(), CvType.CV_8UC4);
 
-        Core.flip(mDocument.t(), endDoc, 1);
+        Core.flip(doc.t(), endDoc, 1);
 
+        /*
         if (colorMode) {
             Imgproc.cvtColor(endDoc, endDoc, Imgproc.COLOR_RGB2BGR, 4);
         } else {
             Imgproc.cvtColor(endDoc, endDoc, Imgproc.COLOR_GRAY2BGR, 4);
         }
+        */
+
         Imgcodecs.imwrite(fileName, endDoc);
 
-        animateDocument(fileName);
+        animateDocument(fileName,scannedDocument);
 
         shootSound();
         Log.d(TAG, "wrote: " + fileName);
@@ -678,9 +725,22 @@ public class OpenNoteScannerActivity extends Activity
 
     class MyRunnable implements Runnable {
 
+        private Size imageSize;
+        private Point[] previewPoints =null;
+        public Size previewSize = null;
         public String fileName = null;
         public int width;
         public int height;
+
+        public MyRunnable(String filename, ScannedDocument document) {
+            this.fileName = filename;
+            this.imageSize = document.processed.size();
+
+            if (document.quadrilateral != null) {
+                this.previewPoints = document.previewPoints;
+                this.previewSize = document.previewSize;
+            }
+        }
 
         public double hipotenuse( Point a , Point b) {
             return Math.sqrt( Math.pow(a.x - b.x , 2 ) + Math.pow(a.y - b.y , 2 ));
@@ -726,32 +786,41 @@ public class OpenNoteScannerActivity extends Activity
             int width = Math.max(size.x, size.y);
             int height = Math.min(size.x, size.y);
 
-            Size imageSize = mRgba.size();
             double imageWidth = imageSize.width;
             double imageHeight = imageSize.height;
 
-            double documentTopWidth = hipotenuse( documentPoints[0], documentPoints[1]);
-            double documentLeftHeight = hipotenuse( documentPoints[0], documentPoints[3]);
-            double documentRightHeight = hipotenuse( documentPoints[1], documentPoints[2]);
-            double documentBottomWidth = hipotenuse( documentPoints[3], documentPoints[0]);
-
-            double documentWidth = Math.max(documentTopWidth,documentBottomWidth);
-            double documentHeight = Math.max(documentLeftHeight,documentRightHeight);
-
-            Log.d(TAG, "device: "+width+"x"+height+" image: "+imageWidth+"x"+imageHeight+" document: "+documentWidth+"x"+documentHeight);
-
-
-            Log.d(TAG, "documentPoints[0] x="+documentPoints[0].x+" y="+documentPoints[0].y);
-            Log.d(TAG, "documentPoints[1] x="+documentPoints[1].x+" y="+documentPoints[1].y);
-            Log.d(TAG, "documentPoints[2] x="+documentPoints[2].x+" y="+documentPoints[2].y);
-            Log.d(TAG, "documentPoints[3] x="+documentPoints[3].x+" y="+documentPoints[3].y);
-
-
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
-            params.topMargin = (int) (documentPoints[0].y/imageHeight*height);
-            params.leftMargin = (int) (documentPoints[0].x/imageWidth*width);
-            params.width = (int) (documentWidth*width/imageWidth);
-            params.height = (int) (documentHeight*height/imageHeight);
+
+            if (previewPoints != null) {
+                double documentTopWidth = hipotenuse(previewPoints[0], previewPoints[1]);
+                double documentLeftHeight = hipotenuse(previewPoints[0], previewPoints[3]);
+                double documentRightHeight = hipotenuse(previewPoints[1], previewPoints[2]);
+                double documentBottomWidth = hipotenuse(previewPoints[3], previewPoints[0]);
+
+                double documentWidth = Math.max(documentTopWidth, documentBottomWidth);
+                double documentHeight = Math.max(documentLeftHeight, documentRightHeight);
+
+                Log.d(TAG, "device: " + width + "x" + height + " image: " + imageWidth + "x" + imageHeight + " document: " + documentWidth + "x" + documentHeight);
+
+
+                Log.d(TAG, "previewPoints[0] x=" + previewPoints[0].x + " y=" + previewPoints[0].y);
+                Log.d(TAG, "previewPoints[1] x=" + previewPoints[1].x + " y=" + previewPoints[1].y);
+                Log.d(TAG, "previewPoints[2] x=" + previewPoints[2].x + " y=" + previewPoints[2].y);
+                Log.d(TAG, "previewPoints[3] x=" + previewPoints[3].x + " y=" + previewPoints[3].y);
+
+                double xratio = width / previewSize.width;
+                double yratio = height / previewSize.height;
+
+                params.topMargin = (int) (previewPoints[0].y * yratio);
+                params.leftMargin = (int) (previewPoints[0].x * xratio);
+                params.width = (int) (documentWidth * xratio);
+                params.height = (int) (documentHeight * yratio);
+            } else {
+                params.topMargin = 0;
+                params.leftMargin = 0;
+                params.width = width;
+                params.height = height;
+            }
 
             imageView.setVisibility(View.VISIBLE);
 
@@ -791,11 +860,9 @@ public class OpenNoteScannerActivity extends Activity
         }
     }
 
-    private void animateDocument(String filename) {
+    private void animateDocument(String filename, ScannedDocument quadrilateral) {
 
-        MyRunnable runnable = new MyRunnable();
-        runnable.fileName = filename;
-
+        MyRunnable runnable = new MyRunnable(filename,quadrilateral);
         runOnUiThread(runnable);
 
     }
@@ -803,7 +870,7 @@ public class OpenNoteScannerActivity extends Activity
     private void shootSound()
     {
         AudioManager meng = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int volume = meng.getStreamVolume( AudioManager.STREAM_NOTIFICATION);
+        int volume = meng.getStreamVolume(AudioManager.STREAM_NOTIFICATION);
 
         if (volume != 0)
         {
@@ -826,7 +893,12 @@ public class OpenNoteScannerActivity extends Activity
         }
     }
 
-    private Quadrilateral getQuadrilateral( ArrayList<MatOfPoint> contours , Mat inputRgba ) {
+    private Quadrilateral getQuadrilateral( ArrayList<MatOfPoint> contours , Size srcSize ) {
+
+        double ratio = srcSize.height / 500;
+        int height = Double.valueOf(srcSize.height / ratio).intValue();
+        int width = Double.valueOf(srcSize.width / ratio).intValue();
+        Size size = new Size(width,height);
 
         for ( MatOfPoint c: contours ) {
             MatOfPoint2f c2f = new MatOfPoint2f(c.toArray());
@@ -840,7 +912,7 @@ public class OpenNoteScannerActivity extends Activity
             if (points.length == 4) {
                 Point[] foundPoints = sortPoints(points);
 
-                if (insideArea(foundPoints, inputRgba.size())) {
+                if (insideArea(foundPoints, size)) {
                     return new Quadrilateral( c , foundPoints );
                 }
             }
@@ -849,26 +921,100 @@ public class OpenNoteScannerActivity extends Activity
         return null;
     }
 
-    private boolean detectPreviewDocument(Mat inputRgba) {
+    private class ScannedDocument {
+        Mat original;
+        Mat processed;
+        public Quadrilateral quadrilateral;
+        public Point[] previewPoints;
+        public Size previewSize;
 
+        public ScannedDocument(Mat original) {
+            this.original = original;
+        }
+
+        public Mat getProcessed() {
+            return processed;
+        }
+
+        public ScannedDocument setProcessed(Mat processed) {
+            this.processed = processed;
+            return this;
+        }
+
+        public void release() {
+            if (processed != null) {
+                processed.release();
+            }
+            if (original != null) {
+                original.release();
+            }
+
+            if (quadrilateral != null && quadrilateral.contour!=null) {
+                quadrilateral.contour.release();
+            }
+        }
+    }
+
+    private ScannedDocument detectDocument(Mat inputRgba) {
         ArrayList<MatOfPoint> contours = findContours(inputRgba);
 
-        Quadrilateral quad = getQuadrilateral(contours, inputRgba);
+        ScannedDocument sd = new ScannedDocument(inputRgba);
+
+        Quadrilateral quad = getQuadrilateral(contours, inputRgba.size());
+
+        Mat doc;
 
         if (quad != null) {
 
             MatOfPoint c = quad.contour;
 
-            ArrayList<MatOfPoint> lmp = new ArrayList<MatOfPoint>();
+            sd.quadrilateral = quad;
+            sd.previewPoints = previewPoints;
+            sd.previewSize = previewSize;
 
-            lmp.add(c);
+            doc = fourPointTransform(inputRgba, quad.points);
+
+        } else {
+            doc = new Mat( inputRgba.size() , CvType.CV_8UC4 );
+            inputRgba.copyTo(doc);
+        }
+
+        enhanceDocument(doc);
+        return sd.setProcessed(doc);
+    }
+
+    private boolean detectPreviewDocument(Mat inputRgba) {
+
+        ArrayList<MatOfPoint> contours = findContours(inputRgba);
+
+        Quadrilateral quad = getQuadrilateral(contours, inputRgba.size());
+
+        previewPoints = null;
+        previewSize = inputRgba.size();
+
+        if (quad != null) {
+
+            MatOfPoint c = quad.contour;
+
+            Point[] rescaledPoints = new Point[4];
+
+            double ratio = inputRgba.size().height / 500;
+
+            for ( int i=0; i<4 ; i++ ) {
+                Point newPoint = new Point();
+                int x = Double.valueOf(quad.points[i].x*ratio).intValue();
+                int y = Double.valueOf(quad.points[i].y*ratio).intValue();
+                rescaledPoints[i] = new Point(x,y);
+            }
+
+            previewPoints = rescaledPoints;
+
+            ArrayList<MatOfPoint> lmp = new ArrayList<>();
+
+            lmp.add( new MatOfPoint(rescaledPoints));
             Imgproc.drawContours(inputRgba, lmp, -1, new Scalar(0, 255, 0), 5);
             Log.d(TAG, quad.points[0].toString() + " , " + quad.points[1].toString() + " , " + quad.points[2].toString() + " , " + quad.points[3].toString());
 
-            fourPointTransform(mIntermediateMat, quad.points);
-            enhanceDocument(mDocument);
-
-            documentPoints = quad.points;
             scanClicked = false;
             return true;
 
@@ -904,11 +1050,17 @@ public class OpenNoteScannerActivity extends Activity
             src.convertTo(src,-1, colorGain , colorBias);
             Imgproc.threshold(src, src, colorThresh, 255, Imgproc.THRESH_BINARY);
         } else {
+            Imgproc.cvtColor(src,src,Imgproc.COLOR_RGBA2GRAY);
             Imgproc.adaptiveThreshold(src,src,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY,15,15);
         }
     }
 
-    private void fourPointTransform( Mat src , Point[] pts ) {
+    private Mat fourPointTransform( Mat src , Point[] pts ) {
+
+        double ratio = src.size().height / 500;
+        int height = Double.valueOf(src.size().height / ratio).intValue();
+        int width = Double.valueOf(src.size().width / ratio).intValue();
+
         Point tl = pts[0];
         Point tr = pts[1];
         Point br = pts[2];
@@ -917,33 +1069,29 @@ public class OpenNoteScannerActivity extends Activity
         double widthA = Math.sqrt(Math.pow(br.x - bl.x, 2) + Math.pow(br.y - bl.y, 2));
         double widthB = Math.sqrt(Math.pow(tr.x - tl.x, 2) + Math.pow(tr.y - tl.y, 2));
 
-        double dw = Math.max(widthA, widthB);
+        double dw = Math.max(widthA, widthB)*ratio;
         int maxWidth = Double.valueOf(dw).intValue();
 
 
         double heightA = Math.sqrt(Math.pow(tr.x - br.x, 2) + Math.pow(tr.y - br.y, 2));
         double heightB = Math.sqrt(Math.pow(tl.x - bl.x, 2) + Math.pow(tl.y - bl.y, 2));
 
-        double dh = Math.max(heightA, heightB);
+        double dh = Math.max(heightA, heightB)*ratio;
         int maxHeight = Double.valueOf(dh).intValue();
 
-        if (mDocument != null) {
-            mDocument.release();
-            mDocument = null;
-        }
-
-        mDocument = new Mat(maxHeight, maxWidth, CvType.CV_8UC4);
+        Mat doc = new Mat(maxHeight, maxWidth, CvType.CV_8UC4);
 
         Mat src_mat = new Mat(4, 1, CvType.CV_32FC2);
         Mat dst_mat = new Mat(4, 1, CvType.CV_32FC2);
 
-        src_mat.put(0, 0, tl.x, tl.y, tr.x, tr.y, br.x, br.y, bl.x, bl.y);
+        src_mat.put(0, 0, tl.x*ratio, tl.y*ratio, tr.x*ratio, tr.y*ratio, br.x*ratio, br.y*ratio, bl.x*ratio, bl.y*ratio);
         dst_mat.put(0, 0, 0.0, 0.0, dw, 0.0, dw, dh, 0.0, dh);
 
         Mat m = Imgproc.getPerspectiveTransform(src_mat, dst_mat);
 
-        Imgproc.warpPerspective(src, mDocument, m, mDocument.size());
+        Imgproc.warpPerspective(src, doc, m, doc.size());
 
+        return doc;
     }
 
     private void previewDocument() {
@@ -999,13 +1147,28 @@ public class OpenNoteScannerActivity extends Activity
 
     private ArrayList<MatOfPoint> findContours(Mat src) {
 
-        Imgproc.cvtColor(src, mGray, Imgproc.COLOR_RGBA2GRAY, 4);
-        Imgproc.Canny(mGray, mCanned, 75, 200);
+        Mat grayImage = null;
+        Mat cannedImage = null;
+        Mat resizedImage = null;
+
+        double ratio = src.size().height / 500;
+        int height = Double.valueOf(src.size().height / ratio).intValue();
+        int width = Double.valueOf(src.size().width / ratio).intValue();
+        Size size = new Size(width,height);
+
+        resizedImage = new Mat(size, CvType.CV_8UC4);
+        grayImage = new Mat(size, CvType.CV_8UC4);
+        cannedImage = new Mat(size, CvType.CV_8UC1);
+
+        Imgproc.resize(src,resizedImage,size);
+        Imgproc.cvtColor(resizedImage, grayImage, Imgproc.COLOR_RGBA2GRAY, 4);
+        Imgproc.GaussianBlur(grayImage, grayImage, new Size(5, 5), 0);
+        Imgproc.Canny(grayImage, cannedImage, 75, 200);
 
         ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
         Mat hierarchy = new Mat();
 
-        Imgproc.findContours(mCanned, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+        Imgproc.findContours(cannedImage, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 
         hierarchy.release();
 
@@ -1016,6 +1179,10 @@ public class OpenNoteScannerActivity extends Activity
                 return Double.valueOf(Imgproc.contourArea(rhs)).compareTo(Imgproc.contourArea(lhs));
             }
         });
+
+        resizedImage.release();
+        grayImage.release();
+        cannedImage.release();
 
         return contours;
     }

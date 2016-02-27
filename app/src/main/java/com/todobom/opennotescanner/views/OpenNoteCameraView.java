@@ -102,6 +102,13 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         mCamera.takePicture(null, null, this);
     }
 
+    public void takePicture(PictureCallback callback) {
+        Log.i(TAG, "Taking picture");
+
+        mCamera.takePicture(null, null, callback);
+
+    }
+
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
         Log.i(TAG, "Saving a bitmap to file");

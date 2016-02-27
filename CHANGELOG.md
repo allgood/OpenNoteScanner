@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+version 1.0.11
+--------------
+
+* some code cleanup on main activity class
+* use higher resolution for capturing
+* enhance contour detection
+* second click on shutter button to capture whole image
+
 version 1.0.10 - a.k.a. f-droid debut
 -------------------------------------
 

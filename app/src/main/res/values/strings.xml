@@ -21,4 +21,9 @@
     <string name="answer_cancel">Cancel</string>
     <string name="downloading">Downloading</string>
     <string name="downloading_opencv">Downloading OpenCV Manager</string>
+    <string name="scanningToast">Searching for document\nTap again to scan whole image</string>
+    <string name="colorMode">Color Mode</string>
+    <string name="bwMode"><![CDATA[B&W mode]]></string>
+    <string name="autoMode">Automatic Mode</string>
+    <string name="manualMode">Manual Mode</string>
 </resources>
