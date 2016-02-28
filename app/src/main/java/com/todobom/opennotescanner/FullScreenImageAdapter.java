@@ -24,6 +24,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
     private Activity _activity;
     private ArrayList<String> _imagePaths;
     private LayoutInflater inflater;
+    private int maxTexture;
 
     // constructor
     public FullScreenImageAdapter(Activity activity,
@@ -56,6 +57,16 @@ public class FullScreenImageAdapter extends PagerAdapter {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap bitmap = BitmapFactory.decodeFile(_imagePaths.get(position), options);
+
+        int origWidth=bitmap.getWidth();
+        int origHeight=bitmap.getHeight();
+        int maxSize=Math.max(origHeight,origWidth);
+        if (maxTexture>0 && maxSize>maxTexture) {
+            float scale=(float)maxSize/(float)maxTexture;
+            Bitmap origBitmap = bitmap;
+            bitmap = Bitmap.createScaledBitmap(origBitmap, (int)(origWidth/scale), (int)(origHeight/scale), true);
+        }
+
         imgDisplay.setImageBitmap(bitmap);
 
         ((ViewPager) container).addView(viewLayout);
@@ -73,4 +84,7 @@ public class FullScreenImageAdapter extends PagerAdapter {
     }
 
 
+    public void setMaxTexture(int maxTexture) {
+        this.maxTexture = maxTexture;
+    }
 }

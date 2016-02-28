@@ -52,7 +52,34 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
         return mCamera.getParameters().getSupportedPreviewSizes();
     }
 
-    public void setMaxResolution() {
+    public List<Size> getPictureResolutionList() {
+        return mCamera.getParameters().getSupportedPictureSizes();
+    }
+
+    public void setMaxPictureResolution() {
+        int maxWidth=0;
+        Size curRes=null;
+        for ( Size r: getPictureResolutionList() ) {
+            Log.d(TAG,"supported picture resolution: "+r.width+"x"+r.height);
+            if (r.width>maxWidth) {
+                maxWidth=r.width;
+                curRes=r;
+            }
+        }
+
+        if (curRes!=null) {
+            Camera.Parameters parameters = mCamera.getParameters();
+            parameters.setPictureSize(curRes.width,curRes.height);
+            mCamera.setParameters(parameters);
+            Log.d(TAG, "selected picture resolution: " + curRes.width + "x" + curRes.height);
+        }
+
+        return;
+    }
+
+
+
+    public void setMaxPreviewResolution() {
         int maxWidth=0;
         Size curRes=null;
         for ( Size r: getResolutionList() ) {

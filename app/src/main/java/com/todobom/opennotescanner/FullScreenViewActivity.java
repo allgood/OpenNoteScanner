@@ -71,6 +71,13 @@ public class FullScreenViewActivity extends AppCompatActivity {
         adapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
                 utils.getFilePaths());
 
+
+        int maxTexture = Utils.getMaxTextureSize();
+
+        Log.d("FullScreenViewActivity", "gl resolution: " + maxTexture);
+
+        adapter.setMaxTexture(maxTexture);
+
         viewPager.setAdapter(adapter);
 
         // displaying selected image first

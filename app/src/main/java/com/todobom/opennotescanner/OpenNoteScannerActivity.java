@@ -536,7 +536,8 @@ public class OpenNoteScannerActivity extends Activity
 
     public void onCameraViewStarted(int width, int height) {
 
-        mOpenCvCameraView.setMaxResolution();
+        mOpenCvCameraView.setMaxPreviewResolution();
+        mOpenCvCameraView.setMaxPictureResolution();
         Camera.Size camResolution = mOpenCvCameraView.getResolution();
 
         int camHeight = camResolution.height;
@@ -582,10 +583,14 @@ public class OpenNoteScannerActivity extends Activity
 
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPictureSize();
 
+        Log.d(TAG,"onPictureTaken - received image "+pictureSize.width+"x"+pictureSize.height);
+
         Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
         Mat img = Imgcodecs.imdecode(mat, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+
+        Log.d(TAG,"onPictureTaken - imported image "+img.size().width+"x"+img.size().height);
 
         ScannedDocument doc = detectDocument(img);
         saveDocument(doc);

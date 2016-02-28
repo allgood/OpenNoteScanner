@@ -106,7 +106,8 @@ public class GalleryGridActivity extends AppCompatActivity {
 
             @Override
             public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-                super.onMeasure(widthMeasureSpec, widthMeasureSpec);
+                int squareSpec = Math.max(widthMeasureSpec, heightMeasureSpec);
+                super.onMeasure(squareSpec, squareSpec);
             }
         }
 
