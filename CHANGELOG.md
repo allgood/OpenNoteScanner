@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+version 1.0.12
+--------------
+
+* fixed resolution selection on some devices
+* fixed gallery display of large images
+* fixed gallery garbage when moving/resizing on some devices
+
 version 1.0.11
 --------------
 

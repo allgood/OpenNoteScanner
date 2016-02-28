@@ -577,24 +577,25 @@ public class OpenNoteScannerActivity extends Activity
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
 
-        // reinicia a prévia
-        camera.startPreview();
-        camera.setPreviewCallback(mOpenCvCameraView);
-
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPictureSize();
 
-        Log.d(TAG,"onPictureTaken - received image "+pictureSize.width+"x"+pictureSize.height);
+        Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height);
 
         Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
         Mat img = Imgcodecs.imdecode(mat, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+        Log.d(TAG, "onPictureTaken - imported image " + img.size().width + "x" + img.size().height);
 
-        Log.d(TAG,"onPictureTaken - imported image "+img.size().width+"x"+img.size().height);
+        // restart preview
+        camera.startPreview();
+        camera.setPreviewCallback(mOpenCvCameraView);
 
         ScannedDocument doc = detectDocument(img);
         saveDocument(doc);
+
         doc.release();
+        mat.release();
 
         scanDocButton.setBackgroundTintList(ColorStateList.valueOf(0xFF00FFFF));
 
