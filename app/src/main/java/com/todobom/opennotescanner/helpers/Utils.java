@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -144,4 +146,18 @@ public class Utils {
         // Return largest texture size found, or default
         return Math.max(maximumTextureSize, IMAGE_MAX_BITMAP_DIMENSION);
     }
+
+    public static boolean isMatch(String s, String pattern) {
+        try {
+            Pattern patt = Pattern.compile(pattern);
+            Matcher matcher = patt.matcher(s);
+            return matcher.matches();
+        } catch (RuntimeException e) {
+            return false;
+        }
+    }
+
+
+
+
 }

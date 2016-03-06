@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+git head
+--------
+
+* image processing in separated thread
+
 version 1.0.12
 --------------
 
