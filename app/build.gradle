@@ -7,8 +7,8 @@ android {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 12
-        versionName '1.0.12'
+        versionCode 13
+        versionName '1.0.13'
     }
     buildTypes {
         release {
