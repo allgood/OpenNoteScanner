@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+version 1.0.14
+--------------
+
+* fixed OOM errors in some devices caused by high resolution images
+
 version 1.0.13
 --------------
 

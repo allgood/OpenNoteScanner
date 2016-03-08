@@ -9,11 +9,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
 import android.media.AudioManager;
-import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -62,10 +60,11 @@ import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
+
+import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -691,6 +690,7 @@ public class OpenNoteScannerActivity extends Activity
         public String fileName = null;
         public int width;
         public int height;
+        private Bitmap bitmap;
 
         public AnimationRunnable(String filename, ScannedDocument document) {
             this.fileName = filename;
@@ -709,36 +709,6 @@ public class OpenNoteScannerActivity extends Activity
         @Override
         public void run() {
             final ImageView imageView = (ImageView) findViewById(R.id.scannedAnimation);
-
-
-            Bitmap bitmap = BitmapFactory.decodeFile(fileName);
-            ExifInterface exif = null;
-            int orientation = ExifInterface.ORIENTATION_UNDEFINED;
-            try {
-                exif = new ExifInterface(fileName);
-                orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Matrix matrix = new Matrix();
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    matrix.postRotate(180);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    matrix.postRotate(270);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    break;
-                default:
-                    matrix.postRotate(270);
-                    break;
-            }
-
-            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-
-            imageView.setImageBitmap(bitmap);
 
             Display display = getWindowManager().getDefaultDisplay();
             android.graphics.Point size = new android.graphics.Point();
@@ -776,11 +746,23 @@ public class OpenNoteScannerActivity extends Activity
                 params.width = (int) (documentWidth * xratio);
                 params.height = (int) (documentHeight * yratio);
             } else {
-                params.topMargin = 0;
-                params.leftMargin = 0;
-                params.width = width;
-                params.height = height;
+                params.topMargin = height/4;
+                params.leftMargin = width/4;
+                params.width = width/2;
+                params.height = height/2;
             }
+
+            Bitmap scaledBitmap = decodeSampledBitmapFromUri(fileName, params.width, params.height);
+
+            Matrix matrix = new Matrix();
+            matrix.postRotate(270);
+
+            bitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(),
+                    scaledBitmap.getHeight(), matrix, true);
+
+            scaledBitmap.recycle();
+
+            imageView.setImageBitmap(bitmap);
 
             imageView.setVisibility(View.VISIBLE);
 
@@ -794,7 +776,7 @@ public class OpenNoteScannerActivity extends Activity
             animationSet.addAnimation(scaleAnimation);
             animationSet.addAnimation(translateAnimation);
 
-            animationSet.setDuration(300);
+            animationSet.setDuration(600);
             animationSet.setInterpolator(new AccelerateInterpolator());
 
             animationSet.setAnimationListener(new Animation.AnimationListener() {
@@ -806,6 +788,8 @@ public class OpenNoteScannerActivity extends Activity
                 @Override
                 public void onAnimationEnd(Animation animation) {
                     imageView.setVisibility(View.INVISIBLE);
+                    imageView.setImageBitmap(null);
+                    bitmap.recycle();
                 }
 
                 @Override
