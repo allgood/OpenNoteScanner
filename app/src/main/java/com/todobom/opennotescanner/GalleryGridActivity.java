@@ -58,20 +58,19 @@ public class GalleryGridActivity extends AppCompatActivity
         recyclerView.setDragSelectActive(true, index);
     }
 
+    private void setSelectionMode(boolean selectionMode) {
+        if (mShare !=null && mDelete != null ) {
+            mShare.setVisible(selectionMode);
+            mDelete.setVisible(selectionMode);
+        }
+        this.selectionMode = selectionMode;
+    }
+
     @Override
     public void onDragSelectionChanged(int i) {
         Log.d(TAG, "DragSelectionChanged: "+i);
 
-        if (i>0) {
-            mShare.setVisible(true);
-            mDelete.setVisible(true);
-            selectionMode = true;
-        } else {
-            mShare.setVisible(false);
-            mDelete.setVisible(false);
-            selectionMode = false;
-        }
-
+        setSelectionMode(i>0);
     }
 
 
@@ -82,13 +81,16 @@ public class GalleryGridActivity extends AppCompatActivity
         ArrayList<String> itemList = new ArrayList<>();
 
         // Constructor takes click listener callback
-        protected ThumbAdapter(GalleryGridActivity c, ArrayList<String> files) {
+        protected ThumbAdapter(GalleryGridActivity activity, ArrayList<String> files) {
             super();
-            mCallback = c;
+            mCallback = activity;
 
             for (String file : files){
                 add(file);
             }
+
+            setSelectionListener(activity);
+
         }
 
         void add(String path){
@@ -184,8 +186,7 @@ public class GalleryGridActivity extends AppCompatActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
 
-        myThumbAdapter = new ThumbAdapter(this , new Utils(getApplicationContext()).getFilePaths());
-        myThumbAdapter.setSelectionListener(this);
+        myThumbAdapter = new ThumbAdapter(this,new Utils(getApplicationContext()).getFilePaths());
 
         recyclerView = (DragSelectRecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -213,7 +214,24 @@ public class GalleryGridActivity extends AppCompatActivity
             }
         });
 
+    }
 
+    private void reloadAdapter() {
+        recyclerView.setAdapter(null);
+
+        myThumbAdapter = new ThumbAdapter(this,new Utils(getApplicationContext()).getFilePaths());
+
+        recyclerView.setAdapter(myThumbAdapter);
+        recyclerView.invalidate();
+
+        setSelectionMode(false);
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        reloadAdapter();
     }
 
     private void deleteImage() {
@@ -224,11 +242,8 @@ public class GalleryGridActivity extends AppCompatActivity
             }
         }
 
-        recyclerView.setAdapter(null);
-        myThumbAdapter = new ThumbAdapter(this,new Utils(getApplicationContext()).getFilePaths());
+        reloadAdapter();
 
-        recyclerView.setAdapter(myThumbAdapter);
-        recyclerView.invalidate();
     }
 
 

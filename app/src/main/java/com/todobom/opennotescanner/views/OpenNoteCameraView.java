@@ -82,6 +82,9 @@ public class OpenNoteCameraView extends JavaCameraView implements PictureCallbac
     public void setMaxPreviewResolution() {
         int maxWidth=0;
         Size curRes=null;
+
+        mCamera.lock();
+
         for ( Size r: getResolutionList() ) {
             if (r.width>maxWidth) {
                 Log.d(TAG,"supported preview resolution: "+r.width+"x"+r.height);
