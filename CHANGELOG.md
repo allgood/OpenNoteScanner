@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+version 1.0.15
+--------------
+
+* new gallery, now accepts drag selection
+* theme color - green
+
 version 1.0.14
 --------------
 
