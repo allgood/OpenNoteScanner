@@ -33,4 +33,7 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'com.github.ctodobom:OpenCV-3.1.0-Android:-SNAPSHOT'
     compile 'us.feras.mdv:markdownview:1.1.0'
+    compile('com.github.afollestad:drag-select-recyclerview:0.3.1@aar') {
+        transitive = true
+    }
 }

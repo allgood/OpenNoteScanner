@@ -3,27 +3,27 @@ package com.todobom.opennotescanner;
 // based on http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
+import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
 
@@ -32,26 +32,64 @@ import java.util.ArrayList;
 
 import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
 
-public class GalleryGridActivity extends AppCompatActivity {
 
-    private ArrayList<String> selection;
+public class GalleryGridActivity extends AppCompatActivity
+        implements ClickListener, DragSelectRecyclerViewAdapter.SelectionListener {
+
+    private static final String TAG = "GalleryGridActivity";
     private MenuItem mShare;
     private MenuItem mDelete;
-    private GridView gridview;
+    private DragSelectRecyclerView recyclerView;
     private AlertDialog.Builder deleteConfirmBuilder;
+    private boolean selectionMode = false;
 
-    public class ImageAdapter extends BaseAdapter {
+    @Override
+    public void onClick(int index) {
+        if (selectionMode) {
+            myThumbAdapter.toggleSelected(index);
+        } else {
+            Intent i = new Intent(this, FullScreenViewActivity.class);
+            i.putExtra("position", index);
+            this.startActivity(i);
+        }
+    }
 
-        private Context mContext;
-        ArrayList<String> itemList = new ArrayList<String>();
+    @Override
+    public void onLongClick(int index) {
+        recyclerView.setDragSelectActive(true, index);
+    }
 
-        public ImageAdapter(Context c, ArrayList<String> files) {
-            mContext = c;
+    @Override
+    public void onDragSelectionChanged(int i) {
+        Log.d(TAG, "DragSelectionChanged: "+i);
+
+        if (i>0) {
+            mShare.setVisible(true);
+            mDelete.setVisible(true);
+            selectionMode = true;
+        } else {
+            mShare.setVisible(false);
+            mDelete.setVisible(false);
+            selectionMode = false;
+        }
+
+    }
+
+
+    public class ThumbAdapter extends DragSelectRecyclerViewAdapter<ThumbAdapter.ThumbViewHolder> {
+
+        private final ClickListener mCallback;
+
+        ArrayList<String> itemList = new ArrayList<>();
+
+        // Constructor takes click listener callback
+        protected ThumbAdapter(GalleryGridActivity c, ArrayList<String> files) {
+            super();
+            mCallback = c;
 
             for (String file : files){
                 add(file);
             }
-
         }
 
         void add(String path){
@@ -59,102 +97,101 @@ public class GalleryGridActivity extends AppCompatActivity {
         }
 
         @Override
-        public int getCount() {
+        public ThumbViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.gallery_item, parent, false);
+            return new ThumbViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(ThumbViewHolder holder, int position) {
+            super.onBindViewHolder(holder, position); // this line is important!
+
+            String filename = itemList.get(position);
+
+            if ( !filename.equals(holder.filename)) {
+                holder.image.setImageBitmap(decodeSampledBitmapFromUri(filename, 220, 220));
+                holder.filename = filename;
+            }
+
+            if (isIndexSelected(position)) {
+                holder.image.setColorFilter(Color.argb(140, 0, 255, 0));
+            } else {
+                holder.image.setColorFilter(Color.argb(0, 0, 0, 0));
+            }
+        }
+
+        @Override
+        public int getItemCount() {
             return itemList.size();
         }
 
-        @Override
-        public Object getItem(int position) {
-            // TODO Auto-generated method stub
-            return itemList.get(position);
-        }
+        public ArrayList<String> getSelectedFiles() {
 
-        @Override
-        public long getItemId(int position) {
-            // TODO Auto-generated method stub
-            return 0;
-        }
+            ArrayList<String> selection = new ArrayList<>();
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            SquareImageView imageView;
-            if (convertView == null) {  // if it's not recycled, initialize some attributes
-                imageView = new SquareImageView(mContext);
-                // imageView.setLayoutParams(new GridView.LayoutParams(220, 220));
-                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                imageView.setPadding(8, 8, 8, 8);
-            } else {
-                imageView = (SquareImageView) convertView;
+            for ( Integer i: getSelectedIndices() ) {
+                selection.add(itemList.get(i));
             }
 
-            Bitmap bm = decodeSampledBitmapFromUri(itemList.get(position), 220, 220);
-
-            imageView.setImageBitmap(bm);
-
-            // image view click listener
-            imageView.setOnClickListener(new OnImageClickListener(position));
-
-            imageView.setOnLongClickListener(new OnImageLongClickListener(position));
-
-            return imageView;
+            return selection;
         }
 
-        private class SquareImageView extends ImageView {
 
-            public SquareImageView(Context context) {
-                super(context);
+        public class ThumbViewHolder extends RecyclerView.ViewHolder
+                implements View.OnClickListener, View.OnLongClickListener{
+
+            public final ImageView image;
+            public String filename;
+
+            public ThumbViewHolder(View itemView) {
+                super(itemView);
+                this.image = (ImageView) itemView.findViewById(R.id.gallery_image);
+                this.image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                // this.image.setPadding(8, 8, 8, 8);
+                this.itemView.setOnClickListener(this);
+                this.itemView.setOnLongClickListener(this);
             }
 
             @Override
-            public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-                int squareSpec = Math.max(widthMeasureSpec, heightMeasureSpec);
-                super.onMeasure(squareSpec, squareSpec);
+            public void onClick(View v) {
+                // Forwards to the adapter's constructor callback
+                if (mCallback != null) mCallback.onClick(getAdapterPosition());
+            }
+
+            @Override
+            public boolean onLongClick(View v) {
+                // Forwards to the adapter's constructor callback
+                if (mCallback != null) mCallback.onLongClick(getAdapterPosition());
+                return true;
             }
         }
 
     }
 
-    ImageAdapter myImageAdapter;
+
+    ThumbAdapter myThumbAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
-        /*
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        this.setSupportActionBar(mToolbar);
-
-        */
-
         ActionBar actionBar = getSupportActionBar();
+
+        assert actionBar != null;
         actionBar.setDisplayShowHomeEnabled(true);
+
         actionBar.setTitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66ffffff")));
 
-        // */
+        myThumbAdapter = new ThumbAdapter(this , new Utils(getApplicationContext()).getFilePaths());
+        myThumbAdapter.setSelectionListener(this);
 
-        selection = new ArrayList<String>();
-
-        gridview = (GridView) findViewById(R.id.gridview);
-
-        myImageAdapter = new ImageAdapter(this, new Utils(getApplicationContext()).getFilePaths());
-        gridview.setAdapter(myImageAdapter);
-
-        String ExternalStorageDirectoryPath = Environment
-                .getExternalStorageDirectory()
-                .getAbsolutePath();
-
-        String targetPath = ExternalStorageDirectoryPath + "/OpenNoteScanner/";
-
-        // Toast.makeText(getApplicationContext(), targetPath, Toast.LENGTH_LONG).show();
-        File targetDirector = new File(targetPath);
-
-
+        recyclerView = (DragSelectRecyclerView) findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerView.setAdapter(myThumbAdapter);
 
         deleteConfirmBuilder = new AlertDialog.Builder(this);
 
@@ -182,19 +219,18 @@ public class GalleryGridActivity extends AppCompatActivity {
     }
 
     private void deleteImage() {
-        for ( String filePath: selection ) {
+        for ( String filePath: myThumbAdapter.getSelectedFiles() ) {
             final File photoFile = new File(filePath);
-            photoFile.delete();
+            if (photoFile.delete()) {
+                Log.d(TAG,"Removed file: "+filePath);
+            }
         }
 
-        selection.clear();
-        selection = new ArrayList<String>();
+        recyclerView.setAdapter(null);
+        myThumbAdapter = new ThumbAdapter(this,new Utils(getApplicationContext()).getFilePaths());
 
-        gridview.setAdapter(null);
-        myImageAdapter = new ImageAdapter(this,new Utils(getApplicationContext()).getFilePaths());
-
-        gridview.setAdapter(myImageAdapter);
-        gridview.invalidate();
+        recyclerView.setAdapter(myThumbAdapter);
+        recyclerView.invalidate();
     }
 
 
@@ -248,86 +284,14 @@ public class GalleryGridActivity extends AppCompatActivity {
         final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
         shareIntent.setType("image/jpg");
 
-        ArrayList<Uri> filesUris = new ArrayList<Uri>();
+        ArrayList<Uri> filesUris = new ArrayList<>();
 
-        for ( String i: selection ) {
+        for (String i : myThumbAdapter.getSelectedFiles() ) {
             filesUris.add(Uri.parse("file://" + i));
         }
         shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
 
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
-    }
-
-
-    class OnImageLongClickListener implements View.OnLongClickListener {
-
-
-        int _position;
-
-        // constructor
-        public OnImageLongClickListener(int position) {
-            this._position = position;
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            GalleryGridActivity.this.selectionToggle(_position, (ImageView) v);
-
-            return true;
-        }
-
-    }
-
-    public void selectionToggle( int position , ImageView v ) {
-
-        boolean oldState = selection.size()>0;
-
-        String filePath = (String) myImageAdapter.getItem(position);
-
-        if (selection.contains(filePath)) {
-            selection.remove(filePath);
-            v.setColorFilter(Color.argb(0, 0, 0, 0));
-        } else {
-            selection.add(filePath);
-            v.setColorFilter(Color.argb(140, 0, 0, 255));
-        }
-
-        boolean newState = selection.size()>0;
-
-        Log.d("gallery", "oldstate " + oldState + " newstate " + newState);
-
-        if (newState != oldState) {
-            mShare.setVisible(newState);
-            mDelete.setVisible(newState);
-        }
-
-    }
-
-    class OnImageClickListener implements View.OnClickListener {
-
-        int _position;
-
-        // constructor
-        public OnImageClickListener(int position) {
-            this._position = position;
-        }
-
-        @Override
-        public void onClick(View v) {
-
-
-            if (GalleryGridActivity.this.selection.size()>0) {
-                GalleryGridActivity.this.selectionToggle(_position, (ImageView) v);
-            } else {
-                GalleryGridActivity activity = GalleryGridActivity.this;
-                Intent i = new Intent(GalleryGridActivity.this, FullScreenViewActivity.class);
-                i.putExtra("position", _position);
-                activity.startActivity(i);
-            }
-        }
-
-
-
     }
 
 }

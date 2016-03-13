@@ -34,9 +34,10 @@ O aplicativo inclui código das seguintes fontes:
 * [Biblioteca OpenCV para Android](http://www.opencv.org)
 * [MarkdownView de Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
 * [TouchImageView de Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
+* [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
 
-Agradecimento
--------------
+Agradecimentos
+--------------
 
 Este aplicativo não seria possível sem o ótimo material produzido pela comunidade. Eu gostaria de dar agradecimentos especiais para os autores de partes essenciais que encontrei na internet e utilizei no código:
 

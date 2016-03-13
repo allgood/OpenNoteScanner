@@ -35,6 +35,7 @@ Binary builds include code from these external projects:
 * [OpenCV Library for Android](http://www.opencv.org)
 * [MarkdownView from Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
 * [TouchImageView from Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
+* [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
 
 Thanks
 ------
