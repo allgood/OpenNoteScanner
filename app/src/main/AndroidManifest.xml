@@ -59,11 +59,7 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".FullImageActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_full_image"
-            android:theme="@style/FullscreenTheme"></activity>
+
         <activity
             android:name=".FullScreenViewActivity"
             android:theme="@style/FullscreenTheme">
