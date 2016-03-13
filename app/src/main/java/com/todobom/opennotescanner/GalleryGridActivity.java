@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -184,7 +183,6 @@ public class GalleryGridActivity extends AppCompatActivity
         actionBar.setTitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#66ffffff")));
 
         myThumbAdapter = new ThumbAdapter(this , new Utils(getApplicationContext()).getFilePaths());
         myThumbAdapter.setSelectionListener(this);
