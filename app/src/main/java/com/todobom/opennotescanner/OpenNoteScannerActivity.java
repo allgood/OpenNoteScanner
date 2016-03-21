@@ -225,8 +225,7 @@ public class OpenNoteScannerActivity extends Activity
                 flashMode = !flashMode;
                 v.setBackgroundTintList(ColorStateList.valueOf(flashMode ? 0xFFFFFFFF : 0x7FFFFFFF));
 
-                // FIXME: setflash
-                // mSurfaceView.setFlash(flashMode);
+                setFlash(flashMode);
             }
         });
 
@@ -254,6 +253,15 @@ public class OpenNoteScannerActivity extends Activity
             }
         });
 
+    }
+
+    public void setFlash(boolean stateFlash) {
+        /* */
+        Camera.Parameters par = mCamera.getParameters();
+        par.setFlashMode(stateFlash ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
+        mCamera.setParameters(par);
+        Log.d(TAG,"flash: " + (stateFlash?"on":"off"));
+        // */
     }
 
     private void checkResumePermissions() {
