@@ -3,7 +3,6 @@ package com.todobom.opennotescanner;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -22,7 +21,9 @@ import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
@@ -41,10 +42,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.CustomOpenCVLoader;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
 import com.todobom.opennotescanner.helpers.PreviewFrame;
 import com.todobom.opennotescanner.helpers.ScannedDocument;
+import com.todobom.opennotescanner.views.HUDCanvasView;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
@@ -68,20 +71,9 @@ import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromU
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class OpenNoteScannerActivity extends Activity
+public class OpenNoteScannerActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener , SurfaceHolder.Callback,
         Camera.PictureCallback, Camera.PreviewCallback {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -148,6 +140,12 @@ public class OpenNoteScannerActivity extends Activity
 
     private boolean focused;
     private Camera.AutoFocusMoveCallback mAutoFocusMoveCallback = null;
+    private HUDCanvasView mHud;
+    private View mWaitSpinner;
+
+    public HUDCanvasView getHUD() {
+        return mHud;
+    }
 
     public void setImageProcessorBusy(boolean imageProcessorBusy) {
         this.imageProcessorBusy = imageProcessorBusy;
@@ -164,6 +162,8 @@ public class OpenNoteScannerActivity extends Activity
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.surfaceView);
+        mHud = (HUDCanvasView) findViewById(R.id.hud);
+        mWaitSpinner = findViewById(R.id.wait_spinner);
 
 
         // Set up the user interaction to manually show or hide the system UI.
@@ -190,13 +190,30 @@ public class OpenNoteScannerActivity extends Activity
             public void onClick(View v) {
                 if (scanClicked) {
                     requestPicture();
-                    scanDocButton.setBackgroundTintList(ColorStateList.valueOf(0xFF00FFFF));
-
+                    scanDocButton.setBackgroundTintList(null);
+                    waitSpinnerVisible();
                 } else {
                     scanClicked = true;
                     Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
                     v.setBackgroundTintList(ColorStateList.valueOf(0x7FFF00FF));
                 }
+            }
+        });
+
+        final Button infoButton = (Button) findViewById(R.id.infoButton);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getSupportFragmentManager();
+                AboutFragment aboutDialog = new AboutFragment();
+                aboutDialog.setRunOnDetach(new Runnable() {
+                    @Override
+                    public void run() {
+                        hide();
+                    }
+                });
+                aboutDialog.show(fm, "about_view");
             }
         });
 
@@ -441,32 +458,39 @@ public class OpenNoteScannerActivity extends Activity
         }
 
         if (mImageProcessor == null) {
-            mImageProcessor = new ImageProcessor(mImageThread.getLooper(), new Handler() , this);
-            imageProcessorBusy = false;
+            mImageProcessor = new ImageProcessor(mImageThread.getLooper(), new Handler(), this);
         }
+        imageProcessorBusy = false;
+        mWaitSpinner.setVisibility(View.GONE);
 
     }
 
+    public void waitSpinnerVisible() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mWaitSpinner.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    public void waitSpinnerInvisible() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mWaitSpinner.setVisibility(View.GONE);
+            }
+        });
+    }
 
     private SurfaceView mSurfaceView;
-    private Mat mRgba;
-    private Mat mDocument = null;
 
     private boolean scanClicked = false;
-    private boolean scanDoubleClicked = false;
 
     private boolean colorMode = false;
-    double colorGain = 1.5;       // contrast
-    double colorBias = 0;         // bright
-    int colorThresh = 150;        // threshold
 
     private boolean autoMode = false;
     private boolean flashMode = false;
-
-    private String currentQR = "";
-    private boolean qrOk = false;
-
-    private Point[] documentPoints = null;
 
 
     @Override
@@ -573,6 +597,8 @@ public class OpenNoteScannerActivity extends Activity
             previewHeight = (int) ( (float) size.y/displayRatio*previewRatio);
             surfaceParams.height = previewHeight;
             mSurfaceView.setLayoutParams(surfaceParams);
+
+            mHud.getLayoutParams().height = previewHeight;
         }
 
         int hotAreaWidth = displayWidth / 4;
@@ -635,6 +661,7 @@ public class OpenNoteScannerActivity extends Activity
         }
 
         safeToTakePicture = true;
+
     }
 
     @Override
@@ -686,9 +713,9 @@ public class OpenNoteScannerActivity extends Activity
 
         Log.d(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height);
 
-        if ( focused && ! imageProcessorBusy && ( autoMode || scanClicked ) ) {
+        if ( focused && ! imageProcessorBusy ) {
             imageProcessorBusy = true;
-            Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5 ) , CvType.CV_8UC1 );
+            Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5), CvType.CV_8UC1);
             yuv.put(0, 0, data);
 
             Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8UC4);
@@ -696,9 +723,18 @@ public class OpenNoteScannerActivity extends Activity
 
             yuv.release();
 
-            sendImageProcessorMessage("previewFrame", new PreviewFrame(mat, autoMode));
+            sendImageProcessorMessage("previewFrame", new PreviewFrame( mat, autoMode, !(autoMode || scanClicked) ));
         }
 
+    }
+
+    public void invalidateHUD() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mHud.invalidate();
+            }
+        });
     }
 
     private class ResetShutterColor implements Runnable {

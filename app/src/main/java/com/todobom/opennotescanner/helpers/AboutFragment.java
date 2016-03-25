@@ -17,6 +17,8 @@ import us.feras.mdv.MarkdownView;
  */
 public class AboutFragment extends DialogFragment {
 
+    private Runnable mRunOnDetach;
+
     public AboutFragment() {
 
     }
@@ -42,7 +44,7 @@ public class AboutFragment extends DialogFragment {
 
         MarkdownView markdownView = (MarkdownView) view.findViewById(R.id.about_markdown);
 
-        markdownView.loadMarkdownFile("file:///android_asset/"+getString(R.string.about_filename));
+        markdownView.loadMarkdownFile("file:///android_asset/" + getString(R.string.about_filename));
 
         /*
 
@@ -68,4 +70,15 @@ public class AboutFragment extends DialogFragment {
 
     }
 
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        if (mRunOnDetach != null) {
+            mRunOnDetach.run();
+        }
+    }
+
+    public void setRunOnDetach( Runnable runOnDetach ) {
+        mRunOnDetach = runOnDetach;
+    }
 }

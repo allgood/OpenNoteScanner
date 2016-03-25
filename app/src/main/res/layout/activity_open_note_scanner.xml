@@ -118,6 +118,29 @@
             android:background="#00000000"
             android:visibility="invisible" />
 
+        <com.todobom.opennotescanner.views.HUDCanvasView
+            android:id="@+id/hud"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#00000000"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/wait_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
     </RelativeLayout>
 
     <Button
@@ -125,7 +148,7 @@
         android:layout_gravity="center_horizontal|bottom"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:background="@drawable/ic_camera_aqua"
+        android:background="@drawable/ic_camera_green"
         android:gravity="center"
         android:enabled="true"
         />
@@ -135,6 +158,17 @@
         android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_gravity="right">
+
+        <Button
+            android:id="@+id/infoButton"
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_info_outline_white_24px"
+            android:gravity="center"
+            android:enabled="true"
+            android:backgroundTint="#7fffffff"
+            />
 
         <Button
             android:id="@+id/colorModeButton"

@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+git HEAD
+--------
+
+* using Camera API directly
+* Main screen is always on portrait orientation
+* new canvas provides visual clues of what is happening
+* about window available on main screen
+* new green shutter button - **Green is the new black**
+
 version 1.0.15
 --------------
 

@@ -1,6 +1,10 @@
 package com.todobom.opennotescanner;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.drawable.shapes.PathShape;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -21,6 +25,7 @@ import com.todobom.opennotescanner.helpers.PreviewFrame;
 import com.todobom.opennotescanner.helpers.Quadrilateral;
 import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.helpers.Utils;
+import com.todobom.opennotescanner.views.HUDCanvasView;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -134,8 +139,11 @@ public class ImageProcessor extends Handler {
         }
 
         boolean autoMode = previewFrame.isAutoMode();
+        boolean previewOnly = previewFrame.isPreviewOnly();
 
-        if ( detectPreviewDocument(frame) && ( !autoMode || ( autoMode && qrOk ) ) ) {
+        if ( detectPreviewDocument(frame) && ( (!autoMode && !previewOnly ) || ( autoMode && qrOk ) ) ) {
+
+            mMainActivity.waitSpinnerVisible();
 
             mMainActivity.requestPicture();
 
@@ -164,7 +172,7 @@ public class ImageProcessor extends Handler {
         picture.release();
 
         mMainActivity.setImageProcessorBusy(false);
-
+        mMainActivity.waitSpinnerInvisible();
     }
 
 
@@ -217,14 +225,11 @@ public class ImageProcessor extends Handler {
 
         if (quad != null) {
 
-            MatOfPoint c = quad.contour;
-
             Point[] rescaledPoints = new Point[4];
 
             double ratio = inputRgba.size().height / 500;
 
             for ( int i=0; i<4 ; i++ ) {
-                Point newPoint = new Point();
                 int x = Double.valueOf(quad.points[i].x*ratio).intValue();
                 int y = Double.valueOf(quad.points[i].y*ratio).intValue();
                 rescaledPoints[i] = new Point(x,y);
@@ -232,22 +237,53 @@ public class ImageProcessor extends Handler {
 
             previewPoints = rescaledPoints;
 
-            ArrayList<MatOfPoint> lmp = new ArrayList<>();
+            drawDocumentBox(previewPoints , previewSize);
 
-            lmp.add(new MatOfPoint(rescaledPoints));
-            // disabled - TODO: use a canvas on UI thread
-            // Imgproc.drawContours(inputRgba, lmp, -1, new Scalar(0, 255, 0), 5);
             Log.d(TAG, quad.points[0].toString() + " , " + quad.points[1].toString() + " , " + quad.points[2].toString() + " , " + quad.points[3].toString());
 
             return true;
 
         }
 
+        mMainActivity.getHUD().clear();
+        mMainActivity.invalidateHUD();
+
         return false;
 
     }
 
+    private void drawDocumentBox(Point[] points, Size stdSize) {
 
+        Path path = new Path();
+
+        HUDCanvasView hud = mMainActivity.getHUD();
+
+        // ATTENTION: axis are swapped
+
+        float previewWidth = (float) stdSize.height;
+        float previewHeight = (float) stdSize.width;
+
+        path.moveTo( previewWidth - (float) points[0].y, (float) points[0].x );
+        path.lineTo( previewWidth - (float) points[1].y, (float) points[1].x );
+        path.lineTo( previewWidth - (float) points[2].y, (float) points[2].x );
+        path.lineTo( previewWidth - (float) points[3].y, (float) points[3].x );
+        path.close();
+
+        PathShape newBox = new PathShape(path , previewWidth , previewHeight);
+
+        Paint paint = new Paint();
+        paint.setColor(Color.argb(64, 0, 255, 0));
+
+        Paint border = new Paint();
+        border.setColor(Color.rgb(0, 255, 0));
+        border.setStrokeWidth(5);
+
+        hud.clear();
+        hud.addShape(newBox, paint, border);
+        mMainActivity.invalidateHUD();
+
+
+    }
 
     private Quadrilateral getQuadrilateral( ArrayList<MatOfPoint> contours , Size srcSize ) {
 
