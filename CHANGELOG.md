@@ -1,9 +1,10 @@
 Change Log
 ==========
 
-git HEAD
---------
+version 1.0.16
+--------------
 
+* fix bug on Android 6 when installing OpenCV Manager from GitHub
 * using Camera API directly
 * Main screen is always on portrait orientation
 * new canvas provides visual clues of what is happening
