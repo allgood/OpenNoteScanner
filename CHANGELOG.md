@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-version 1.0.16
---------------
+version 1.0.16.1
+----------------
 
 * fix bug on Android 6 when installing OpenCV Manager from GitHub
 * using Camera API directly
