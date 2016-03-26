@@ -91,6 +91,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
     private static class MyBroadcastReceiver extends BroadcastReceiver {
 
+        private static final String TAG = "CustomOpenCVLoader";
         private Context AppContext;
 
         public MyBroadcastReceiver(Context appContext) {
@@ -126,17 +127,17 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                     switch (status) {
                         case DownloadManager.STATUS_SUCCESSFUL:
 
-                            // start activity to display the downloaded image
-                            Uri uri = dm.getUriForDownloadedFile(id);
+                            waitOpenCVDialog.dismiss();
+                            AppContext.unregisterReceiver(onComplete);
 
+                            String path = "file://" + savedFilePath;
+                            Uri uri = Uri.parse(path);
+                            Log.d(TAG,"dm query: " + path );
                             intent = new Intent(Intent.ACTION_VIEW);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.setDataAndType(dm.getUriForDownloadedFile(id),
-                                    dm.getMimeTypeForDownloadedFile(id));
+                            intent.setDataAndType(uri, dm.getMimeTypeForDownloadedFile(id));
 
-                            waitOpenCVDialog.dismiss();
                             AppContext.startActivity(intent);
-                            AppContext.unregisterReceiver(onComplete);
                             break;
                         case DownloadManager.STATUS_FAILED:
                             Toast.makeText(AppContext,
@@ -155,7 +156,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
             }
         }
-    };
+    }
 
     static AlertDialog.Builder waitInstallOpenCV;
     static Dialog waitOpenCVDialog;
