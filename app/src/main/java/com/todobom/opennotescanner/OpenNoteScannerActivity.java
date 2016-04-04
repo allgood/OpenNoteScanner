@@ -149,6 +149,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
     public void setImageProcessorBusy(boolean imageProcessorBusy) {
         this.imageProcessorBusy = imageProcessorBusy;
+        if (!imageProcessorBusy) {
+            mWaitSpinner.setVisibility(View.GONE);
+        }
     }
 
     private boolean imageProcessorBusy=true;
@@ -460,8 +463,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (mImageProcessor == null) {
             mImageProcessor = new ImageProcessor(mImageThread.getLooper(), new Handler(), this);
         }
-        imageProcessorBusy = false;
-        mWaitSpinner.setVisibility(View.GONE);
+        this.setImageProcessorBusy(false);
 
     }
 
@@ -714,7 +716,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         Log.d(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height);
 
         if ( focused && ! imageProcessorBusy ) {
-            imageProcessorBusy = true;
+            setImageProcessorBusy(true);
             Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5), CvType.CV_8UC1);
             yuv.put(0, 0, data);
 
@@ -740,7 +742,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private class ResetShutterColor implements Runnable {
         @Override
         public void run() {
-            scanDocButton.setBackgroundTintList(ColorStateList.valueOf(0xFF00FFFF));
+            scanDocButton.setBackgroundTintList(null);
         }
     }
 
@@ -766,7 +768,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
-        imageProcessorBusy = true;
+        setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
 
         shootSound();
