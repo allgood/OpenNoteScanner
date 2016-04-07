@@ -55,6 +55,9 @@ public class GalleryGridActivity extends AppCompatActivity
 
     @Override
     public void onLongClick(int index) {
+        if (!selectionMode) {
+            setSelectionMode(true);
+        }
         recyclerView.setDragSelectActive(true, index);
     }
 
