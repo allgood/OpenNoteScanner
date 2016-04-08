@@ -23,13 +23,14 @@ import android.widget.ImageView;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
 
 
 public class GalleryGridActivity extends AppCompatActivity
@@ -41,6 +42,8 @@ public class GalleryGridActivity extends AppCompatActivity
     private DragSelectRecyclerView recyclerView;
     private AlertDialog.Builder deleteConfirmBuilder;
     private boolean selectionMode = false;
+    private ImageLoader mImageLoader;
+    private ImageSize mTargetSize;
 
     @Override
     public void onClick(int index) {
@@ -113,7 +116,15 @@ public class GalleryGridActivity extends AppCompatActivity
             String filename = itemList.get(position);
 
             if ( !filename.equals(holder.filename)) {
-                holder.image.setImageBitmap(decodeSampledBitmapFromUri(filename, 220, 220));
+
+                // remove previous image
+                holder.image.setImageBitmap(null);
+
+                // Load image, decode it to Bitmap and return Bitmap to callback
+                mImageLoader.displayImage("file:///"+filename, holder.image, mTargetSize);
+
+                // holder.image.setImageBitmap(decodeSampledBitmapFromUri(filename, 220, 220));
+
                 holder.filename = filename;
             }
 
@@ -189,7 +200,15 @@ public class GalleryGridActivity extends AppCompatActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
 
-        myThumbAdapter = new ThumbAdapter(this,new Utils(getApplicationContext()).getFilePaths());
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        mImageLoader = ImageLoader.getInstance();
+        mImageLoader.init(config);
+
+        mTargetSize = new ImageSize(220, 220); // result Bitmap will be fit to this size
+
+        ArrayList<String> ab = new ArrayList<>();
+        myThumbAdapter = new ThumbAdapter(this, ab );
+        // new Utils(getApplicationContext()).getFilePaths(););
 
         recyclerView = (DragSelectRecyclerView) findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -222,7 +241,8 @@ public class GalleryGridActivity extends AppCompatActivity
     private void reloadAdapter() {
         recyclerView.setAdapter(null);
 
-        myThumbAdapter = new ThumbAdapter(this,new Utils(getApplicationContext()).getFilePaths());
+        // ArrayList<String> ab = new ArrayList<>();
+        myThumbAdapter = new ThumbAdapter(this, new Utils(getApplicationContext()).getFilePaths());
 
         recyclerView.setAdapter(myThumbAdapter);
         recyclerView.invalidate();
@@ -309,5 +329,7 @@ public class GalleryGridActivity extends AppCompatActivity
 
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
     }
+
+
 
 }
