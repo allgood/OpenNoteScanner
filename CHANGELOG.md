@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+version 1.0.17
+--------------
+
+* implement asynchronous loading of the image gallery
+* started to use a own fork of DragSelectRecyclerView
+* removed the need of autofocus on the device from manifest
+* some code clean up
+
 version 1.0.16.1
 ----------------
 
