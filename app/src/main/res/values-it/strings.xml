@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
 
-    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Galleria</string>
 
     <string name="title_activity_full_image">Visualizzatore immagini acquisite</string>
@@ -21,7 +20,7 @@
     <string name="answer_cancel">Annulla</string>
     <string name="downloading">Scaricamento in corso</string>
     <string name="downloading_opencv">Scaricamento di OpenCV Manager</string>
-    <string name="scanningToast">Ricerca del documento\nToccare di nuovo per acquisire l'intera immagine</string>
+    <string name="scanningToast">Ricerca del documento\nToccare di nuovo per acquisire l\'intera immagine</string>
     <string name="colorMode">Modalità colore</string>
     <string name="bwMode"><![CDATA[Modalità bianco e nero]]></string>
     <string name="autoMode">Modalità automatica</string>
