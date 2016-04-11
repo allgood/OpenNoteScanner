@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Open Note Scanner</string>
+
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
+    <string name="title_activity_gallery">Galleria</string>
+
+    <string name="title_activity_full_image">Visualizzatore immagini acquisite</string>
+    <string name="images_scanned">Immagini acquisite</string>
+    <string name="action_share">Condividi</string>
+    <string name="action_delete">Elimina</string>
+    <string name="confirm_title">Conferma</string>
+    <string name="confirm_delete_text">Eliminare questa immagine?</string>
+    <string name="answer_yes">Sì</string>
+    <string name="answer_no">No</string>
+    <string name="confirm_delete_multiple_text">Eliminare le immagini selezionate?</string>
+    <string name="share_snackbar">Condividi immagini attraverso</string>
+    <string name="action_about">Informazioni</string>
+    <string name="about_filename">about.md</string>
+    <string name="install_opencv">Installare OpenCV Manager</string>
+    <string name="confirm_install_opencv">Scaricare OpenCV Manager da GitHub?</string>
+    <string name="answer_cancel">Annulla</string>
+    <string name="downloading">Scaricamento in corso</string>
+    <string name="downloading_opencv">Scaricamento di OpenCV Manager</string>
+    <string name="scanningToast">Ricerca del documento\nToccare di nuovo per acquisire l'intera immagine</string>
+    <string name="colorMode">Modalità colore</string>
+    <string name="bwMode"><![CDATA[Modalità bianco e nero]]></string>
+    <string name="autoMode">Modalità automatica</string>
+    <string name="manualMode">Modalità manuale</string>
+</resources>
