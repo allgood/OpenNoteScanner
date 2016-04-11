@@ -149,9 +149,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
     public void setImageProcessorBusy(boolean imageProcessorBusy) {
         this.imageProcessorBusy = imageProcessorBusy;
-        if (!imageProcessorBusy) {
-            mWaitSpinner.setVisibility(View.GONE);
-        }
     }
 
     private boolean imageProcessorBusy=true;
