@@ -14,7 +14,7 @@
     <string name="confirm_delete_multiple_text">Eliminare le immagini selezionate?</string>
     <string name="share_snackbar">Condividi immagini attraverso</string>
     <string name="action_about">Informazioni</string>
-    <string name="about_filename">about.md</string>
+    <string name="about_filename">about-it.md</string>
     <string name="install_opencv">Installare OpenCV Manager</string>
     <string name="confirm_install_opencv">Scaricare OpenCV Manager da GitHub?</string>
     <string name="answer_cancel">Annulla</string>
