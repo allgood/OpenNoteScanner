@@ -3,7 +3,7 @@ Sobre o Open Note Scanner
 
 **© 20XX [Claudemir Todo Bom](http://todobom.com)**
 
-Este aplicativo fornece uma maneira rápida para escanear e armazenar anotações, artes e também recibos e outros documentos. Ele também suporta a captura automática a partir de uma página pré-formatada.
+Este aplicativo fornece uma maneira rápida para escanear e armazenar anotações, artes e também recibos e outros documentos. Ele também suporta a captura automática a partir de uma [página pré-formatada](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
 
 Licença
 -------
@@ -39,6 +39,17 @@ O aplicativo inclui código das seguintes fontes:
 
 Agradecimentos
 --------------
+
+### Colaboradores
+
+Como uma aplicaçao de código aberto, contribuições são sempre bem vindas. Todos que contribuírem com código serão listados aqui:.
+
+* Nicolas Raoul - Correções em Inglês
+* Claudio Arseni - Tradução para Italiano
+
+Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
+
+### Código de terceiros
 
 Este aplicativo não seria possível sem o ótimo material produzido pela comunidade. Eu gostaria de dar agradecimentos especiais para os autores de partes essenciais que encontrei na internet e utilizei no código:
 

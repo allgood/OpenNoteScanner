@@ -6,15 +6,14 @@ package com.todobom.opennotescanner;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.todobom.opennotescanner.views.TouchImageView;
 
 import java.util.ArrayList;
@@ -25,6 +24,8 @@ public class FullScreenImageAdapter extends PagerAdapter {
     private Activity _activity;
     private ArrayList<String> _imagePaths;
     private int maxTexture;
+    private ImageLoader mImageLoader;
+    private ImageSize mTargetSize;
 
     // constructor
     public FullScreenImageAdapter(Activity activity,
@@ -54,9 +55,10 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
         imgDisplay = (TouchImageView) viewLayout.findViewById(R.id.imgDisplay);
 
+        String imagePath = _imagePaths.get(position);
+        /*
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        String imagePath = _imagePaths.get(position);
         BitmapFactory.decodeFile(imagePath, options);
 
         int maxSize=Math.max(options.outHeight,options.outWidth);
@@ -75,8 +77,11 @@ public class FullScreenImageAdapter extends PagerAdapter {
 
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+        */
 
-        imgDisplay.setImageBitmap(bitmap);
+        // imgDisplay.setImageBitmap(bitmap);
+        mImageLoader.displayImage("file:///"+imagePath, imgDisplay, mTargetSize);
+
 
         container.addView(viewLayout);
 
@@ -96,7 +101,12 @@ public class FullScreenImageAdapter extends PagerAdapter {
         container.removeView((RelativeLayout) object);
     }
 
-    public void setMaxTexture(int maxTexture) {
+    public void setMaxTexture(int maxTexture, ImageSize targetSize) {
         this.maxTexture = maxTexture;
+        mTargetSize = targetSize;
+    }
+
+    public void setImageLoader(ImageLoader imageLoader) {
+        mImageLoader = imageLoader;
     }
 }

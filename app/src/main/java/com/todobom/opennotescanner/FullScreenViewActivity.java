@@ -13,32 +13,30 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
 
 import java.io.File;
 
-
 public class FullScreenViewActivity extends AppCompatActivity {
 
     private Utils utils;
-    private FullScreenImageAdapter adapter;
-    private ViewPager viewPager;
+    private FullScreenImageAdapter mAdapter;
+    private ViewPager mViewPager;
     private AlertDialog.Builder deleteConfirmBuilder;
-    // private Toolbar mToolbar;
+    private ImageLoader mImageLoader;
+    private ImageSize mTargetSize;
+    private int mMaxTexture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen_view);
 
-        viewPager = (ViewPager) findViewById(R.id.pager);
-
-        // mToolbar = (Toolbar) findViewById(R.id.FullImageViewToolbar);
-
-        // setDisplayHomeAsUpEnabled(true);
-
-        // setSupportActionBar(mToolbar);
+        mViewPager = (ViewPager) findViewById(R.id.pager);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
@@ -46,57 +44,42 @@ public class FullScreenViewActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp);
 
-        /*
-
-        // close button click event
-        Button btnClose = (Button) findViewById(R.id.btnClose);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FullScreenViewActivity.this.finish();
-            }
-        });
-
-        // */
-
         utils = new Utils(getApplicationContext());
 
         Intent i = getIntent();
         int position = i.getIntExtra("position", 0);
 
-        adapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
-                utils.getFilePaths());
+        // initialize Universal Image Loader
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
+        mImageLoader = ImageLoader.getInstance();
+        mImageLoader.init(config);
 
+        mMaxTexture = Utils.getMaxTextureSize();
+        Log.d("FullScreenViewActivity", "gl resolution: " + mMaxTexture);
+        mTargetSize = new ImageSize(mMaxTexture, mMaxTexture);
 
-        int maxTexture = Utils.getMaxTextureSize();
-
-        Log.d("FullScreenViewActivity", "gl resolution: " + maxTexture);
-
-        adapter.setMaxTexture(maxTexture);
-
-        viewPager.setAdapter(adapter);
+        loadAdapter();
 
         // displaying selected image first
-        viewPager.setCurrentItem(position);
+        mViewPager.setCurrentItem(position);
 
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 Log.d("fullview", "scrolled position " + position + " offset " + positionOffset);
-                Log.d("fullview", "pager " + FullScreenViewActivity.this.viewPager.getCurrentItem());
+                Log.d("fullview", "pager " + FullScreenViewActivity.this.mViewPager.getCurrentItem());
             }
 
             @Override
             public void onPageSelected(int position) {
                 Log.d("fullview", "selected");
-                Log.d("fullview", "item" + FullScreenViewActivity.this.viewPager.getCurrentItem());
+                Log.d("fullview", "item" + FullScreenViewActivity.this.mViewPager.getCurrentItem());
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
                 Log.d("fullview", "state changed");
             }
-
 
         });
 
@@ -124,6 +107,14 @@ public class FullScreenViewActivity extends AppCompatActivity {
 
     }
 
+    private void loadAdapter() {
+        mViewPager.setAdapter(null);
+        mAdapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
+                utils.getFilePaths());
+        mAdapter.setImageLoader(mImageLoader);
+        mAdapter.setMaxTexture(mMaxTexture, mTargetSize);
+        mViewPager.setAdapter(mAdapter);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,36 +150,28 @@ public class FullScreenViewActivity extends AppCompatActivity {
                 break;
         }
 
-
         return super.onOptionsItemSelected(item);
     }
 
     private void deleteImage() {
-        ViewPager pager = FullScreenViewActivity.this.viewPager;
-        int item = pager.getCurrentItem();
+        int item = mViewPager.getCurrentItem();
 
-        final File photoFile = new File(adapter.getPath(item));
-
-        // pager.removeViewAt(item);
+        final File photoFile = new File(mAdapter.getPath(item));
 
         photoFile.delete();
 
-        pager.setAdapter(null);
-        adapter = new FullScreenImageAdapter(FullScreenViewActivity.this,
-                utils.getFilePaths());
-
-        pager.setAdapter(adapter);
-
+        loadAdapter();
+        mViewPager.setCurrentItem(item);
     }
 
     public void shareImage() {
 
-        ViewPager pager = FullScreenViewActivity.this.viewPager;
+        ViewPager pager = FullScreenViewActivity.this.mViewPager;
         int item = pager.getCurrentItem();
 
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/jpg");
-        final File photoFile = new File(adapter.getPath(item));
+        final File photoFile = new File(mAdapter.getPath(item));
         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(photoFile));
         Log.d("Fullscreen","uri "+Uri.fromFile(photoFile));
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));

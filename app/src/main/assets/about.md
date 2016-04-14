@@ -3,7 +3,7 @@ About Open Note Scanner
 
 **© 20XX [Claudemir Todo Bom](http://todobom.com)**
 
-This application provides a quick way to scan and store hand written notes and arts, and also shopping receipts and other documents. It also supports automatic capture of images on a pre-formatted page.
+This application provides a quick way to scan and store hand written notes and arts, and also shopping receipts and other documents. It also supports automatic capture of images on a [pre-formatted page](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
 
 
 License
@@ -40,6 +40,17 @@ Binary builds include code from these external projects:
 
 Thanks
 ------
+
+### Contributors
+
+As an open source application, contribution are always welcome. Everyone that submits any code will be listed here.
+
+* Nicolas Raoul - English corrections
+* Claudio Arseni - Italian translation
+
+Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
+
+### External code
 
 This application wouldn't be possible without the great material produced by the community. I would like to give special thanks to the authors of essencial parts I've got on the internet and used in the code:
 

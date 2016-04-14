@@ -3,7 +3,7 @@ Informazioni su Open Note Scanner
 
 **© 20XX [Claudemir Todo Bom](http://todobom.com)**
 
-Questa applicazione offre una rapida soluzione per acquisire e archiviare note scritte a mano e disegni, oltre a liste della spesa e altri documenti. Supporta anche l'acquisizione automatica di immagini su una pagina pre-formattata.
+Questa applicazione offre una rapida soluzione per acquisire e archiviare note scritte a mano e disegni, oltre a liste della spesa e altri documenti. Supporta anche l'acquisizione automatica di immagini su una [pagina pre-formattata](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
 
 
 Licenza
@@ -40,6 +40,17 @@ Questa applicazione contiene codice dai seguenti progetti esterni:
 
 Ringraziamenti
 --------------
+
+### Contributori
+
+Come applicazione open source, contributo sono sempre i benvenuti. Ognuno che presenta alcun codice saranno elencati qui.
+
+* Nicolas Raoul - correzioni in inglese
+* Claudio Arseni - traduzione in italiano
+
+Altre persone hanno aiutato la presentazione [Report Issue] (https://github.com/ctodobom/OpenNoteScanner/issues) e dando informazioni attraverso il [Gruppo Telegram] (https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Il loro aiuto è apprezzato pure.
+
+### Codice esterno
 
 Questa applicazione non sarebbe stata realizzabile senza il grande materiale prodotto dalla comunità. Uno speciale ringraziamento agli autori di parti essenziali che ho trovato su internet e di cui ho utilizzato il codice:
 

@@ -1,6 +1,19 @@
 Change Log
 ==========
 
+version 1.0.19
+--------------
+
+* translation of About window to italian (Claudio Arseni)
+* Out-of-memory bug in image viewer on some devices
+* asynchronous loading of images on the full screen viewer
+
+version 1.0.18
+--------------
+
+* translation of interface messages to italian (Claudio Arseni)
+* quick fix of UI bug
+
 version 1.0.17
 --------------
 

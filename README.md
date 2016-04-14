@@ -5,7 +5,7 @@ This little application provides a way on scanning handwritten notes and printed
 
 It automatically detect the edge of the paper over a contrastant surface.
 
-If you have RocketBook Wave notebook or home printed pages it automatically detects the qrcode printed on the bottom right corner and scans the page immediately.
+When using the [printed special page template](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf) it automatically detects the QR Code printed on the bottom right corner and scans the page immediately.
 
 After the page is detected, it compensates any perspective from the image adjusting it to a 90 degree top view and saves it on a folder on the device.
 
@@ -95,7 +95,26 @@ Contributing
 
 If you have any idea, feel free to fork it and submit your changes back to me.
 
-It is possible to backport this project to [OpenCV 2.4.8](https://github.com/vRallev/OpenCV) in a way that it can run on Android 4.4.2 (KitKat), this will demand a lot of rework on user interface code. If you know how to do it, it is a great contribution.
+Thanks
+------
+
+### Contributors
+
+As an open source application, contribution are always welcome. Everyone that submits any code will be listed here.
+
+* Nicolas Raoul - English corrections
+* Claudio Arseni - Italian translation
+
+Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
+
+### External code
+
+This application wouldn't be possible without the great material produced by the community. I would like to give special thanks to the authors of essencial parts I've got on the internet and used in the code:
+
+* [Android-er / GridView code sample](http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html)
+* [Android Hive / Full Screen Image pager](http://www.androidhive.info/2013/09/android-fullscreen-image-slider-with-swipe-and-pinch-zoom-gestures/)
+* [Adrian Rosebrock from pyimagesearch.com for the excellent tutorial on how to handle the images](http://www.pyimagesearch.com/2014/09/01/build-kick-ass-mobile-document-scanner-just-5-minutes/)
+* [Gabriele Mariotti / On how to implement sections in the RecyclerView](https://gist.github.com/gabrielemariotti/e81e126227f8a4bb339c)
 
 
 License
