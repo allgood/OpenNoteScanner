@@ -43,12 +43,12 @@ Ringraziamenti
 
 ### Contributori
 
-Come applicazione open source, contributo sono sempre i benvenuti. Ognuno che presenta alcun codice saranno elencati qui.
+Come applicazione open source, i contributi sono sempre benvenuti. Chiunque contribuisca al codice viene elencato in questa sezione.
 
 * Nicolas Raoul - correzioni in inglese
 * Claudio Arseni - traduzione in italiano
 
-Altre persone hanno aiutato la presentazione [Report Issue] (https://github.com/ctodobom/OpenNoteScanner/issues) e dando informazioni attraverso il [Gruppo Telegram] (https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Il loro aiuto è apprezzato pure.
+Altre persone hanno aiutato con le [segnalazioni di errori] (https://github.com/ctodobom/OpenNoteScanner/issues) e dando informazioni attraverso il [gruppo Telegram] (https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Anche il loro aiuto è molto apprezzato.
 
 ### Codice esterno
 
