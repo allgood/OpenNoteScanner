@@ -603,37 +603,29 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         int hotAreaWidth = displayWidth / 4;
         int hotAreaHeight = previewHeight / 2 - hotAreaWidth;
 
-        ImageView qTopLeft = (ImageView) findViewById(R.id.quadranttl);
-        RelativeLayout.LayoutParams paramsTl = (RelativeLayout.LayoutParams) qTopLeft.getLayoutParams();
-        paramsTl.leftMargin = 0;
-        paramsTl.topMargin = 0;
-        paramsTl.height = hotAreaHeight;
-        paramsTl.width = hotAreaWidth;
-        qTopLeft.setLayoutParams(paramsTl);
+        ImageView angleNorthWest = (ImageView) findViewById(R.id.nw_angle);
+        RelativeLayout.LayoutParams paramsNW = (RelativeLayout.LayoutParams) angleNorthWest.getLayoutParams();
+        paramsNW.leftMargin = hotAreaWidth - paramsNW.width;
+        paramsNW.topMargin = hotAreaHeight - paramsNW.height;
+        angleNorthWest.setLayoutParams(paramsNW);
 
-        ImageView qTopRight = (ImageView) findViewById(R.id.quadranttr);
-        RelativeLayout.LayoutParams paramsTr = (RelativeLayout.LayoutParams) qTopRight.getLayoutParams();
-        paramsTr.leftMargin = displayWidth - hotAreaWidth;
-        paramsTr.topMargin = 0;
-        paramsTr.height = hotAreaHeight;
-        paramsTr.width = hotAreaWidth;
-        qTopRight.setLayoutParams(paramsTr);
+        ImageView angleNorthEast = (ImageView) findViewById(R.id.ne_angle);
+        RelativeLayout.LayoutParams paramsNE = (RelativeLayout.LayoutParams) angleNorthEast.getLayoutParams();
+        paramsNE.leftMargin = displayWidth - hotAreaWidth;
+        paramsNE.topMargin = hotAreaHeight - paramsNE.height;
+        angleNorthEast.setLayoutParams(paramsNE);
 
-        ImageView qBottomRight = (ImageView) findViewById(R.id.quadrantbr);
-        RelativeLayout.LayoutParams paramsBr = (RelativeLayout.LayoutParams) qBottomRight.getLayoutParams();
-        paramsBr.leftMargin = displayWidth - hotAreaWidth;
-        paramsBr.topMargin = previewHeight - hotAreaHeight;
-        paramsBr.height = hotAreaHeight;
-        paramsBr.width = hotAreaWidth;
-        qBottomRight.setLayoutParams(paramsBr);
+        ImageView angleSouthEast = (ImageView) findViewById(R.id.se_angle);
+        RelativeLayout.LayoutParams paramsSE = (RelativeLayout.LayoutParams) angleSouthEast.getLayoutParams();
+        paramsSE.leftMargin = displayWidth - hotAreaWidth;
+        paramsSE.topMargin = previewHeight - hotAreaHeight;
+        angleSouthEast.setLayoutParams(paramsSE);
 
-        ImageView qBottomLeft = (ImageView) findViewById(R.id.quadrantbl);
-        RelativeLayout.LayoutParams paramsBl = (RelativeLayout.LayoutParams) qBottomLeft.getLayoutParams();
-        paramsBl.leftMargin = 0;
-        paramsBl.topMargin = previewHeight - hotAreaHeight;
-        paramsBl.height = hotAreaHeight;
-        paramsBl.width = hotAreaWidth;
-        qBottomLeft.setLayoutParams(paramsBl);
+        ImageView angleSouthWest = (ImageView) findViewById(R.id.sw_angle);
+        RelativeLayout.LayoutParams paramsSW = (RelativeLayout.LayoutParams) angleSouthWest.getLayoutParams();
+        paramsSW.leftMargin = hotAreaWidth - paramsSW.width;
+        paramsSW.topMargin = previewHeight - hotAreaHeight;
+        angleSouthWest.setLayoutParams(paramsSW);
 
 
         Camera.Size maxRes = getMaxPictureResolution();

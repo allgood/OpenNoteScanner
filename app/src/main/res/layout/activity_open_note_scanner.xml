@@ -57,56 +57,6 @@
         >
 
         <ImageView
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:layout_marginLeft="0px"
-            android:layout_marginBottom="0px"
-            android:id="@+id/quadranttl"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:backgroundTint="#6fafafaf"
-            android:background="#7fffff" />
-
-        <ImageView
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:layout_marginLeft="0px"
-            android:layout_marginBottom="0px"
-            android:id="@+id/quadranttr"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:backgroundTint="#6fafafaf"
-            android:background="#7fffff" />
-
-
-        <ImageView
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:layout_marginLeft="0px"
-            android:layout_marginBottom="0px"
-            android:id="@+id/quadrantbl"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:backgroundTint="#6fafafaf"
-            android:background="#7fffff" />
-
-
-        <ImageView
-            android:layout_width="20px"
-            android:layout_height="20px"
-            android:layout_marginLeft="0px"
-            android:layout_marginBottom="0px"
-            android:id="@+id/quadrantbr"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:backgroundTint="#6fafafaf"
-            android:background="#7fffff" />
-
-        <ImageView
             android:layout_width="0px"
             android:layout_height="0px"
             android:layout_marginLeft="0px"
@@ -126,6 +76,33 @@
             android:paddingBottom="0dp"
             android:paddingLeft="0dp"
             />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/nw_angle"
+            android:src="@drawable/angle"
+            android:rotation="270" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/se_angle"
+            android:src="@drawable/angle"
+            android:rotation="90" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/sw_angle"
+            android:src="@drawable/angle"
+            android:rotation="180" />
+
+        <ImageView
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:id="@+id/ne_angle"
+            android:src="@drawable/angle" />
 
     </RelativeLayout>
 
