@@ -27,10 +27,10 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.android.support:design:23.3.0'
     compile 'com.google.zxing:core:3.0.1'
-    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:support-v4:23.3.0'
     compile 'com.github.ctodobom:OpenCV-3.1.0-Android:-SNAPSHOT'
     compile 'us.feras.mdv:markdownview:1.1.0'
     compile 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
