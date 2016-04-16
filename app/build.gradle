@@ -35,4 +35,5 @@ dependencies {
     compile 'us.feras.mdv:markdownview:1.1.0'
     compile 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     compile 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
+    compile 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
 }

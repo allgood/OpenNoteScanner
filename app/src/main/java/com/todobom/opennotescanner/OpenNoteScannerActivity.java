@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
@@ -42,6 +43,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.CustomOpenCVLoader;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
@@ -142,6 +144,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private Camera.AutoFocusMoveCallback mAutoFocusMoveCallback = null;
     private HUDCanvasView mHud;
     private View mWaitSpinner;
+    private FABToolbarLayout mFabToolbar;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -200,7 +203,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
         });
 
-        final Button infoButton = (Button) findViewById(R.id.infoButton);
+        final ImageView infoButton = (ImageView) findViewById(R.id.infoButton);
         infoButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -217,14 +220,14 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
         });
 
-        final Button colorModeButton = (Button) findViewById(R.id.colorModeButton);
+        final ImageView colorModeButton = (ImageView) findViewById(R.id.colorModeButton);
 
         colorModeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 colorMode = !colorMode;
-                v.setBackgroundTintList(ColorStateList.valueOf(colorMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+                ((ImageView)v).setColorFilter(colorMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
                 sendImageProcessorMessage("colorMode" , colorMode );
 
@@ -233,33 +236,33 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
         });
 
-        final Button flashModeButton = (Button) findViewById(R.id.flashModeButton);
+        final ImageView flashModeButton = (ImageView) findViewById(R.id.flashModeButton);
 
         flashModeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 flashMode = !flashMode;
-                v.setBackgroundTintList(ColorStateList.valueOf(flashMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+                ((ImageView)v).setColorFilter(flashMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
                 setFlash(flashMode);
             }
         });
 
 
-        final Button autoModeButton = (Button) findViewById(R.id.autoModeButton);
+        final ImageView autoModeButton = (ImageView) findViewById(R.id.autoModeButton);
 
         autoModeButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 autoMode = !autoMode;
-                v.setBackgroundTintList(ColorStateList.valueOf(autoMode ? 0xFFFFFFFF : 0x7FFFFFFF));
+                ((ImageView)v).setColorFilter(autoMode ? 0xFFFFFFFF : 0xFFA0F0A0);
                 Toast.makeText(getApplicationContext(), autoMode?R.string.autoMode:R.string.manualMode, Toast.LENGTH_SHORT).show();
             }
         });
 
-        final Button galleryButton = (Button) findViewById(R.id.galleryButton);
+        final FloatingActionButton galleryButton = (FloatingActionButton) findViewById(R.id.galleryButton);
 
         galleryButton.setOnClickListener(new View.OnClickListener() {
 
@@ -267,6 +270,23 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext() , GalleryGridActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        mFabToolbar = (FABToolbarLayout) findViewById(R.id.fabtoolbar);
+
+        FloatingActionButton fabToolbarButton = (FloatingActionButton) findViewById(R.id.fabtoolbar_fab);
+        fabToolbarButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFabToolbar.show();
+            }
+        });
+
+        findViewById(R.id.hideToolbarButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFabToolbar.hide();
             }
         });
 

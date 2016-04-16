@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:opencv="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FF000000"
@@ -77,6 +78,21 @@
             android:paddingLeft="0dp"
             />
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/galleryButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_gallery"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:elevation="0sp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="80dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:backgroundTint="#A060FF60"
+            android:tint="#ffffff"/>
+-
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -103,6 +119,108 @@
             android:layout_height="32dp"
             android:id="@+id/ne_angle"
             android:src="@drawable/angle" />
+
+
+        <com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
+            android:id="@+id/fabtoolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:showDuration="600"
+            app:hideDuration="200"
+            app:horizontalMargin="30dp"
+            app:verticalMargin="30dp"
+            app:fadeInFraction="0.2"
+            app:fabId="@+id/fabtoolbar_fab"
+            app:containerId="@+id/fabtoolbar_container"
+            app:fabToolbarId="@+id/fabtoolbar_toolbar">
+
+            <RelativeLayout
+                android:id="@id/fabtoolbar_container"
+                android:layout_width="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_height="70dp"
+                >
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@id/fabtoolbar_fab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:fabSize="mini"
+                    app:borderWidth="0dp"
+                    app:elevation="0sp"
+                    android:src="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+                    android:layout_alignParentRight="true"
+                    android:backgroundTint="#A060FF60"
+                    android:tint="#ffffff"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@id/fabtoolbar_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/infoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_info_outline_white_24px"
+                    android:gravity="center"
+                    android:enabled="true"
+                    android:tint="#ffffff"/>
+
+                <ImageView
+                    android:id="@+id/colorModeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_palette"
+                    android:gravity="center"
+                    android:enabled="true"
+                    android:focusableInTouchMode="false"
+                    android:tint="#a0f0a0"/>
+
+                <ImageView
+                    android:id="@+id/flashModeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_flash_on_24dp"
+                    android:gravity="center"
+                    android:enabled="true"
+                    android:tint="#a0f0a0"/>
+
+                <ImageView
+                    android:id="@+id/autoModeButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_find_in_page"
+                    android:gravity="center"
+                    android:enabled="true"
+                    android:tint="#a0f0a0"/>
+
+                <ImageView
+                    android:id="@+id/hideToolbarButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/abc_ic_clear_mtrl_alpha"
+                    android:gravity="center"
+                    android:enabled="true"
+                    android:tint="#ffffff"/>
+
+            </LinearLayout>
+
+        </com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout>
 
     </RelativeLayout>
 
@@ -136,63 +254,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right">
 
-        <Button
-            android:id="@+id/infoButton"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_info_outline_white_24px"
-            android:gravity="center"
-            android:enabled="true"
-            android:backgroundTint="#7fffffff"
-            />
 
-        <Button
-            android:id="@+id/colorModeButton"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_palette"
-            android:gravity="center"
-            android:enabled="true"
-            android:backgroundTint="#7fffffff"
-            />
-
-        <Button
-            android:id="@+id/flashModeButton"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/ic_flash_on_24dp"
-            android:gravity="center"
-            android:enabled="true"
-            android:backgroundTint="#7fffffff"
-            />
-
-        <Button
-            android:id="@+id/autoModeButton"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="100dp"
-            android:background="@drawable/ic_find_in_page"
-            android:gravity="center"
-            android:enabled="true"
-            android:backgroundTint="#7fffffff"
-            />
-
-        <Button
-            android:id="@+id/galleryButton"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="150dp"
-            android:background="@drawable/ic_menu_gallery"
-            android:gravity="center"
-            android:enabled="true"
-            android:backgroundTint="#7fffffff"
-            />
     </LinearLayout>
 
 </FrameLayout>
