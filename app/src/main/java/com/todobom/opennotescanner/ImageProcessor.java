@@ -32,6 +32,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -54,7 +55,7 @@ public class ImageProcessor extends Handler {
     private boolean colorMode=false;
     private double colorGain = 1.5;       // contrast
     private double colorBias = 0;         // bright
-    private int colorThresh = 150;        // threshold
+    private int colorThresh = 110;        // threshold
     private Size previewSize;
     private Point[] previewPoints;
 
@@ -372,11 +373,59 @@ public class ImageProcessor extends Handler {
     private void enhanceDocument( Mat src ) {
         if (colorMode) {
             src.convertTo(src,-1, colorGain , colorBias);
-            Imgproc.threshold(src, src, colorThresh, 255, Imgproc.THRESH_BINARY);
+            Mat mask = new Mat(src.size(), CvType.CV_8UC1);
+            Imgproc.cvtColor(src,mask,Imgproc.COLOR_RGBA2GRAY);
+
+            Mat copy = new Mat(src.size(), CvType.CV_8UC3);
+            src.copyTo(copy);
+
+            Imgproc.adaptiveThreshold(mask,mask,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY_INV,15,15);
+
+            src.setTo(new Scalar(255,255,255));
+            copy.copyTo(src,mask);
+
+            copy.release();
+            mask.release();
+
+            // special color threshold algorithm
+            colorThresh(src,colorThresh);
         } else {
             Imgproc.cvtColor(src,src,Imgproc.COLOR_RGBA2GRAY);
             Imgproc.adaptiveThreshold(src,src,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY,15,15);
         }
+    }
+
+    /**
+     * When a pixel have any of its three elements above the threshold
+     * value and the mean of the three values are less than 80% of the
+     * higher one, brings all three values to the max possible keeping
+     * the relation between them.
+     *
+     * src must be a 3 channel image with 8 bits per channel
+     *
+     * @param src
+     * @param threshold
+     */
+    private void colorThresh(Mat src, int threshold) {
+        Size srcSize = src.size();
+        int size = (int) (srcSize.height * srcSize.width)*3;
+        byte[] d = new byte[size];
+        src.get(0,0,d);
+
+        for (int i=0; i < size; i+=3) {
+                // the "& 0xff" operations are needed to convert the signed byte to double
+                double max = Math.max( Math.max((double) (d[i] & 0xff) , (double) ( d[i+1] & 0xff ) ),
+                        (double) ( d[i+2] & 0xff ) );
+                double mean = ( (double) (d[i] & 0xff) + (double) ( d[i+1] & 0xff )
+                        + (double) ( d[i+2] & 0xff ) ) / 3;
+
+                if ( max<255 && max>threshold && mean<max*0.8 ) {
+                    d[i] = (byte) ( (double) ( d[i] & 0xff ) * 255 / max );
+                    d[i + 1] = (byte) ( (double) ( d[i + 1] & 0xff ) * 255 / max );
+                    d[i + 2] = (byte) ( (double) ( d[i + 2] & 0xff ) * 255 / max );
+                }
+        }
+        src.put(0,0,d);
     }
 
     private Mat fourPointTransform( Mat src , Point[] pts ) {
