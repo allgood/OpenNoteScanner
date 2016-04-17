@@ -9,7 +9,7 @@ This application provides a quick way to scan and store hand written notes and a
 License
 -------
 
-This application is made available through the [GNU General Public License version 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). Source code is [available on GitHub](http://github.com/ctodobom/OpenNoteScanner).
+This application is made available through the [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt). Source code is [available on GitHub](http://github.com/ctodobom/OpenNoteScanner).
 
 Donations
 ---------

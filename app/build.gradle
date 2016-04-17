@@ -7,8 +7,8 @@ android {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 19
-        versionName '1.0.19'
+        versionCode 20
+        versionName '1.0.20'
     }
     buildTypes {
         release {
@@ -31,7 +31,7 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'com.google.zxing:core:3.0.1'
     compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.github.ctodobom:OpenCV-3.1.0-Android:-SNAPSHOT'
+    compile 'com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115'
     compile 'us.feras.mdv:markdownview:1.1.0'
     compile 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     compile 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'

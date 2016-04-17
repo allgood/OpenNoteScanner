@@ -4,10 +4,27 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:layout_gravity="center" android:orientation="vertical">
 
-    <us.feras.mdv.MarkdownView
-        android:id="@+id/about_markdown"
+    <RelativeLayout
+        android:id="@+id/about_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       />
+        android:gravity="top">
+
+        <us.feras.mdv.MarkdownView
+            android:id="@+id/about_markdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="false"
+            android:layout_above="@+id/about_shareapp" />
+
+        <Button
+            android:id="@+id/about_shareapp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/share_app"
+            android:layout_alignParentBottom="true"
+            style="@style/Widget.AppCompat.Button.Colored"
+            />
+    </RelativeLayout>
 
 </FrameLayout>

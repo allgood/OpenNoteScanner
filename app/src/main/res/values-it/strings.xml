@@ -25,4 +25,8 @@
     <string name="bwMode"><![CDATA[Modalità bianco e nero]]></string>
     <string name="autoMode">Modalità automatica</string>
     <string name="manualMode">Modalità manuale</string>
+    <string name="share_app">Share this App</string>
+    <string name="share_app_using">Share link through</string>
+    <string name="share_app_body">"Take a look at this great app that scans notes, drawings and documents through your camera: "</string>
+    <string name="share_app_subject">Great app to scan notes and documents</string>
 </resources>

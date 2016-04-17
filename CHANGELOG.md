@@ -1,13 +1,14 @@
 Change Log
 ==========
 
-git HEAD
---------
+version 1.0.20
+--------------
 
 * better images in color mode
 * enhancements on main screen interface
 * flash state persist between activities changes
 * better handling of devices without flash and/or autofocus
+* "share app" button on About window
 
 version 1.0.19
 --------------

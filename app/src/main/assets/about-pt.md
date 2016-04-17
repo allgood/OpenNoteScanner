@@ -8,7 +8,7 @@ Este aplicativo fornece uma maneira rápida para escanear e armazenar anotaçõe
 Licença
 -------
 
-Esta aplicação está disponibilizada através da [Licença GNU GPL versão 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). Source code is [available on GitHub](http://github.com/ctodobom/OpenNoteScanner).
+Esta aplicação está disponibilizada através da [Licença GNU GPL versão 3](http://www.gnu.org/licenses/gpl.txt). Source code is [available on GitHub](http://github.com/ctodobom/OpenNoteScanner).
 
 Doações
 -------

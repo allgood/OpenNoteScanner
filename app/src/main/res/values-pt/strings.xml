@@ -24,4 +24,8 @@
     <string name="bwMode"><![CDATA[Modo preto & branco]]></string>
     <string name="autoMode">Modo Automático</string>
     <string name="manualMode">Modo manual</string>
+    <string name="share_app">Compartilhar Aplicativo</string>
+    <string name="share_app_using">Compartilhar link por</string>
+    <string name="share_app_body">"Dê uma olhada neste aplicativo para escanear anotações, desenhos e documentos utilizando a câmera: "</string>
+    <string name="share_app_subject">Ótimo aplicativo para escanear anotações e documentos</string>
 </resources>

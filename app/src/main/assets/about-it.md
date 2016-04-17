@@ -9,7 +9,7 @@ Questa applicazione offre una rapida soluzione per acquisire e archiviare note s
 Licenza
 -------
 
-Questa applicazione è distribuita secondo i termini della [GNU General Public License versione 2](http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt). Il codice sorgente è [disponibile su GitHub](http://github.com/ctodobom/OpenNoteScanner).
+Questa applicazione è distribuita secondo i termini della [GNU General Public License versione 3](http://www.gnu.org/licenses/gpl.txt). Il codice sorgente è [disponibile su GitHub](http://github.com/ctodobom/OpenNoteScanner).
 
 Donazioni
 ---------
