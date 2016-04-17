@@ -140,7 +140,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private SurfaceHolder mSurfaceHolder;
     private Camera mCamera;
 
-    private boolean focused;
+    private boolean mFocused;
     private Camera.AutoFocusMoveCallback mAutoFocusMoveCallback = null;
     private HUDCanvasView mHud;
     private View mWaitSpinner;
@@ -242,10 +242,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                mFlashMode = !mFlashMode;
+                mFlashMode = setFlash(!mFlashMode);
                 ((ImageView)v).setColorFilter(mFlashMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
-                setFlash(mFlashMode);
             }
         });
 
@@ -292,13 +291,16 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
     }
 
-    public void setFlash(boolean stateFlash) {
-        /* */
-        Camera.Parameters par = mCamera.getParameters();
-        par.setFlashMode(stateFlash ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
-        mCamera.setParameters(par);
-        Log.d(TAG,"flash: " + (stateFlash?"on":"off"));
-        // */
+    public boolean setFlash(boolean stateFlash) {
+        PackageManager pm = getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+            Camera.Parameters par = mCamera.getParameters();
+            par.setFlashMode(stateFlash ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
+            mCamera.setParameters(par);
+            Log.d(TAG, "flash: " + (stateFlash ? "on" : "off"));
+            return stateFlash;
+        }
+        return false;
     }
 
     private void checkResumePermissions() {
@@ -560,7 +562,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     }
 
 
-    private int findBackFacingCamera() {
+    private int findBestCamera() {
         int cameraId = -1;
         //Search for the back facing camera
         //get the number of cameras
@@ -573,6 +575,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 cameraId = i;
                 break;
             }
+            cameraId = i;
         }
         return cameraId;
     }
@@ -580,7 +583,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         try {
-            int cameraId = findBackFacingCamera();
+            int cameraId = findBestCamera();
             mCamera = Camera.open(cameraId);
         }
 
@@ -651,8 +654,17 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             Log.d(TAG,"max supported picture resolution: " + maxRes.width + "x" + maxRes.height);
         }
 
-        param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-        param.setFlashMode(mFlashMode ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
+        PackageManager pm = getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
+            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            Log.d(TAG, "enabling autofocus");
+        } else {
+            mFocused = true;
+            Log.d(TAG, "autofocus not available");
+        }
+        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
+            param.setFlashMode(mFlashMode ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
+        }
 
         mCamera.setParameters(param);
         mCamera.setDisplayOrientation(90);
@@ -664,7 +676,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         catch (Exception e) {
-            System.err.println(e);
+            e.printStackTrace();
             return;
         }
 
@@ -696,10 +708,12 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        mCamera.stopPreview();
-        mCamera.setPreviewCallback(null);
-        mCamera.release();
-        mCamera = null;
+        if (mCamera != null) {
+            mCamera.stopPreview();
+            mCamera.setPreviewCallback(null);
+            mCamera.release();
+            mCamera = null;
+        }
     }
 
     @Override
@@ -709,19 +723,25 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             mAutoFocusMoveCallback = new Camera.AutoFocusMoveCallback() {
                 @Override
                 public void onAutoFocusMoving(boolean start, Camera camera) {
-                    focused = !start;
-                    Log.d(TAG, "focus: " + focused);
+                    mFocused = !start;
+                    Log.d(TAG, "focus: " + mFocused);
                 }
             };
 
-            mCamera.setAutoFocusMoveCallback(mAutoFocusMoveCallback);
+            try {
+                mCamera.setAutoFocusMoveCallback(mAutoFocusMoveCallback);
+            } catch (Exception e) {
+                Log.d(TAG, "failed setting AutoFocusMoveCallback");
+            }
+
         }
 
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPreviewSize();
 
-        Log.d(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height);
+        Log.d(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height
+                + " focused: "+ mFocused +" imageprocessor: "+(imageProcessorBusy?"busy":"available"));
 
-        if ( focused && ! imageProcessorBusy ) {
+        if ( mFocused && ! imageProcessorBusy ) {
             setImageProcessorBusy(true);
             Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5), CvType.CV_8UC1);
             yuv.put(0, 0, data);
@@ -781,6 +801,20 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         // restart preview
         camera.startPreview();
+
+        // initialize autofocus
+        try {
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean success, Camera camera) {
+                    Log.d(TAG,"autofocus callback result: "+success);
+                    mFocused = success;
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "failed setting AutoFocus callback");
+        }
+
         // FIXME: check setPreviewCallback
         camera.setPreviewCallback(this);
 
