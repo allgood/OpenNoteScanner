@@ -242,10 +242,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
             @Override
             public void onClick(View v) {
-                flashMode = !flashMode;
-                ((ImageView)v).setColorFilter(flashMode ? 0xFFFFFFFF : 0xFFA0F0A0);
+                mFlashMode = !mFlashMode;
+                ((ImageView)v).setColorFilter(mFlashMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
-                setFlash(flashMode);
+                setFlash(mFlashMode);
             }
         });
 
@@ -463,9 +463,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Log.d(TAG, "resuming");
 
-        flashMode=false;
-        findViewById(R.id.colorModeButton).setBackgroundTintList(ColorStateList.valueOf(0x7FFFFFFF));
-
         for ( String build: Build.SUPPORTED_ABIS) {
             Log.d(TAG,"myBuild "+ build);
         }
@@ -509,7 +506,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private boolean colorMode = false;
 
     private boolean autoMode = false;
-    private boolean flashMode = false;
+    private boolean mFlashMode = false;
 
 
     @Override
@@ -655,10 +652,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+        param.setFlashMode(mFlashMode ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
 
         mCamera.setParameters(param);
         mCamera.setDisplayOrientation(90);
-
 
         try {
             mCamera.setPreviewDisplay(mSurfaceHolder);
