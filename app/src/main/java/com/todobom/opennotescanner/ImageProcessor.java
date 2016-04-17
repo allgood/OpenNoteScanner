@@ -397,7 +397,7 @@ public class ImageProcessor extends Handler {
 
     /**
      * When a pixel have any of its three elements above the threshold
-     * value and the mean of the three values are less than 80% of the
+     * value and the average of the three values are less than 80% of the
      * higher one, brings all three values to the max possible keeping
      * the relation between them.
      *
