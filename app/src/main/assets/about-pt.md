@@ -47,7 +47,7 @@ Como uma aplicaçao de código aberto, contribuições são sempre bem vindas. T
 * Nicolas Raoul - Correções em Inglês
 * Claudio Arseni - Tradução para Italiano
 
-Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
+Outras pessoas ajudaram enviando [Relatórios de Bugs](https://github.com/ctodobom/OpenNoteScanner/issues) e fornecendo informações pelo [grupo no Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Esta ajuda também é muito apreciada.
 
 ### Código de terceiros
 
