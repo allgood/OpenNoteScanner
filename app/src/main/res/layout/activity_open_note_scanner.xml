@@ -151,7 +151,8 @@
                     android:src="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
                     android:layout_alignParentRight="true"
                     android:backgroundTint="#A060FF60"
-                    android:tint="#ffffff"/>
+                    android:tint="#ffffff"
+                    android:rotation="90"/>
 
             </RelativeLayout>
 

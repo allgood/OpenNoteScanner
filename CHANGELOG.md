@@ -7,7 +7,7 @@ git HEAD
 * better images in color mode
 * enhancements on main screen interface
 * flash state persist between activities changes
-* better handling of devices without flash and autofocus
+* better handling of devices without flash and/or autofocus
 
 version 1.0.19
 --------------
