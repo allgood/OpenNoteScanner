@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+git HEAD
+--------
+
+* removed permission to READ_PHONE_STATE
+
 version 1.0.20
 --------------
 
