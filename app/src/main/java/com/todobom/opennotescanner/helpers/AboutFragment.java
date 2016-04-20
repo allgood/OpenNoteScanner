@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,11 +54,9 @@ public class AboutFragment extends DialogFragment {
         android.graphics.Point size = new android.graphics.Point();
         display.getRealSize(size);
 
-        View aboutContainer = view.findViewById(R.id.about_container);
-        ViewGroup.LayoutParams params = aboutContainer.getLayoutParams();
-        params.height = (int) (size.y * .9);
-        params.width = (int) (size.x * .9);
-        aboutContainer.setLayoutParams(params);
+        Window window = getDialog().getWindow();
+        window.setLayout( (int) (size.x*0.9) , (int) (size.y*0.9) );
+        window.setGravity(Gravity.CENTER);
 
         View about_shareapp = view.findViewById(R.id.about_shareapp);
         about_shareapp.setOnClickListener(new View.OnClickListener() {
