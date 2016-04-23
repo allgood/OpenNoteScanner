@@ -156,9 +156,11 @@ public class FullScreenViewActivity extends AppCompatActivity {
     private void deleteImage() {
         int item = mViewPager.getCurrentItem();
 
-        final File photoFile = new File(mAdapter.getPath(item));
+        String filePath = mAdapter.getPath(item);
+        final File photoFile = new File(filePath);
 
         photoFile.delete();
+        Utils.removeImageFromGallery(filePath,this);
 
         loadAdapter();
         mViewPager.setCurrentItem(item);

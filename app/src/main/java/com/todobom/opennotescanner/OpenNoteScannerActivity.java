@@ -5,11 +5,13 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -63,10 +66,12 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.todobom.opennotescanner.helpers.Utils.addImageToGallery;
 import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
 
 /**
@@ -145,6 +150,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private HUDCanvasView mHud;
     private View mWaitSpinner;
     private FABToolbarLayout mFabToolbar;
+    private boolean mBugRotate=false;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -258,6 +264,16 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 autoMode = !autoMode;
                 ((ImageView)v).setColorFilter(autoMode ? 0xFFFFFFFF : 0xFFA0F0A0);
                 Toast.makeText(getApplicationContext(), autoMode?R.string.autoMode:R.string.manualMode, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final ImageView settingsButton = (ImageView) findViewById(R.id.settingsButton);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext() , SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -667,17 +683,18 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         mCamera.setParameters(param);
-        mCamera.setDisplayOrientation(90);
 
-        try {
-            mCamera.setPreviewDisplay(mSurfaceHolder);
-            mCamera.startPreview();
-            mCamera.setPreviewCallback(this);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        mBugRotate = sharedPref.getBoolean("bug_rotate", false);
+
+        if (mBugRotate) {
+            mCamera.setDisplayOrientation(270);
+        } else {
+            mCamera.setDisplayOrientation(90);
         }
 
-        catch (Exception e) {
-            e.printStackTrace();
-            return;
+        if (mImageProcessor != null) {
+            mImageProcessor.setBugRotate(mBugRotate);
         }
 
         safeToTakePicture = true;
@@ -699,6 +716,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         try {
             mCamera.setPreviewDisplay(mSurfaceHolder);
+
             mCamera.startPreview();
             mCamera.setPreviewCallback(this);
         }
@@ -787,6 +805,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
 
+        shootSound();
+
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPictureSize();
 
         Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height);
@@ -796,11 +816,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
-
-        shootSound();
-
-        // restart preview
-        camera.startPreview();
 
         // initialize autofocus
         try {
@@ -814,9 +829,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         } catch (Exception e) {
             Log.d(TAG, "failed setting AutoFocus callback");
         }
-
-        // FIXME: check setPreviewCallback
-        camera.setPreviewCallback(this);
 
         scanClicked = false;
         safeToTakePicture = true;
@@ -860,6 +872,17 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Imgcodecs.imwrite(fileName, endDoc);
 
+        try {
+            ExifInterface exif = new ExifInterface(fileName);
+            exif.setAttribute("UserComment", "Generated using Open Note Scanner");
+            // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
+            exif.saveAttributes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        addImageToGallery(fileName , this);
+
         animateDocument(fileName,scannedDocument);
 
         Log.d(TAG, "wrote: " + fileName);
@@ -868,6 +891,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             setResult(RESULT_OK, intent);
             finish();
         }
+
+        refreshCamera();
+
     }
 
     class AnimationRunnable implements Runnable {

@@ -5,6 +5,10 @@ git HEAD
 --------
 
 * removed permission to READ_PHONE_STATE
+* started settings activity
+* setting to rotate the camera 180 degrees
+* keep image frozen until picture processing is done
+* some code cleanup
 
 version 1.0.20
 --------------

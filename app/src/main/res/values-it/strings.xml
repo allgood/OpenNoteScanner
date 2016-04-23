@@ -29,4 +29,5 @@
     <string name="share_app_using">Share link through</string>
     <string name="share_app_body">"Take a look at this great app that scans notes, drawings and documents through your camera: "</string>
     <string name="share_app_subject">Great app to scan notes and documents</string>
+    <string name="settings">Settings</string>
 </resources>

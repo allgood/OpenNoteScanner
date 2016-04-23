@@ -261,6 +261,7 @@ public class GalleryGridActivity extends AppCompatActivity
         for ( String filePath: myThumbAdapter.getSelectedFiles() ) {
             final File photoFile = new File(filePath);
             if (photoFile.delete()) {
+                Utils.removeImageFromGallery(filePath,this);
                 Log.d(TAG,"Removed file: "+filePath);
             }
         }

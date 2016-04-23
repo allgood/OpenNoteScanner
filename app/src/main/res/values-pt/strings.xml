@@ -28,4 +28,5 @@
     <string name="share_app_using">Compartilhar link por</string>
     <string name="share_app_body">"Dê uma olhada neste aplicativo para escanear anotações, desenhos e documentos utilizando a câmera: "</string>
     <string name="share_app_subject">Ótimo aplicativo para escanear anotações e documentos</string>
+    <string name="settings">Settings</string>
 </resources>

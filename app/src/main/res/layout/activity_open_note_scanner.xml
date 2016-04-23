@@ -209,6 +209,17 @@
                     android:tint="#a0f0a0"/>
 
                 <ImageView
+                    android:id="@+id/settingsButton"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_settings"
+                    android:gravity="center"
+                    android:enabled="true"
+                    android:tint="#ffffff"/>
+
+                <ImageView
                     android:id="@+id/hideToolbarButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
