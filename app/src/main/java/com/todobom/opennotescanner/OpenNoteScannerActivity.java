@@ -146,7 +146,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private Camera mCamera;
 
     private boolean mFocused;
-    private Camera.AutoFocusMoveCallback mAutoFocusMoveCallback = null;
     private HUDCanvasView mHud;
     private View mWaitSpinner;
     private FABToolbarLayout mFabToolbar;
@@ -672,7 +671,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         PackageManager pm = getPackageManager();
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
-            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
             Log.d(TAG, "enabling autofocus");
         } else {
             mFocused = true;
@@ -696,6 +695,22 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (mImageProcessor != null) {
             mImageProcessor.setBugRotate(mBugRotate);
         }
+
+        try {
+            mCamera.setAutoFocusMoveCallback(new Camera.AutoFocusMoveCallback() {
+                @Override
+                public void onAutoFocusMoving(boolean start, Camera camera) {
+                    mFocused = !start;
+                    Log.d(TAG, "focusMoving: " + mFocused);
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "failed setting AutoFocusMoveCallback");
+        }
+
+        // some devices doesn't call the AutoFocusMoveCallback - fake the
+        // focus to true at the start
+        mFocused = true;
 
         safeToTakePicture = true;
 
@@ -736,23 +751,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-
-        if ( mAutoFocusMoveCallback == null ) {
-            mAutoFocusMoveCallback = new Camera.AutoFocusMoveCallback() {
-                @Override
-                public void onAutoFocusMoving(boolean start, Camera camera) {
-                    mFocused = !start;
-                    Log.d(TAG, "focus: " + mFocused);
-                }
-            };
-
-            try {
-                mCamera.setAutoFocusMoveCallback(mAutoFocusMoveCallback);
-            } catch (Exception e) {
-                Log.d(TAG, "failed setting AutoFocusMoveCallback");
-            }
-
-        }
 
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPreviewSize();
 
@@ -816,19 +814,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
-
-        // initialize autofocus
-        try {
-            mCamera.autoFocus(new Camera.AutoFocusCallback() {
-                @Override
-                public void onAutoFocus(boolean success, Camera camera) {
-                    Log.d(TAG,"autofocus callback result: "+success);
-                    mFocused = success;
-                }
-            });
-        } catch (Exception e) {
-            Log.d(TAG, "failed setting AutoFocus callback");
-        }
 
         scanClicked = false;
         safeToTakePicture = true;
