@@ -562,18 +562,38 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         return mCamera.getParameters().getSupportedPictureSizes();
     }
 
-    public Camera.Size getMaxPictureResolution() {
+    public Camera.Size getMaxPictureResolution(float previewRatio) {
         int maxPixels=0;
-        Camera.Size curRes=null;
+        int ratioMaxPixels=0;
+        Camera.Size currentMaxRes=null;
+        Camera.Size ratioCurrentMaxRes=null;
         for ( Camera.Size r: getPictureResolutionList() ) {
-            Log.d(TAG,"supported picture resolution: "+r.width+"x"+r.height);
-            if (r.width*r.height>maxPixels) {
-                maxPixels=r.width*r.height;
-                curRes=r;
+            float pictureRatio = (float) r.width / r.height;
+            Log.d(TAG,"supported picture resolution: "+r.width+"x"+r.height+" ratio: "+pictureRatio);
+            int resolutionPixels = r.width * r.height;
+
+            if (resolutionPixels>ratioMaxPixels && pictureRatio == previewRatio) {
+                ratioMaxPixels=resolutionPixels;
+                ratioCurrentMaxRes=r;
+            }
+
+            if (resolutionPixels>maxPixels) {
+                maxPixels=resolutionPixels;
+                currentMaxRes=r;
             }
         }
 
-        return curRes;
+        if (ratioCurrentMaxRes!=null &&
+                (ratioCurrentMaxRes.width==currentMaxRes.width
+                        || ratioCurrentMaxRes.height==currentMaxRes.height)) {
+
+            Log.d(TAG,"Max supported picture with preview ratio resolution: "
+                    + ratioCurrentMaxRes.width+"x"+ratioCurrentMaxRes.height);
+            return ratioCurrentMaxRes;
+
+        }
+
+        return currentMaxRes;
     }
 
 
@@ -663,7 +683,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         angleSouthWest.setLayoutParams(paramsSW);
 
 
-        Camera.Size maxRes = getMaxPictureResolution();
+        Camera.Size maxRes = getMaxPictureResolution(previewRatio);
         if ( maxRes != null) {
             param.setPictureSize(maxRes.width, maxRes.height);
             Log.d(TAG,"max supported picture resolution: " + maxRes.width + "x" + maxRes.height);
