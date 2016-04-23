@@ -590,7 +590,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         if (ratioCurrentMaxRes!=null && matchAspect) {
 
-            Log.d(TAG,"Max supported picture with preview ratio resolution: "
+            Log.d(TAG,"Max supported picture resolution with preview aspect ratio: "
                     + ratioCurrentMaxRes.width+"x"+ratioCurrentMaxRes.height);
             return ratioCurrentMaxRes;
 

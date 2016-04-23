@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
     <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
         <PreferenceCategory
-            android:title="Basic Settings"
+            android:title="@string/basic_settings"
             android:persistent="false">
             <PreferenceScreen
-                android:title="Automatic Tagging"
-                android:summary="Define automatic tags to be applied on marked scans using the special page template"
+                android:title="@string/automatic_tagging"
+                android:summary="@string/automatic_tagging_summary"
                 >
-            <EditTextPreference
-                android:name="tag_rocket"
-                android:title="Rocket"
-                android:defaultValue="rocket"
-                android:key="tag_rocket"></EditTextPreference>
-            <EditTextPreference
-                android:name="tag_gift"
-                android:title="Gift"
-                android:defaultValue="gift"
-                android:key="tag_gift"></EditTextPreference>
-            <EditTextPreference
-                android:name="tag_tv"
-                android:title="TV"
-                android:defaultValue="tv"
-                android:key="tag_tv"></EditTextPreference>
-            <EditTextPreference
-                android:name="tag_bell"
-                android:title="Bell"
-                android:defaultValue="bell"
-                android:key="tag_bell"></EditTextPreference>
-            <EditTextPreference
-                android:name="tag_game"
-                android:title="Game"
-                android:defaultValue="game"
-                android:key="tag_game"></EditTextPreference>
-            <EditTextPreference
-                android:name="tag_star"
-                android:title="Star"
-                android:defaultValue="star"
-                android:key="tag_star"></EditTextPreference>
-            <EditTextPreference
-                android:name="tag_magnet"
-                android:title="Magnet"
-                android:defaultValue="magnet"
-                android:key="tag_magnet"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_rocket"
+                    android:title="Rocket"
+                    android:defaultValue="rocket"
+                    android:key="tag_rocket"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_gift"
+                    android:title="Gift"
+                    android:defaultValue="gift"
+                    android:key="tag_gift"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_tv"
+                    android:title="TV"
+                    android:defaultValue="tv"
+                    android:key="tag_tv"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_bell"
+                    android:title="Bell"
+                    android:defaultValue="bell"
+                    android:key="tag_bell"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_game"
+                    android:title="Game"
+                    android:defaultValue="game"
+                    android:key="tag_game"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_star"
+                    android:title="Star"
+                    android:defaultValue="star"
+                    android:key="tag_star"></EditTextPreference>
+                <EditTextPreference
+                    android:name="tag_magnet"
+                    android:title="Magnet"
+                    android:defaultValue="magnet"
+                    android:key="tag_magnet">
+                </EditTextPreference>
             </PreferenceScreen>
             <CheckBoxPreference
-                android:title="Match preview aspect ratio"
+                android:title="@string/match_aspect"
                 android:defaultValue="true"
                 android:key="match_aspect"
-                android:summary="Most devices have the highest resolution picture aspect ratio different from the preview one, this setting will select the highest picture resolution that matches with the aspect ratio of preview"
+                android:summary="@string/match_aspect_summary"
                 ></CheckBoxPreference>
             <CheckBoxPreference
-                android:title="Rotate Image 180º"
+                android:title="@string/bug_rotate"
                 android:defaultValue="false"
                 android:key="bug_rotate"
-                android:summary="Some devices have the camera upside down, this setting adjust everything to make sense"
+                android:summary="@string/bug_rotate_summary"
                 ></CheckBoxPreference>
         </PreferenceCategory>
     <PreferenceCategory
-        android:title="Feedback"
+        android:title="@string/feedback"
         android:persistent="false">
         <CheckBoxPreference
-            android:title="Usage Statistics"
+            android:title="@string/usage_stats"
             android:defaultValue="false"
             android:key="privacy_stats"
-            android:summary="Send various usage statistics to developer. No content data will be sent"
+            android:summary="@string/usage_stats_summary"
             ></CheckBoxPreference>
         <CheckBoxPreference
-            android:title="Unique ID"
+            android:title="@string/unique_id"
             android:defaultValue="false"
             android:key="privacy_uuid"
-            android:summary="Use an anonymous unique device identificator"
+            android:summary="@string/unique_id_summary"
             ></CheckBoxPreference>
         <Preference
-            android:title="Send Message"
-            android:summary="Send message to developer"
+            android:title="@string/send_message"
+            android:summary="@string/send_message_summary"
             android:persistent="false">
             <intent
                 android:action="android.intent.action.VIEW"
