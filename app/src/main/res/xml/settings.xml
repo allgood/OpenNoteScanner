@@ -44,6 +44,12 @@
                 android:key="tag_magnet"></EditTextPreference>
             </PreferenceScreen>
             <CheckBoxPreference
+                android:title="Match preview aspect ratio"
+                android:defaultValue="true"
+                android:key="match_aspect"
+                android:summary="Most devices have the highest resolution picture aspect ratio different from the preview one, this setting will select the highest picture resolution that matches with the aspect ratio of preview"
+                ></CheckBoxPreference>
+            <CheckBoxPreference
                 android:title="Rotate Image 180º"
                 android:defaultValue="false"
                 android:key="bug_rotate"

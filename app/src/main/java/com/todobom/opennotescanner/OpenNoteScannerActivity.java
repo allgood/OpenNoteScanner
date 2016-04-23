@@ -150,6 +150,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private View mWaitSpinner;
     private FABToolbarLayout mFabToolbar;
     private boolean mBugRotate=false;
+    private SharedPreferences mSharedPref;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -164,6 +165,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.activity_open_note_scanner);
 
@@ -583,9 +586,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
         }
 
-        if (ratioCurrentMaxRes!=null &&
-                (ratioCurrentMaxRes.width==currentMaxRes.width
-                        || ratioCurrentMaxRes.height==currentMaxRes.height)) {
+        boolean matchAspect = mSharedPref.getBoolean("match_aspect", true);
+
+        if (ratioCurrentMaxRes!=null && matchAspect) {
 
             Log.d(TAG,"Max supported picture with preview ratio resolution: "
                     + ratioCurrentMaxRes.width+"x"+ratioCurrentMaxRes.height);
@@ -703,8 +706,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         mCamera.setParameters(param);
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        mBugRotate = sharedPref.getBoolean("bug_rotate", false);
+        mBugRotate = mSharedPref.getBoolean("bug_rotate", false);
 
         if (mBugRotate) {
             mCamera.setDisplayOrientation(270);
