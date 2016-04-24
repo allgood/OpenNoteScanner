@@ -39,8 +39,9 @@
     <string name="feedback">Feedback</string>
     <string name="usage_stats">Usage Statistics</string>
     <string name="usage_stats_summary">Send various usage statistics to developer. No content data will be sent</string>
-    <string name="unique_id">Unique ID</string>
-    <string name="unique_id_summary">Use an anonymous unique device identificator</string>
     <string name="send_message">Send Message</string>
     <string name="send_message_summary">Send message to developer</string>
+    <string name="stats_optin_title">Usage Stats</string>
+    <string name="stats_optin_text">Do you want to enable Open Note Scanner to send anonymous usage statistics to the developer?\n\nYou can change this anytime on the settings screen.</string>
+    <string name="answer_later">Later</string>
 </resources>

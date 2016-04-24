@@ -5,9 +5,11 @@ package com.todobom.opennotescanner;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +46,7 @@ public class GalleryGridActivity extends AppCompatActivity
     private boolean selectionMode = false;
     private ImageLoader mImageLoader;
     private ImageSize mTargetSize;
+    private SharedPreferences mSharedPref;
 
     @Override
     public void onClick(int index) {
@@ -189,6 +192,12 @@ public class GalleryGridActivity extends AppCompatActivity
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ((OpenNoteScannerApplication) getApplication()).getTracker()
+                .trackScreenView("/GalleryGridActivity", "Gallery");
+
         setContentView(R.layout.activity_gallery);
 
         ActionBar actionBar = getSupportActionBar();

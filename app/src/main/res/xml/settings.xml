@@ -63,14 +63,8 @@
         <CheckBoxPreference
             android:title="@string/usage_stats"
             android:defaultValue="false"
-            android:key="privacy_stats"
+            android:key="usage_stats"
             android:summary="@string/usage_stats_summary"
-            ></CheckBoxPreference>
-        <CheckBoxPreference
-            android:title="@string/unique_id"
-            android:defaultValue="false"
-            android:key="privacy_uuid"
-            android:summary="@string/unique_id_summary"
             ></CheckBoxPreference>
         <Preference
             android:title="@string/send_message"

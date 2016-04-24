@@ -3,8 +3,10 @@ package com.todobom.opennotescanner;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -30,10 +32,17 @@ public class FullScreenViewActivity extends AppCompatActivity {
     private ImageLoader mImageLoader;
     private ImageSize mTargetSize;
     private int mMaxTexture;
+    private SharedPreferences mSharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ((OpenNoteScannerApplication) getApplication()).getTracker()
+                .trackScreenView("/FullScreenViewActivity", "Full Screen Viewer");
+
         setContentView(R.layout.activity_fullscreen_view);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
