@@ -55,10 +55,11 @@
         </activity>
         <activity
             android:name=".FullScreenViewActivity"
-            android:theme="@style/FullscreenTheme"></activity>
-        <activity android:name=".SettingsActivity"
-            android:theme="@style/AppTheme"
-            android:label="@string/settings"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/settings"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

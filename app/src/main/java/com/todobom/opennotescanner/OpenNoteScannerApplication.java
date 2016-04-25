@@ -20,6 +20,11 @@ public class OpenNoteScannerApplication extends PiwikApplication {
             if (key.equals("usage_stats")) {
                 mOptOut = !sharedPreferences.getBoolean("usage_stats", false);
                 getPiwik().setOptOut(mOptOut);
+
+                // when user opt-in, register the download
+                if (!mOptOut) {
+                    getTracker().trackAppDownload(OpenNoteScannerApplication.this, Tracker.ExtraIdentifier.APK_CHECKSUM);
+                }
             }
         }
     };
@@ -43,6 +48,12 @@ public class OpenNoteScannerApplication extends PiwikApplication {
 
     private void initPiwik() {
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // enable usage stats on google play
+        if (BuildConfig.FLAVOR.equals("gplay") && mSharedPref.getBoolean("isFirstRun",true)) {
+            mSharedPref.edit().putBoolean("usage_stats", true);
+            mSharedPref.edit().putBoolean("isFirstRun", false);
+        }
 
         // usage stats is optional and only when not debugging
         mOptOut = !mSharedPref.getBoolean("usage_stats", false);

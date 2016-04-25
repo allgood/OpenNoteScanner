@@ -194,8 +194,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
         });
 
-        checkCreatePermissions();
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         Display display = getWindowManager().getDefaultDisplay();
@@ -495,6 +493,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         for ( String build: Build.SUPPORTED_ABIS) {
             Log.d(TAG,"myBuild "+ build);
         }
+
+        checkCreatePermissions();
 
         CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
 
@@ -1073,6 +1073,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mSharedPref.edit().putBoolean("usage_stats",true);
+                mSharedPref.edit().putBoolean("isFirstRun",false);
+                dialog.dismiss();
             }
         });
 
@@ -1080,12 +1082,15 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mSharedPref.edit().putBoolean("usage_stats",false);
+                mSharedPref.edit().putBoolean("isFirstRun",false);
+                dialog.dismiss();
             }
         });
 
         statsOptInDialog.setNeutralButton(R.string.answer_later, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
 

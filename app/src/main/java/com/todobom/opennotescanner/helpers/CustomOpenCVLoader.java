@@ -43,6 +43,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
     private static long myDownloadReference;
     private static LoaderCallbackInterface Callback;
     private static String Version;
+    private static AlertDialog mAskInstallDialog;
 
 
     public static boolean isFDroidInstalled(Context context) {
@@ -167,6 +168,12 @@ public class CustomOpenCVLoader extends OpenCVLoader {
         Version = version;
         Callback = callback;
 
+        // if dialog is showing, remove
+        if (mAskInstallDialog != null) {
+            mAskInstallDialog.dismiss();
+            mAskInstallDialog = null;
+        }
+
         // if don't have google play, check for OpenCV before trying to init
         if (!isOpenCVInstalled(Version,AppContext) && ( isFDroidInstalled(AppContext) || !isGooglePlayInstalled(AppContext))) {
 
@@ -207,6 +214,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                             dm.remove(myDownloadReference);
                             AppContext.unregisterReceiver(onComplete);
                             dialog.dismiss();
+                            mAskInstallDialog = null;
                         }
                     });
 
@@ -216,6 +224,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                             dm.remove(myDownloadReference);
                             AppContext.unregisterReceiver(onComplete);
                             dialog.dismiss();
+                            mAskInstallDialog = null;
                         }
                     });
 
@@ -235,12 +244,14 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                 }
             });
 
-            askInstallOpenCV.create().show();
+            mAskInstallDialog = askInstallOpenCV.create();
+
+            mAskInstallDialog.show();
 
         } else {
             // initialize opencv
             return OpenCVLoader.initAsync(Version, AppContext, Callback);
-        };
+        }
 
         return false;
 
