@@ -51,8 +51,8 @@ public class OpenNoteScannerApplication extends PiwikApplication {
 
         // enable usage stats on google play
         if (BuildConfig.FLAVOR.equals("gplay") && mSharedPref.getBoolean("isFirstRun",true)) {
-            mSharedPref.edit().putBoolean("usage_stats", true);
-            mSharedPref.edit().putBoolean("isFirstRun", false);
+            mSharedPref.edit().putBoolean("usage_stats", true).commit();
+            mSharedPref.edit().putBoolean("isFirstRun", false).commit();
         }
 
         // usage stats is optional and only when not debugging

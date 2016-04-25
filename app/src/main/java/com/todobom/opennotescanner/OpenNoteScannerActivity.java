@@ -1072,8 +1072,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         statsOptInDialog.setPositiveButton(R.string.answer_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mSharedPref.edit().putBoolean("usage_stats",true);
-                mSharedPref.edit().putBoolean("isFirstRun",false);
+                mSharedPref.edit().putBoolean("usage_stats",true).commit();
+                mSharedPref.edit().putBoolean("isFirstRun",false).commit();
                 dialog.dismiss();
             }
         });
@@ -1081,8 +1081,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         statsOptInDialog.setNegativeButton(R.string.answer_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                mSharedPref.edit().putBoolean("usage_stats",false);
-                mSharedPref.edit().putBoolean("isFirstRun",false);
+                mSharedPref.edit().putBoolean("usage_stats",false).commit();
+                mSharedPref.edit().putBoolean("isFirstRun",false).commit();
                 dialog.dismiss();
             }
         });
