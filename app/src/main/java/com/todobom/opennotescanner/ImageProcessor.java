@@ -62,6 +62,7 @@ public class ImageProcessor extends Handler {
     private int colorThresh = 110;        // threshold
     private Size mPreviewSize;
     private Point[] mPreviewPoints;
+    private ResultPoint[] qrResultPoints;
 
 
     public ImageProcessor ( Looper looper , Handler uiHandler , OpenNoteScannerActivity mainActivity ) {
@@ -95,7 +96,6 @@ public class ImageProcessor extends Handler {
 
     private void processPreviewFrame( PreviewFrame previewFrame ) {
 
-
         Result[] results = {};
 
         Mat frame = previewFrame.getFrame();
@@ -116,32 +116,11 @@ public class ImageProcessor extends Handler {
                 Log.d(TAG, "QR Code valid: " + result.getText());
                 qrOk = true;
                 currentQR = qrText;
+                qrResultPoints = result.getResultPoints();
                 break;
             } else {
                 Log.d(TAG, "QR Code ignored: " + result.getText());
             }
-        }
-
-        int width = frame.width();
-        int height = frame.height();
-
-        for (Result result : results) {
-            ResultPoint[] rp = result.getResultPoints();
-
-            Point lpi = null;
-
-            for (int i = 0; i < rp.length; i += 1) {
-                Point pi = new Point();
-                pi.y = rp[i].getY();
-                pi.x = rp[i].getX() + width/2 + height/4;
-
-                if (lpi != null) {
-                    // disabled - TODO: use a canvas on UI thread
-                    // Imgproc.line(previewFrame, lpi, pi, new Scalar(255, 0, 0), 10);
-                }
-                lpi = pi;
-            }
-
         }
 
         boolean autoMode = previewFrame.isAutoMode();

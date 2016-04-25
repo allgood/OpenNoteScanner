@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+version 1.0.22
+--------------
+
+* fixed first run dialog
+
 version 1.0.21
 --------------
 

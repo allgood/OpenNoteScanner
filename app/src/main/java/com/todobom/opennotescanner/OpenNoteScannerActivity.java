@@ -170,7 +170,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (mSharedPref.getBoolean("isFirstRun",true)) {
+        if (mSharedPref.getBoolean("isFirstRun",true) && !mSharedPref.getBoolean("usage_stats",false)) {
             statsOptInDialog();
         }
 
