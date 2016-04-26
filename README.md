@@ -1,6 +1,8 @@
 OpenNoteScanner
 ===============
 
+[![Build Status](https://travis-ci.org/ctodobom/OpenNoteScanner.svg)](https://travis-ci.org/ctodobom/OpenNoteScanner)
+
 This little application provides a way on scanning handwritten notes and printed documents.
 
 It automatically detect the edge of the paper over a contrastant surface.
