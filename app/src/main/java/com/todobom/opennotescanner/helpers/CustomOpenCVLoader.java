@@ -71,7 +71,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
         {
             PackageInfo info = pm.getPackageInfo("com.android.vending", PackageManager.GET_ACTIVITIES);
             String label = (String) info.applicationInfo.loadLabel(pm);
-            app_installed = (label != null && !label.equals("Market"));
+            app_installed = (label != null && label.equals("Google Play Store"));
         }
         catch (PackageManager.NameNotFoundException e)
         {
