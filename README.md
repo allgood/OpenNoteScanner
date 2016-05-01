@@ -13,7 +13,13 @@ After the page is detected, it compensates any perspective from the image adjust
 
 It is also possible to launch the application from any other application that asks for a picture, just make sure that there is no default application associated with this action.
 
-**TODO:** place some screenshots here
+Screenshots
+-----------
+
+[![screenshot1](http://i.imgur.com/1MDisD3m.jpg)](http://imgur.com/a/ypytF/embed)
+[![screenshot1](http://i.imgur.com/ksvmOlym.png)](http://imgur.com/a/ypytF/embed)
+[![screenshot1](http://i.imgur.com/Ayy8GGgm.jpg)](http://imgur.com/a/ypytF/embed)
+[![screenshot1](http://i.imgur.com/tzMLas3m.jpg)](http://imgur.com/a/ypytF/embed)
 
 Requirements
 ------------
