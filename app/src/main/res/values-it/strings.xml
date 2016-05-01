@@ -37,7 +37,6 @@
     <string name="match_aspect_summary">Most devices have the highest resolution picture aspect ratio different from the preview one, this setting will select the highest picture resolution that matches with the aspect ratio of preview</string>
     <string name="bug_rotate">Rotate Image 180º</string>
     <string name="bug_rotate_summary">Some devices have the camera upside down, this setting adjust everything to make sense</string>
-    <string name="feedback">Feedback</string>
     <string name="usage_stats">Usage Statistics</string>
     <string name="usage_stats_summary">Send various usage statistics to developer. No content data will be sent</string>
     <string name="send_message">Send Message</string>
@@ -50,4 +49,13 @@
     <string name="githubdownload">Direct Download</string>
     <string name="activateunknown">Go to Settings</string>
     <string name="messageactivateunknown">Google Play isn\'t available and Install from Unknown Sources is disabled, please go to Settings and activate it.</string>
+    <string name="github_project">Project on GitHub</string>
+    <string name="github_project_summary">This application is open source, you can help to improve it with feedback, issue reports, code and translations through the GitHub project\'s page</string>
+    <string name="donate">Buy me a coffee</string>
+    <string name="donate_summary">If you liked this application and think it is useful, you may consider on making a donation</string>
+    <string name="telegram">Telegram Group</string>
+    <string name="telegram_summary">Chat about the project on Telegram</string>
+    <string name="feedback_and_contributions">Feedback and contributions</string>
+    <string name="bitcoin_summary">Donate using Bitcoin cryptocurrency</string>
+    <string name="paypal_summary">Many credit cards accepted</string>
 </resources>

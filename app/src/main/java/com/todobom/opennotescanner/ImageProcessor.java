@@ -392,7 +392,8 @@ public class ImageProcessor extends Handler {
      * When a pixel have any of its three elements above the threshold
      * value and the average of the three values are less than 80% of the
      * higher one, brings all three values to the max possible keeping
-     * the relation between them.
+     * the relation between them, any absolute white keeps the value, all
+     * others go to absolute black.
      *
      * src must be a 3 channel image with 8 bits per channel
      *

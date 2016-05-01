@@ -213,7 +213,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 } else {
                     scanClicked = true;
                     Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
-                    v.setBackgroundTintList(ColorStateList.valueOf(0x7FFF00FF));
+                    v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
                 }
             }
         });

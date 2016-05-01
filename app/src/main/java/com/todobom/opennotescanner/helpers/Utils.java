@@ -2,6 +2,8 @@ package com.todobom.opennotescanner.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -215,5 +217,21 @@ public class Utils {
                         + "='"
                         + filePath
                         + "'", null);
+    }
+
+    public static boolean isPackageInstalled(Context context , String packagename) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed = false;
+        try
+        {
+            PackageInfo info = pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            String label = (String) info.applicationInfo.loadLabel(pm);
+            app_installed = (label != null);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            app_installed = false;
+        }
+        return app_installed;
     }
 }

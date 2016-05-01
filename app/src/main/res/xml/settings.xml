@@ -58,7 +58,7 @@
                 ></CheckBoxPreference>
         </PreferenceCategory>
     <PreferenceCategory
-        android:title="@string/feedback"
+        android:title="@string/feedback_and_contributions"
         android:persistent="false">
         <CheckBoxPreference
             android:title="@string/usage_stats"
@@ -66,6 +66,22 @@
             android:key="usage_stats"
             android:summary="@string/usage_stats_summary"
             ></CheckBoxPreference>
+        <Preference
+            android:title="@string/github_project"
+            android:summary="@string/github_project_summary"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/ctodobom/OpenNoteScanner"
+                ></intent></Preference>
+        <Preference
+            android:title="@string/telegram"
+            android:summary="@string/telegram_summary"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg"
+                ></intent></Preference>
         <Preference
             android:title="@string/send_message"
             android:summary="@string/send_message_summary"
@@ -76,5 +92,50 @@
                 ></intent></Preference>
 
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/donate"
+        android:persistent="false"
+        android:key="donate_pref_category">
+
+        <Preference
+            android:summary="@string/donate_summary"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=X6XHVCPMRQEL4"
+                ></intent></Preference>
+
+        <Preference
+            android:title="Paypal"
+            android:summary="@string/paypal_summary"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=X6XHVCPMRQEL4"
+                ></intent></Preference>
+
+        <Preference
+            android:title="Bitcoin"
+            android:summary="@string/bitcoin_summary"
+            android:key="donate_bitcoin"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
+                ></intent></Preference>
+
+        <Preference
+            android:title="Dogecoin"
+            android:summary="@string/dogecoin_summary"
+            android:key="donate_dogecoin"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
+                ></intent></Preference>
+
+    </PreferenceCategory>
+
 
 </PreferenceScreen>
