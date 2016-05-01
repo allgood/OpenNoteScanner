@@ -406,17 +406,26 @@ public class ImageProcessor extends Handler {
         src.get(0,0,d);
 
         for (int i=0; i < size; i+=3) {
-                // the "& 0xff" operations are needed to convert the signed byte to double
-                double max = Math.max( Math.max((double) (d[i] & 0xff) , (double) ( d[i+1] & 0xff ) ),
-                        (double) ( d[i+2] & 0xff ) );
-                double mean = ( (double) (d[i] & 0xff) + (double) ( d[i+1] & 0xff )
-                        + (double) ( d[i+2] & 0xff ) ) / 3;
 
-                if ( max<255 && max>threshold && mean<max*0.8 ) {
-                    d[i] = (byte) ( (double) ( d[i] & 0xff ) * 255 / max );
-                    d[i + 1] = (byte) ( (double) ( d[i + 1] & 0xff ) * 255 / max );
-                    d[i + 2] = (byte) ( (double) ( d[i + 2] & 0xff ) * 255 / max );
-                }
+            // the "& 0xff" operations are needed to convert the signed byte to double
+
+            // avoid unneeded work
+            if ( (double) (d[i] & 0xff) == 255 ) {
+                continue;
+            }
+
+            double max = Math.max(Math.max((double) (d[i] & 0xff), (double) (d[i + 1] & 0xff)),
+                    (double) (d[i + 2] & 0xff));
+            double mean = ((double) (d[i] & 0xff) + (double) (d[i + 1] & 0xff)
+                    + (double) (d[i + 2] & 0xff)) / 3;
+
+            if (max > threshold && mean < max * 0.8) {
+                d[i] = (byte) ((double) (d[i] & 0xff) * 255 / max);
+                d[i + 1] = (byte) ((double) (d[i + 1] & 0xff) * 255 / max);
+                d[i + 2] = (byte) ((double) (d[i + 2] & 0xff) * 255 / max);
+            } else {
+                d[i] = d[i + 1] = d[i + 2] = 0;
+            }
         }
         src.put(0,0,d);
     }
