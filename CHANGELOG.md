@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+version 1.0.23
+--------------
+
+* enhanced quality and performance of color algorithm
+* better messages when asking for OpenCV Manager
+* updated portuguese translation
+
 version 1.0.22
 --------------
 
