@@ -80,7 +80,7 @@
             android:persistent="false">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg"
+                android:data="https://telegram.me/OpenNoteScanner"
                 ></intent></Preference>
         <Preference
             android:title="@string/send_message"
