@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+version 1.0.24
+--------------
+
+* Telegram Group link changed to new "Supergroup"
+* Work with other apps that requests ".nomedia" suffix on files
+
 version 1.0.23
 --------------
 
