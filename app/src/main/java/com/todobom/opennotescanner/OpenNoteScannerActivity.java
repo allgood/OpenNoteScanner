@@ -886,18 +886,28 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Core.flip(doc.t(), endDoc, 1);
 
-        Imgcodecs.imwrite(fileName, endDoc);
-
-        try {
-            ExifInterface exif = new ExifInterface(fileName);
-            exif.setAttribute("UserComment", "Generated using Open Note Scanner");
-            // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
-            exif.saveAttributes();
-        } catch (IOException e) {
-            e.printStackTrace();
+        String suffix = "";
+        if (isIntent && fileName.endsWith(".nomedia")) {
+            suffix = ".jpg";
         }
 
-        addImageToGallery(fileName , this);
+        Imgcodecs.imwrite(fileName+suffix, endDoc);
+
+        if (isIntent && !suffix.isEmpty()) {
+            File orig = new File(fileName+suffix);
+            orig.renameTo(new File(fileName));
+        }
+
+        if ((fileName+suffix).endsWith(".jpg")) {
+            try {
+                ExifInterface exif = new ExifInterface(fileName);
+                exif.setAttribute("UserComment", "Generated using Open Note Scanner");
+                // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
+                exif.saveAttributes();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         animateDocument(fileName,scannedDocument);
 
@@ -906,6 +916,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (isIntent) {
             setResult(RESULT_OK, intent);
             finish();
+        } else {
+            addImageToGallery(fileName , this);
         }
 
         // Record goal "PictureTaken"
