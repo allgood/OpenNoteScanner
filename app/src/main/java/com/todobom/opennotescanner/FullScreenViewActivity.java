@@ -34,6 +34,10 @@ public class FullScreenViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ((OpenNoteScannerApplication) getApplication()).getTracker()
+                .trackScreenView("/FullScreenViewActivity", "Full Screen Viewer");
+
         setContentView(R.layout.activity_fullscreen_view);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -156,9 +160,11 @@ public class FullScreenViewActivity extends AppCompatActivity {
     private void deleteImage() {
         int item = mViewPager.getCurrentItem();
 
-        final File photoFile = new File(mAdapter.getPath(item));
+        String filePath = mAdapter.getPath(item);
+        final File photoFile = new File(filePath);
 
         photoFile.delete();
+        Utils.removeImageFromGallery(filePath,this);
 
         loadAdapter();
         mViewPager.setCurrentItem(item);

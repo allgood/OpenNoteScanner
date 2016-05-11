@@ -1,9 +1,13 @@
 package com.todobom.opennotescanner.helpers;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.provider.MediaStore;
 import android.view.Display;
 import android.view.WindowManager;
 
@@ -196,5 +200,38 @@ public class Utils {
         return inSampleSize;
     }
 
+    public static void addImageToGallery(final String filePath, final Context context) {
 
+        ContentValues values = new ContentValues();
+
+        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis());
+        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+        values.put(MediaStore.MediaColumns.DATA, filePath);
+
+        context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+    }
+
+    public static void removeImageFromGallery(String filePath, Context context) {
+        context.getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Images.Media.DATA
+                        + "='"
+                        + filePath
+                        + "'", null);
+    }
+
+    public static boolean isPackageInstalled(Context context , String packagename) {
+        PackageManager pm = context.getPackageManager();
+        boolean app_installed = false;
+        try
+        {
+            PackageInfo info = pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            String label = (String) info.applicationInfo.loadLabel(pm);
+            app_installed = (label != null);
+        }
+        catch (PackageManager.NameNotFoundException e)
+        {
+            app_installed = false;
+        }
+        return app_installed;
+    }
 }

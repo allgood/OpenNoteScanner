@@ -1,6 +1,8 @@
 OpenNoteScanner
 ===============
 
+[![Build Status](https://travis-ci.org/ctodobom/OpenNoteScanner.svg)](https://travis-ci.org/ctodobom/OpenNoteScanner)
+
 This little application provides a way on scanning handwritten notes and printed documents.
 
 It automatically detect the edge of the paper over a contrastant surface.
@@ -11,7 +13,13 @@ After the page is detected, it compensates any perspective from the image adjust
 
 It is also possible to launch the application from any other application that asks for a picture, just make sure that there is no default application associated with this action.
 
-**TODO:** place some screenshots here
+Screenshots
+-----------
+
+[![screenshot1](http://i.imgur.com/1MDisD3m.jpg)](http://imgur.com/a/ypytF/embed#0)
+[![screenshot1](http://i.imgur.com/ksvmOlym.png)](http://imgur.com/a/ypytF/embed#3)
+[![screenshot1](http://i.imgur.com/Ayy8GGgm.jpg)](http://imgur.com/a/ypytF/embed#1)
+[![screenshot1](http://i.imgur.com/tzMLas3m.jpg)](http://imgur.com/a/ypytF/embed#2)
 
 Requirements
 ------------
@@ -24,15 +32,15 @@ In order to capture and manipulate images Open Note Scanner depends on having th
 How to Install
 --------------
 
-Open Note Scanner is available for simplified installation on [Google Play Store](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner) and also from [F-Droid Android Open Source Repository](https://f-droid.org/repository/browse/?fdfilter=open+note+scanner&fdid=com.todobom.opennotescanner).
+Open Note Scanner is available for simplified installation on [Google Play Store](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner), from [Amazon App Store](http://www.amazon.com/Claudemir-Todo-Bom-Open-Scanner/dp/B01EUAU924) and also from [F-Droid Android Open Source Repository](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner).
 
-Binary APK file is available in the [releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. 
+[<img alt="Get it on Google Play" height="60" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) [![Get it on F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner) [<img alt="Available at Amazon App Store" height="60" src="https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/devportal2/res/images/amazon-underground-app-us-black.png" />](http://www.amazon.com/Claudemir-Todo-Bom-Open-Scanner/dp/B01EUAU924)
+
+Binary APK file is available [directly from GitHub in the releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. 
 
 
 Instructions for building
 -------------------------
-
-Open Note Scanner needs to include the java library for OpenCV. This library is responsible in interfacing the services from OpenCV Manager (see Installation) with the Android Java code.
 
 ### Android Studio
 
@@ -58,7 +66,7 @@ You need to point the environment variable ```ANDROID_HOME``` to your Android SD
 ```
 $ cd OpenNoteScanner
 $ export ANDROID_HOME=~/android-sdk-linux
-$ ./gradlew assembleDebug
+$ ./gradlew assembleRelease
 ```
 
 

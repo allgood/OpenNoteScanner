@@ -1,5 +1,6 @@
 package com.todobom.opennotescanner.helpers;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.todobom.opennotescanner.OpenNoteScannerApplication;
 import com.todobom.opennotescanner.R;
 
 import us.feras.mdv.MarkdownView;
@@ -39,12 +41,6 @@ public class AboutFragment extends DialogFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        // Get field from view
-        // Fetch arguments from bundle and set title
-        /*
-        String title = getArguments().getString("title", "Enter Name");
-        getDialog().setTitle(title);
-        */
 
         MarkdownView markdownView = (MarkdownView) view.findViewById(R.id.about_markdown);
 
@@ -67,6 +63,10 @@ public class AboutFragment extends DialogFragment {
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_app_subject));
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+
+                ((OpenNoteScannerApplication) v.getContext().getApplicationContext()).getTracker()
+                        .trackScreenView("/shareapp", "Share Application");
+
                 startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_app_using)));
             }
         });
@@ -79,6 +79,16 @@ public class AboutFragment extends DialogFragment {
             mRunOnDetach.run();
         }
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        ((OpenNoteScannerApplication) activity.getApplication()).getTracker()
+                .trackScreenView("/about", "About Dialog");
+
+    }
+
 
     public void setRunOnDetach( Runnable runOnDetach ) {
         mRunOnDetach = runOnDetach;

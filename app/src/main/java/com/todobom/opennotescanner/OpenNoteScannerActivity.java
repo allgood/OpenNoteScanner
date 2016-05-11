@@ -3,13 +3,17 @@ package com.todobom.opennotescanner;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.AudioManager;
+import android.media.ExifInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +22,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -63,10 +68,12 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.todobom.opennotescanner.helpers.Utils.addImageToGallery;
 import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
 
 /**
@@ -141,10 +148,11 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private Camera mCamera;
 
     private boolean mFocused;
-    private Camera.AutoFocusMoveCallback mAutoFocusMoveCallback = null;
     private HUDCanvasView mHud;
     private View mWaitSpinner;
     private FABToolbarLayout mFabToolbar;
+    private boolean mBugRotate=false;
+    private SharedPreferences mSharedPref;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -159,6 +167,15 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if (mSharedPref.getBoolean("isFirstRun",true) && !mSharedPref.getBoolean("usage_stats",false)) {
+            statsOptInDialog();
+        }
+
+        ((OpenNoteScannerApplication) getApplication()).getTracker()
+                .trackScreenView("/OpenNoteScannerActivity", "Main Screen");
 
         setContentView(R.layout.activity_open_note_scanner);
 
@@ -176,8 +193,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 toggle();
             }
         });
-
-        checkCreatePermissions();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -198,7 +213,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 } else {
                     scanClicked = true;
                     Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
-                    v.setBackgroundTintList(ColorStateList.valueOf(0x7FFF00FF));
+                    v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
                 }
             }
         });
@@ -258,6 +273,16 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 autoMode = !autoMode;
                 ((ImageView)v).setColorFilter(autoMode ? 0xFFFFFFFF : 0xFFA0F0A0);
                 Toast.makeText(getApplicationContext(), autoMode?R.string.autoMode:R.string.manualMode, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        final ImageView settingsButton = (ImageView) findViewById(R.id.settingsButton);
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext() , SettingsActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -469,6 +494,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             Log.d(TAG,"myBuild "+ build);
         }
 
+        checkCreatePermissions();
+
         CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
 
         if (mImageThread == null ) {
@@ -547,18 +574,38 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         return mCamera.getParameters().getSupportedPictureSizes();
     }
 
-    public Camera.Size getMaxPictureResolution() {
+    public Camera.Size getMaxPictureResolution(float previewRatio) {
         int maxPixels=0;
-        Camera.Size curRes=null;
+        int ratioMaxPixels=0;
+        Camera.Size currentMaxRes=null;
+        Camera.Size ratioCurrentMaxRes=null;
         for ( Camera.Size r: getPictureResolutionList() ) {
-            Log.d(TAG,"supported picture resolution: "+r.width+"x"+r.height);
-            if (r.width*r.height>maxPixels) {
-                maxPixels=r.width*r.height;
-                curRes=r;
+            float pictureRatio = (float) r.width / r.height;
+            Log.d(TAG,"supported picture resolution: "+r.width+"x"+r.height+" ratio: "+pictureRatio);
+            int resolutionPixels = r.width * r.height;
+
+            if (resolutionPixels>ratioMaxPixels && pictureRatio == previewRatio) {
+                ratioMaxPixels=resolutionPixels;
+                ratioCurrentMaxRes=r;
+            }
+
+            if (resolutionPixels>maxPixels) {
+                maxPixels=resolutionPixels;
+                currentMaxRes=r;
             }
         }
 
-        return curRes;
+        boolean matchAspect = mSharedPref.getBoolean("match_aspect", true);
+
+        if (ratioCurrentMaxRes!=null && matchAspect) {
+
+            Log.d(TAG,"Max supported picture resolution with preview aspect ratio: "
+                    + ratioCurrentMaxRes.width+"x"+ratioCurrentMaxRes.height);
+            return ratioCurrentMaxRes;
+
+        }
+
+        return currentMaxRes;
     }
 
 
@@ -648,7 +695,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         angleSouthWest.setLayoutParams(paramsSW);
 
 
-        Camera.Size maxRes = getMaxPictureResolution();
+        Camera.Size maxRes = getMaxPictureResolution(previewRatio);
         if ( maxRes != null) {
             param.setPictureSize(maxRes.width, maxRes.height);
             Log.d(TAG,"max supported picture resolution: " + maxRes.width + "x" + maxRes.height);
@@ -656,7 +703,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         PackageManager pm = getPackageManager();
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
-            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
             Log.d(TAG, "enabling autofocus");
         } else {
             mFocused = true;
@@ -667,18 +714,34 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         mCamera.setParameters(param);
-        mCamera.setDisplayOrientation(90);
+
+        mBugRotate = mSharedPref.getBoolean("bug_rotate", false);
+
+        if (mBugRotate) {
+            mCamera.setDisplayOrientation(270);
+        } else {
+            mCamera.setDisplayOrientation(90);
+        }
+
+        if (mImageProcessor != null) {
+            mImageProcessor.setBugRotate(mBugRotate);
+        }
 
         try {
-            mCamera.setPreviewDisplay(mSurfaceHolder);
-            mCamera.startPreview();
-            mCamera.setPreviewCallback(this);
+            mCamera.setAutoFocusMoveCallback(new Camera.AutoFocusMoveCallback() {
+                @Override
+                public void onAutoFocusMoving(boolean start, Camera camera) {
+                    mFocused = !start;
+                    Log.d(TAG, "focusMoving: " + mFocused);
+                }
+            });
+        } catch (Exception e) {
+            Log.d(TAG, "failed setting AutoFocusMoveCallback");
         }
 
-        catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
+        // some devices doesn't call the AutoFocusMoveCallback - fake the
+        // focus to true at the start
+        mFocused = true;
 
         safeToTakePicture = true;
 
@@ -699,6 +762,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         try {
             mCamera.setPreviewDisplay(mSurfaceHolder);
+
             mCamera.startPreview();
             mCamera.setPreviewCallback(this);
         }
@@ -718,23 +782,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-
-        if ( mAutoFocusMoveCallback == null ) {
-            mAutoFocusMoveCallback = new Camera.AutoFocusMoveCallback() {
-                @Override
-                public void onAutoFocusMoving(boolean start, Camera camera) {
-                    mFocused = !start;
-                    Log.d(TAG, "focus: " + mFocused);
-                }
-            };
-
-            try {
-                mCamera.setAutoFocusMoveCallback(mAutoFocusMoveCallback);
-            } catch (Exception e) {
-                Log.d(TAG, "failed setting AutoFocusMoveCallback");
-            }
-
-        }
 
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPreviewSize();
 
@@ -787,6 +834,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     @Override
     public void onPictureTaken(byte[] data, Camera camera) {
 
+        shootSound();
+
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPictureSize();
 
         Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height);
@@ -796,27 +845,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
-
-        shootSound();
-
-        // restart preview
-        camera.startPreview();
-
-        // initialize autofocus
-        try {
-            mCamera.autoFocus(new Camera.AutoFocusCallback() {
-                @Override
-                public void onAutoFocus(boolean success, Camera camera) {
-                    Log.d(TAG,"autofocus callback result: "+success);
-                    mFocused = success;
-                }
-            });
-        } catch (Exception e) {
-            Log.d(TAG, "failed setting AutoFocus callback");
-        }
-
-        // FIXME: check setPreviewCallback
-        camera.setPreviewCallback(this);
 
         scanClicked = false;
         safeToTakePicture = true;
@@ -858,7 +886,28 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Core.flip(doc.t(), endDoc, 1);
 
-        Imgcodecs.imwrite(fileName, endDoc);
+        String suffix = "";
+        if (isIntent && fileName.endsWith(".nomedia")) {
+            suffix = ".jpg";
+        }
+
+        Imgcodecs.imwrite(fileName+suffix, endDoc);
+
+        if (isIntent && !suffix.isEmpty()) {
+            File orig = new File(fileName+suffix);
+            orig.renameTo(new File(fileName));
+        }
+
+        if ((fileName+suffix).endsWith(".jpg")) {
+            try {
+                ExifInterface exif = new ExifInterface(fileName);
+                exif.setAttribute("UserComment", "Generated using Open Note Scanner");
+                // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
+                exif.saveAttributes();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         animateDocument(fileName,scannedDocument);
 
@@ -867,7 +916,15 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (isIntent) {
             setResult(RESULT_OK, intent);
             finish();
+        } else {
+            addImageToGallery(fileName , this);
         }
+
+        // Record goal "PictureTaken"
+        ((OpenNoteScannerApplication) getApplication()).getTracker().trackGoal(1);
+
+        refreshCamera();
+
     }
 
     class AnimationRunnable implements Runnable {
@@ -1016,4 +1073,40 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         return false;
     }
+
+
+    private void statsOptInDialog() {
+        AlertDialog.Builder statsOptInDialog = new AlertDialog.Builder(this);
+
+        statsOptInDialog.setTitle(getString(R.string.stats_optin_title));
+        statsOptInDialog.setMessage(getString(R.string.stats_optin_text));
+
+        statsOptInDialog.setPositiveButton(R.string.answer_yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mSharedPref.edit().putBoolean("usage_stats",true).commit();
+                mSharedPref.edit().putBoolean("isFirstRun",false).commit();
+                dialog.dismiss();
+            }
+        });
+
+        statsOptInDialog.setNegativeButton(R.string.answer_no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mSharedPref.edit().putBoolean("usage_stats",false).commit();
+                mSharedPref.edit().putBoolean("isFirstRun",false).commit();
+                dialog.dismiss();
+            }
+        });
+
+        statsOptInDialog.setNeutralButton(R.string.answer_later, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        statsOptInDialog.create().show();
+    }
+
 }

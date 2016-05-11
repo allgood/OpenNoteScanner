@@ -1,5 +1,6 @@
 package com.todobom.opennotescanner;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.graphics.drawable.shapes.PathShape;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.zxing.BinaryBitmap;
@@ -27,6 +29,7 @@ import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.helpers.Utils;
 import com.todobom.opennotescanner.views.HUDCanvasView;
 
+import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -52,12 +55,14 @@ public class ImageProcessor extends Handler {
     private static final String TAG = "ImageProcessor";
     private final Handler mUiHandler;
     private final OpenNoteScannerActivity mMainActivity;
+    private boolean mBugRotate;
     private boolean colorMode=false;
     private double colorGain = 1.5;       // contrast
     private double colorBias = 0;         // bright
     private int colorThresh = 110;        // threshold
-    private Size previewSize;
-    private Point[] previewPoints;
+    private Size mPreviewSize;
+    private Point[] mPreviewPoints;
+    private ResultPoint[] qrResultPoints;
 
 
     public ImageProcessor ( Looper looper , Handler uiHandler , OpenNoteScannerActivity mainActivity ) {
@@ -65,6 +70,8 @@ public class ImageProcessor extends Handler {
         mUiHandler = uiHandler;
         mMainActivity = mainActivity;
 
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
+        mBugRotate = sharedPref.getBoolean("bug_rotate",false);
     }
 
     public void handleMessage ( Message msg ) {
@@ -89,7 +96,6 @@ public class ImageProcessor extends Handler {
 
     private void processPreviewFrame( PreviewFrame previewFrame ) {
 
-
         Result[] results = {};
 
         Mat frame = previewFrame.getFrame();
@@ -110,33 +116,11 @@ public class ImageProcessor extends Handler {
                 Log.d(TAG, "QR Code valid: " + result.getText());
                 qrOk = true;
                 currentQR = qrText;
+                qrResultPoints = result.getResultPoints();
                 break;
             } else {
                 Log.d(TAG, "QR Code ignored: " + result.getText());
             }
-        }
-
-
-        int width = frame.width();
-        int height = frame.height();
-
-        for (Result result : results) {
-            ResultPoint[] rp = result.getResultPoints();
-
-            Point lpi = null;
-
-            for (int i = 0; i < rp.length; i += 1) {
-                Point pi = new Point();
-                pi.y = rp[i].getY();
-                pi.x = rp[i].getX() + width/2 + height/4;
-
-                if (lpi != null) {
-                    // disabled - TODO: use a canvas on UI thread
-                    // Imgproc.line(previewFrame, lpi, pi, new Scalar(255, 0, 0), 10);
-                }
-                lpi = pi;
-            }
-
         }
 
         boolean autoMode = previewFrame.isAutoMode();
@@ -166,6 +150,11 @@ public class ImageProcessor extends Handler {
 
         Log.d(TAG, "processPicture - imported image " + img.size().width + "x" + img.size().height);
 
+        if (mBugRotate) {
+            Core.flip(img, img, 1 );
+            Core.flip(img, img, 0 );
+        }
+
         ScannedDocument doc = detectDocument(img);
         mMainActivity.saveDocument(doc);
 
@@ -191,8 +180,8 @@ public class ImageProcessor extends Handler {
             MatOfPoint c = quad.contour;
 
             sd.quadrilateral = quad;
-            sd.previewPoints = previewPoints;
-            sd.previewSize = previewSize;
+            sd.previewPoints = mPreviewPoints;
+            sd.previewSize = mPreviewSize;
 
             doc = fourPointTransform(inputRgba, quad.points);
 
@@ -221,8 +210,8 @@ public class ImageProcessor extends Handler {
 
         Quadrilateral quad = getQuadrilateral(contours, inputRgba.size());
 
-        previewPoints = null;
-        previewSize = inputRgba.size();
+        mPreviewPoints = null;
+        mPreviewSize = inputRgba.size();
 
         if (quad != null) {
 
@@ -233,12 +222,16 @@ public class ImageProcessor extends Handler {
             for ( int i=0; i<4 ; i++ ) {
                 int x = Double.valueOf(quad.points[i].x*ratio).intValue();
                 int y = Double.valueOf(quad.points[i].y*ratio).intValue();
-                rescaledPoints[i] = new Point(x,y);
+                if (mBugRotate) {
+                    rescaledPoints[(i+2)%4] = new Point( Math.abs(x- mPreviewSize.width), Math.abs(y- mPreviewSize.height));
+                } else {
+                    rescaledPoints[i] = new Point(x, y);
+                }
             }
 
-            previewPoints = rescaledPoints;
+            mPreviewPoints = rescaledPoints;
 
-            drawDocumentBox(previewPoints , previewSize);
+            drawDocumentBox(mPreviewPoints, mPreviewSize);
 
             Log.d(TAG, quad.points[0].toString() + " , " + quad.points[1].toString() + " , " + quad.points[2].toString() + " , " + quad.points[3].toString());
 
@@ -399,7 +392,8 @@ public class ImageProcessor extends Handler {
      * When a pixel have any of its three elements above the threshold
      * value and the average of the three values are less than 80% of the
      * higher one, brings all three values to the max possible keeping
-     * the relation between them.
+     * the relation between them, any absolute white keeps the value, all
+     * others go to absolute black.
      *
      * src must be a 3 channel image with 8 bits per channel
      *
@@ -413,17 +407,26 @@ public class ImageProcessor extends Handler {
         src.get(0,0,d);
 
         for (int i=0; i < size; i+=3) {
-                // the "& 0xff" operations are needed to convert the signed byte to double
-                double max = Math.max( Math.max((double) (d[i] & 0xff) , (double) ( d[i+1] & 0xff ) ),
-                        (double) ( d[i+2] & 0xff ) );
-                double mean = ( (double) (d[i] & 0xff) + (double) ( d[i+1] & 0xff )
-                        + (double) ( d[i+2] & 0xff ) ) / 3;
 
-                if ( max<255 && max>threshold && mean<max*0.8 ) {
-                    d[i] = (byte) ( (double) ( d[i] & 0xff ) * 255 / max );
-                    d[i + 1] = (byte) ( (double) ( d[i + 1] & 0xff ) * 255 / max );
-                    d[i + 2] = (byte) ( (double) ( d[i + 2] & 0xff ) * 255 / max );
-                }
+            // the "& 0xff" operations are needed to convert the signed byte to double
+
+            // avoid unneeded work
+            if ( (double) (d[i] & 0xff) == 255 ) {
+                continue;
+            }
+
+            double max = Math.max(Math.max((double) (d[i] & 0xff), (double) (d[i + 1] & 0xff)),
+                    (double) (d[i + 2] & 0xff));
+            double mean = ((double) (d[i] & 0xff) + (double) (d[i + 1] & 0xff)
+                    + (double) (d[i + 2] & 0xff)) / 3;
+
+            if (max > threshold && mean < max * 0.8) {
+                d[i] = (byte) ((double) (d[i] & 0xff) * 255 / max);
+                d[i + 1] = (byte) ((double) (d[i + 1] & 0xff) * 255 / max);
+                d[i + 2] = (byte) ((double) (d[i + 2] & 0xff) * 255 / max);
+            } else {
+                d[i] = d[i + 1] = d[i + 2] = 0;
+            }
         }
         src.put(0,0,d);
     }
@@ -518,7 +521,13 @@ public class ImageProcessor extends Handler {
         int w = inputImage.width();
         int h = inputImage.height();
 
-        Mat southEast = inputImage.submat(0, h/4, w/2 + h/4, w);
+        Mat southEast;
+
+        if (mBugRotate) {
+            southEast = inputImage.submat(h-h/4 , h , 0 , w/2 - h/4 );
+        } else {
+            southEast = inputImage.submat(0, h / 4, w / 2 + h / 4, w);
+        }
 
         Bitmap bMap = Bitmap.createBitmap(southEast.width(), southEast.height(), Bitmap.Config.ARGB_8888);
         org.opencv.android.Utils.matToBitmap(southEast, bMap);
@@ -531,9 +540,6 @@ public class ImageProcessor extends Handler {
 
         BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
 
-        Result result = null;
-        ResultPoint[] rps = null;
-
         Result[] results = {};
         try {
             results = qrCodeMultiReader.decodeMultiple(bitmap);
@@ -545,4 +551,7 @@ public class ImageProcessor extends Handler {
 
     }
 
+    public void setBugRotate(boolean bugRotate) {
+        mBugRotate = bugRotate;
+    }
 }

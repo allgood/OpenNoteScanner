@@ -1,10 +1,34 @@
 Change Log
 ==========
 
-git HEAD
---------
+version 1.0.24
+--------------
+
+* Telegram Group link changed to new "Supergroup"
+* Work with other apps that requests ".nomedia" suffix on files
+
+version 1.0.23
+--------------
+
+* enhanced quality and performance of color algorithm
+* better messages when asking for OpenCV Manager
+* updated portuguese translation
+
+version 1.0.22
+--------------
+
+* fixed first run dialog
+
+version 1.0.21
+--------------
 
 * removed permission to READ_PHONE_STATE
+* started settings activity
+* setting to rotate the camera 180 degrees
+* keep image frozen until picture processing is done
+* some code cleanup
+* piwik monitoring
+* opt-in dialog on first run
 
 version 1.0.20
 --------------

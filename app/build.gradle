@@ -7,8 +7,8 @@ android {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 20
-        versionName '1.0.20'
+        versionCode 24
+        versionName '1.0.24'
     }
     buildTypes {
         release {
@@ -17,6 +17,10 @@ android {
         }
     }
     productFlavors {
+        fdroid {
+        }
+        gplay {
+        }
     }
 }
 
@@ -36,4 +40,5 @@ dependencies {
     compile 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     compile 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     compile 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
+    compile 'org.piwik.sdk:piwik-sdk:0.0.4'
 }
