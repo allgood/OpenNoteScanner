@@ -68,7 +68,11 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -865,9 +869,16 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         Intent intent = getIntent();
         String fileName;
         boolean isIntent = false;
+        Uri fileUri = null;
         if (intent.getAction().equals("android.media.action.IMAGE_CAPTURE")) {
-            Uri fileUri = ((Uri) intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT));
-            fileName = fileUri.getPath();
+            fileUri = ((Uri) intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT));
+            Log.d(TAG,"intent uri: " + fileUri.toString());
+            try {
+                fileName = File.createTempFile("onsFile",".jpg", this.getCacheDir()).getPath();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
             isIntent = true;
         } else {
             File folder = new File(Environment.getExternalStorageDirectory().toString()
@@ -886,34 +897,53 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Core.flip(doc.t(), endDoc, 1);
 
-        String suffix = "";
-        if (isIntent && fileName.endsWith(".nomedia")) {
-            suffix = ".jpg";
+        Imgcodecs.imwrite(fileName, endDoc);
+
+        try {
+            ExifInterface exif = new ExifInterface(fileName);
+            exif.setAttribute("UserComment", "Generated using Open Note Scanner");
+            // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
+            exif.saveAttributes();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        Imgcodecs.imwrite(fileName+suffix, endDoc);
-
-        if (isIntent && !suffix.isEmpty()) {
-            File orig = new File(fileName+suffix);
-            orig.renameTo(new File(fileName));
-        }
-
-        if ((fileName+suffix).endsWith(".jpg")) {
+        if (isIntent) {
+            InputStream inputStream = null;
+            OutputStream realOutputStream = null;
             try {
-                ExifInterface exif = new ExifInterface(fileName);
-                exif.setAttribute("UserComment", "Generated using Open Note Scanner");
-                // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
-                exif.saveAttributes();
+                inputStream = new FileInputStream(fileName);
+                realOutputStream = this.getContentResolver().openOutputStream(fileUri);
+                // Transfer bytes from in to out
+                byte [] buffer = new byte[1024];
+                int len;
+                while( (len = inputStream.read(buffer)) > 0 ) {
+                    realOutputStream.write(buffer, 0, len);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                return;
             } catch (IOException e) {
                 e.printStackTrace();
+                return;
+            } finally {
+                try {
+                    inputStream.close();
+                    realOutputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         }
 
         animateDocument(fileName,scannedDocument);
 
         Log.d(TAG, "wrote: " + fileName);
         endDoc.release();
+
         if (isIntent) {
+            new File(fileName).delete();
             setResult(RESULT_OK, intent);
             finish();
         } else {
