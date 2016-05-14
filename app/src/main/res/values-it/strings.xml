@@ -58,4 +58,6 @@
     <string name="feedback_and_contributions">Feedback and contributions</string>
     <string name="bitcoin_summary">Donate using Bitcoin cryptocurrency</string>
     <string name="paypal_summary">Many credit cards accepted</string>
+    <string name="filterModeOn">Image Processor On</string>
+    <string name="filterModeOff">Image Processor Off</string>
 </resources>

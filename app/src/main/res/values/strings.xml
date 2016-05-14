@@ -60,4 +60,6 @@
     <string name="bitcoin_summary">Donate using Bitcoin cryptocurrency</string>
     <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">Many credit cards accepted</string>
+    <string name="filterModeOn">Image Processor On</string>
+    <string name="filterModeOff">Image Processor Off</string>
 </resources>

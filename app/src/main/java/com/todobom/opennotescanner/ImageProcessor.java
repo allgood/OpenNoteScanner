@@ -57,6 +57,7 @@ public class ImageProcessor extends Handler {
     private final OpenNoteScannerActivity mMainActivity;
     private boolean mBugRotate;
     private boolean colorMode=false;
+    private boolean filterMode=true;
     private double colorGain = 1.5;       // contrast
     private double colorBias = 0;         // bright
     private int colorThresh = 110;        // threshold
@@ -90,6 +91,8 @@ public class ImageProcessor extends Handler {
                 processPicture((Mat) obj.getObj());
             } else if ( command.equals("colorMode")) {
                 colorMode=(Boolean) obj.getObj();
+            } else if ( command.equals("filterMode")) {
+                filterMode=(Boolean) obj.getObj();
             }
         }
     }
@@ -364,7 +367,7 @@ public class ImageProcessor extends Handler {
     }
 
     private void enhanceDocument( Mat src ) {
-        if (colorMode) {
+        if (colorMode && filterMode) {
             src.convertTo(src,-1, colorGain , colorBias);
             Mat mask = new Mat(src.size(), CvType.CV_8UC1);
             Imgproc.cvtColor(src,mask,Imgproc.COLOR_RGBA2GRAY);
@@ -382,9 +385,11 @@ public class ImageProcessor extends Handler {
 
             // special color threshold algorithm
             colorThresh(src,colorThresh);
-        } else {
+        } else if (!colorMode) {
             Imgproc.cvtColor(src,src,Imgproc.COLOR_RGBA2GRAY);
-            Imgproc.adaptiveThreshold(src,src,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY,15,15);
+            if (filterMode) {
+                Imgproc.adaptiveThreshold(src, src, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 15);
+            }
         }
     }
 

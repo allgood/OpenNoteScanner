@@ -255,6 +255,22 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
         });
 
+        final ImageView filterModeButton = (ImageView) findViewById(R.id.filterModeButton);
+
+        filterModeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                filterMode = !filterMode;
+                ((ImageView)v).setColorFilter(filterMode ? 0xFFFFFFFF : 0xFFA0F0A0);
+
+                sendImageProcessorMessage("filterMode" , filterMode );
+
+                Toast.makeText(getApplicationContext(), filterMode?R.string.filterModeOn:R.string.filterModeOff, Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
         final ImageView flashModeButton = (ImageView) findViewById(R.id.flashModeButton);
 
         flashModeButton.setOnClickListener(new View.OnClickListener() {
@@ -537,6 +553,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private boolean scanClicked = false;
 
     private boolean colorMode = false;
+    private boolean filterMode = true;
 
     private boolean autoMode = false;
     private boolean mFlashMode = false;
@@ -898,6 +915,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         Core.flip(doc.t(), endDoc, 1);
 
         Imgcodecs.imwrite(fileName, endDoc);
+        endDoc.release();
 
         try {
             ExifInterface exif = new ExifInterface(fileName);
@@ -940,7 +958,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         animateDocument(fileName,scannedDocument);
 
         Log.d(TAG, "wrote: " + fileName);
-        endDoc.release();
 
         if (isIntent) {
             new File(fileName).delete();
