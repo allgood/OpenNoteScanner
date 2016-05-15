@@ -47,6 +47,8 @@ Wie bei Freier Software üblich, sind Beiträge immer willkommen. Jeder, der Cod
 
 * Nicolas Raoul - Korrekturen an der englischen Übersetzung
 * Claudio Arseni - Italienische Übersetzung
+* Francisco Toca - Spanische Übersetzung
+* [@nebulon42](https://github.com/nebulon42) - Deutsche Übersetzung
 
 Weitere Menschen haben [Fehlermeldungen](https://github.com/ctodobom/OpenNoteScanner/issues) erstellt und Informationen über die [Telegram Gruppe](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) bereitgestellt. Diese Hilfe wird auch sehr geschätzt.
 

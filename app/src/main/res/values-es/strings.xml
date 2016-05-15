@@ -58,6 +58,6 @@
     <string name="feedback_and_contributions">Comentarios y contribuciones</string>
     <string name="bitcoin_summary">Donar usando la criptomoneda Bitcoin</string>
     <string name="paypal_summary">Acepta diversas tarjetas de crédito</string>
-    <string name="filterModeOn">Image Processor On</string>
-    <string name="filterModeOff">Image Processor Off</string>
+    <string name="filterModeOn">Procesador de imagen activado</string>
+    <string name="filterModeOff">Procesador de imagen desactivado</string>
 </resources>
