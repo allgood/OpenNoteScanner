@@ -6,7 +6,7 @@ version 1.0.25
 
 * Handle calls from external apps that uses Content Handlers (fix #37)
 * Toolbar icon to disable image processing (fix #38)
-* Spanish translation (contributed by Francico Toca)
+* Spanish translation (contributed by Francisco Toca)
 * German translation (contributed by [@nebulon42](https://github.com/nebulon42))
 
 version 1.0.24
