@@ -58,6 +58,6 @@
     <string name="feedback_and_contributions">Feedback und Beiträge</string>
     <string name="bitcoin_summary">Spenden Sie mit der Kryptowährung Bitcoin</string>
     <string name="paypal_summary">Viele verschiedene Kreditkarten werden akzeptiert</string>
-    <string name="filterModeOn">Image Processor On</string>
-    <string name="filterModeOff">Image Processor Off</string>
+    <string name="filterModeOn">Bildnachbearbeitung Ein</string>
+    <string name="filterModeOff">Bildnachbearbeitung Aus</string>
 </resources>
