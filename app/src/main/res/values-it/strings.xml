@@ -54,7 +54,7 @@
     <string name="donate">Offrmi un caffè</string>
     <string name="donate_summary">Se ti piace questa applicazione e ritieni che sia utile, potresti considerare l'idea di una donazione</string>
     <string name="telegram">Gruppo Telegram</string>
-    <string name="telegram_summary">Chiacchiera su Telegram dell'applicazione</string>
+    <string name="telegram_summary">Chiacchiera su Telegram dell\'applicazione</string>
     <string name="feedback_and_contributions">Feedback e contributi</string>
     <string name="bitcoin_summary">Dona usando la cripto-valuta Bitcoin</string>
     <string name="paypal_summary">Molte carte di credito sono accettate</string>
