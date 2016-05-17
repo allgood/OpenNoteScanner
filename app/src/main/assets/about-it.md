@@ -47,8 +47,8 @@ Come applicazione open source, i contributi sono sempre benvenuti. Chiunque cont
 
 * Nicolas Raoul - correzioni in inglese
 * Claudio Arseni - traduzione in italiano
-* Francisco Toca - Spanish translation
-* [@nebulon42](https://github.com/nebulon42) - German translation
+* Francisco Toca - traduzione in spagnolo
+* [@nebulon42](https://github.com/nebulon42) - traduzione in tedesco
 
 Altre persone hanno aiutato con le [segnalazioni di errori] (https://github.com/ctodobom/OpenNoteScanner/issues) e dando informazioni attraverso il [gruppo Telegram] (https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Anche il loro aiuto è molto apprezzato.
 
