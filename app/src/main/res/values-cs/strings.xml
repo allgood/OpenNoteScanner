@@ -40,7 +40,7 @@
     <string name="bug_rotate_summary">Některá zařízení mají fotoaparát vzhůru nohama. Toto nastavení nastaví vše, aby to dávalo smysl.</string>
     <string name="usage_stats">Statistiky používání</string>
     <string name="usage_stats_summary">Zasílat různé data o používání vývojáři. Žádný obsah nebude zaslán.</string>
-    <string name="send_message”>Poslat zprávu</string>
+    <string name="send_message">Poslat zprávu</string>
     <string name="send_message_summary">Poslat zprávu vývojáři </string>
     <string name="stats_optin_title">Statistiky používání</string>
     <string name="stats_optin_text">Chcete umožnit Open Note Scanner zasílat anonymní data o používání vývojáři?\n\n Své rozhodnutí můžete kdykoli změnit v nabídce nastavení.</string>
