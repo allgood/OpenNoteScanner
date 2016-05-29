@@ -157,6 +157,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private FABToolbarLayout mFabToolbar;
     private boolean mBugRotate=false;
     private SharedPreferences mSharedPref;
+    private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -920,7 +921,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         try {
             ExifInterface exif = new ExifInterface(fileName);
             exif.setAttribute("UserComment", "Generated using Open Note Scanner");
-            // exif.setAttribute(ExifInterface.TAG_ORIENTATION,Integer.valueOf(ExifInterface.ORIENTATION_ROTATE_180).toString());
+            String nowFormatted = mDateFormat.format(new Date().getTime());
+            exif.setAttribute(ExifInterface.TAG_DATETIME,nowFormatted);
+            exif.setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED , nowFormatted);
+            exif.setAttribute("Software" , "OpenNoteScanner " + BuildConfig.VERSION_NAME + " https://goo.gl/2JwEPq");
             exif.saveAttributes();
         } catch (IOException e) {
             e.printStackTrace();
