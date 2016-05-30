@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content" android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Standard Tags:"
+            android:id="@+id/textView"
+            android:layout_gravity="left|top" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textView"
+            android:paddingTop="12dp"
+            android:id="@+id/linearLayout">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonRocket"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_rocket" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonGift"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_gift"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonTv"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_tv" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonBell"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_bell"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonGame"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_game"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonStar"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_star"/>
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_margin="5dp"
+                android:id="@+id/buttonMagnet"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/ic_tag_magnet"/>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Done"
+            android:id="@+id/tag_done"
+            android:layout_alignEnd="@+id/linearLayout"
+            android:layout_alignLeft="@+id/linearLayout"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_below="@+id/linearLayout" />
+
+    </RelativeLayout>
+
+</FrameLayout>

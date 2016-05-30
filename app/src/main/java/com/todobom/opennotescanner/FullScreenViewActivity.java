@@ -18,6 +18,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
+import com.todobom.opennotescanner.views.TagEditorFragment;
 
 import java.io.File;
 
@@ -139,6 +140,9 @@ public class FullScreenViewActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
+            case R.id.action_tag:
+                tagImage();
+                return true;
             case R.id.action_share:
                 shareImage();
                 return true;
@@ -155,6 +159,23 @@ public class FullScreenViewActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void tagImage() {
+        int item = mViewPager.getCurrentItem();
+        String filePath = mAdapter.getPath(item);
+
+        FragmentManager fm = getSupportFragmentManager();
+        TagEditorFragment tagEditorDialog = new TagEditorFragment();
+
+        tagEditorDialog.setFilePath(filePath);
+
+        tagEditorDialog.setRunOnDetach(new Runnable() {
+            @Override
+            public void run() {
+            }
+        });
+        tagEditorDialog.show(fm, "tageditor_view");
     }
 
     private void deleteImage() {

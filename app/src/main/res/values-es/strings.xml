@@ -60,4 +60,5 @@
     <string name="paypal_summary">Acepta diversas tarjetas de crédito</string>
     <string name="filterModeOn">Procesador de imagen activado</string>
     <string name="filterModeOff">Procesador de imagen desactivado</string>
+    <string name="action_tag">Tag</string>
 </resources>

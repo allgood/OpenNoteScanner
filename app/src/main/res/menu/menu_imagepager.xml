@@ -8,14 +8,21 @@
         android:title="@string/action_delete"
         android:orderInCategory="100"
         android:icon="@drawable/ic_delete_white_24dp"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_tag"
+        android:title="@string/action_tag"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_tag"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_share"
         android:title="@string/action_share"
         android:orderInCategory="100"
         android:icon="@drawable/ic_menu_share"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_about"

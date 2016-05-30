@@ -60,4 +60,5 @@
     <string name="paypal_summary">Přijímáno mnoho druhů kreditních karet</string>
     <string name="filterModeOn">Zpracování obrázku Zapnout</string>
     <string name="filterModeOff">Zpracování obrázku Vypnout</string>
+    <string name="action_tag">Tag</string>
 </resources>

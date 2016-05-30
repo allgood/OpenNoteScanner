@@ -60,4 +60,5 @@
     <string name="paypal_summary">Molte carte di credito sono accettate</string>
     <string name="filterModeOn">Elaboratore immagine attivo</string>
     <string name="filterModeOff">Elaboratore immagine non attivo</string>
+    <string name="action_tag">Tag</string>
 </resources>

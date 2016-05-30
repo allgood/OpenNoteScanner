@@ -62,4 +62,5 @@
     <string name="paypal_summary">Many credit cards accepted</string>
     <string name="filterModeOn">Image Processor On</string>
     <string name="filterModeOff">Image Processor Off</string>
+    <string name="action_tag">Tag</string>
 </resources>
