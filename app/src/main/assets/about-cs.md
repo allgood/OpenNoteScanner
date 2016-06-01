@@ -14,9 +14,9 @@ Tato aplikace je volně přístupná díky [GNU General Public License version 3
 Dotace
 ---------
 
-Dělání aplikací pro Android není mým povoláním, udělal jsem ji ze zvědavosti, a protože je mnoho podobných aplikací, které bohužel nejsou volně dostupné.
+Tvorba aplikací pro Android není mým povoláním. Tuto aplikaci jsem udělal ze zvědavosti, protože je mnoho podobných aplikací, které bohužel nejsou volně přístupné.
 
-Pokud si myslíš, že je tato aplikace nebo nějaký z mých příspěvků hodný nějakého peněžního obnosu a přeješ si přispět, můžeš tak učinit pomocí přispění přes Paypal, Bitcoin nebo Dogecoin.
+Pokud si myslíš, že je tato aplikace nebo některý z mých příspěvků hodná nějakého peněžního obnosu a přeješ-li si přispět, můžeš tak učinit pomocí  Paypal, Bitcoin nebo Dogecoin.
 
 [Podpoř přes Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
@@ -43,7 +43,7 @@ Chtěl bych poděkovat
 
 ### Přispěvatelům
 
-Jako volně přístupná aplikace, příspěvky jsou velice vítané. Všichni, kteří přispějí jakýmkoli kódem budou uvedeni zde.
+Vzhledem k tomu, že je aplikace  volně přístupná, příspěvky jsou velmi vítané. Všichni, kteří přispějí jakýmkoli kódem, budou uvedeni zde.
 
 * Nicolas Raoul - Anglická korekce
 * Claudio Arseni - Italský překlad
