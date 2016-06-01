@@ -60,4 +60,5 @@
     <string name="paypal_summary">Viele verschiedene Kreditkarten werden akzeptiert</string>
     <string name="filterModeOn">Bildnachbearbeitung Ein</string>
     <string name="filterModeOff">Bildnachbearbeitung Aus</string>
+    <string name="action_tag">Tag</string>
 </resources>
