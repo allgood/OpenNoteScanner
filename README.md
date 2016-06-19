@@ -38,6 +38,9 @@ Open Note Scanner is available for simplified installation on [Google Play Store
 
 Binary APK file is available [directly from GitHub in the releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. 
 
+### Source code releases
+
+Starting on 1.0.26, small enhancements will be made available only as a source code release. F-Droid should automatically build the source code releases and offer it to installation. Binary releases will be made available on Google Play, Amazon App Store and direct `apk` download from the [releases page](https://github.com/ctodobom/OpenNoteScanner/releases).
 
 Instructions for building
 -------------------------
@@ -114,6 +117,7 @@ As an open source application, contribution are always welcome. Everyone that su
 * Claudio Arseni - Italian translation
 * Francisco Toca - Spanish translation
 * [@nebulon42](https://github.com/nebulon42) - German translation
+* Ondřej Míchal - Czech translation
 
 Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
 

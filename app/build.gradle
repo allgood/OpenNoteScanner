@@ -7,8 +7,8 @@ android {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
         targetSdkVersion 23
-        versionCode 25
-        versionName '1.0.25'
+        versionCode 26
+        versionName '1.0.26'
     }
     buildTypes {
         release {
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
     compile 'com.android.support:design:23.3.0'

@@ -1,6 +1,15 @@
 Change Log
 ==========
 
+version 1.0.26
+--------------
+
+This is a source code only release F-Droid should build and make it available for installation
+ 
+* Added tagging support on image viewer
+* Czech translation (contributed by Ondřej Míchal)
+* Updated Italian translation (contributed by Claudio Arseni)
+
 version 1.0.25
 --------------
 
