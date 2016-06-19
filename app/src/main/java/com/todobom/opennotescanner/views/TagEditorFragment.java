@@ -91,7 +91,7 @@ public class TagEditorFragment extends DialogFragment {
         }
         String userComment = exif.getAttribute("UserComment");
         for (int i=0; i<7 ; i++) {
-            stdTagsState[i] = userComment.contains("#" + stdTags[i]);
+            stdTagsState[i] = userComment.contains("<" + stdTags[i] + ">");
         }
     }
 
@@ -104,10 +104,10 @@ public class TagEditorFragment extends DialogFragment {
         }
         String userComment = exif.getAttribute("UserComment");
         for (int i=0; i<7 ; i++) {
-            if (stdTagsState[i] && !userComment.contains("#" + stdTags[i])) {
-                userComment += " #"+stdTags[i]+ " ";
-            } else if (!stdTagsState[i] && userComment.contains("#" + stdTags[i])) {
-                userComment.replaceAll("#"+stdTags[i] , "");
+            if (stdTagsState[i] && !userComment.contains("<" + stdTags[i] + ">")) {
+                userComment += "<"+stdTags[i]+ ">";
+            } else if (!stdTagsState[i] && userComment.contains("<" + stdTags[i] + ">")) {
+                userComment.replaceAll("<"+stdTags[i]+">" , "");
             }
         }
         exif.setAttribute("UserComment" , userComment);
