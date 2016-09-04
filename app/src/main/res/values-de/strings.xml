@@ -61,4 +61,6 @@
     <string name="filterModeOn">Bildnachbearbeitung Ein</string>
     <string name="filterModeOff">Bildnachbearbeitung Aus</string>
     <string name="action_tag">Tag</string>
+    <string name="storage_folder">Storage Folder</string>
+    <string name="storage_folder_summary">Sets where the scanned files should be stored</string>
 </resources>

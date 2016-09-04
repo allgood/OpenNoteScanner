@@ -56,6 +56,13 @@
                 android:key="bug_rotate"
                 android:summary="@string/bug_rotate_summary"
                 ></CheckBoxPreference>
+            <EditTextPreference
+                android:name="storage_folder"
+                android:title="@string/storage_folder"
+                android:defaultValue="OpenNoteScanner"
+                android:key="storage_folder"
+                android:summary="@string/storage_folder_summary">
+            </EditTextPreference>
         </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/feedback_and_contributions"

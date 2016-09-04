@@ -61,4 +61,6 @@
     <string name="filterModeOn">Procesador de imagen activado</string>
     <string name="filterModeOff">Procesador de imagen desactivado</string>
     <string name="action_tag">Tag</string>
+    <string name="storage_folder">Storage Folder</string>
+    <string name="storage_folder_summary">Sets where the scanned files should be stored</string>
 </resources>

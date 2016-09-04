@@ -899,14 +899,15 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             }
             isIntent = true;
         } else {
+            String folderName=mSharedPref.getString("storage_folder","OpenNoteScanner");
             File folder = new File(Environment.getExternalStorageDirectory().toString()
-                    + "/OpenNoteScanner");
+                    + "/" + folderName );
             if (!folder.exists()) {
-                folder.mkdir();
+                folder.mkdirs();
                 Log.d(TAG, "wrote: created folder "+folder.getPath());
             }
             fileName = Environment.getExternalStorageDirectory().toString()
-                    + "/OpenNoteScanner/DOC-"
+                    + "/" + folderName + "/DOC-"
                     + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())
                     + ".jpg";
         }

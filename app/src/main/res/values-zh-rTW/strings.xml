@@ -59,4 +59,6 @@
     <string name="filterModeOn">圖片處理器已開啟</string>
     <string name="filterModeOff">圖片處理器已關閉</string>
     <string name="action_tag">標籤</string>
+    <string name="storage_folder">Storage Folder</string>
+    <string name="storage_folder_summary">Sets where the scanned files should be stored</string>
 </resources>

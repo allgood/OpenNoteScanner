@@ -2,11 +2,13 @@ package com.todobom.opennotescanner.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.view.Display;
 import android.view.WindowManager;
@@ -26,11 +28,13 @@ import javax.microedition.khronos.egl.EGLDisplay;
 
 public class Utils {
 
+    private final SharedPreferences mSharedPref;
     private Context _context;
 
     // constructor
     public Utils(Context context) {
         this._context = context;
+        mSharedPref = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /*
@@ -41,7 +45,7 @@ public class Utils {
 
         File directory = new File(
                 android.os.Environment.getExternalStorageDirectory()
-                        + File.separator + AppConstant.PHOTO_ALBUM);
+                        + File.separator + mSharedPref.getString("storage_folder","OpenNoteScanner"));
 
         // check for directory
         if (directory.isDirectory()) {

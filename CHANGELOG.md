@@ -5,7 +5,7 @@ Git Head
 --------
 
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
-
+* Allow to customize the storage folder location
 
 version 1.0.26
 --------------
