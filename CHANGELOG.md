@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Git Head
+--------
+
+* [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
+
+
 version 1.0.26
 --------------
 
