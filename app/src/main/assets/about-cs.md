@@ -50,6 +50,7 @@ Vzhledem k tomu, že je aplikace  volně přístupná, příspěvky jsou velmi v
 * Francisco Toca - Španělský překlad
 * [@nebulon42](https://github.com/nebulon42) - Německý překlad
 * [@HarryPhoon] (https://github.com/HarryPhoon) - Český překlad
+* [@nigelinux](https://github.com/nigelinux) - Čínský (tradiční) překlad
 
 Ostatní lidé pomohli [nahlášením problémů](https://github.com/ctodobom/OpenNoteScanner/issues) a poskytnutím informací přes [skupinu na Telegramu](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Jejich pomoc je taktéž velmi ceněna.
 
