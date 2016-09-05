@@ -61,6 +61,6 @@
     <string name="filterModeOn">Zpracování obrázku Zapnout</string>
     <string name="filterModeOff">Zpracování obrázku Vypnout</string>
     <string name="action_tag">Štítek</string>
-    <string name="storage_folder">Storage Folder</string>
-    <string name="storage_folder_summary">Sets where the scanned files should be stored</string>
+    <string name="storage_folder">Složka uložiště</string>
+    <string name="storage_folder_summary">Určuje, kde budou naskenované soubory uloženy</string>
 </resources>
