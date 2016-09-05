@@ -25,10 +25,10 @@
     <string name="bwMode"><![CDATA[Modalità bianco e nero]]></string>
     <string name="autoMode">Modalità automatica</string>
     <string name="manualMode">Modalità manuale</string>
-    <string name="share_app">Condividi quuesta app</string>
+    <string name="share_app">Condividi questa app</string>
     <string name="share_app_using">Condividi il link attraverso</string>
     <string name="share_app_body">"Dai un\'occhiata a questa meravigliosa applicazione per acquisire note, disegni e documenti attraverso la videocamera: "</string>
-    <string name="share_app_subject">Sprensida applicazione per acquisire note e documenti</string>
+    <string name="share_app_subject">Splendida applicazione per acquisire note e documenti</string>
     <string name="settings">Impostazioni</string>
     <string name="basic_settings">Impostazioni di base</string>
     <string name="automatic_tagging">Etichette automatiche</string>
@@ -38,20 +38,20 @@
     <string name="bug_rotate">Ruota immagine di 180º</string>
     <string name="bug_rotate_summary">Alcuni dispositivi hanno la fotocamera al contrario, questa impostazione regola tutto in modo da avere l\'immagine corretta</string>
     <string name="usage_stats">Statistiche di utilizzo</string>
-    <string name="usage_stats_summary">Invia alcune statistiche di utilizzo allo sviluppatore. I contenuti non verraano trasmessi</string>
+    <string name="usage_stats_summary">Invia alcune statistiche di utilizzo allo sviluppatore. I contenuti non verranno trasmessi</string>
     <string name="send_message">Invia messaggio</string>
     <string name="send_message_summary">Invia un messaggio allo sviluppatore</string>
     <string name="stats_optin_title">Statistiche di utilizzo</string>
     <string name="stats_optin_text">Abilitare Open Note Scanner all\'invio di statistiche anonime allo sviluppatore sull\'utilizzo?\n\nQuesta opzione può essere modificata in qualsiasi momento dalle impostazioni.</string>
     <string name="answer_later">Più tardi</string>
-    <string name="ask_install_opencv">Per fuznzionare, Open Note Scanner necessita dei servizi di OpenCV Manager, che non è installata.</string>
+    <string name="ask_install_opencv">Per funzionare, Open Note Scanner necessita dei servizi di OpenCV Manager, che non è installata.</string>
     <string name="googleplay">Google Play</string>
     <string name="githubdownload">Download diretto</string>
     <string name="activateunknown">Vai alle impostazioni</string>
     <string name="messageactivateunknown">Google Play non è disponibile e l\'installazione da sorgenti sconosciute è disabilitata. Attivare la funzione nelle impostazioni.</string>
     <string name="github_project">Progetto su GitHub</string>
     <string name="github_project_summary">Questa applicazione è open source, è possibile contribuire per migliorarla con i feedback, le segnalazioni di errori, la modifica del codice e con le traduzioni attraverso la pagina del progetto su GitHub</string>
-    <string name="donate">Offrmi un caffè</string>
+    <string name="donate">Offrimi un caffè</string>
     <string name="donate_summary">Se ti piace questa applicazione e ritieni che sia utile, potresti considerare l\'idea di una donazione</string>
     <string name="telegram">Gruppo Telegram</string>
     <string name="telegram_summary">Chiacchiera su Telegram dell\'applicazione</string>
@@ -60,7 +60,7 @@
     <string name="paypal_summary">Molte carte di credito sono accettate</string>
     <string name="filterModeOn">Elaboratore immagine attivo</string>
     <string name="filterModeOff">Elaboratore immagine non attivo</string>
-    <string name="action_tag">Tag</string>
-    <string name="storage_folder">Storage Folder</string>
-    <string name="storage_folder_summary">Sets where the scanned files should be stored</string>
+    <string name="action_tag">Etichetta</string>
+    <string name="storage_folder">Cartella di archiviazione</string>
+    <string name="storage_folder_summary">Imposta dove verranno archiviati i file acquisiti</string>
 </resources>
