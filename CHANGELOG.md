@@ -1,8 +1,8 @@
 Change Log
 ==========
 
-Git Head
---------
+version 1.0.27
+--------------
 
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
 * Allow to customize the storage folder location
