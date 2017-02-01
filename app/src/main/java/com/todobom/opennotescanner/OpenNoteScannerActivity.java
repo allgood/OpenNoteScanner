@@ -150,6 +150,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private ImageProcessor mImageProcessor;
     private SurfaceHolder mSurfaceHolder;
     private Camera mCamera;
+    private OpenNoteScannerActivity mThis;
 
     private boolean mFocused;
     private HUDCanvasView mHud;
@@ -172,6 +173,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mThis = this;
 
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -725,7 +728,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         PackageManager pm = getPackageManager();
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
-            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             Log.d(TAG, "enabling autofocus");
         } else {
             mFocused = true;
@@ -847,7 +850,12 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (safeToTakePicture) {
             runOnUiThread(resetShutterColor);
             safeToTakePicture = false;
-            mCamera.takePicture(null, null, this);
+            mCamera.autoFocus(new Camera.AutoFocusCallback() {
+                @Override
+                public void onAutoFocus(boolean success, Camera camera) {
+                    camera.takePicture(null,null,mThis);
+                }
+            });
             return true;
         }
         return false;
