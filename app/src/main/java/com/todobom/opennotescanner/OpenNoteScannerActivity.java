@@ -847,6 +847,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (safeToTakePicture) {
             runOnUiThread(resetShutterColor);
             safeToTakePicture = false;
+            //change back into picture mode (at least the Xperia SP needs that to focus right)
+            Camera.Parameters param = mCamera.getParameters();
+            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            mCamera.setParameters(param);
             mCamera.takePicture(null, null, this);
             return true;
         }
