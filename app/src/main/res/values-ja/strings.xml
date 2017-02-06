@@ -14,7 +14,7 @@
     <string name="confirm_delete_multiple_text">スキャンした画像を削除しますか?</string>
     <string name="share_snackbar">画像を共有...</string>
     <string name="action_about">アプリについて</string>
-    <string name="about_filename">about.md</string>
+    <string name="about_filename">about-ja.md</string>
     <string name="install_opencv">OpenCV Manager をインストール</string>
     <string name="confirm_install_opencv">GitHub から OpenCV Manager をダウンロードしますか?</string>
     <string name="answer_cancel">キャンセル</string>
