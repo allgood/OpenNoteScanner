@@ -168,7 +168,12 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         this.imageProcessorBusy = imageProcessorBusy;
     }
 
+    public void setAttemptToFocus(boolean attemptToFocus) {
+        this.attemptToFocus = attemptToFocus;
+    }
+
     private boolean imageProcessorBusy=true;
+    private boolean attemptToFocus = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -853,6 +858,12 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             mCamera.autoFocus(new Camera.AutoFocusCallback() {
                 @Override
                 public void onAutoFocus(boolean success, Camera camera) {
+                    if (attemptToFocus) {
+                        return;
+                    } else {
+                        attemptToFocus = true;
+                    }
+
                     camera.takePicture(null,null,mThis);
                 }
             });
