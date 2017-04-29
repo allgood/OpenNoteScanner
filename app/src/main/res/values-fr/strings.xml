@@ -16,7 +16,7 @@
     <string name="action_about">A propos</string>
     <string name="about_filename">about-fr.md</string>
     <string name="install_opencv">Installer OpenCV Manager</string>
-    <string name="confirm_install_opencv">Voullez-vous télécharger OpenCV Manager depuis GitHub?</string>
+    <string name="confirm_install_opencv">Voulez-vous télécharger OpenCV Manager depuis GitHub?</string>
     <string name="answer_cancel">Annuler</string>
     <string name="downloading">Téléchargement en cours</string>
     <string name="downloading_opencv">Téléchargement d\'OpenCV Manager en cours</string>
@@ -26,7 +26,7 @@
     <string name="autoMode">Mode automatique</string>
     <string name="manualMode">Mode manuel</string>
     <string name="share_app">Partager cette application</string>
-    <string name="share_app_using">Share l\'application via</string>
+    <string name="share_app_using">Partager l\'application via</string>
     <string name="share_app_body">"Regarde cette superbe application pour numériser des notes, des dessins ou des documents en utilisant ton appareil photo : "</string>
     <string name="share_app_subject">Superbe application pour numériser des notes et des documents</string>
     <string name="settings">Paramètres</string>
@@ -34,15 +34,15 @@
     <string name="automatic_tagging">Étiquetage automatique</string>
     <string name="automatic_tagging_summary">Définir automatiquement les étiquettes en utilisant des modèles de page spéciaux</string>
     <string name="match_aspect">Utiliser le ratio d\'aspect de la prévisualisation</string>
-    <string name="match_aspect_summary">La plupart des appareils ont un ratio d\'aspect différent entre l\'image prévisualisée et celle capturée avec la plus haute résolution possible, ce paramètre permet que le ratio d\'aspect de l\'image capturée avec la plus haute résolution suive celui de l\'image prévisualisée</string>
+    <string name="match_aspect_summary">La plupart des terminaux ont un ratio d\'aspect différent entre la résolution de capture la plus élevée et la prévisualisation, ce paramètre va sélectionner la résolution la plus élevée qui corresponde au ratio d\'aspect de la prévisualisation</string>
     <string name="bug_rotate">Rotation de 180º de l\'image</string>
-    <string name="bug_rotate_summary">Certaine appareil ont leur appareil photo à l\'envers, ce paramètre ajuste tout ce qui est nécessaire en conséquence</string>
+    <string name="bug_rotate_summary">Certains terminaux ont leur appareil photo à l\'envers, ce paramètre permet de prendre cela en compte</string>
     <string name="usage_stats">Statistiques d\'utilisation</string>
-    <string name="usage_stats_summary">Envoyer différentes statistiques d\'utilisation au développeur. Aucune donnée relative aux images numérisée ne sera transmise</string>
+    <string name="usage_stats_summary">Envoyer différentes statistiques d\'utilisation au développeur. Aucune donnée relative aux images numérisées ne sera transmise</string>
     <string name="send_message">Envoyer un message</string>
-    <string name="send_message_summary">Envoyer un message au developpeur</string>
+    <string name="send_message_summary">Envoyer un message au développeur</string>
     <string name="stats_optin_title">Stats d\'utilisation</string>
-    <string name="stats_optin_text">Voulez-vous activer l\'envoi de statistique d\'utilisation annonyme d\'Open Note Scanner au développeur ?\n\nVous pouvez changer d\'avis à n\'importe quel moment sur cette fenêtre de configuration.</string>
+    <string name="stats_optin_text">Voulez-vous activer l\'envoi de statistiques d\'utilisation anonymes d\'Open Note Scanner au développeur ?\n\nVous pouvez changer d\'avis à n\'importe quel moment sur cette fenêtre de configuration.</string>
     <string name="answer_later">Plus tard</string>
     <string name="ask_install_opencv">Pour son fonctionnement, Open Note Scanner a besoin des services d\'OpenCV Manager, qui n\'est pas encore installé.</string>
     <string name="googleplay">Google Play</string>
@@ -52,7 +52,7 @@
     <string name="github_project">Voir le projet sur GitHub</string>
     <string name="github_project_summary">Cette application est libre, vous pouvez aider à son amélioration au travers vos retours d\'utilisation, rapports de bug, contributions au code source et aux traductions via la page GitHub du projet</string>
     <string name="donate">Offrez moi un café</string>
-    <string name="donate_summary">Si vous aimez cette application et que vous la trouvez utile, refléchissez à faire un don</string>
+    <string name="donate_summary">Si vous aimez cette application et que vous la trouvez utile, vous pouvez faire un don</string>
     <string name="telegram">Groupe Telegram</string>
     <string name="telegram_summary">Discutez à propos de ce projet sur Telegram</string>
     <string name="feedback_and_contributions">Retours d\'utilisation et contributions</string>
@@ -61,6 +61,6 @@
     <string name="filterModeOn">Traitement d\'image activé</string>
     <string name="filterModeOff">Traitement d\'image désactivé</string>
     <string name="action_tag">Étiquette</string>
-    <string name="storage_folder">Dossie de stockage</string>
+    <string name="storage_folder">Dossier d\'enregistrement</string>
     <string name="storage_folder_summary">Définir où seront enregistrées les images numérisées</string>
 </resources>
