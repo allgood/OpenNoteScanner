@@ -979,8 +979,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         }
 
-        animateDocument(fileName,scannedDocument);
-
         Log.d(TAG, "wrote: " + fileName);
 
         if (isIntent) {
@@ -988,6 +986,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             setResult(RESULT_OK, intent);
             finish();
         } else {
+            animateDocument(fileName,scannedDocument);
             addImageToGallery(fileName , this);
         }
 
