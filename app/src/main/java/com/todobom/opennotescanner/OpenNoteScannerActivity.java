@@ -525,8 +525,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         checkCreatePermissions();
 
-        CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+//        CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
 
+        checkResumePermissions();
         if (mImageThread == null ) {
             mImageThread = new HandlerThread("Worker Thread");
             mImageThread.start();
@@ -820,15 +821,19 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         if ( mFocused && ! imageProcessorBusy ) {
             setImageProcessorBusy(true);
-            Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5), CvType.CV_8UC1);
-            yuv.put(0, 0, data);
+            if (OpenCVLoader.initDebug()) {
+                Mat yuv = new Mat(new Size(pictureSize.width, pictureSize.height * 1.5), CvType.CV_8UC1);
+                yuv.put(0, 0, data);
 
-            Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8UC4);
-            Imgproc.cvtColor(yuv, mat, Imgproc.COLOR_YUV2RGBA_NV21, 4);
+                Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8UC4);
+                Imgproc.cvtColor(yuv, mat, Imgproc.COLOR_YUV2RGBA_NV21, 4);
 
-            yuv.release();
+                yuv.release();
 
-            sendImageProcessorMessage("previewFrame", new PreviewFrame( mat, autoMode, !(autoMode || scanClicked) ));
+
+                sendImageProcessorMessage("previewFrame", new PreviewFrame(mat, autoMode, !(autoMode || scanClicked)));
+            }
+
         }
 
     }
@@ -881,14 +886,16 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height);
 
-        Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
-        mat.put(0, 0, data);
+        if (OpenCVLoader.initDebug()) {
+            Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
+            mat.put(0, 0, data);
 
-        setImageProcessorBusy(true);
-        sendImageProcessorMessage("pictureTaken", mat);
+            setImageProcessorBusy(true);
+            sendImageProcessorMessage("pictureTaken", mat);
 
-        scanClicked = false;
-        safeToTakePicture = true;
+            scanClicked = false;
+            safeToTakePicture = true;
+        }
 
     }
 
