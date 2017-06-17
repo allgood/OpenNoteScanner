@@ -188,6 +188,9 @@ public class FullScreenViewActivity extends AppCompatActivity {
         Utils.removeImageFromGallery(filePath,this);
 
         loadAdapter();
+        
+        if (0 == mAdapter.getCount())
+            finish();
         mViewPager.setCurrentItem(item);
     }
 
