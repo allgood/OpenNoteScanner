@@ -333,18 +333,29 @@ public class GalleryGridActivity extends AppCompatActivity
     }
 
     public void shareImages() {
+        ArrayList<String> selectedFiles = myThumbAdapter.getSelectedFiles();
 
-        final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-        shareIntent.setType("image/jpg");
+        if (selectedFiles.size() == 1) {
+            /* Only one scanned document selected: ACTION_SEND intent */
+            final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/jpg");
 
-        ArrayList<Uri> filesUris = new ArrayList<>();
+            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + selectedFiles.get(0)));
 
-        for (String i : myThumbAdapter.getSelectedFiles() ) {
-            filesUris.add(Uri.parse("file://" + i));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
+        } else {
+            ArrayList<Uri> filesUris = new ArrayList<>();
+            for (String i : myThumbAdapter.getSelectedFiles()) {
+                filesUris.add(Uri.parse("file://" + i));
+            }
+
+            final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+            shareIntent.setType("image/jpg");
+
+            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
+
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
         }
-        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
-
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
     }
 
 
