@@ -37,7 +37,6 @@ Binary builds include code from these external projects:
 * [TouchImageView from Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
 * [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
 * [Android Universal Image Loader from Sergey Tarasevich](https://github.com/nostra13/Android-Universal-Image-Loader)
-* [@nikoss](https://github.com/nikoss) - Greek translation
 
 Thanks
 ------
@@ -52,6 +51,7 @@ As an open source application, contribution are always welcome. Everyone that su
 * [@nebulon42](https://github.com/nebulon42) - German translation
 * Ondřej Míchal - Czech translation
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
+* [@nikoss](https://github.com/nikoss) - Greek translation
 
 Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
 
