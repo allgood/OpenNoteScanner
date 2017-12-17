@@ -37,6 +37,7 @@ Binary builds include code from these external projects:
 * [TouchImageView from Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
 * [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
 * [Android Universal Image Loader from Sergey Tarasevich](https://github.com/nostra13/Android-Universal-Image-Loader)
+* [@nikoss](https://github.com/nikoss) - Greek translation
 
 Thanks
 ------
