@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">Ο Ανοιχτός Σαρωτής Σημειώσεων</string>
+
+    <string name="title_activity_gallery">Εικονοθήκη</string>
+
+    <string name="title_activity_full_image">Προβολέας των Σαρωμένων Εικόνων</string>
+    <string name="images_scanned">Οι Εικόνες Σαρώθηκαν</string>
+    <string name="action_share">Από χέρι σε χέρι</string>
+    <string name="action_delete">Διαγραφή</string>
+    <string name="confirm_title">Επιβεβαίωση</string>
+    <string name="confirm_delete_text">Θέλεις να διαγράψεις αυτή την εικόνα;</string>
+    <string name="answer_yes">Ναι</string>
+    <string name="answer_no">Όχι</string>
+    <string name="confirm_delete_multiple_text">Θέλεις να διαγράψεις τις επιλεγμένες εικόνες;</string>
+    <string name="share_snackbar">Κοινοποίηση εικόνων μέσω</string>
+    <string name="action_about">Σχετικά με</string>
+    <string name="about_filename">about.md</string>
+    <string name="install_opencv">Εγκατάσταση του Διαχειριστή OpenCV</string>
+    <string name="confirm_install_opencv">Θέλεις να λάβεις τον Διαχειριστή OpenCV από το ΓκιτΧάμπ;</string>
+    <string name="answer_cancel">Ακύρωση</string>
+    <string name="downloading">Γίνεται λήψη</string>
+    <string name="downloading_opencv">Γίνεται λήψη του Διαχειριστή OpenCV</string>
+    <string name="scanningToast">Αναζητείται έγγραφο\n
+       Άγγιξε ξανά, για να σαρώσεις ολόκληρη την εικόνα</string>
+    <string name="colorMode">Έγχρωμη λειτουργία</string>
+    <string name="bwMode">Ασπρόμαυρη λειτουργία</string>
+    <string name="autoMode">Αυτόματη Κατάσταση Λειτουργίας</string>
+    <string name="manualMode">Χειροκίνητη Λειτουργία</string>
+    <string name="share_app">Κοινοποίησε αυτή την Εφαρμογή</string>
+    <string name="share_app_using">Κοινοποίηση δεσμού μέσω</string>
+    <string name="share_app_body">«Ρίξε μια ματιά σε αυτή την εξαιρετική εφαρμογή. Με αυτήν μπορείς να σαρώνεις σημειώσεις, να σκανάρεις σχέδια και έγγραφα, απλά χρησιμοποιώντας την κάμερα: »</string>
+    <string name="share_app_subject">Εξαιρετική εφαρμογή για τη σάρωση σημειώσεων και εγγράφων</string>
+    <string name="settings">Ρυθμίσεις</string>
+    <string name="basic_settings">Βασικές Ρυθμίσεις</string>
+    <string name="automatic_tagging">Αυτόματη Επικόλληση Ετικετών</string>
+    <string name="automatic_tagging_summary">Προσδιόρισε αυτόματες ετικέτες, οι οποίες θα επικολλούνται σε οριζόμενες σαρώσεις, με τη χρήση της μήτρας από την ειδική σελίδα.</string>
+    <string name="match_aspect">Ταίριασμα της αναλογίας διαστάσεων της προεπισκόπησης</string>
+    <string name="match_aspect_summary">Στις περισσότερες συσκευές η, υψηλότερης ανάλυσης, αναλογία διαστάσεων της εικόνας είναι διαφορετική από αυτή της προεπισκόπησης. Η παρούσα ρύθμιση θα επιλέξει την υψηλότερη ανάλυση της εικόνας, η οποία ταιριάζει με την αναλογία διαστάσεων της προεπισκόπησης.</string>
+    <string name="bug_rotate">Περιστροφή της Εικόνας κατά 180º</string>
+    <string name="bug_rotate_summary">Μερικές συσκευές έχουν την κάμερα ανάποδα (τα πάνω κάτω). Αυτή η ρύθμιση κάνει όλες τις απαραίτητες προσαρμογές, ώστε να βγαίνει νόημα.</string>
+    <string name="usage_stats">Στατιστικά Χρήσης</string>
+    <string name="usage_stats_summary">Αποστολή στον προγραμματιστή διάφορων στατιστικών χρήσης. Δεν θα αποστέλνονται δεδομένα περιεχομένου.</string>
+    <string name="send_message">Αποστολή Μηνύματος</string>
+    <string name="send_message_summary">Αποστολή μηνύματος στον προγραμματιστή</string>
+    <string name="stats_optin_title">Στατιστικά Χρήσης</string>
+    <string name="stats_optin_text">Θέλεις να επιτρέψεις στον Ανοιχτό Σαρωτή Σημειώσεων να αποστέλλει, προς τον προγραμματιστή του, ανώνυμες στατιστικές χρήσης;\n
+     \n
+     Μπορείς να το αλλάξεις αυτό, όποτε θες, από την οθόνη των ρυθμίσεων.</string>
+    <string name="answer_later">Αργότερα</string>
+    <string name="ask_install_opencv">Για να λειτουργήσει, ο Ανοιχτός Σαρωτής Σημειώσεων χρειάζεται τις υπηρεσίες του Διαχειριστή OpenCV, ο οποίος δεν έχει, ακόμη, εγκατασταθεί.</string>
+    <string name="googleplay">Google Play</string>
+    <string name="githubdownload">Απευθείας Λήψη</string>
+    <string name="activateunknown">Μεταφορά στις Ρυθμίσεις</string>
+    <string name="messageactivateunknown">Δεν είναι διαθέσιμο το Γκουγκλ Πλέυ, και είναι απενεργοποιημένη η Εγκατάσταση από Άγνωστες Πηγές. Παρακαλώ, πήγαινε στις Ρυθμίσεις και ενεργοποίησέ την.</string>
+    <string name="github_project">Εγχείρημα στο GitHub</string>
+    <string name="github_project_summary">Αυτή η εφαρμογή είναι ανοιχτής πηγής. Μπορείς να βοηθήσεις στην βελτίωσή της, με ανάδραση, αναφορά ζητημάτων, συνεισφορά κώδικα, και μετάφραση, στην σελίδα του εγχειρήματός μας στο ΓκιτΧαμπ.</string>
+    <string name="donate">Κέρασέ με ένα καφέ</string>
+    <string name="donate_summary">Αν σου αρέσει αυτή η εφαρμογή και την βρίσκεις χρήσιμη, ίσως να θες να προχωρήσεις σε μία δωρεά.</string>
+    <string name="telegram">Ομάδα Telegram</string>
+    <string name="telegram_summary">Συζήτηση στο Telegram σχετικά με το εγχείρημα</string>
+    <string name="feedback_and_contributions">Ανάδραση και συνεισφορές</string>
+    <string name="bitcoin_summary">Κάνε δωρεά με κρυπτο-νόμισμα Bitcoin</string>
+    <string name="paypal_summary">Γίνονται δεκτές πολλές πιστωτικές κάρτες</string>
+    <string name="filterModeOn">Επεξεργαστής Εικόνας Ενεργός</string>
+    <string name="filterModeOff">Επεξεργαστής Εικόνας Ανενεργός</string>
+    <string name="action_tag">Ετικέτα</string>
+    <string name="storage_folder">Φάκελος Αποθήκευσης</string>
+    <string name="storage_folder_summary">Ορίζει πού θα πρέπει να αποθηκεύονται τα σαρωμένα αρχεία</string>
+</resources>
