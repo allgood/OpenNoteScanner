@@ -53,6 +53,9 @@ Als open source-applicatie is een bijdrage altijd welkom. Iedereen die een code 
 * [@nigelinux](https://github.com/nigelinux) - Traditioneel Chinees (zh-rTW) Vertaling
 * [@nikoss](https://github.com/nikoss) - Griekse vertaling
 * [@SkyDragonsz](https://github.com/SkyDragonsz) - Nederlandse vertaling
+* Naofumi Fukue - Japanse vertaling
+* [@ASMfreaK](https://github.com/ASMfreaK) - vertaling naar het Russisch
+
 
 Andere mensen hebben geholpen bij het indienen van [Issuerapporten](https://github.com/ctodobom/OpenNoteScanner/issues) en het geven van informatie via de [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Hun hulp wordt ook gewaardeerd.
 

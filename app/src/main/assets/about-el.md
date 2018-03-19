@@ -52,6 +52,9 @@
 * Ondřej Míchal - Τσέχικη μετάφραση
 * [@nigelinux](https://github.com/nigelinux) - Παραδοσιακή Κινέζικη (zh-rTW) μετάφραση
 * [@nikoss](https://github.com/nikoss) - Ελληνική μετάφραση
+* [@SkyDragonsz](https://github.com/SkyDragonsz) - μετάφραση στα ολλανδικά
+* Naofumi Fukue - Ιαπωνική μετάφραση
+* [@ASMfreaK](https://github.com/ASMfreaK) - μετάφραση στα ρωσικά
 
 Άλλοι άνθρωποι έχουν βοηθήσει με την [Αναφορά Θεμάτων](https://github.com/ctodobom/OpenNoteScanner/issues), και έχουν δώσει πληροφορίες μέσω της [Ομάδας του Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Η βοήθειά τους εκτιμάται, επίσης.
 

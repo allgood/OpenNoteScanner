@@ -49,6 +49,12 @@ Come applicazione open source, i contributi sono sempre benvenuti. Chiunque cont
 * Claudio Arseni - traduzione in italiano
 * Francisco Toca - traduzione in spagnolo
 * [@nebulon42](https://github.com/nebulon42) - traduzione in tedesco
+* Ondřej Míchal - traduzione шт ceco
+* [@nigelinux](https://github.com/nigelinux) - traduzione in cinese tradizionale (zh-rTW)
+* [@nikoss](https://github.com/nikoss) - traduzione in greco
+* [@SkyDragonsz](https://github.com/SkyDragonsz) - traduzione in olandese
+* Naofumi Fukue - traduzione giapponese
+* [@ASMfreaK](https://github.com/ASMfreaK) - traduzione in russo
 
 Altre persone hanno aiutato con le [segnalazioni di errori] (https://github.com/ctodobom/OpenNoteScanner/issues) e dando informazioni attraverso il [gruppo Telegram] (https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Anche il loro aiuto è molto apprezzato.
 

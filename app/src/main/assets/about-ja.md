@@ -51,7 +51,10 @@ Android アプリケーションを作成することは私の主要な仕事で
 * [@nebulon42](https://github.com/nebulon42) - ドイツ語翻訳
 * Ondřej Míchal - チェコ語翻訳
 * [@nigelinux](https://github.com/nigelinux) - 繁体中国語 (zh-rTW) 翻訳
+* [@nikoss](https://github.com/nikoss) - ギリシャ語への翻訳
+* [@SkyDragonsz](https://github.com/SkyDragonsz) - オランダ語翻訳
 * Naofumi Fukue - 日本語翻訳
+* [@ASMfreaK](https://github.com/ASMfreaK) - ロシア語の翻訳
 
 [問題の報告](https://github.com/ctodobom/OpenNoteScanner/issues) を提出して支援したり [Telegram グループ](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) で情報を提供してくれた他の人々。 彼らの支援も高く評価しています。
 
