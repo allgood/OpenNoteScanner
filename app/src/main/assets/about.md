@@ -52,6 +52,7 @@ As an open source application, contribution are always welcome. Everyone that su
 * Ondřej Míchal - Czech translation
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
 * [@nikoss](https://github.com/nikoss) - Greek translation
+* [@SkyDragonsz](https://github.com/SkyDragonsz) - Dutch translation
 
 Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
 
