@@ -35,7 +35,7 @@
     <string name="automatic_tagging">Automatic Tagging</string>
     <string name="automatic_tagging_summary">Define automatic tags to be applied on marked scans using the special page template</string>
     <string name="match_aspect">Match preview aspect ratio</string>
-    <string name="match_aspect_summary">Most devices have the highest resolution picture aspect ratio different from the preview one, this setting will select the highest picture resolution that matches with the aspect ratio of preview</string>
+    <string name="match_aspect_summary">On several devices the aspect ratio of the preview image does not match the one of the final picture. When turned on, this option will select the highest resolution for the final picture that matches the aspect ratio of the preview image.</string>
     <string name="bug_rotate">Rotate Image 180º</string>
     <string name="bug_rotate_summary">Some devices have the camera upside down, this setting adjusts everything to make sense</string>
     <string name="usage_stats">Usage Statistics</string>
