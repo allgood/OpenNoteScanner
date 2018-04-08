@@ -122,8 +122,10 @@ As an open source application, contribution are always welcome. Everyone that su
 * [@SparkyCola](https://github.com/SparkyCola) - help on picture focus enhancements
 * [@brenard](https://github.com/brenard) - French translation
 * [@naofum](https://github.com/naofum) - Japanese translation
-* [@nikoss](https://github.com/nikoss) - Greek translation
-* [@SkyDragonsz](https://github.com/SkyDragonsz) - Dutch translation
+* [@nikoss](https://githob.com/nikoss) - Greek translation
+* [Arthur Saprunov](https://github.com/Skydragonsz) - Dutch translation
+* [@ASMfreaK](https://github.com/ASMfreaK) - Russian translation
+* [Yaron Shahrabani](https://github.com/yarons) Hebrew translation
 
 Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
 
