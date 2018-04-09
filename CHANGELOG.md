@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+version 1.0.30
+--------------
+
 Updates from contributors:
 * Greek translation by [@nikoss](https://githob.com/nikoss)
 * Dutch translation by [Arthur Saprunov](https://github.com/Skydragonsz)
