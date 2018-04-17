@@ -34,7 +34,7 @@
     <string name="automatic_tagging">תיוג אוטומטי</string>
     <string name="automatic_tagging_summary">ניתן להגדיר תגיות אוטומטיות שיוצמדו לסריקות שסומנו באמצעות תבנית העמוד המיוחד</string>
     <string name="match_aspect">להתאים ליחס התצוגה של התצוגה המקדימה</string>
-    <string name="match_aspect_summary">לרוב ההתקנים יש יחס רזולוציית תצוגת תמונה גבוהה מזה של התצוגה המקדימה, הגדרה זו תבחר את הרזולוציה שמתאימה ליחס התצוגה של התצוגה המקדימה.</string>
+    <string name="match_aspect_summary">בחלק מההתקנים יחס התצוגה של תמונת התצוגה המקדימה אינו תואם לזה של התמונה המוגמרת. כשאפשרות זו פעילה, תיבחר הרזולוציה הגבוהה ביותר לתמונה המוגמרת שתואמת ליחס של תמונת התצוגה המקדימה.</string>
     <string name="bug_rotate">היפוך התמונה ב־180º</string>
     <string name="bug_rotate_summary">בחלק מההתקנים המצלמה הפוכה, הגדרה זו מכוונת אותה לכיוון הנכון</string>
     <string name="usage_stats">סטטיסטיקת שימוש</string>
