@@ -55,6 +55,7 @@ Como uma aplicaçao de código aberto, contribuições são sempre bem vindas. T
 * [Arthur Saprunov](https://github.com/Skydragonsz) - tradução para o Holandês
 * [@ASMfreaK](https://github.com/ASMfreaK) - Tradução para o Russo
 * [Yaron Shahrabani](https://github.com/yarons) Tradução para o Hebraico
+* [@Tobaloidee](https://github.com/Tobaloidee) - Design do Ícone
 
 Outras pessoas ajudaram enviando [Relatórios de Bugs](https://github.com/ctodobom/OpenNoteScanner/issues) e fornecendo informações pelo [grupo no Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Esta ajuda também é muito apreciada.
 
