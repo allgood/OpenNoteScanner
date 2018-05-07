@@ -127,6 +127,7 @@ As an open source application, contribution are always welcome. Everyone that su
 * [@ASMfreaK](https://github.com/ASMfreaK) - Russian translation
 * [Yaron Shahrabani](https://github.com/yarons) Hebrew translation
 * [@Tobaloidee](https://github.com/Tobaloidee) - Icon design
+* [@princekelly1](https://github.com/princekelly1) - Contributed FAQ.md file
 
 Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
 
