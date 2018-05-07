@@ -1,7 +1,7 @@
 ### Updated privacy policy For Open Note Scanner
 
 Claudemir Todo Bom built Open Note Scanner.
-This document serves as an informative texts to users and prospective users of this app about the policies invovled in the usage of the app.
+This document serves as an informative texts to users and prospective users of this app about the policies involved in the usage of the app.
 
 ### Collected Information
 Open Note Scanner only collects anonymous usage data, which is enabled by default, when download via your device play store **Google Play**, it can be disabled/enabled on the settings page of the app.
