@@ -1,6 +1,8 @@
 *.apk
 *.iml
 .gradle
+.idea
+import-summary.txt
 /local.properties
 **/.idea/workspace.xml
 **/.idea/tasks.xml
