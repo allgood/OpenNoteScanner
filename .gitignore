@@ -2,6 +2,7 @@
 *.iml
 .gradle
 .idea
+*~
 import-summary.txt
 /local.properties
 **/.idea/workspace.xml
