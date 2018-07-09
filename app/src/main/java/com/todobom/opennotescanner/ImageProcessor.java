@@ -482,19 +482,39 @@ public class ImageProcessor extends Handler {
         Mat cannedImage = null;
         Mat resizedImage = null;
 
+        Log.d(TAG, "CvTypes src: "+src.type());
+
         double ratio = src.size().height / 500;
         int height = Double.valueOf(src.size().height / ratio).intValue();
         int width = Double.valueOf(src.size().width / ratio).intValue();
         Size size = new Size(width,height);
 
         resizedImage = new Mat(size, CvType.CV_8UC4);
-        grayImage = new Mat(size, CvType.CV_8UC4);
-        cannedImage = new Mat(size, CvType.CV_8UC1);
 
         Imgproc.resize(src,resizedImage,size);
-        Imgproc.cvtColor(resizedImage, grayImage, Imgproc.COLOR_RGBA2GRAY, 4);
-        Imgproc.GaussianBlur(grayImage, grayImage, new Size(5, 5), 0);
-        Imgproc.Canny(grayImage, cannedImage, 75, 200);
+        Log.d(TAG, "CvTypes resizedImage: "+resizedImage.type());
+
+        // Mat rgbImage = new Mat(size, CvType.CV_8UC3);
+        // Imgproc.cvtColor(resizedImage,rgbImage,Imgproc.COLOR_RGBA2RGB);
+        // Log.d(TAG, "CvTypes rgbImage: "+rgbImage.type());
+
+        grayImage = new Mat(size, CvType.CV_8SC1);
+        Imgproc.cvtColor(resizedImage, grayImage, Imgproc.COLOR_RGBA2GRAY);
+        resizedImage.release();
+        Log.d(TAG, "CvTypes grayImage: "+grayImage.type());
+
+        Mat depthGrayImage = new Mat(size , CvType.CV_16SC1);
+        grayImage.convertTo(depthGrayImage, CvType.CV_16SC1);
+        grayImage.release();
+        Log.d(TAG, "CvTypes depthGrayImage: "+depthGrayImage.type());
+
+        Imgproc.GaussianBlur(depthGrayImage, depthGrayImage, new Size(5, 5), 0);
+
+        cannedImage = new Mat(size, CvType.CV_16SC1);
+        Imgproc.Canny(depthGrayImage, cannedImage, 75, 200);
+        depthGrayImage.release();
+
+        Log.d(TAG, "CvTypes cannedImage: "+cannedImage.type());
 
         ArrayList<MatOfPoint> contours = new ArrayList<MatOfPoint>();
         Mat hierarchy = new Mat();
@@ -511,8 +531,6 @@ public class ImageProcessor extends Handler {
             }
         });
 
-        resizedImage.release();
-        grayImage.release();
         cannedImage.release();
 
         return contours;
