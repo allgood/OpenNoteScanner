@@ -72,6 +72,9 @@ $ export ANDROID_HOME=~/android-sdk-linux
 $ ./gradlew assembleRelease
 ```
 
+Instructions for Contributing
+-------------------------
+If you're new to open-source, we recommend you to checkout our [_Contributing Guidelines_](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTING.md) and [Setup Guidelines](https://github.com/ctodobom/OpenNoteScanner/blob/master/SETUP_GUIDELINES.md). Feel free to fork the project and send us a pull request.
 
 History
 -------
