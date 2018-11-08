@@ -117,7 +117,7 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                 installIntent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
-                                uri = android.support.v4.content.FileProvider.getUriForFile(ctxt,ctxt.getApplicationContext().getPackageName() + ".genericfileprovider", apkFile);
+                                uri = android.support.v4.content.FileProvider.getUriForFile(ctxt,ctxt.getApplicationContext().getPackageName() + ".fileprovider", apkFile);
                             } else {
                                 installIntent = new Intent(Intent.ACTION_VIEW);
                                 uri = Uri.fromFile(apkFile);

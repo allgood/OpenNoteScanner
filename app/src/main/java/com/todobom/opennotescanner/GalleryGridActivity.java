@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -340,13 +341,17 @@ public class GalleryGridActivity extends AppCompatActivity
             final Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/jpg");
 
-            shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + selectedFiles.get(0)));
+            Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(selectedFiles.get(0)));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            Log.d("GalleryGridActivity","uri "+uri);
 
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
         } else {
             ArrayList<Uri> filesUris = new ArrayList<>();
             for (String i : myThumbAdapter.getSelectedFiles()) {
-                filesUris.add(Uri.parse("file://" + i));
+                Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(i));
+                filesUris.add(uri);
+                Log.d("GalleryGridActivity","uri "+uri);
             }
 
             final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
