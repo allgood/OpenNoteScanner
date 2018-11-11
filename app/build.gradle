@@ -20,12 +20,12 @@ android {
     productFlavors {
         fdroid {
             dimension "version"
-            applicationIdSuffix ".fdroid"
+            applicationIdSuffix ""
             versionNameSuffix "-fdroid"
         }
         gplay {
             dimension "version"
-            applicationIdSuffix ".gplay"
+            applicationIdSuffix ""
             versionNameSuffix "-gplay"
         }
     }
