@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.todobom.opennotescanner">
 
-    <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="27"/>
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
