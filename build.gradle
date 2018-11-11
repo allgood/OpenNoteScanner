@@ -23,6 +23,9 @@ allprojects {
             url 'https://maven.google.com/'
             name 'Google'
         }
+        maven {
+            url  'http://dl.bintray.com/steveliles/maven'
+        }
     }
 }
 

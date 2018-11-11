@@ -274,7 +274,8 @@ public class CustomOpenCVLoader extends OpenCVLoader {
 
         } else {
             // initialize opencv
-            return OpenCVLoader.initAsync(Version, AppContext, Callback);
+            // DISABLED
+            // return OpenCVLoader.initAsync(Version, AppContext, Callback);
         }
 
         return false;
