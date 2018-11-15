@@ -50,6 +50,12 @@
                 android:summary="@string/match_aspect_summary"
                 />
             <CheckBoxPreference
+                android:title="@string/save_png"
+                android:defaultValue="false"
+                android:key="save_png"
+                android:summary="@string/save_png_summary"
+                />
+            <CheckBoxPreference
                 android:title="@string/bug_rotate"
                 android:defaultValue="false"
                 android:key="bug_rotate"

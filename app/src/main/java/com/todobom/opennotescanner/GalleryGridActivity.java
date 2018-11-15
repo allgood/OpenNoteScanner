@@ -72,7 +72,7 @@ public class GalleryGridActivity extends AppCompatActivity
     private void setSelectionMode(boolean selectionMode) {
         if (mShare !=null && mDelete != null ) {
             mShare.setVisible(selectionMode);
-            mTag.setVisible(selectionMode);
+            //mTag.setVisible(selectionMode);
             mDelete.setVisible(selectionMode);
         }
         this.selectionMode = selectionMode;
