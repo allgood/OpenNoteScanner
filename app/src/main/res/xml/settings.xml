@@ -11,58 +11,57 @@
                     android:name="tag_rocket"
                     android:title="Rocket"
                     android:defaultValue="rocket"
-                    android:key="tag_rocket"></EditTextPreference>
+                    android:key="tag_rocket" />
                 <EditTextPreference
                     android:name="tag_gift"
                     android:title="Gift"
                     android:defaultValue="gift"
-                    android:key="tag_gift"></EditTextPreference>
+                    android:key="tag_gift" />
                 <EditTextPreference
                     android:name="tag_tv"
                     android:title="TV"
                     android:defaultValue="tv"
-                    android:key="tag_tv"></EditTextPreference>
+                    android:key="tag_tv" />
                 <EditTextPreference
                     android:name="tag_bell"
                     android:title="Bell"
                     android:defaultValue="bell"
-                    android:key="tag_bell"></EditTextPreference>
+                    android:key="tag_bell" />
                 <EditTextPreference
                     android:name="tag_game"
                     android:title="Game"
                     android:defaultValue="game"
-                    android:key="tag_game"></EditTextPreference>
+                    android:key="tag_game" />
                 <EditTextPreference
                     android:name="tag_star"
                     android:title="Star"
                     android:defaultValue="star"
-                    android:key="tag_star"></EditTextPreference>
+                    android:key="tag_star" />
                 <EditTextPreference
                     android:name="tag_magnet"
                     android:title="Magnet"
                     android:defaultValue="magnet"
-                    android:key="tag_magnet">
-                </EditTextPreference>
+                    android:key="tag_magnet" />
             </PreferenceScreen>
             <CheckBoxPreference
                 android:title="@string/match_aspect"
                 android:defaultValue="true"
                 android:key="match_aspect"
                 android:summary="@string/match_aspect_summary"
-                ></CheckBoxPreference>
+                />
             <CheckBoxPreference
                 android:title="@string/bug_rotate"
                 android:defaultValue="false"
                 android:key="bug_rotate"
                 android:summary="@string/bug_rotate_summary"
-                ></CheckBoxPreference>
+                />
             <EditTextPreference
                 android:name="storage_folder"
                 android:title="@string/storage_folder"
                 android:defaultValue="OpenNoteScanner"
                 android:key="storage_folder"
-                android:summary="@string/storage_folder_summary">
-            </EditTextPreference>
+                android:summary="@string/storage_folder_summary"
+                />
         </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/feedback_and_contributions"
@@ -72,7 +71,7 @@
             android:defaultValue="false"
             android:key="usage_stats"
             android:summary="@string/usage_stats_summary"
-            ></CheckBoxPreference>
+            />
         <Preference
             android:title="@string/github_project"
             android:summary="@string/github_project_summary"
@@ -80,7 +79,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://github.com/ctodobom/OpenNoteScanner"
-                ></intent></Preference>
+                /></Preference>
         <Preference
             android:title="@string/telegram"
             android:summary="@string/telegram_summary"
@@ -88,7 +87,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://telegram.me/OpenNoteScanner"
-                ></intent></Preference>
+                /></Preference>
         <Preference
             android:title="@string/send_message"
             android:summary="@string/send_message_summary"
@@ -96,7 +95,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="mailto:claudemir@todobom.com"
-                ></intent></Preference>
+                /></Preference>
 
     </PreferenceCategory>
 
@@ -111,7 +110,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=X6XHVCPMRQEL4"
-                ></intent></Preference>
+                /></Preference>
 
         <Preference
             android:title="Paypal"
@@ -120,7 +119,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=X6XHVCPMRQEL4"
-                ></intent></Preference>
+                /></Preference>
 
         <Preference
             android:title="Bitcoin"
@@ -130,7 +129,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
-                ></intent></Preference>
+                /></Preference>
 
         <Preference
             android:title="Dogecoin"
@@ -140,7 +139,7 @@
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
-                ></intent></Preference>
+                /></Preference>
 
     </PreferenceCategory>
 
