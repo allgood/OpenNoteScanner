@@ -166,6 +166,22 @@ public class FullScreenViewActivity extends AppCompatActivity {
         int item = mViewPager.getCurrentItem();
         String filePath = mAdapter.getPath(item);
 
+        if (filePath.endsWith(".png")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.format_not_supported);
+            builder.setMessage(R.string.format_not_supported_message);
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alerta = builder.create();
+            alerta.show();
+            return;
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         TagEditorFragment tagEditorDialog = new TagEditorFragment();
 
