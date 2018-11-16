@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Ο Ανοιχτός Σαρωτής Σημειώσεων</string>
 
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Εικονοθήκη</string>
 
     <string name="title_activity_full_image">Προβολέας των Σαρωμένων Εικόνων</string>
@@ -20,8 +21,7 @@
     <string name="answer_cancel">Ακύρωση</string>
     <string name="downloading">Γίνεται λήψη</string>
     <string name="downloading_opencv">Γίνεται λήψη του Διαχειριστή OpenCV</string>
-    <string name="scanningToast">Αναζητείται έγγραφο\n
-       Άγγιξε ξανά, για να σαρώσεις ολόκληρη την εικόνα</string>
+    <string name="scanningToast">Αναζητείται έγγραφο\n Άγγιξε ξανά, για να σαρώσεις ολόκληρη την εικόνα</string>
     <string name="colorMode">Έγχρωμη λειτουργία</string>
     <string name="bwMode">Ασπρόμαυρη λειτουργία</string>
     <string name="autoMode">Αυτόματη Κατάσταση Λειτουργίας</string>
@@ -43,9 +43,7 @@
     <string name="send_message">Αποστολή Μηνύματος</string>
     <string name="send_message_summary">Αποστολή μηνύματος στον προγραμματιστή</string>
     <string name="stats_optin_title">Στατιστικά Χρήσης</string>
-    <string name="stats_optin_text">Θέλεις να επιτρέψεις στον Ανοιχτό Σαρωτή Σημειώσεων να αποστέλλει, προς τον προγραμματιστή του, ανώνυμες στατιστικές χρήσης;\n
-     \n
-     Μπορείς να το αλλάξεις αυτό, όποτε θες, από την οθόνη των ρυθμίσεων.</string>
+    <string name="stats_optin_text">Θέλεις να επιτρέψεις στον Ανοιχτό Σαρωτή Σημειώσεων να αποστέλλει, προς τον προγραμματιστή του, ανώνυμες στατιστικές χρήσης;\n \n Μπορείς να το αλλάξεις αυτό, όποτε θες, από την οθόνη των ρυθμίσεων.</string>
     <string name="answer_later">Αργότερα</string>
     <string name="ask_install_opencv">Για να λειτουργήσει, ο Ανοιχτός Σαρωτής Σημειώσεων χρειάζεται τις υπηρεσίες του Διαχειριστή OpenCV, ο οποίος δεν έχει, ακόμη, εγκατασταθεί.</string>
     <string name="googleplay">Google Play</string>
@@ -60,10 +58,15 @@
     <string name="telegram_summary">Συζήτηση στο Telegram σχετικά με το εγχείρημα</string>
     <string name="feedback_and_contributions">Ανάδραση και συνεισφορές</string>
     <string name="bitcoin_summary">Κάνε δωρεά με κρυπτο-νόμισμα Bitcoin</string>
+    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">Γίνονται δεκτές πολλές πιστωτικές κάρτες</string>
     <string name="filterModeOn">Επεξεργαστής Εικόνας Ενεργός</string>
     <string name="filterModeOff">Επεξεργαστής Εικόνας Ανενεργός</string>
     <string name="action_tag">Ετικέτα</string>
     <string name="storage_folder">Φάκελος Αποθήκευσης</string>
     <string name="storage_folder_summary">Ορίζει πού θα πρέπει να αποθηκεύονται τα σαρωμένα αρχεία</string>
+    <string name="save_png">Αποθήκευση σε Μορφή PNG</string>
+    <string name="save_png_summary">Αποθήκευση της τελικής εικόνας σε μορφή ΠιΕνΤζί. Έχε υπόψη σου, πως η ΠιΕνΤζί, για την ώρα, δεν υποστηρίζει μεταδεδομένα. Κατά συνέπεια, κάποια χαρακτηριστικά δεν θα είναι διαθέσιμα.</string>
+    <string name="format_not_supported">Δεν υποστηρίζεται αυτή η μορφή</string>
+    <string name="format_not_supported_message">Αυτή η μορφή εικόνας δεν υποστηρίζει τις καρτέλες</string>
 </resources>
