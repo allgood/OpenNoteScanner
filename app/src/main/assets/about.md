@@ -52,7 +52,7 @@ As an open source application, contribution are always welcome. Everyone that su
 * Ondřej Míchal - Czech translation
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
 * Naofumi Fukue - Japanese translation
-* [@nikoss](https://githob.com/nikoss) - Greek translation
+* [@nikoss](https://github.com/nikoss) - Greek translation
 * [Arthur Saprunov](https://github.com/Skydragonsz) - Dutch translation
 * [@ASMfreaK](https://github.com/ASMfreaK) - Russian translation
 * [Yaron Shahrabani](https://github.com/yarons) Hebrew translation
