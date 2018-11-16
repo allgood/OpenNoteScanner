@@ -907,11 +907,17 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         String fileName;
         boolean isIntent = false;
         Uri fileUri = null;
+
+        String imgSuffix = ".jpg";
+        if (mSharedPref.getBoolean("save_png",false)) {
+            imgSuffix = ".png";
+        }
+
         if (intent.getAction().equals("android.media.action.IMAGE_CAPTURE")) {
             fileUri = ((Uri) intent.getParcelableExtra(MediaStore.EXTRA_OUTPUT));
             Log.d(TAG,"intent uri: " + fileUri.toString());
             try {
-                fileName = File.createTempFile("onsFile",".jpg", this.getCacheDir()).getPath();
+                fileName = File.createTempFile("onsFile",imgSuffix, this.getCacheDir()).getPath();
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
@@ -928,7 +934,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             fileName = Environment.getExternalStorageDirectory().toString()
                     + "/" + folderName + "/DOC-"
                     + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())
-                    + ".jpg";
+                    + imgSuffix;
         }
         Mat endDoc = new Mat(Double.valueOf(doc.size().width).intValue(),
                 Double.valueOf(doc.size().height).intValue(), CvType.CV_8UC4);

@@ -49,6 +49,12 @@ Wie bei Freier Software üblich, sind Beiträge immer willkommen. Jeder, der Cod
 * Claudio Arseni - Italienische Übersetzung
 * Francisco Toca - Spanische Übersetzung
 * [@nebulon42](https://github.com/nebulon42) - Deutsche Übersetzung
+* Ondřej Míchal - Tschechische Übersetzung
+* [@nigelinux](https://github.com/nigelinux) - Übersetzungen in traditionelles Chinesisch (zh-rTW)
+* [@nikoss](https://github.com/nikoss) - Griechische Übersetzung
+* [@SkyDragonsz](https://github.com/SkyDragonsz) - Übersetzung ins Niederländische
+* Naofumi Fukue - Japanische Übersetzung
+* [@ASMfreaK](https://github.com/ASMfreaK) - Übersetzung ins Russische
 
 Weitere Menschen haben [Fehlermeldungen](https://github.com/ctodobom/OpenNoteScanner/issues) erstellt und Informationen über die [Telegram Gruppe](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) bereitgestellt. Diese Hilfe wird auch sehr geschätzt.
 

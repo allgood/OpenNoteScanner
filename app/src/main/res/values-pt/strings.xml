@@ -33,7 +33,7 @@
     <string name="automatic_tagging">Tags automáticas</string>
     <string name="automatic_tagging_summary">Define as tags que serão aplicadas automaticamente nas páginas marcadas usando o modelo de página especial</string>
     <string name="match_aspect">Manter relação de aspecto</string>
-    <string name="match_aspect_summary">Muitos dispositivos tem o aspecto da maior resolução de fotografia diferente da prévia, esta configuração irá escolher a maior resolução de fotografia que tenha a mesma relação a da prévia.</string>
+    <string name="match_aspect_summary">Em muitos dispositivos a proporção da imagem de prévia é diferente da imagem final. Quando ativada, esta opção irá selecionar a maior resolução disponível para que a imagem final tenha a mesma proporção da prévia.</string>
     <string name="bug_rotate">Rotaciona a imagem em 180º</string>
     <string name="bug_rotate_summary">Alguns aparelhos possuem a câmera invertida, esta configuração ajusta para que tudo fique correto</string>
     <string name="usage_stats">Estatísticas de Uso</string>
@@ -62,4 +62,8 @@
     <string name="action_tag">Marcação</string>
     <string name="storage_folder">Pasta de Armazenamento</string>
     <string name="storage_folder_summary">Define a pasta de armazenamento das imagens</string>
+    <string name="save_png">Salvar no formato PNG</string>
+    <string name="save_png_summary">Salva as imagens no formato  PNG format. O formato atualmente não suporta metadados, por consequência alguns recursos ficam indisponíveis.</string>
+    <string name="format_not_supported">Formato não suportado</string>
+    <string name="format_not_supported_message">Formato da imagem não suporta etiquetas</string>
 </resources>

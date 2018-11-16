@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -24,6 +23,8 @@ import com.todobom.opennotescanner.R;
 
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+
+import java.io.File;
 
 /**
  * Created by allgood on 22/02/16.
@@ -49,6 +50,9 @@ public class CustomOpenCVLoader extends OpenCVLoader {
     public static boolean isGooglePlayInstalled(Context context) {
         PackageManager pm = context.getPackageManager();
         boolean app_installed = false;
+
+        // DISABLED installation from Google Play since OpenCV Manager is removed from there
+        /*
         try
         {
             PackageInfo info = pm.getPackageInfo("com.android.vending", PackageManager.GET_ACTIVITIES);
@@ -59,6 +63,8 @@ public class CustomOpenCVLoader extends OpenCVLoader {
         {
             app_installed = false;
         }
+        */
+
         return app_installed;
     }
 
@@ -98,31 +104,40 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                             .COLUMN_STATUS);
                     int status = cursor.getInt(columnIndex);
 
-                    int fileNameIndex = cursor.getColumnIndex(DownloadManager
-                            .COLUMN_LOCAL_FILENAME);
-                    String savedFilePath = cursor.getString(fileNameIndex);
-
-                    // get the reason - more detail on the status
-                    int columnReason = cursor.getColumnIndex(DownloadManager
-                            .COLUMN_REASON);
-                    int reason = cursor.getInt(columnReason);
-
                     switch (status) {
                         case DownloadManager.STATUS_SUCCESSFUL:
+
+                            String downloadFileLocalUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI));
+                            File apkFile;
+
+                            apkFile = new File(Uri.parse(downloadFileLocalUri).getPath());
 
                             waitOpenCVDialog.dismiss();
                             AppContext.unregisterReceiver(onComplete);
 
-                            String path = "file://" + savedFilePath;
-                            Uri uri = Uri.parse(path);
-                            Log.d(TAG,"dm query: " + path );
-                            intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            intent.setDataAndType(uri, dm.getMimeTypeForDownloadedFile(id));
+                            Uri uri;
 
-                            AppContext.startActivity(intent);
+                            Intent installIntent;
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                                installIntent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
+                                uri = android.support.v4.content.FileProvider.getUriForFile(ctxt,ctxt.getApplicationContext().getPackageName() + ".fileprovider", apkFile);
+                            } else {
+                                installIntent = new Intent(Intent.ACTION_VIEW);
+                                uri = Uri.fromFile(apkFile);
+                            }
+
+                            installIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            installIntent.setDataAndType(uri, "application/vnd.android.package-archive");
+
+                            AppContext.startActivity(installIntent);
                             break;
                         case DownloadManager.STATUS_FAILED:
+                            // get the reason - more detail on the status
+                            int columnReason = cursor.getColumnIndex(DownloadManager
+                                    .COLUMN_REASON);
+                            int reason = cursor.getInt(columnReason);
+
                             Toast.makeText(AppContext,
                                     "FAILED: " + reason,
                                     Toast.LENGTH_LONG).show();
