@@ -1,7 +1,7 @@
 Over Open Note Scanner
 =======================
 
-** © 20XX [Claudemir Todo Bom](http://todobom.com) **
+**© 20XX [Claudemir Todo Bom](http://todobom.com)**
 
 Deze applicatie biedt een snelle manier om handgeschreven notities en tekeningen te scannen en op te slaan, evenals kassaticketten en andere documenten. Het ondersteunt ook het automatisch vastleggen van afbeeldingen op een [voorgeformatteerde pagina](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
 
@@ -22,9 +22,9 @@ Als je denkt dat deze applicatie of een van mijn bijdragen wat geld waard is en 
 
 ** LET OP: ** Link naar cryptocoins werkt alleen als u de app voor die munt hebt geïnstalleerd!
 
-[Doneer via Bitcoin](bitcoin: 1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
+[Doneer via Bitcoin](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
 
-[Doneer via Dogecoin](dogecoin: DFBaP724XR3rfs9wFahBd353yFkgkqatvd)
+[Doneer via Dogecoin](dogecoin:DFBaP724XR3rfs9wFahBd353yFkgkqatvd)
 
 
 Onderdelen en vereisten van derden
@@ -54,7 +54,9 @@ Als open source-applicatie is een bijdrage altijd welkom. Iedereen die een code 
 * [@nikoss](https://github.com/nikoss) - Griekse vertaling
 * [@SkyDragonsz](https://github.com/SkyDragonsz) - Nederlandse vertaling
 * Naofumi Fukue - Japanse vertaling
-* [@ASMfreaK](https://github.com/ASMfreaK) - vertaling naar het Russisch
+* [@ASMfreaK](https://github.com/ASMfreaK) - Vertaling naar het Russisch
+* [Yaron Shahrabani](https://github.com/yarons) Hebreeuwse vertaling
+* [@Tobaloidee](https://github.com/Tobaloidee) - Grafisch ontwerper
 
 
 Andere mensen hebben geholpen bij het indienen van [Issuerapporten](https://github.com/ctodobom/OpenNoteScanner/issues) en het geven van informatie via de [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Hun hulp wordt ook gewaardeerd.
@@ -65,5 +67,5 @@ Deze toepassing zou niet mogelijk zijn zonder het fantastische materiaal geprodu
 
 * [Android-er / GridView-codevoorbeeld](http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html)
 * [Android Hive / Afbeelding op volledig scherm](http://www.androidhive.info/2013/09/android-fullscreen-image-slider-with-swipe-and-pinch-zoom-gestures/)
-* [Adrian Rosebrock van pyimagesearch.com voor de uitstekende zelfstudie over hoe met de afbeeldingen om te gaan](http://www.pyimagesearch.com/2014/09/01/build-kick-ass-mobile-document-scanner-just- 5 minuten/)
+* [Adrian Rosebrock van pyimagesearch.com voor de uitstekende zelfstudie over hoe met de afbeeldingen om te gaan](http://www.pyimagesearch.com/2014/09/01/build-kick-ass-mobile-document-scanner-just-5-minutes/)
 * [Gabriele Mariotti / Over hoe u secties in de RecyclerView kunt implementeren](https://gist.github.com/gabrielemariotti/e81e126227f8a4bb339c)
