@@ -36,7 +36,7 @@ Open Note Scanner is available for simplified installation on [Google Play Store
 
 [<img alt="Get it on Google Play" height="60" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) [![Get it on F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner) [<img alt="Available at Amazon App Store" height="60" src="https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/devportal2/res/images/amazon-underground-app-us-black.png" />](http://www.amazon.com/Claudemir-Todo-Bom-Open-Scanner/dp/B01EUAU924)
 
-Binary APK file is available [directly from GitHub in the releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project. 
+Binary APK file is available [directly from GitHub in the releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project.
 
 ### Source code releases
 
@@ -72,6 +72,9 @@ $ export ANDROID_HOME=~/android-sdk-linux
 $ ./gradlew assembleRelease
 ```
 
+Instructions for Contributing
+-------------------------
+If you're new to open-source, we recommend you to checkout our [_Contributing Guidelines_](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTING.md) and [Setup Guidelines](https://github.com/ctodobom/OpenNoteScanner/blob/master/SETUP_GUIDELINES.md). Feel free to fork the project and send us a pull request.
 
 History
 -------
@@ -121,6 +124,13 @@ As an open source application, contribution are always welcome. Everyone that su
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
 * [@SparkyCola](https://github.com/SparkyCola) - help on picture focus enhancements
 * [@brenard](https://github.com/brenard) - French translation
+* [@naofum](https://github.com/naofum) - Japanese translation
+* [@nikoss](https://github.com/nikoss) - Greek translation
+* [Arthur Saprunov](https://github.com/Skydragonsz) - Dutch translation
+* [@ASMfreaK](https://github.com/ASMfreaK) - Russian translation
+* [Yaron Shahrabani](https://github.com/yarons) Hebrew translation
+* [@Tobaloidee](https://github.com/Tobaloidee) - Icon design
+* [@princekelly1](https://github.com/princekelly1) - Contributed FAQ.md file
 
 Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
 

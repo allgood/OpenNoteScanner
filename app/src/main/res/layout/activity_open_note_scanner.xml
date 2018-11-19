@@ -148,7 +148,7 @@
                     app:fabSize="mini"
                     app:borderWidth="0dp"
                     app:elevation="0sp"
-                    android:src="@drawable/abc_ic_menu_moreoverflow_mtrl_alpha"
+                    android:src="@drawable/abc_ic_menu_overflow_material"
                     android:layout_alignParentRight="true"
                     android:backgroundTint="#A060FF60"
                     android:tint="#ffffff"
@@ -237,7 +237,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:scaleType="centerInside"
-                    android:src="@drawable/abc_ic_clear_mtrl_alpha"
+                    android:src="@drawable/abc_ic_clear_material"
                     android:gravity="center"
                     android:enabled="true"
                     android:tint="#ffffff"/>

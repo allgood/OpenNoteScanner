@@ -51,6 +51,9 @@ Vzhledem k tomu, že je aplikace  volně přístupná, příspěvky jsou velmi v
 * [@nebulon42](https://github.com/nebulon42) - Německý překlad
 * [@HarryPhoon] (https://github.com/HarryPhoon) - Český překlad
 * [@nigelinux](https://github.com/nigelinux) - Čínský (tradiční) překlad
+* [@SkyDragonsz](https://github.com/SkyDragonsz) - překlad do holandštiny
+* Naofumi Fukue - japonský překlad
+* [@ASMfreaK](https://github.com/ASMfreaK) - překlad do ruštiny
 
 Ostatní lidé pomohli [nahlášením problémů](https://github.com/ctodobom/OpenNoteScanner/issues) a poskytnutím informací přes [skupinu na Telegramu](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Jejich pomoc je taktéž velmi ceněna.
 

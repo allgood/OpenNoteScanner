@@ -1,6 +1,36 @@
 Change Log
 ==========
 
+version 1.0.30
+--------------
+
+Updates from contributors:
+* Greek translation by [@nikoss](https://githob.com/nikoss)
+* Dutch translation by [Arthur Saprunov](https://github.com/Skydragonsz)
+* Russian translation by [@ASMfreaK](https://github.com/ASMfreaK)
+* Hebrew translation by [Yaron Shahrabani](https://github.com/yarons)
+
+version 1.0.29
+--------------
+
+Updates from contributors:
+* Japanese translation by @naofum
+* Fix a crash on some autofocus operations by @mattkhaw
+* French translation improvements by @guillaume-roche
+* Remove animation when launched by intent by @hannesss81
+* Share enhancement from gallery by @Reylak
+
+Also by me ( @ctodobom ):
+* Simpler privacy policy
+* Compiled with Nougat 7.1.1 tools (Level 25)
+
+version 1.0.28
+--------------
+
+* French translation (@brenard)
+* Spanish translation updates (@franciscot)
+* Autofocus enhancements (with the help of @SparkyCola)
+
 version 1.0.27
 --------------
 

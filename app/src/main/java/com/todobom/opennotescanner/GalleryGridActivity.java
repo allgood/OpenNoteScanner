@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -71,7 +72,7 @@ public class GalleryGridActivity extends AppCompatActivity
     private void setSelectionMode(boolean selectionMode) {
         if (mShare !=null && mDelete != null ) {
             mShare.setVisible(selectionMode);
-            mTag.setVisible(selectionMode);
+            //mTag.setVisible(selectionMode);
             mDelete.setVisible(selectionMode);
         }
         this.selectionMode = selectionMode;
@@ -333,18 +334,33 @@ public class GalleryGridActivity extends AppCompatActivity
     }
 
     public void shareImages() {
+        ArrayList<String> selectedFiles = myThumbAdapter.getSelectedFiles();
 
-        final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-        shareIntent.setType("image/jpg");
+        if (selectedFiles.size() == 1) {
+            /* Only one scanned document selected: ACTION_SEND intent */
+            final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/jpg");
 
-        ArrayList<Uri> filesUris = new ArrayList<>();
+            Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(selectedFiles.get(0)));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+            Log.d("GalleryGridActivity","uri "+uri);
 
-        for (String i : myThumbAdapter.getSelectedFiles() ) {
-            filesUris.add(Uri.parse("file://" + i));
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
+        } else {
+            ArrayList<Uri> filesUris = new ArrayList<>();
+            for (String i : myThumbAdapter.getSelectedFiles()) {
+                Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(i));
+                filesUris.add(uri);
+                Log.d("GalleryGridActivity","uri "+uri);
+            }
+
+            final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+            shareIntent.setType("image/jpg");
+
+            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
+
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
         }
-        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris);
-
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
     }
 
 

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -165,6 +166,22 @@ public class FullScreenViewActivity extends AppCompatActivity {
         int item = mViewPager.getCurrentItem();
         String filePath = mAdapter.getPath(item);
 
+        if (filePath.endsWith(".png")) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.format_not_supported);
+            builder.setMessage(R.string.format_not_supported_message);
+            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+
+            AlertDialog alerta = builder.create();
+            alerta.show();
+            return;
+        }
+
         FragmentManager fm = getSupportFragmentManager();
         TagEditorFragment tagEditorDialog = new TagEditorFragment();
 
@@ -188,6 +205,9 @@ public class FullScreenViewActivity extends AppCompatActivity {
         Utils.removeImageFromGallery(filePath,this);
 
         loadAdapter();
+        
+        if (0 == mAdapter.getCount())
+            finish();
         mViewPager.setCurrentItem(item);
     }
 
@@ -198,9 +218,10 @@ public class FullScreenViewActivity extends AppCompatActivity {
 
         final Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("image/jpg");
-        final File photoFile = new File(mAdapter.getPath(item));
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(photoFile));
-        Log.d("Fullscreen","uri "+Uri.fromFile(photoFile));
+        Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(mAdapter.getPath(item)));
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
+        Log.d("Fullscreen","uri "+uri);
+
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
     }
 
