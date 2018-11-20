@@ -63,4 +63,8 @@
     <string name="action_tag">Etiqueta</string>
     <string name="storage_folder">Carpeta de almacenamiento</string>
     <string name="storage_folder_summary">Establecer dónde se deben almacenar los archivos escaneados</string>
+    <string name="save_png">Guardar en formato PNG</string>
+    <string name="save_png_summary">Guardar las imágenes finales en formato PNG. Tenga en cuenta que los metadatos aún no son compatibles con PNG, por lo que algunas funciones no estarán disponibles.</string>
+    <string name="format_not_supported">Formato no soportado</string>
+    <string name="format_not_supported_message">El formato de imagen no soporta etiquetado</string>
 </resources>
