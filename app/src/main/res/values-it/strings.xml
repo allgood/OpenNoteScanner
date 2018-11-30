@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
 
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Galleria</string>
 
     <string name="title_activity_full_image">Visualizzatore immagini acquisite</string>
@@ -26,7 +27,7 @@
     <string name="autoMode">Modalità automatica</string>
     <string name="manualMode">Modalità manuale</string>
     <string name="share_app">Condividi questa app</string>
-    <string name="share_app_using">Condividi il link attraverso</string>
+    <string name="share_app_using">Condividi il collegamento attraverso</string>
     <string name="share_app_body">"Dai un\'occhiata a questa meravigliosa applicazione per acquisire note, disegni e documenti attraverso la videocamera: "</string>
     <string name="share_app_subject">Splendida applicazione per acquisire note e documenti</string>
     <string name="settings">Impostazioni</string>
@@ -34,7 +35,7 @@
     <string name="automatic_tagging">Etichette automatiche</string>
     <string name="automatic_tagging_summary">Imposta etichette automatiche da applicare durante l\'acquisizione usando il modello di pagina speciale</string>
     <string name="match_aspect">Confronta risoluzione anteprima</string>
-    <string name="match_aspect_summary">La maggior parte dei dispositivi ha la risoluzione delle immagini maggiore diversa da quella delle anteprime, questa impostazione selezionerà la maggiore risoluzione dell\'immagine in modo che corrisponda con quella dell\'anteprima</string>
+    <string name="match_aspect_summary">La maggior parte dei dispositivi ha la risoluzione delle immagini diversa da quella delle anteprime, questa impostazione selezionerà la maggiore risoluzione dell\'immagine in modo che corrisponda con quella dell\'anteprima.</string>
     <string name="bug_rotate">Ruota immagine di 180º</string>
     <string name="bug_rotate_summary">Alcuni dispositivi hanno la fotocamera al contrario, questa impostazione regola tutto in modo da avere l\'immagine corretta</string>
     <string name="usage_stats">Statistiche di utilizzo</string>
@@ -63,4 +64,8 @@
     <string name="action_tag">Etichetta</string>
     <string name="storage_folder">Cartella di archiviazione</string>
     <string name="storage_folder_summary">Imposta dove verranno archiviati i file acquisiti</string>
+     <string name="save_png">Salva in formato PNG</string>
+    <string name="save_png_summary">Salva l'immagine finale in formatoPNG. Notare che i metadati non sono ancora supportati per PNG, quindi alcune funzionalità non saranno disponibili.</string>
+    <string name="format_not_supported">Formato non supportato</string>
+    <string name="format_not_supported_message">Il formato dell'immagine non supporta le etichette</string>
 </resources>
