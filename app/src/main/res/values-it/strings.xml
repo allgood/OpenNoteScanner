@@ -65,7 +65,7 @@
     <string name="storage_folder">Cartella di archiviazione</string>
     <string name="storage_folder_summary">Imposta dove verranno archiviati i file acquisiti</string>
      <string name="save_png">Salva in formato PNG</string>
-    <string name="save_png_summary">Salva l'immagine finale in formatoPNG. Notare che i metadati non sono ancora supportati per PNG, quindi alcune funzionalità non saranno disponibili.</string>
+    <string name="save_png_summary">Salva l\'immagine finale in formatoPNG. Notare che i metadati non sono ancora supportati per PNG, quindi alcune funzionalità non saranno disponibili.</string>
     <string name="format_not_supported">Formato non supportato</string>
-    <string name="format_not_supported_message">Il formato dell'immagine non supporta le etichette</string>
+    <string name="format_not_supported_message">Il formato dell\'immagine non supporta le etichette</string>
 </resources>
