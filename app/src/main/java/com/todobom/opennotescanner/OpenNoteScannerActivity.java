@@ -887,6 +887,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
 
+        camera.cancelAutoFocus();
         scanClicked = false;
         safeToTakePicture = true;
 
