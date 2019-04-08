@@ -47,7 +47,7 @@ As an open source application, contribution are always welcome. Everyone that su
 
 * Nicolas Raoul - English corrections
 * Claudio Arseni - Italian translation
-* Francisco Toca - Spanish translation
+* [@franciscot](https://github.com/franciscot) Francisco Toca / [@yeyeto2788](https://github.com/yeyeto2788) Juan Biondi - Spanish translation
 * [@nebulon42](https://github.com/nebulon42) - German translation
 * Ondřej Míchal - Czech translation
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
