@@ -32,7 +32,11 @@ android {
     lintOptions {
         abortOnError false
     }
-
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
 }
 
 repositories {
@@ -46,10 +50,11 @@ dependencies {
     implementation 'com.android.support:design:27.0.0'
     implementation 'com.google.zxing:core:3.0.1'
     implementation 'com.android.support:support-v4:27.0.0'
-    implementation 'com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115'
+    implementation project(path: ':openCVLibrary410')
     implementation 'us.feras.mdv:markdownview:1.1.0'
     implementation 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
     implementation 'org.piwik.sdk:piwik-sdk:0.0.4'
+    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
 }

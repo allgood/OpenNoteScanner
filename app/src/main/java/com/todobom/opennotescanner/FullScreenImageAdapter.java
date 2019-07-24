@@ -14,7 +14,7 @@ import android.widget.RelativeLayout;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
-import com.todobom.opennotescanner.views.TouchImageView;
+import com.ortiz.touchview.TouchImageView;
 
 import java.util.ArrayList;
 

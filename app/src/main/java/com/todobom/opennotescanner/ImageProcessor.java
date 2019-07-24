@@ -148,7 +148,7 @@ public class ImageProcessor extends Handler {
 
     public void processPicture( Mat picture ) {
 
-        Mat img = Imgcodecs.imdecode(picture, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
+        Mat img = Imgcodecs.imdecode(picture, Imgcodecs.IMREAD_UNCHANGED);
         picture.release();
 
         Log.d(TAG, "processPicture - imported image " + img.size().width + "x" + img.size().height);
