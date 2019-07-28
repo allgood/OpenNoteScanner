@@ -1,9 +1,9 @@
 language: android
-jdk: oraclejdk11
+dist: trusty
 android:
   components:
-    - platform-tools
-    - tools
+    # - platform-tools
+    # - tools
     - build-tools-28.0.3
     - android-27
     - extra-android-support
