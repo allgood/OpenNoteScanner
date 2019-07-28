@@ -3,31 +3,31 @@ Acerca de Open Note Scanner
 
 **© 20XX [Claudemir Todo Bom](http://todobom.com)**
 
-Esta aplicación proporciona una manera rápida de escanear y almacenar notas escritas a mano y diseños, asi como recibos de la compra y otros documentos. También soporta la captura automática de imagenes de una [página pre-formateada](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
+Esta aplicación proporciona una manera rápida de escanear y almacenar notas escritas a mano y diseños, así como recibos de la compra y otros documentos. También soporta la captura automática de imágenes de una [página pre-formateada](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
 
 
 Licencia
 --------
 
-Esta aplicación está disponible a traves de la [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt). El código fuente está [disponible en GitHub](http://github.com/ctodobom/OpenNoteScanner).
+Esta aplicación está disponible a través de la [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt). El código fuente está [disponible en GitHub](http://github.com/ctodobom/OpenNoteScanner).
 
 Donaciones
 ----------
 
 El desarrollo de aplicaciones en android no es mi trabajo, yo hago esta aplicación por curiosidad y porque hay docenas de aplicaciones con objetivos similares pero ninguna es código abierto.
 
-Si tu crees que esta aplicacion o alguna de mis contribuciones vale la pena gastar un poco de dinero y estás dispuesto a pagarlo, por favor no dudes en hacer alguna donación a través de Paypal, Bitcoin o Dogecoin.
+Si tu crees que esta aplicación o alguna de mis contribuciones vale la pena gastar un poco de dinero y estás dispuesto a pagarlo, por favor no dudes en hacer alguna donación a través de Paypal, Bitcoin o Dogecoin.
 
 [Donar a través de Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
-**ATENCIÓN:** El enlace a criptomonedas funciona unicamente si tienes la aplicación de esta moneda instalada!
+**ATENCIÓN:** El enlace a criptomonedas funciona únicamente si tienes la aplicación de esta moneda instalada!
 
 [Donar a través de Bitcoin](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
 
 [Donar a través de Dogecoin](dogecoin:DFBaP724XR3rfs9wFahBd353yFkgkqatvd)
 
 
-Partes de terceros y requermientos
+Partes de terceros y requerimientos
 ----------------------------------
 
 El binario compilado incluye código desde estos proyectos externos:
@@ -47,7 +47,7 @@ Como cualquier aplicación de código abierto, las contribuciones siempre son bi
 
 * Nicolas Raoul - Correciones en inglés
 * Claudio Arseni - Traducción al italiano
-* [@franciscot](https://github.com/franciscot) Francisco Toca - Traducción al español
+* [@franciscot](https://github.com/franciscot) Francisco Toca / [@yeyeto2788](https://github.com/yeyeto2788) Juan Biondi - Traducción al español
 * [@nebulon42](https://github.com/nebulon42) - Traducción al alemán
 * Ondřej Míchal - Traducción al Checo
 * [@nigelinux](https://github.com/nigelinux) - Traducción al chino tradicional (zh-rTW)

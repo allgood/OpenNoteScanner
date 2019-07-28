@@ -62,5 +62,9 @@
     <string name="filterModeOff">Afbeelding filter uit</string>
     <string name="action_tag">Tag</string>
     <string name="storage_folder">Opslagmap</string>
-    <string name="storage_folder_summary">Instellen waar de gescande bestanden opgeslagen worden</string>
+    <string name="storage_folder_summary">Instellen waar de gescande bestanden opgeslagen worden</string>    
+    <string name="save_png">Opslaan naar PNG formaat</string>
+    <string name="save_png_summary">Sla definitieve afbeeldingen op in PNG formaat. Merk op dat metadata nog niet wordt ondersteund op PNG, dus sommige functies zullen niet beschikbaar zijn.</string>
+    <string name="format_not_supported">Formaat niet ondersteund</string>
+    <string name="format_not_supported_message">Afbeelding formaat ondersteunt geen tag</string>
 </resources>

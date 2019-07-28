@@ -14,9 +14,9 @@ Open Note Scanner について
 寄付
 ----
 
-Android アプリケーションを作成することは私の主要な仕事ではありません。私はこのアプリケーションを好奇心の対象から外しました。同様の目的を持った数十ものアプリケーションがありますが、どれもオープンソースではありません。
+Android アプリケーションを作成することは私の主要な仕事ではありません。私はこのアプリケーションを好奇心から作成しました。同様の目的を持った数十ものアプリケーションがありますが、どれもオープンソースではないからです。
 
-このアプリケーション、または私の貢献に価値があると思い、そしてあなたが支払うことを望むのであれば、Paypal、Bitcoin、Dogecoin で寄付をしてください。
+このアプリケーションや私の貢献に価値があり、あなたが支払ってもよいと思っていただくのでであれば、Paypal、Bitcoin、Dogecoin で寄付をしてください。
 
 [Paypal で寄付](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
@@ -51,10 +51,12 @@ Android アプリケーションを作成することは私の主要な仕事で
 * [@nebulon42](https://github.com/nebulon42) - ドイツ語翻訳
 * Ondřej Míchal - チェコ語翻訳
 * [@nigelinux](https://github.com/nigelinux) - 繁体中国語 (zh-rTW) 翻訳
+* [@naofum] - 日本語翻訳
 * [@nikoss](https://github.com/nikoss) - ギリシャ語への翻訳
-* [@SkyDragonsz](https://github.com/SkyDragonsz) - オランダ語翻訳
-* Naofumi Fukue - 日本語翻訳
+* [Arthur Saprunov](https://github.com/Skydragonsz) - オランダ語翻訳
 * [@ASMfreaK](https://github.com/ASMfreaK) - ロシア語の翻訳
+* [Yaron Shahrabani](https://github.com/yarons) ヘブライ語翻訳
+* [@Tobaloidee](https://github.com/Tobaloidee) - アイコンデザイン
 
 [問題の報告](https://github.com/ctodobom/OpenNoteScanner/issues) を提出して支援したり [Telegram グループ](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) で情報を提供してくれた他の人々。 彼らの支援も高く評価しています。
 

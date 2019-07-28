@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
-
     <string name="title_activity_gallery">Galerie</string>
-
     <string name="title_activity_full_image">Betrachter für gescannte Bilder</string>
     <string name="images_scanned">Gescannte Bilder</string>
     <string name="action_share">Teilen</string>
@@ -61,6 +59,10 @@
     <string name="filterModeOn">Bildnachbearbeitung Ein</string>
     <string name="filterModeOff">Bildnachbearbeitung Aus</string>
     <string name="action_tag">Tag</string>
-    <string name="storage_folder">Storage Folder</string>
-    <string name="storage_folder_summary">Sets where the scanned files should be stored</string>
+    <string name="storage_folder">Dokumentenordner</string>
+    <string name="storage_folder_summary">Stellt den Ordner für die Speicherung der eingescannten Dokumente ein</string>
+    <string name="save_png">Speichern in PNG-Grafikformat</string>
+    <string name="save_png_summary">Dokumente werden als PNG-Bilder gespeichert. Das PNG-Grafikformat unterstützt keine Metadaten. Daher sind bei PNG-Bildern nicht alle Anwendungsfunktionalitäten vorhanden</string>
+    <string name="format_not_supported">Grafikformat nicht unterstützt</string>
+    <string name="format_not_supported_message">Das Grafikformat hat keine Unterstützung für Tags</string>
 </resources>

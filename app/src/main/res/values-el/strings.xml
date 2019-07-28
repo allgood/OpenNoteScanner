@@ -20,8 +20,7 @@
     <string name="answer_cancel">Ακύρωση</string>
     <string name="downloading">Γίνεται λήψη</string>
     <string name="downloading_opencv">Γίνεται λήψη του Διαχειριστή OpenCV</string>
-    <string name="scanningToast">Αναζητείται έγγραφο\n
-       Άγγιξε ξανά, για να σαρώσεις ολόκληρη την εικόνα</string>
+    <string name="scanningToast">Αναζητείται έγγραφο\n Άγγιξε ξανά, για να σαρώσεις ολόκληρη την εικόνα</string>
     <string name="colorMode">Έγχρωμη λειτουργία</string>
     <string name="bwMode">Ασπρόμαυρη λειτουργία</string>
     <string name="autoMode">Αυτόματη Κατάσταση Λειτουργίας</string>
@@ -43,9 +42,7 @@
     <string name="send_message">Αποστολή Μηνύματος</string>
     <string name="send_message_summary">Αποστολή μηνύματος στον προγραμματιστή</string>
     <string name="stats_optin_title">Στατιστικά Χρήσης</string>
-    <string name="stats_optin_text">Θέλεις να επιτρέψεις στον Ανοιχτό Σαρωτή Σημειώσεων να αποστέλλει, προς τον προγραμματιστή του, ανώνυμες στατιστικές χρήσης;\n
-     \n
-     Μπορείς να το αλλάξεις αυτό, όποτε θες, από την οθόνη των ρυθμίσεων.</string>
+    <string name="stats_optin_text">Θέλεις να επιτρέψεις στον Ανοιχτό Σαρωτή Σημειώσεων να αποστέλλει, προς τον προγραμματιστή του, ανώνυμες στατιστικές χρήσης;\n \n Μπορείς να το αλλάξεις αυτό, όποτε θες, από την οθόνη των ρυθμίσεων.</string>
     <string name="answer_later">Αργότερα</string>
     <string name="ask_install_opencv">Για να λειτουργήσει, ο Ανοιχτός Σαρωτής Σημειώσεων χρειάζεται τις υπηρεσίες του Διαχειριστή OpenCV, ο οποίος δεν έχει, ακόμη, εγκατασταθεί.</string>
     <string name="googleplay">Google Play</string>
@@ -66,4 +63,8 @@
     <string name="action_tag">Ετικέτα</string>
     <string name="storage_folder">Φάκελος Αποθήκευσης</string>
     <string name="storage_folder_summary">Ορίζει πού θα πρέπει να αποθηκεύονται τα σαρωμένα αρχεία</string>
+    <string name="save_png">Αποθήκευση σε Μορφή PNG</string>
+    <string name="save_png_summary">Αποθήκευση της τελικής εικόνας σε μορφή ΠιΕνΤζί. Έχε υπόψη σου, πως η ΠιΕνΤζί, για την ώρα, δεν υποστηρίζει μεταδεδομένα. Κατά συνέπεια, κάποια χαρακτηριστικά δεν θα είναι διαθέσιμα.</string>
+    <string name="format_not_supported">Δεν υποστηρίζεται αυτή η μορφή</string>
+    <string name="format_not_supported_message">Αυτή η μορφή εικόνας δεν υποστηρίζει τις καρτέλες</string>
 </resources>

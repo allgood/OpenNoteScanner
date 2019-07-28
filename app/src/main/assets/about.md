@@ -47,12 +47,12 @@ As an open source application, contribution are always welcome. Everyone that su
 
 * Nicolas Raoul - English corrections
 * Claudio Arseni - Italian translation
-* Francisco Toca - Spanish translation
+* [@franciscot](https://github.com/franciscot) Francisco Toca / [@yeyeto2788](https://github.com/yeyeto2788) Juan Biondi - Spanish translation
 * [@nebulon42](https://github.com/nebulon42) - German translation
 * Ondřej Míchal - Czech translation
 * [@nigelinux](https://github.com/nigelinux) - Traditional Chinese (zh-rTW) Translation
 * Naofumi Fukue - Japanese translation
-* [@nikoss](https://githob.com/nikoss) - Greek translation
+* [@nikoss](https://github.com/nikoss) - Greek translation
 * [Arthur Saprunov](https://github.com/Skydragonsz) - Dutch translation
 * [@ASMfreaK](https://github.com/ASMfreaK) - Russian translation
 * [Yaron Shahrabani](https://github.com/yarons) Hebrew translation
