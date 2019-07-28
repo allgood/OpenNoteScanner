@@ -1,6 +1,23 @@
 Change Log
 ==========
 
+version 1.0.33
+--------------
+
+* Fix bug on image viewer when running Android 9
+* Added support for PNG images (on settings screen)
+* Simplified Chinese translation, thanks to @yzqzss
+* Basque translation, thanks to @beriain
+* Updates and fixes on translations ( Greek by @nikoss, Dutch by @Skydragonsz , Spanish by @fransiscot and @yeyeto2788, Japanese by @naofum , Italian by @Claudinux , German by @dellani )
+
+
+version 1.0.32
+--------------
+
+* Removed Google Play link to OpenCV Manager
+* Fixed share function
+
+
 version 1.0.30
 --------------
 
