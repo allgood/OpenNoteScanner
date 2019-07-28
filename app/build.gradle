@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
     implementation 'org.piwik.sdk:piwik-sdk:0.0.4'
+    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
 }
