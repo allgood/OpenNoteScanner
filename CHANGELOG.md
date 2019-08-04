@@ -22,7 +22,7 @@ version 1.0.30
 --------------
 
 Updates from contributors:
-* Greek translation by [@nikoss](https://githob.com/nikoss)
+* Greek translation by [@nikoss](https://github.com/nikoss)
 * Dutch translation by [Arthur Saprunov](https://github.com/Skydragonsz)
 * Russian translation by [@ASMfreaK](https://github.com/ASMfreaK)
 * Hebrew translation by [Yaron Shahrabani](https://github.com/yarons)
