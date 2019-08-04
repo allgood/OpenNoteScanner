@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+version 1.0.34
+
+* Fix typo on Changelog
+* Updated Danish About.md
+* Sync F-Droid and Google Play versions
+
+--------------
+
 version 1.0.33
 --------------
 
