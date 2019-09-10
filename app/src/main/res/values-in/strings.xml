@@ -13,7 +13,7 @@
     <string name="confirm_delete_multiple_text">Apakah anda ingin menghapus gambar yang dipilih?</string>
     <string name="share_snackbar">Bagikan gambar via</string>
     <string name="action_about">Tentang</string>
-    <string name="about_filename">about.md</string>
+    <string name="about_filename">about-in.md</string>
     <string name="install_opencv">Pasang Pengelola OpenCV</string>
     <string name="confirm_install_opencv">Apakah anda ingin mengunduh Pengelola OpenCV dari GitHub?</string>
     <string name="answer_cancel">Batal</string>
