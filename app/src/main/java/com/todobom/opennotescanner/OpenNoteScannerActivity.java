@@ -53,6 +53,7 @@ import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.CustomOpenCVLoader;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
 import com.todobom.opennotescanner.helpers.PreviewFrame;
+import com.todobom.opennotescanner.helpers.ScanTopicDialogFragment;
 import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.views.HUDCanvasView;
 
@@ -85,8 +86,8 @@ import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromU
  * status bar and navigation/system bar) with user interaction.
  */
 public class OpenNoteScannerActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener , SurfaceHolder.Callback,
-        Camera.PictureCallback, Camera.PreviewCallback {
+        implements NavigationView.OnNavigationItemSelectedListener, SurfaceHolder.Callback,
+        Camera.PictureCallback, Camera.PreviewCallback, ScanTopicDialogFragment.SetTopicDialogListener {
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -159,6 +160,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private boolean mBugRotate=false;
     private SharedPreferences mSharedPref;
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
+    private String scanTopic = null;
+    private Mat mat;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -690,7 +693,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         if ( displayRatio > previewRatio ) {
             ViewGroup.LayoutParams surfaceParams = mSurfaceView.getLayoutParams();
-            previewHeight = (int) ( (float) size.y/displayRatio*previewRatio);
+            previewHeight = (int) ((float) size.y / displayRatio * previewRatio);
             surfaceParams.height = previewHeight;
             mSurfaceView.setLayoutParams(surfaceParams);
 
@@ -881,16 +884,32 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height);
 
-        Mat mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
+        mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
         setImageProcessorBusy(true);
-        sendImageProcessorMessage("pictureTaken", mat);
 
-        camera.cancelAutoFocus();
+        if (mSharedPref.getBoolean("custom_scan_topic", false)) {
+            FragmentManager fm = getSupportFragmentManager();
+            final ScanTopicDialogFragment scanTopicDialogFragment = new ScanTopicDialogFragment();
+            scanTopicDialogFragment.show(fm, getString(R.string.scan_topic_dialog_title));
+
+            return;
+        }
+
+        issueProcessingOfTakenPicture();
+    }
+
+    @Override
+    public void onFinishTopicDialog(String userInputScanTopic) {
+        scanTopic = userInputScanTopic;
+        issueProcessingOfTakenPicture();
+    }
+
+    private void issueProcessingOfTakenPicture() {
+        sendImageProcessorMessage("pictureTaken", mat);
         scanClicked = false;
         safeToTakePicture = true;
-
     }
 
     public void sendImageProcessorMessage(String messageText , Object obj ) {
@@ -932,10 +951,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 folder.mkdirs();
                 Log.d(TAG, "wrote: created folder "+folder.getPath());
             }
-            fileName = Environment.getExternalStorageDirectory().toString()
-                    + "/" + folderName + "/DOC-"
-                    + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())
-                    + imgSuffix;
+
+            fileName = createFileName(imgSuffix, folderName);
         }
         Mat endDoc = new Mat(Double.valueOf(doc.size().width).intValue(),
                 Double.valueOf(doc.size().height).intValue(), CvType.CV_8UC4);
@@ -1002,6 +1019,19 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         refreshCamera();
 
+    }
+
+    private String createFileName(String imgSuffix, String folderName) {
+        String fileName;
+        fileName = Environment.getExternalStorageDirectory().toString()
+                + "/" + folderName + "/";
+        if (scanTopic != null) {
+            fileName += scanTopic + "-";
+        }
+        fileName += "DOC-"
+                + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date())
+                + imgSuffix;
+        return fileName;
     }
 
     class AnimationRunnable implements Runnable {
