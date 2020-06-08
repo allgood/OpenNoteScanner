@@ -67,4 +67,5 @@
     <string name="save_png_summary">Save final images to PNG format. Notice that metadata isn\'t supported yet on PNG, so some features will not be available.</string>
     <string name="format_not_supported">Format not supported</string>
     <string name="format_not_supported_message">Image format doesn\'t support tagging</string>
+    <string name="no_files_selected">No files selected.</string>
 </resources>

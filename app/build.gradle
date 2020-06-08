@@ -53,4 +53,7 @@ dependencies {
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
     implementation 'org.piwik.sdk:piwik-sdk:0.0.4'
     implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
+    implementation 'com.itextpdf:kernel:7.1.11'
+    implementation 'com.itextpdf:layout:7.1.11'
+    implementation 'com.itextpdf:io:7.1.11'
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:layout_gravity="left|center_vertical"
     android:background="#FFFFFF">
 
     <com.afollestad.dragselectrecyclerview.DragSelectRecyclerView
@@ -13,5 +14,19 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/pdfButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:backgroundTint="#A060FF60"
+        android:src="@drawable/ic_menu_pdf"
+        android:tint="#ffffff"
+        app:borderWidth="0dp"
+        app:elevation="0sp"
+        app:fabSize="mini" />
 
-</LinearLayout>
+</RelativeLayout>
