@@ -13,7 +13,7 @@
     <string name="confirm_delete_multiple_text">می‌خواهید تصاویر انتخاب شده را پاک کنید؟</string>
     <string name="share_snackbar">هم‌رسانی تصاویر از طریق</string>
     <string name="action_about">درباره</string>
-    <string name="about_filename">about.md</string>
+    <string name="about_filename">about-fa.md</string>
     <string name="install_opencv">نصب OpenCV Manager</string>
     <string name="confirm_install_opencv">تمایل دارید که OpenCV Manager از گیت‌هاب نصب شود؟</string>
     <string name="answer_cancel">لغو</string>
