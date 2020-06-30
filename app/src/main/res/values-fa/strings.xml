@@ -67,4 +67,9 @@
     <string name="save_png_summary">تصاویر نهایی را در قالب PNG ذخیره شوند. توجه داشته باشید این قالب هنوز قابلیت پشتیبانی از فراداده‌ها را ندارد و در نتیجه برخی ویژگی‌های دردسترس نخواهند بود.</string>
     <string name="format_not_supported">این قالب پشتیبانی نمی‌شود</string>
     <string name="format_not_supported_message">قالب تصویر، برچسب‌زنی را پشتیبانی نمی‌کند</string>
+    <string name="set_scan_topic">تنظیم موضوع اسکن</string>
+    <string name="cancel">لغو</string>
+    <string name="custom_scan_topic">موضوع سفارشی اسکن</string>
+    <string name="scan_topic_dialog_title">لطفا موضوعی را انتخاب کنید</string>
+    <string name="skip_scan_topic">عبور کردن از انتخاب موضوع</string>
 </resources>
