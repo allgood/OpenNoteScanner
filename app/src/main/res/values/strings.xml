@@ -72,4 +72,5 @@
     <string name="custom_scan_topic">Custom scan topic</string>
     <string name="scan_topic_dialog_title">Please provide a topic</string>
     <string name="skip_scan_topic">Skip Topic</string>
+    <string name="no_files_selected">No files selected.</string>
 </resources>
