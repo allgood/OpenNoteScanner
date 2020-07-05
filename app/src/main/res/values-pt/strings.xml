@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- When adding a new string value, please keep the alphabetical order
+     in which the string names are sorted. This makes the life of translation
+     contributors easier -->
 <resources>
     <string name="about_filename">about-pt.md</string>
     <string name="action_about">Sobre</string>
