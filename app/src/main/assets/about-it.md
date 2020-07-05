@@ -41,21 +41,11 @@ Questa applicazione contiene codice dai seguenti progetti esterni:
 Ringraziamenti
 --------------
 
-### Contributori
+### Contributi
 
-Come applicazione open source, i contributi sono sempre benvenuti. Chiunque contribuisca al codice viene elencato in questa sezione.
+Come applicazione open source, i contributi sono sempre benvenuti. 
 
-* Nicolas Raoul - correzioni in inglese
-* [Claudio Arseni](https://github.com/Claudinux) - traduzione in italiano
-* Francisco Toca - traduzione in spagnolo
-* [@nebulon42](https://github.com/nebulon42) - traduzione in tedesco
-* Ondřej Míchal - traduzione in ceco
-* [@nigelinux](https://github.com/nigelinux) - traduzione in cinese tradizionale (zh-rTW)
-* Naofumi Fukue - traduzione giapponese
-* [@nikoss](https://github.com/nikoss) - traduzione in greco
-* [Arthur Saprunov](https://github.com/Skydragonsz) - traduzione in olandese
-* [@ASMfreaK](https://github.com/ASMfreaK) - traduzione in russo
-* [Yaron Shahrabani](https://github.com/yarons) - traduzione in ebraico
+La maggior parte dei contributi alla traduzione sono elencati nel file [CONTRIBUTORS.md file](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md), mentre i contributi al codice sono nel [Changelog](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) e nella [cronologia dei commit](https://github.com/ctodobom/OpenNoteScanner/commits).
 
 Altre persone hanno aiutato con le [segnalazioni di errori](https://github.com/ctodobom/OpenNoteScanner/issues) e dando informazioni attraverso il [gruppo Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Anche il loro aiuto è molto apprezzato.
 

@@ -20,7 +20,7 @@ Als je denkt dat deze applicatie of een van mijn bijdragen wat geld waard is en 
 
 [Doneer via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
-** LET OP: ** Link naar cryptocoins werkt alleen als u de app voor die munt hebt geïnstalleerd!
+**LET OP:** Link naar cryptocoins werkt alleen als u de app voor die munt hebt geïnstalleerd!
 
 [Doneer via Bitcoin](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
 
@@ -35,7 +35,7 @@ Binaire builds bevatten code van deze externe projecten:
 * [OpenCV Library voor Android](http://www.opencv.org)
 * [MarkdownView van Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
 * [TouchImageView van Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
-* [Drag Select Recycler Viewhttps://github.com/afollestad/drag-select-recyclerview)
+* [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
 * [Android Universal Image Loader van Sergey Tarasevich](https://github.com/nostra13/Android-Universal-Image-Loader)
 
 Bedankt
@@ -45,19 +45,7 @@ Bedankt
 
 Als open source-applicatie is een bijdrage altijd welkom. Iedereen die een code indient, wordt hier vermeld.
 
-* Nicolas Raoul - Engelse correcties
-* Claudio Arseni - Italiaanse vertaling
-* Francisco Toca - Spaanse vertaling
-* [@nebulon42](https://github.com/nebulon42) - Duitse vertaling
-* Ondřej Míchal - Tsjechische vertaling
-* [@nigelinux](https://github.com/nigelinux) - Traditioneel Chinees (zh-rTW) Vertaling
-* [@nikoss](https://github.com/nikoss) - Griekse vertaling
-* [@SkyDragonsz](https://github.com/SkyDragonsz) - Nederlandse vertaling
-* Naofumi Fukue - Japanse vertaling
-* [@ASMfreaK](https://github.com/ASMfreaK) - Vertaling naar het Russisch
-* [Yaron Shahrabani](https://github.com/yarons) Hebreeuwse vertaling
-* [@Tobaloidee](https://github.com/Tobaloidee) - Grafisch ontwerper
-
+De meeste vertaalbijdragen worden vermeld in het [CONTRIBUTORS.md-bestand](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) en codebijdragers worden vermeld in het [Changelog-bestand](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) en de [commits-geschiedenis](https://github.com/ctodobom/OpenNoteScanner/commits)
 
 Andere mensen hebben geholpen bij het indienen van [Issuerapporten](https://github.com/ctodobom/OpenNoteScanner/issues) en het geven van informatie via de [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Hun hulp wordt ook gewaardeerd.
 

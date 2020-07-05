@@ -67,4 +67,10 @@
     <string name="save_png_summary">Sla definitieve afbeeldingen op in PNG formaat. Merk op dat metadata nog niet wordt ondersteund op PNG, dus sommige functies zullen niet beschikbaar zijn.</string>
     <string name="format_not_supported">Formaat niet ondersteund</string>
     <string name="format_not_supported_message">Afbeelding formaat ondersteunt geen tag</string>
+    
+    <string name="set_scan_topic">Zet scan onderwerp</string>
+    <string name="cancel">Annuleer</string>
+    <string name="custom_scan_topic">Aangepaste scan onderwerp</string>
+    <string name="scan_topic_dialog_title">Geef een onderwerp op</string>
+    <string name="skip_scan_topic">Onderwerp overslaan</string>
 </resources>

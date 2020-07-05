@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<Glabels-document version="4.0">
+  <Template brand="OpenNote" part="A4" size="A4" description="2x A5 bordered note page">
+    <Label-rectangle width="595.276pt" height="419.528pt" round="0pt" y_waste="0pt" x_waste="0pt" id="0">
+      <Markup-margin size="0pt"/>
+      <Layout dx="595.276pt" y0="0pt" dy="422.362pt" nx="1" x0="0pt" ny="2"/>
+    </Label-rectangle>
+  </Template>
+  <Objects rotate="true" id="0">
+    <Object-box w="376.157pt" x="22.9606pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="40.8189pt" shadow_y="0pt" line_color="0xff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="513.354pt" fill_color="0x0" line_width="5pt" shadow_opacity="1"/>
+    <Object-barcode w="32.04pt" color="0xff" x="361.046pt" y="516.183pt" h="32.04pt" lock_aspect_ratio="false" a0="1" a1="0" backend="zint" a2="0" a3="1" a4="0" a5="0" data="${1}" text="false" checksum="true" style="qr"/>
+    <Object-ellipse w="18.1417pt" x="42.2362pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-ellipse w="18.1417pt" x="87.874pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-ellipse w="18.1417pt" x="136.913pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-ellipse w="18.1417pt" x="181.701pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-ellipse w="18.1417pt" x="228.756pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-ellipse w="18.1417pt" x="275.811pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-ellipse w="18.1417pt" x="322.583pt" lock_aspect_ratio="false" shadow_x="0pt" shadow_color="0x0" y="515.055pt" shadow_y="0pt" line_color="0xc0c0c0ff" a0="1" a1="0" a2="0" a3="1" shadow="false" a4="0" a5="0" h="18.1214pt" fill_color="0xffffffff" line_width="0.5pt" shadow_opacity="1"/>
+    <Object-image w="14.1732pt" x="44.2205pt" y="534.886pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/rocket.svg" shadow_y="0pt" shadow_color="0x0"/>
+    <Object-image w="14.1732pt" x="89.8583pt" y="534.886pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/gift.svg" shadow_y="0pt" shadow_color="0x0"/>
+    <Object-image w="14.1732pt" x="138.898pt" y="534.898pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/tv.svg" shadow_y="0pt" shadow_color="0x0"/>
+    <Object-image w="14.1732pt" x="183.685pt" y="534.898pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/bell.svg" shadow_y="0pt" shadow_color="0x0"/>
+    <Object-image w="14.1732pt" x="230.74pt" y="534.898pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/pacman.svg" shadow_y="0pt" shadow_color="0x0"/>
+    <Object-image w="14.1732pt" x="277.795pt" y="534.898pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/star-empty.svg" shadow_y="0pt" shadow_color="0x0"/>
+    <Object-image w="14.1732pt" x="324.567pt" y="534.898pt" h="14.1732pt" lock_aspect_ratio="false" a0="1" a1="0" a2="0" shadow_opacity="1" a3="1" shadow="false" a4="0" a5="0" shadow_x="0pt" src="/home/allgood/Downloads/iconessvg/magnet.svg" shadow_y="0pt" shadow_color="0x0"/>
+  </Objects>
+  <Merge type="Text/Comma" src="/home/allgood/OpenNotebook.csv"/>
+  <Data>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/bell.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M16.023 12.5c0-4.5-4-3.5-4-7 0-0.29-0.028-0.538-0.079-0.749-0.263-1.766-1.44-3.183-2.965-3.615 0.014-0.062 0.021-0.125 0.021-0.191 0-0.52-0.45-0.945-1-0.945s-1 0.425-1 0.945c0 0.065 0.007 0.129 0.021 0.191-1.71 0.484-2.983 2.208-3.020 4.273-0.001 0.030-0.001 0.060-0.001 0.091 0 3.5-4 2.5-4 7 0 1.191 2.665 2.187 6.234 2.439 0.336 0.631 1.001 1.061 1.766 1.061s1.43-0.43 1.766-1.061c3.568-0.251 6.234-1.248 6.234-2.439 0-0.004-0-0.007-0-0.011l0.024 0.011zM12.91 13.345c-0.847 0.226-1.846 0.389-2.918 0.479-0.089-1.022-0.947-1.824-1.992-1.824s-1.903 0.802-1.992 1.824c-1.072-0.090-2.071-0.253-2.918-0.479-1.166-0.311-1.724-0.659-1.928-0.845 0.204-0.186 0.762-0.534 1.928-0.845 1.356-0.362 3.1-0.561 4.91-0.561s3.554 0.199 4.91 0.561c1.166 0.311 1.724 0.659 1.928 0.845-0.204 0.186-0.762 0.534-1.928 0.845z"></path>
+</svg>
+]]></File>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/gift.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M12.055 5c0.283-0.201 0.555-0.425 0.804-0.674 0.522-0.522 0.871-1.164 0.983-1.808 0.123-0.706-0.057-1.362-0.494-1.798-0.348-0.348-0.82-0.533-1.365-0.533-0.775 0-1.593 0.372-2.242 1.021-1.039 1.039-1.644 2.472-1.97 3.496-0.241-1.028-0.722-2.416-1.657-3.351-0.501-0.501-1.142-0.759-1.748-0.759-0.495 0-0.965 0.172-1.317 0.523-0.781 0.781-0.675 2.153 0.236 3.064 0.325 0.325 0.705 0.595 1.105 0.819h-3.391v4h1v7h12v-7h1v-4h-2.945zM10.536 2.003c0.433-0.433 0.974-0.692 1.446-0.692 0.167 0 0.402 0.035 0.57 0.203 0.407 0.407 0.178 1.349-0.489 2.016-0.687 0.687-1.61 1.159-2.413 1.47h-0.792c0.29-0.899 0.813-2.132 1.678-2.997zM3.655 2.514c-0.011-0.143-0.001-0.41 0.191-0.601 0.16-0.16 0.372-0.194 0.521-0.194v0c0.332 0 0.679 0.157 0.952 0.429 0.529 0.529 0.965 1.371 1.26 2.436 0.008 0.029 0.016 0.057 0.023 0.086-0.028-0.008-0.057-0.015-0.086-0.023-1.064-0.295-1.906-0.731-2.436-1.26-0.247-0.247-0.403-0.565-0.426-0.872zM7 15h-4v-6.5h4v6.5zM7 8h-5v-2h5v2zM13 15h-4v-6.5h4v6.5zM14 8h-5v-2h5v2z"></path>
+</svg>
+]]></File>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/magnet.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M14 0h-4l1 9c0 1.657-1.343 3-3 3s-3-1.343-3-3l1-9h-4l-1 9c0 3.866 3.134 7 7 7s7-3.134 7-7l-1-9zM12.154 13.154c-1.11 1.11-2.585 1.721-4.154 1.721s-3.045-0.611-4.154-1.721c-1.096-1.096-1.705-2.548-1.72-4.095l0.564-5.075h1.736l-0.55 4.953v0.062c0 1.102 0.429 2.138 1.208 2.917s1.815 1.208 2.917 1.208 2.138-0.429 2.917-1.208c0.779-0.779 1.208-1.815 1.208-2.917v-0.062l-0.007-0.062-0.543-4.891h1.736l0.564 5.075c-0.015 1.547-0.625 2.999-1.72 4.095z"></path>
+</svg>
+]]></File>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/pacman.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M15.074 2.794c-1.467-1.71-3.644-2.794-6.074-2.794-4.418 0-8 3.582-8 8s3.582 8 8 8c2.43 0 4.607-1.084 6.074-2.794l-5.074-5.206 5.074-5.206zM11 1.884c0.616 0 1.116 0.499 1.116 1.116s-0.499 1.116-1.116 1.116-1.116-0.499-1.116-1.116c0-0.616 0.499-1.116 1.116-1.116z"></path>
+</svg>
+]]></File>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/rocket.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M11 1l-5 5h-3l-3 4c0 0 3.178-0.885 5.032-0.47l-5.032 6.47 6.592-5.127c0.919 2.104-0.592 5.127-0.592 5.127l4-3v-3l5-5 1-5-5 1z"></path>
+</svg>
+]]></File>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/star-empty.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M16 6.204l-5.528-0.803-2.472-5.009-2.472 5.009-5.528 0.803 4 3.899-0.944 5.505 4.944-2.599 4.944 2.599-0.944-5.505 4-3.899zM8 11.773l-3.492 1.836 0.667-3.888-2.825-2.753 3.904-0.567 1.746-3.537 1.746 3.537 3.904 0.567-2.825 2.753 0.667 3.888-3.492-1.836z"></path>
+</svg>
+]]></File>
+    <File mimetype="image/svg+xml" name="/home/allgood/Downloads/iconessvg/tv.svg" encoding="cdata"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated by IcoMoon.io -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="0 0 16 16">
+<path d="M15.331 4.502c-1.388-0.199-2.865-0.344-4.407-0.425l2.576-2.576-1-1-3.509 3.509c-0.328-0.006-0.659-0.009-0.991-0.009v0l-4-4-1 1 3.034 3.034c-1.889 0.066-3.693 0.227-5.365 0.467-0.43 1.683-0.669 3.543-0.669 5.498s0.239 3.815 0.669 5.498c2.244 0.323 4.724 0.502 7.331 0.502s5.087-0.179 7.331-0.502c0.43-1.683 0.669-3.543 0.669-5.498s-0.239-3.815-0.669-5.498zM13.498 13.666c-1.683 0.215-3.543 0.334-5.498 0.334s-3.815-0.119-5.498-0.334c-0.323-1.122-0.502-2.362-0.502-3.666s0.179-2.543 0.502-3.666c1.683-0.215 3.543-0.334 5.498-0.334s3.815 0.119 5.498 0.334c0.323 1.122 0.502 2.362 0.502 3.666s-0.179 2.543-0.502 3.666z"></path>
+</svg>
+]]></File>
+  </Data>
+</Glabels-document>

@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 32
-        versionName '1.0.32'
+        targetSdkVersion 29
+        versionCode 34
+        versionName '1.0.34'
     }
     buildTypes {
         release {
@@ -52,4 +52,5 @@ dependencies {
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
     implementation 'org.piwik.sdk:piwik-sdk:0.0.4'
+    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
 }
