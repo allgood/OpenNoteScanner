@@ -30,7 +30,6 @@
     <string name="confirm_install_opencv">Do you want to download OpenCV Manager from GitHub?</string>
     <string name="confirm_title">Confirm</string>
     <string name="custom_scan_topic">Custom scan topic</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="donate_summary">If you like this application and think it is useful, you may consider making a donation</string>
     <string name="donate">Buy me a coffee</string>
     <string name="downloading_opencv">Downloading OpenCV Manager</string>
@@ -73,7 +72,10 @@
     <string name="telegram">Telegram Group</string>
     <string name="title_activity_full_image">Scanned Image Viewer</string>
     <string name="title_activity_gallery">Gallery</string>
-    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="usage_stats_summary">Send various usage statistics to developer. No content data will be sent</string>
     <string name="usage_stats">Usage Statistics</string>
+
+    <!-- To keep things tidy, include non-translatable strings from here on -->
+    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
 </resources>
