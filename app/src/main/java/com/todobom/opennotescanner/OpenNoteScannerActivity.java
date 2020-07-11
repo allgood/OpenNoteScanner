@@ -880,13 +880,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
-        setImageProcessorBusy(true);
-
         if (mSharedPref.getBoolean("custom_scan_topic", false)) {
             FragmentManager fm = getSupportFragmentManager();
             final ScanTopicDialogFragment scanTopicDialogFragment = new ScanTopicDialogFragment();
             scanTopicDialogFragment.show(fm, getString(R.string.scan_topic_dialog_title));
-
             return;
         }
 
@@ -900,6 +897,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     }
 
     private void issueProcessingOfTakenPicture() {
+        setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
         scanClicked = false;
         safeToTakePicture = true;
