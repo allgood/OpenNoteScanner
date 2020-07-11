@@ -10,7 +10,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
@@ -44,6 +43,7 @@ public class GalleryGridActivity extends AppCompatActivity
     private MenuItem mShare;
     private MenuItem mTag;
     private MenuItem mDelete;
+    private MenuItem mPdfExport;
     private DragSelectRecyclerView recyclerView;
     private AlertDialog.Builder deleteConfirmBuilder;
     private boolean selectionMode = false;
@@ -71,11 +71,16 @@ public class GalleryGridActivity extends AppCompatActivity
     }
 
     private void setSelectionMode(boolean selectionMode) {
-        if (mShare != null && mDelete != null) {
+        if (mShare != null && mDelete != null ) {
             mShare.setVisible(selectionMode);
             //mTag.setVisible(selectionMode);
             mDelete.setVisible(selectionMode);
         }
+
+        if (mPdfExport != null) {
+            mPdfExport.setVisible(selectionMode);
+        }
+
         this.selectionMode = selectionMode;
     }
 
@@ -249,15 +254,6 @@ public class GalleryGridActivity extends AppCompatActivity
             }
         });
 
-        final FloatingActionButton pdfButton = (FloatingActionButton) findViewById(R.id.pdfButton);
-
-        pdfButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PdfHelper.mergeImagesToPdf(getApplicationContext(), myThumbAdapter.getSelectedFiles());
-            }
-        });
-
     }
 
     private void reloadAdapter() {
@@ -306,6 +302,9 @@ public class GalleryGridActivity extends AppCompatActivity
         mDelete = menu.findItem(R.id.action_delete);
         mDelete.setVisible(false);
 
+        mPdfExport = menu.findItem(R.id.action_pdfexport);
+        mPdfExport.setVisible(false);
+
         invalidateOptionsMenu();
 
         return true;
@@ -325,6 +324,9 @@ public class GalleryGridActivity extends AppCompatActivity
             case R.id.action_share:
                 shareImages();
                 return true;
+            case R.id.action_pdfexport:
+                pdfExport();
+                return true;
             case R.id.action_tag:
                 break;
             case R.id.action_delete:
@@ -340,6 +342,10 @@ public class GalleryGridActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void pdfExport() {
+        PdfHelper.mergeImagesToPdf(getApplicationContext(), myThumbAdapter.getSelectedFiles());
     }
 
     public void shareImages() {
