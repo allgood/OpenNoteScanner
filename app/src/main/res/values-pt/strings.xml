@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Open Note Scanner</string>
-    <string name="action_delete">Excluir</string>
-    <string name="action_share">Compartilhar</string>
-    <string name="answer_no">Não</string>
-    <string name="answer_yes">Sim</string>
-    <string name="confirm_delete_multiple_text">Deseja deletar as imagens selecionadas?</string>
-    <string name="confirm_delete_text">Deseja deletar esta imagem?</string>
-    <string name="confirm_title">Confirme</string>
-    <string name="images_scanned">Imagens capturadas</string>
-    <string name="title_activity_full_image">Visualizador de imagens capturadas</string>
     <string name="title_activity_gallery">Galeria</string>
+    <string name="title_activity_full_image">Visualizador de imagens capturadas</string>
+    <string name="images_scanned">Imagens capturadas</string>
+    <string name="action_share">Compartilhar</string>
+    <string name="action_delete">Excluir</string>
+    <string name="confirm_title">Confirme</string>
+    <string name="confirm_delete_multiple_text">Deseja deletar as imagens selecionadas?</string>
+    <string name="answer_yes">Sim</string>
+    <string name="answer_no">Não</string>
+    <string name="confirm_delete_text">Deseja deletar esta imagem?</string>
     <string name="share_snackbar">Compartilhar usando</string>
     <string name="action_about">Sobre</string>
     <string name="about_filename">about-pt.md</string>
-    <string name="answer_cancel">Cancelar</string>
+    <string name="install_opencv">Instalar OpenCV Manager</string>
     <string name="confirm_install_opencv">Deseja baixar o OpenCV Manager a partir do GitHub?</string>
+    <string name="answer_cancel">Cancelar</string>
     <string name="downloading">Baixando</string>
     <string name="downloading_opencv">Baixando OpenCV Manager</string>
-    <string name="install_opencv">Instalar OpenCV Manager</string>
     <string name="scanningToast">Buscando documento\nClique novamente para capturar imagem inteira</string>
     <string name="colorMode">Modo em cores</string>
     <string name="bwMode"><![CDATA[Modo preto & branco]]></string>
@@ -66,4 +66,9 @@
     <string name="save_png_summary">Salva as imagens no formato  PNG format. O formato atualmente não suporta metadados, por consequência alguns recursos ficam indisponíveis.</string>
     <string name="format_not_supported">Formato não suportado</string>
     <string name="format_not_supported_message">Formato da imagem não suporta etiquetas</string>
+    <string name="set_scan_topic">Definir Tópico</string>
+    <string name="cancel">Cancelar</string>
+    <string name="custom_scan_topic">Tópico de captura personalizado</string>
+    <string name="scan_topic_dialog_title">Por favor entre com um tópico</string>
+    <string name="skip_scan_topic">Pular tópico</string>
 </resources>
