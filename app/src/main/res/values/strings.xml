@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
-    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Gallery</string>
     <string name="title_activity_full_image">Scanned Image Viewer</string>
     <string name="images_scanned">Images Scanned</string>
@@ -56,7 +55,6 @@
     <string name="telegram_summary">Chat about the project on Telegram</string>
     <string name="feedback_and_contributions">Feedback and contributions</string>
     <string name="bitcoin_summary">Donate using Bitcoin cryptocurrency</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">Many credit cards accepted</string>
     <string name="filterModeOn">Image Processor On</string>
     <string name="filterModeOff">Image Processor Off</string>
@@ -72,4 +70,8 @@
     <string name="custom_scan_topic">Custom scan topic</string>
     <string name="scan_topic_dialog_title">Please provide a topic</string>
     <string name="skip_scan_topic">Skip Topic</string>
+
+    <!-- To keep things tidy, include non-translatable strings from here on -->
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
+    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
 </resources>
