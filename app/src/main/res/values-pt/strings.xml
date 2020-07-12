@@ -66,7 +66,7 @@
     <string name="save_png_summary">Salva as imagens no formato  PNG format. O formato atualmente não suporta metadados, por consequência alguns recursos ficam indisponíveis.</string>
     <string name="format_not_supported">Formato não suportado</string>
     <string name="format_not_supported_message">Formato da imagem não suporta etiquetas</string>
-    <string name="set_scan_topic">Defina tópido da captura</string>
+    <string name="set_scan_topic">Definir Tópico</string>
     <string name="cancel">Cancelar</string>
     <string name="custom_scan_topic">Tópico de captura personalizado</string>
     <string name="scan_topic_dialog_title">Por favor entre com um tópico</string>
