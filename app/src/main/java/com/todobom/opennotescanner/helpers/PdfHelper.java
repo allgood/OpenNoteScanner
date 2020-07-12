@@ -25,13 +25,13 @@ import java.util.Date;
 
 public class PdfHelper {
 
-    public static void mergeImagesToPdf(Context applicationContext, ArrayList<String> files) {
+    public static String mergeImagesToPdf(Context applicationContext, ArrayList<String> files) {
         //TODO move this to background thread
         if (files.isEmpty()) {
             Toast
                     .makeText(applicationContext, applicationContext.getString(R.string.no_files_selected), Toast.LENGTH_SHORT)
                     .show();
-            return;
+            return null;
         }
         String outputFile = "PDF-"
                 + new SimpleDateFormat("yyyyMMdd-HHmmss").format(new Date()) + ".pdf";
@@ -50,7 +50,7 @@ public class PdfHelper {
             e.printStackTrace();
         }
         if(pdfWriter == null){
-            return;
+            return null;
         }
 
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
@@ -66,7 +66,7 @@ public class PdfHelper {
                 e.printStackTrace();
             }
             if(imageData == null){
-                return;
+                return null;
             }
             Image image = new Image(imageData);
             pdfDocument.addNewPage(new PageSize(image.getImageWidth(), image.getImageHeight()));
@@ -75,10 +75,7 @@ public class PdfHelper {
 
         document.close();
 
-        Toast
-                .makeText(applicationContext, pdfFilePath, Toast.LENGTH_SHORT)
-                .show();
-
+        return pdfFilePath;
     }
 
 }

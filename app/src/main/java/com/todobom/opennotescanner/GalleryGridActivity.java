@@ -3,6 +3,7 @@ package com.todobom.opennotescanner;
 // based on http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
@@ -345,7 +347,19 @@ public class GalleryGridActivity extends AppCompatActivity
     }
 
     public void pdfExport() {
-        PdfHelper.mergeImagesToPdf(getApplicationContext(), myThumbAdapter.getSelectedFiles());
+        String pdfFilePath = PdfHelper.mergeImagesToPdf(getApplicationContext(), myThumbAdapter.getSelectedFiles());
+
+        if (pdfFilePath != null) {
+            try {
+                File file = new File(pdfFilePath);
+                Intent i=new Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(getApplicationContext(),
+                        getPackageName() + ".fileprovider", file));
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(i);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "Cant Find Your File", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     public void shareImages() {
