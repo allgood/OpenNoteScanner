@@ -13,7 +13,7 @@
     <string name="confirm_delete_multiple_text">确定删除选定的图片?</string>
     <string name="share_snackbar">分享图片</string>
     <string name="action_about">关于</string>
-    <string name="about_filename">about.md</string>
+    <string name="about_filename">about-zh.md</string>
     <string name="install_opencv">安装 OpenCV Manager</string>
     <string name="confirm_install_opencv">从GitHub下载OpenCV Manager?</string>
     <string name="answer_cancel">取消</string>

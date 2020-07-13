@@ -11,3 +11,6 @@ import-summary.txt
 .DS_Store
 /build
 /captures
+/app/gplay
+/app/fdroid
+/app/release

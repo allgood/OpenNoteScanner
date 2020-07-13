@@ -68,6 +68,12 @@
                 android:key="storage_folder"
                 android:summary="@string/storage_folder_summary"
                 />
+            <CheckBoxPreference
+                android:title="@string/custom_scan_topic"
+                android:defaultValue="false"
+                android:key="custom_scan_topic"
+                android:summary="enable setting a custom topic to scan fle name"
+                />
         </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/feedback_and_contributions"
