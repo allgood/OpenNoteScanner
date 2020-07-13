@@ -71,4 +71,6 @@
     <string name="custom_scan_topic">Tópico de captura personalizado</string>
     <string name="scan_topic_dialog_title">Por favor entre com um tópico</string>
     <string name="skip_scan_topic">Pular tópico</string>
+    <string name="no_files_selected">Nenhum arquivo selecionado</string>
+    <string name="action_pdfexport">Exportar para PDF</string>
 </resources>
