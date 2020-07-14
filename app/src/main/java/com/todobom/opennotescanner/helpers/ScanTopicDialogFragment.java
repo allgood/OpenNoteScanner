@@ -1,10 +1,11 @@
 package com.todobom.opennotescanner.helpers;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ public class ScanTopicDialogFragment extends DialogFragment {
     private EditText scanTopic;
 
     public ScanTopicDialogFragment() {
+        setCancelable(false);
     }
 
     public interface SetTopicDialogListener {
@@ -38,6 +40,7 @@ public class ScanTopicDialogFragment extends DialogFragment {
                 SetTopicDialogListener listener = (SetTopicDialogListener) getActivity();
                 listener.onFinishTopicDialog(scanTopic.getText().toString());
                 dismiss();
+                ((Activity) getContext()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
             }
 
@@ -50,6 +53,7 @@ public class ScanTopicDialogFragment extends DialogFragment {
                     SetTopicDialogListener listener = (SetTopicDialogListener) getActivity();
                     listener.onFinishTopicDialog(null);
                     dialog.dismiss();
+                    ((Activity) getContext()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
                 }
             }
         });

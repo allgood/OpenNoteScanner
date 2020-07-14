@@ -143,16 +143,6 @@
                 android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
                 /></Preference>
 
-        <Preference
-            android:title="Dogecoin"
-            android:summary="@string/dogecoin_summary"
-            android:key="donate_dogecoin"
-            android:persistent="false">
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
-                /></Preference>
-
     </PreferenceCategory>
 
 

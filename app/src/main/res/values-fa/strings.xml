@@ -56,7 +56,6 @@
     <string name="telegram_summary">روی تلگرام درباره پروژه گپ بزنید</string>
     <string name="feedback_and_contributions">بازخورد و مشارکت‌ها</string>
     <string name="bitcoin_summary">حمایت مالی از طریق رمزارز بیت کوین</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">بسیاری از کارت‌های اعتباری مورد پذیرش هستید</string>
     <string name="filterModeOn">پردازنده تصویر روشن</string>
     <string name="filterModeOff">پردازنده تصویر خاموش</string>

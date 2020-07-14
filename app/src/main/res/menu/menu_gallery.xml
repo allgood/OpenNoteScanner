@@ -11,6 +11,13 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_pdfexport"
+        android:title="@string/action_pdfexport"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_menu_pdf"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_tag"
         android:title="@string/action_tag"
         android:orderInCategory="100"
