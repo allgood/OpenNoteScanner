@@ -24,12 +24,12 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
@@ -880,13 +880,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
-        setImageProcessorBusy(true);
-
         if (mSharedPref.getBoolean("custom_scan_topic", false)) {
             FragmentManager fm = getSupportFragmentManager();
             final ScanTopicDialogFragment scanTopicDialogFragment = new ScanTopicDialogFragment();
             scanTopicDialogFragment.show(fm, getString(R.string.scan_topic_dialog_title));
-
             return;
         }
 
@@ -900,6 +897,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     }
 
     private void issueProcessingOfTakenPicture() {
+        setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
         scanClicked = false;
         safeToTakePicture = true;

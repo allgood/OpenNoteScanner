@@ -56,7 +56,6 @@
     <string name="telegram_summary">在Telegram上聊聊该项目</string>
     <string name="feedback_and_contributions">反馈和贡献</string>
     <string name="bitcoin_summary">使用比特币捐赠</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">接受多种信用卡</string>
     <string name="filterModeOn">图像处理开启</string>
     <string name="filterModeOff">图像处理关闭</string>

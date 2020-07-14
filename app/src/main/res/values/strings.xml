@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Open Note Scanner</string>
+    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Gallery</string>
     <string name="title_activity_full_image">Scanned Image Viewer</string>
     <string name="images_scanned">Images Scanned</string>
@@ -71,8 +71,9 @@
     <string name="custom_scan_topic">Custom scan topic</string>
     <string name="scan_topic_dialog_title">Please provide a topic</string>
     <string name="skip_scan_topic">Skip Topic</string>
-
-    <!-- To keep things tidy, include non-translatable strings from here on -->
-    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
+    <string name="no_files_selected">No files selected.</string>
+    <string name="action_pdfexport">Export to PDF</string>
+    <string name="googleplay_donation_summary">Make a donation using Google Play, this donation will disable all ads from the app for one year</string>
+    <string name="reward_ad_summary">View a Video Ad until it ends, Open Note Scanner will receive a small value. As a reward, all ads from the app will be disabled for one week.</string>
+    <string name="reward_ad_title">View an Ad</string>
 </resources>
