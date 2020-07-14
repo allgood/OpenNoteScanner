@@ -5,9 +5,10 @@ import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.todobom.opennotescanner.helpers.Utils;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -32,14 +33,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         PreferenceCategory donateCategory = (PreferenceCategory) sf.findPreference("donate_pref_category");
         Preference bitcoinPref = sf.findPreference("donate_bitcoin");
-        Preference dogecoinPref = sf.findPreference("donate_dogecoin");
 
         if (donateCategory != null && bitcoinPref != null && !Utils.isPackageInstalled(this,"de.schildbach.wallet")) {
             donateCategory.removePreference(bitcoinPref);
-        }
-
-        if (donateCategory != null && dogecoinPref != null && !Utils.isPackageInstalled(this,"de.langerhans.wallet")) {
-            donateCategory.removePreference(dogecoinPref);
         }
 
     }
