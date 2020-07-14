@@ -56,7 +56,6 @@
     <string name="telegram_summary">Program hakkında Telegram üzerinden diğer kullanıcılarla ve geliştirici ile görüşebilirsiniz</string>
     <string name="feedback_and_contributions">Geri bildirim ve katkı</string>
     <string name="bitcoin_summary">Bitcoin kullanarak bağış yap</string>
-    <string name="dogecoin_summary" translatable="false">Wow, çok faydalı bir program</string>
     <string name="paypal_summary">Birçok kredi kartı kabul edilir</string>
     <string name="filterModeOn">Görüntü İşlemci Açık</string>
     <string name="filterModeOff">Görüntü İşlemci Kapalı</string>

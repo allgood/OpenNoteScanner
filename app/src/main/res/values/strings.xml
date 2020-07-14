@@ -56,7 +56,6 @@
     <string name="telegram_summary">Chat about the project on Telegram</string>
     <string name="feedback_and_contributions">Feedback and contributions</string>
     <string name="bitcoin_summary">Donate using Bitcoin cryptocurrency</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">Many credit cards accepted</string>
     <string name="filterModeOn">Image Processor On</string>
     <string name="filterModeOff">Image Processor Off</string>
@@ -74,4 +73,7 @@
     <string name="skip_scan_topic">Skip Topic</string>
     <string name="no_files_selected">No files selected.</string>
     <string name="action_pdfexport">Export to PDF</string>
+    <string name="googleplay_donation_summary">Make a donation using Google Play, this donation will disable all ads from the app for one year</string>
+    <string name="reward_ad_summary">View a Video Ad until it ends, Open Note Scanner will receive a small value. As a reward, all ads from the app will be disabled for one week.</string>
+    <string name="reward_ad_title">View an Ad</string>
 </resources>
