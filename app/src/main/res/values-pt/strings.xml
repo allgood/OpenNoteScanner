@@ -73,4 +73,7 @@
     <string name="skip_scan_topic">Pular tópico</string>
     <string name="no_files_selected">Nenhum arquivo selecionado</string>
     <string name="action_pdfexport">Exportar para PDF</string>
+    <string name="reward_ad_title">Ver um anúncio</string>
+    <string name="reward_ad_summary">Assista a um anúncio até o final. Como recompensa todos os anúncios do app serão desativados por uma semana.</string>
+    <string name="googleplay_donation_summary">Faça uma doação pela Google Play, esta doação irá desativar todos os anúncios do app por um ano.</string>
 </resources>

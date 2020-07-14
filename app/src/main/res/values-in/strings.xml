@@ -56,7 +56,6 @@
     <string name="telegram_summary">Mengobrol tentang proyek ini di Telegram</string>
     <string name="feedback_and_contributions">Umpanbalik dan kontribusi</string>
     <string name="bitcoin_summary">Donasi dengan Bitcoin</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">Mendukung banyak kartu kredit</string>
     <string name="filterModeOn">Pemroses Gambar Nyala</string>
     <string name="filterModeOff">Pemroses Gambar Mati</string>
