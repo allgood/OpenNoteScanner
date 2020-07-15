@@ -11,3 +11,7 @@ android:
     - extra-google-m2repository
 
 script: ./gradlew build assembleDebug
+
+branches:
+  except:
+    - admob

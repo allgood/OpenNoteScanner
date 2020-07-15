@@ -27,7 +27,3 @@ build:
   artifacts:
     paths:
     - app/build/outputs/
-
-branches:
-  except:
-    - admob

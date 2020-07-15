@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -263,17 +264,20 @@ public class GalleryGridActivity extends AppCompatActivity
         });
 
         // MobileAD - Only enabled on Google Play version
+        AdView mAdView = findViewById(R.id.adView);
         SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         long rewardedTime = mSharedPref.getLong("rewarded_time" , 0);
-        if ( System.currentTimeMillis() / 1000L > rewardedTime + 604800) {
+        long oneyearTime = mSharedPref.getLong("one_year_donation_time" , 0);
+        if ( System.currentTimeMillis() / 1000L > Math.max(rewardedTime + 604800 , oneyearTime + 31536000)) {
             MobileAds.initialize(this, new OnInitializationCompleteListener() {
                 @Override
                 public void onInitializationComplete(InitializationStatus initializationStatus) {
                 }
             });
-            AdView mAdView = findViewById(R.id.adView);
             AdRequest adRequest = new AdRequest.Builder().build();
             mAdView.loadAd(adRequest);
+        } else {
+            ((ViewManager) mAdView.getParent()).removeView(mAdView);
         }
 
     }
