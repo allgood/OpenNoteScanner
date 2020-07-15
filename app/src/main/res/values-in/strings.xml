@@ -21,7 +21,7 @@
     <string name="downloading_opencv">Mengunduh Pengelola OpenCV</string>
     <string name="scanningToast">Mencari dokumen\nKetuk lagi untuk memindai seluruh gambar</string>
     <string name="colorMode">Mode Warna</string>
-    <string name="bwMode"><![CDATA[B&W mode]]></string>
+    <string name="bwMode"><![CDATA[Mode H&P]]></string>
     <string name="autoMode">Mode Otomatis</string>
     <string name="manualMode">Mode Manual</string>
     <string name="share_app">Bagikan Apl ini</string>
@@ -66,4 +66,14 @@
     <string name="save_png_summary">Simpan gambar final ke format PNG. Perhatikan bahwa metadata belum didukung untuk PNG, sehingga beberapa fitur tidak akan tersedia.</string>
     <string name="format_not_supported">Format tidak didukung</string>
     <string name="format_not_supported_message">Format gambar tidak mendukung tag</string>
+    <string name="set_scan_topic">Setel topik pemindaian</string>
+    <string name="cancel">Batal</string>
+    <string name="custom_scan_topic">Topik pemindaian khusus</string>
+    <string name="scan_topic_dialog_title">Silakan tetapkan topik</string>
+    <string name="skip_scan_topic">Lewati topik</string>
+    <string name="no_files_selected">Tidak ada berkas yang dipilih.</string>
+    <string name="action_pdfexport">Ekspor ke PDF</string>
+    <string name="googleplay_donation_summary">Donasi menggunakan Google Play, donasi ini akan menonaktifkan semua iklan di dalam aplikas selama satu tahun</string>
+    <string name="reward_ad_summary">Tonton iklan video sampai selesai, Open Note Scanner akan menerima sedikit imbalan. Sebaga gantinya, semua iklan di dalam aplikasi akan dinonaktifkan selama seminggu.</string>
+    <string name="reward_ad_title">Tonton iklan</string>
 </resources>
