@@ -134,6 +134,20 @@
                 /></Preference>
 
         <Preference
+            android:title="@string/googleplay"
+            android:summary="@string/googleplay_donation_summary"
+            android:key="googleplay"
+            android:persistent="false">
+        </Preference>
+
+        <Preference
+            android:title="@string/reward_ad_title"
+            android:summary="@string/reward_ad_summary"
+            android:key="reward_ad"
+            android:persistent="false">
+        </Preference>
+
+        <Preference
             android:title="Bitcoin"
             android:summary="@string/bitcoin_summary"
             android:key="donate_bitcoin"

@@ -263,14 +263,18 @@ public class GalleryGridActivity extends AppCompatActivity
         });
 
         // MobileAD - Only enabled on Google Play version
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
-            }
-        });
-        AdView mAdView = findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder().build();
-        mAdView.loadAd(adRequest);
+        SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        long rewardedTime = mSharedPref.getLong("rewarded_time" , 0);
+        if ( System.currentTimeMillis() / 1000L > rewardedTime + 604800) {
+            MobileAds.initialize(this, new OnInitializationCompleteListener() {
+                @Override
+                public void onInitializationComplete(InitializationStatus initializationStatus) {
+                }
+            });
+            AdView mAdView = findViewById(R.id.adView);
+            AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequest);
+        }
 
     }
 
