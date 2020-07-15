@@ -1,4 +1,4 @@
-resources>
+<resources>
     <string name="app_name">Open Note Scanner</string>
     <string name="title_activity_gallery">Galería</string>
     <string name="title_activity_full_image">Visor de imagen escaneada</string>
