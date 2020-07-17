@@ -34,13 +34,9 @@ How to Install
 
 Open Note Scanner is available for simplified installation on [Google Play Store](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner), from [Amazon App Store](http://www.amazon.com/Claudemir-Todo-Bom-Open-Scanner/dp/B01EUAU924) and also from [F-Droid Android Open Source Repository](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner).
 
-[<img alt="Get it on Google Play" height="60" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) [![Get it on F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner) [<img alt="Available at Amazon App Store" height="60" src="https://images-na.ssl-images-amazon.com/images/G/01/mobile-apps/devportal2/res/images/amazon-underground-app-us-black.png" />](http://www.amazon.com/Claudemir-Todo-Bom-Open-Scanner/dp/B01EUAU924)
+[<img alt="Get it on Google Play" height="60" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) [![Get it on F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner)
 
 Binary APK file is available [directly from GitHub in the releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project.
-
-### Source code releases
-
-Starting on 1.0.26, small enhancements will be made available only as a source code release. F-Droid should automatically build the source code releases and offer it to installation. Binary releases will be made available on Google Play, Amazon App Store and direct `apk` download from the [releases page](https://github.com/ctodobom/OpenNoteScanner/releases).
 
 Instructions for building
 -------------------------
@@ -101,7 +97,7 @@ If you think that any information you obtained here is worth of some money and a
 
 | Paypal | Bitcoin |
 | ------ | ------- |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://todobom.com/images/bitcoin-donations.png)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> |
+| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=bitcoin%3A1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9&qzone=1&margin=0&size=400x400&ecc=L)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> |
 
 
 Contributing
