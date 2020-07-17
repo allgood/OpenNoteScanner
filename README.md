@@ -97,7 +97,7 @@ If you think that any information you obtained here is worth of some money and a
 
 | Paypal | Bitcoin |
 | ------ | ------- |
-| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> ![1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=bitcoin%3A1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9&qzone=1&margin=0&size=400x400&ecc=L)<br />1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9</center> |
+| [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> [![](http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=bitcoin%3A1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9&qzone=1&margin=0&size=200x200&ecc=L)](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)<br />[1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)</center> |
 
 
 Contributing
