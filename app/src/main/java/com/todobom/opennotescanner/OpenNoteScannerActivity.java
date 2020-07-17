@@ -44,7 +44,6 @@ import android.widget.Toast;
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.CustomOpenCVLoader;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
 import com.todobom.opennotescanner.helpers.PreviewFrame;
@@ -235,23 +234,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
                     v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
                 }
-            }
-        });
-
-        final ImageView infoButton = (ImageView) findViewById(R.id.infoButton);
-        infoButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getSupportFragmentManager();
-                AboutFragment aboutDialog = new AboutFragment();
-                aboutDialog.setRunOnDetach(new Runnable() {
-                    @Override
-                    public void run() {
-                        hide();
-                    }
-                });
-                aboutDialog.show(fm, "about_view");
             }
         });
 

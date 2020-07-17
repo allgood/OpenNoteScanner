@@ -76,4 +76,5 @@
     <string name="googleplay_donation_summary">Make a donation using Google Play, this donation will disable all ads from the app for one year</string>
     <string name="reward_ad_summary">View a Video Ad until it ends, Open Note Scanner will receive a small value. As a reward, all ads from the app will be disabled for one week.</string>
     <string name="reward_ad_title">View an Ad</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>
