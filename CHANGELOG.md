@@ -1,14 +1,16 @@
 Change Log
 ==========
 
-version that is cooking
------------------------
+version 1.0.35
+--------------
 
 * Custom Scan Topic by @thrillfall in PR #191
 * PDF Export contribution by @miclill ( miclill@9cff336 )
 * Turkish translation by @sturkmen72 in PR #195
 * Persian translation by @ahangartha in PR #194
 * Indonesian translation by @zmni in PR #178
+* Update spanish translation by @yeyeto2788 in PR #207
+* more updates on translations by previous contributors
 
 version 1.0.34
 --------------
