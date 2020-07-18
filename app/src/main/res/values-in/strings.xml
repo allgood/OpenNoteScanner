@@ -76,4 +76,5 @@
     <string name="googleplay_donation_summary">Donasi menggunakan Google Play, donasi ini akan menonaktifkan semua iklan di dalam aplikas selama satu tahun</string>
     <string name="reward_ad_summary">Tonton iklan video sampai selesai, Open Note Scanner akan menerima sedikit imbalan. Sebaga gantinya, semua iklan di dalam aplikasi akan dinonaktifkan selama seminggu.</string>
     <string name="reward_ad_title">Tonton iklan</string>
+    <string name="privacy_policy">Kebijakan Privasi</string>
 </resources>
