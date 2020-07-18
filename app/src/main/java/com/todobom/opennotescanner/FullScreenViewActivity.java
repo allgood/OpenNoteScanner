@@ -5,11 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.content.FileProvider;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +17,12 @@ import com.todobom.opennotescanner.helpers.Utils;
 import com.todobom.opennotescanner.views.TagEditorFragment;
 
 import java.io.File;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 public class FullScreenViewActivity extends AppCompatActivity {
 
@@ -36,9 +37,6 @@ public class FullScreenViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        ((OpenNoteScannerApplication) getApplication()).getTracker()
-                .trackScreenView("/FullScreenViewActivity", "Full Screen Viewer");
 
         setContentView(R.layout.activity_fullscreen_view);
 

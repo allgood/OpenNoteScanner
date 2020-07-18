@@ -145,5 +145,26 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory
+        android:title="@string/action_about"
+        android:persistent="false"
+        android:key="about_pref_category">
+
+        <Preference
+            android:summary="@string/action_about"
+            android:persistent="false"
+            android:key="about_preference">
+        </Preference>
+
+        <Preference
+            android:summary="@string/privacy_policy"
+            android:persistent="false">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/ctodobom/OpenNoteScanner/blob/master/PrivacyPolicy.md"
+            /></Preference>
+
+    </PreferenceCategory>
+
 
 </PreferenceScreen>

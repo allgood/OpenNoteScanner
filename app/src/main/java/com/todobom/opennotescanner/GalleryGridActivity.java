@@ -11,12 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import androidx.fragment.app.FragmentManager;
-import androidx.core.content.FileProvider;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,6 +31,13 @@ import com.todobom.opennotescanner.helpers.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class GalleryGridActivity extends AppCompatActivity
         implements ClickListener, DragSelectRecyclerViewAdapter.SelectionListener {
@@ -205,9 +206,6 @@ public class GalleryGridActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-
-        ((OpenNoteScannerApplication) getApplication()).getTracker()
-                .trackScreenView("/GalleryGridActivity", "Gallery");
 
         setContentView(R.layout.activity_gallery);
 

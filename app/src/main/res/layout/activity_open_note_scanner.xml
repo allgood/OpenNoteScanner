@@ -164,17 +164,6 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/infoButton"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_info_outline_white_24px"
-                    android:gravity="center"
-                    android:enabled="true"
-                    android:tint="#ffffff"/>
-
-                <ImageView
                     android:id="@+id/colorModeButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

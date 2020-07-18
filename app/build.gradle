@@ -2,6 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 29
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
@@ -48,6 +52,7 @@ repositories {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
@@ -58,7 +63,7 @@ dependencies {
     implementation 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
-    implementation 'org.piwik.sdk:piwik-sdk:0.0.4'
+    implementation 'org.matomo.sdk:tracker:4.1.2'
     implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
     implementation 'com.itextpdf:kernel:7.1.11'
     implementation 'com.itextpdf:layout:7.1.11'

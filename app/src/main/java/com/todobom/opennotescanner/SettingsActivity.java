@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 
+import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,17 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        Preference aboutPreference = sf.findPreference("about_preference");
+        aboutPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+                AboutFragment aboutDialog = new AboutFragment();
+                aboutDialog.show(fm, "about_view");
+                return true;
+            }
+        });
 
         PreferenceCategory donateCategory = (PreferenceCategory) sf.findPreference("donate_pref_category");
         Preference bitcoinPref = sf.findPreference("donate_bitcoin");
