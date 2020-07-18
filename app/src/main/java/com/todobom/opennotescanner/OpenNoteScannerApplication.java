@@ -3,14 +3,19 @@ package com.todobom.opennotescanner;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import org.piwik.sdk.PiwikApplication;
-import org.piwik.sdk.Tracker;
+import org.matomo.sdk.TrackerBuilder;
+import org.matomo.sdk.dispatcher.Packet;
+import org.matomo.sdk.extra.DownloadTracker;
+import org.matomo.sdk.extra.MatomoApplication;
+import org.matomo.sdk.extra.TrackHelper;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by allgood on 23/04/16.
  */
-public class OpenNoteScannerApplication extends PiwikApplication {
-    private SharedPreferences mSharedPref;
+public class OpenNoteScannerApplication extends MatomoApplication {
     private boolean mOptOut;
 
     SharedPreferences.OnSharedPreferenceChangeListener mPreferenceChangeListener =
@@ -19,64 +24,57 @@ public class OpenNoteScannerApplication extends PiwikApplication {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if (key.equals("usage_stats")) {
                 mOptOut = !sharedPreferences.getBoolean("usage_stats", false);
-                getPiwik().setOptOut(mOptOut);
+                getTracker().setOptOut(mOptOut);
 
                 // when user opt-in, register the download
                 if (!mOptOut) {
-                    getTracker().trackAppDownload(OpenNoteScannerApplication.this, Tracker.ExtraIdentifier.APK_CHECKSUM);
+                    trackDownload();
                 }
             }
         }
     };
 
     @Override
-    public String getTrackerUrl() {
-        return "https://stats.todobom.com/";
-    }
-
-    @Override
-    public Integer getSiteId() {
-        return 2;
+    public TrackerBuilder onCreateTrackerConfig() {
+        return TrackerBuilder.createDefault("https://stats.todobom.com/matomo.php", 2);
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        initPiwik();
+        initMatomo();
     }
 
-
-    private void initPiwik() {
-        mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+    private void initMatomo() {
+        SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
         // enable usage stats on google play
         if (BuildConfig.FLAVOR.equals("gplay") && mSharedPref.getBoolean("isFirstRun",true)) {
-            mSharedPref.edit().putBoolean("usage_stats", true).commit();
-            mSharedPref.edit().putBoolean("isFirstRun", false).commit();
+            mSharedPref.edit().putBoolean("usage_stats", true).apply();
+            mSharedPref.edit().putBoolean("isFirstRun", false).apply();
         }
 
         // usage stats is optional and only when not debugging
         mOptOut = !mSharedPref.getBoolean("usage_stats", false);
-        getPiwik().setOptOut(mOptOut);
+        getTracker().setOptOut(mOptOut);
 
         mSharedPref.registerOnSharedPreferenceChangeListener( mPreferenceChangeListener );
 
-        // Print debug output when working on an app.
-        getPiwik().setDebug(BuildConfig.DEBUG);
-
         // When working on an app we don't want to skew tracking results.
-        getPiwik().setDryRun(BuildConfig.DEBUG);
+        getTracker().setDryRunTarget(BuildConfig.DEBUG ? Collections.synchronizedList(new ArrayList<Packet>()) : null);
 
         // If you want to set a specific userID other than the random UUID token, do it NOW to ensure all future actions use that token.
         // Changing it later will track new events as belonging to a different user.
         // String userEmail = ....preferences....getString
         // getTracker().setUserId(userEmail);
 
+        if (!mOptOut) {
+            trackDownload();
+        }
+    }
+
+    private void trackDownload() {
         // Track this app install, this will only trigger once per app version.
-        // i.e. "http://com.piwik.demo:1/185DECB5CFE28FDB2F45887022D668B4"
-        getTracker().trackAppDownload(this, Tracker.ExtraIdentifier.APK_CHECKSUM);
-        // Alternative:
-        // i.e. "http://com.piwik.demo:1/com.android.vending"
-        // getTracker().trackAppDownload();
+        TrackHelper.track().download().identifier(new DownloadTracker.Extra.ApkChecksum(this)).with(getTracker());
     }
 }

@@ -49,7 +49,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
-import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
 import com.todobom.opennotescanner.helpers.PreviewFrame;
 import com.todobom.opennotescanner.helpers.ScanTopicDialogFragment;
@@ -76,6 +75,9 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import org.matomo.sdk.Tracker;
+import org.matomo.sdk.extra.TrackHelper;
 
 import static com.todobom.opennotescanner.helpers.Utils.addImageToGallery;
 import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
@@ -161,6 +163,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
     private String scanTopic = null;
     private Mat mat;
+    private Tracker tracker;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -189,8 +192,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             statsOptInDialog();
         }
 
-        ((OpenNoteScannerApplication) getApplication()).getTracker()
-                .trackScreenView("/OpenNoteScannerActivity", "Main Screen");
+        tracker = ((OpenNoteScannerApplication) getApplication()).getTracker();
+        TrackHelper.track().screen("/OpenNoteScannerActivity").title("Main Screen").with(tracker);
 
         setContentView(R.layout.activity_open_note_scanner);
 
@@ -230,23 +233,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
                     v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
                 }
-            }
-        });
-
-        final ImageView infoButton = (ImageView) findViewById(R.id.infoButton);
-        infoButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getSupportFragmentManager();
-                AboutFragment aboutDialog = new AboutFragment();
-                aboutDialog.setRunOnDetach(new Runnable() {
-                    @Override
-                    public void run() {
-                        hide();
-                    }
-                });
-                aboutDialog.show(fm, "about_view");
             }
         });
 
@@ -941,7 +927,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         } else {
             String folderName = mSharedPref.getString("storage_folder", "OpenNoteScanner");
             File folder = new File(Environment.getExternalStorageDirectory().toString()
-                    + "/" + folderName);
+                    , "/" + folderName);
             if (!folder.exists()) {
                 folder.mkdirs();
                 Log.d(TAG, "wrote: created folder " + folder.getPath());
@@ -1010,7 +996,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         // Record goal "PictureTaken"
-        ((OpenNoteScannerApplication) getApplication()).getTracker().trackGoal(1);
+        TrackHelper.track().event("Picture", "PictureTaken").with(tracker);
 
         refreshCamera();
 
@@ -1133,7 +1119,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 public void onAnimationEnd(Animation animation) {
                     imageView.setVisibility(View.INVISIBLE);
                     imageView.setImageBitmap(null);
-                    AnimationRunnable.this.bitmap.recycle();
+                    if (AnimationRunnable.this.bitmap != null) {
+                        AnimationRunnable.this.bitmap.recycle();
+                    }
                 }
 
                 @Override

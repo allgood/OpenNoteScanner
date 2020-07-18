@@ -10,6 +10,7 @@ import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.android.billingclient.api.BillingClient;
 import com.android.billingclient.api.BillingClientStateListener;
 import com.android.billingclient.api.BillingFlowParams;
@@ -64,6 +65,17 @@ public class SettingsActivity extends AppCompatActivity implements PurchasesUpda
     @Override
     protected void onResume() {
         super.onResume();
+
+        Preference aboutPreference = sf.findPreference("about_preference");
+        aboutPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            @Override
+            public boolean onPreferenceClick(Preference preference) {
+                androidx.fragment.app.FragmentManager fm = getSupportFragmentManager();
+                AboutFragment aboutDialog = new AboutFragment();
+                aboutDialog.show(fm, "about_view");
+                return true;
+            }
+        });
 
         PreferenceCategory donateCategory = (PreferenceCategory) sf.findPreference("donate_pref_category");
         Preference bitcoinPref = sf.findPreference("donate_bitcoin");

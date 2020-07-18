@@ -213,9 +213,6 @@ public class GalleryGridActivity extends AppCompatActivity
 
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        ((OpenNoteScannerApplication) getApplication()).getTracker()
-                .trackScreenView("/GalleryGridActivity", "Gallery");
-
         setContentView(R.layout.activity_gallery);
 
         ActionBar actionBar = getSupportActionBar();

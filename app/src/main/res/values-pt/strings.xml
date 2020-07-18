@@ -76,4 +76,5 @@
     <string name="reward_ad_title">Ver um anúncio</string>
     <string name="reward_ad_summary">Assista a um anúncio até o final. Como recompensa todos os anúncios do app serão desativados por uma semana.</string>
     <string name="googleplay_donation_summary">Faça uma doação pela Google Play, esta doação irá desativar todos os anúncios do app por um ano.</string>
+    <string name="privacy_policy">Política de Privacidade</string>
 </resources>
