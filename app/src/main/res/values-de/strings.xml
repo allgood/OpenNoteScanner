@@ -71,4 +71,10 @@
     <string name="custom_scan_topic">Maßgeschneidertes Scan-Themenfeld</string>
     <string name="scan_topic_dialog_title">Stell ein Themenfeld bitte bereit</string>
     <string name="skip_scan_topic">Themenfeld überspringen</string>
+    <string name="no_files_selected">Keine Dateien ausgewählten.</string>
+    <string name="action_pdfexport">Als PDF exportieren</string>
+    <string name="googleplay_donation_summary">Tätigen Sie eine Spende über Google Play um die Anzeigen für ein ganzes Jahr auszuschalten</string>
+    <string name="reward_ad_summary">Schauen Sie eine Video Anzeige bis zum Ende um für eine Woche keine weitere Anzeigen gezeigt zu bekommen.</string>
+    <string name="reward_ad_title">Schauen Sie eine Anzeige</string>
+    <string name="privacy_policy">Datenschutzrichtlinie</string>
 </resources>
