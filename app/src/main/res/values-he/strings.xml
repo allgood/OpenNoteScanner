@@ -70,4 +70,10 @@
     <string name="custom_scan_topic">נושא סריקה מותאם אישית</string>
     <string name="scan_topic_dialog_title">נא לציין נושא</string>
     <string name="skip_scan_topic">דילוג על נושא</string>
+    <string name="no_files_selected">לא נבחרו קבצים.</string>
+    <string name="action_pdfexport">ייצוא ל־PDF</string>
+    <string name="googleplay_donation_summary">ניתן לתרום דרך Google Play, תרומה זו תשבית את כל הפרסומות מהיישומון למשך שנה</string>
+    <string name="reward_ad_summary">בצפייה של סרטון פרסומי עד תומו, המיזם Open Note Scanner יקבל סכום קטן. בתמורה, כל הפרסומות שביישומון יושבתו למשך שבוע שלם.</string>
+    <string name="reward_ad_title">צפייה בפרסומת</string>
+    <string name="privacy_policy">מדיניות פרטיות</string>
 </resources>

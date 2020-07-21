@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Open Note Scanner</string>
     <string name="title_activity_gallery">Galerie</string>
@@ -65,4 +66,15 @@
     <string name="save_png_summary">Dokumente werden als PNG-Bilder gespeichert. Das PNG-Grafikformat unterstützt keine Metadaten. Daher sind bei PNG-Bildern nicht alle Anwendungsfunktionalitäten vorhanden</string>
     <string name="format_not_supported">Grafikformat nicht unterstützt</string>
     <string name="format_not_supported_message">Das Grafikformat hat keine Unterstützung für Tags</string>
+    <string name="set_scan_topic">Scan-Themenfeld setzen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="custom_scan_topic">Maßgeschneidertes Scan-Themenfeld</string>
+    <string name="scan_topic_dialog_title">Stell ein Themenfeld bitte bereit</string>
+    <string name="skip_scan_topic">Themenfeld überspringen</string>
+    <string name="no_files_selected">Keine Datei ausgewählt.</string>
+    <string name="action_pdfexport">Als PDF exportieren</string>
+    <string name="googleplay_donation_summary">Tätigen Sie eine Spende über Google Play um die Anzeigen für ein ganzes Jahr auszuschalten</string>
+    <string name="reward_ad_summary">Schauen Sie eine Video Anzeige bis zum Ende um für eine Woche keine weitere Anzeigen gezeigt zu bekommen.</string>
+    <string name="reward_ad_title">Schauen Sie eine Anzeige</string>
+    <string name="privacy_policy">Datenschutzrichtlinie</string>
 </resources>

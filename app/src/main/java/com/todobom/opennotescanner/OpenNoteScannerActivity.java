@@ -24,12 +24,6 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.MenuItem;
@@ -49,7 +43,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout;
-import com.todobom.opennotescanner.helpers.AboutFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.todobom.opennotescanner.helpers.CustomOpenCVLoader;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
 import com.todobom.opennotescanner.helpers.PreviewFrame;
@@ -57,6 +52,8 @@ import com.todobom.opennotescanner.helpers.ScanTopicDialogFragment;
 import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.views.HUDCanvasView;
 
+import org.matomo.sdk.Tracker;
+import org.matomo.sdk.extra.TrackHelper;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
@@ -77,6 +74,11 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 
 import static com.todobom.opennotescanner.helpers.Utils.addImageToGallery;
 import static com.todobom.opennotescanner.helpers.Utils.decodeSampledBitmapFromUri;
@@ -162,6 +164,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private SimpleDateFormat mDateFormat = new SimpleDateFormat("yyyy:MM:dd HH:mm:ss");
     private String scanTopic = null;
     private Mat mat;
+    private Tracker tracker;
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -190,8 +193,8 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             statsOptInDialog();
         }
 
-        ((OpenNoteScannerApplication) getApplication()).getTracker()
-                .trackScreenView("/OpenNoteScannerActivity", "Main Screen");
+        tracker = ((OpenNoteScannerApplication) getApplication()).getTracker();
+        TrackHelper.track().screen("/OpenNoteScannerActivity").title("Main Screen").with(tracker);
 
         setContentView(R.layout.activity_open_note_scanner);
 
@@ -231,23 +234,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
                     v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
                 }
-            }
-        });
-
-        final ImageView infoButton = (ImageView) findViewById(R.id.infoButton);
-        infoButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                FragmentManager fm = getSupportFragmentManager();
-                AboutFragment aboutDialog = new AboutFragment();
-                aboutDialog.setRunOnDetach(new Runnable() {
-                    @Override
-                    public void run() {
-                        hide();
-                    }
-                });
-                aboutDialog.show(fm, "about_view");
             }
         });
 
@@ -880,13 +866,10 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         mat = new Mat(new Size(pictureSize.width, pictureSize.height), CvType.CV_8U);
         mat.put(0, 0, data);
 
-        setImageProcessorBusy(true);
-
         if (mSharedPref.getBoolean("custom_scan_topic", false)) {
             FragmentManager fm = getSupportFragmentManager();
             final ScanTopicDialogFragment scanTopicDialogFragment = new ScanTopicDialogFragment();
             scanTopicDialogFragment.show(fm, getString(R.string.scan_topic_dialog_title));
-
             return;
         }
 
@@ -900,6 +883,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     }
 
     private void issueProcessingOfTakenPicture() {
+        setImageProcessorBusy(true);
         sendImageProcessorMessage("pictureTaken", mat);
         scanClicked = false;
         safeToTakePicture = true;
@@ -939,7 +923,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         } else {
             String folderName = mSharedPref.getString("storage_folder", "OpenNoteScanner");
             File folder = new File(Environment.getExternalStorageDirectory().toString()
-                    + "/" + folderName);
+                    , "/" + folderName);
             if (!folder.exists()) {
                 folder.mkdirs();
                 Log.d(TAG, "wrote: created folder " + folder.getPath());
@@ -1008,7 +992,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         // Record goal "PictureTaken"
-        ((OpenNoteScannerApplication) getApplication()).getTracker().trackGoal(1);
+        TrackHelper.track().event("Picture", "PictureTaken").with(tracker);
 
         refreshCamera();
 
@@ -1131,7 +1115,9 @@ public class OpenNoteScannerActivity extends AppCompatActivity
                 public void onAnimationEnd(Animation animation) {
                     imageView.setVisibility(View.INVISIBLE);
                     imageView.setImageBitmap(null);
-                    AnimationRunnable.this.bitmap.recycle();
+                    if (AnimationRunnable.this.bitmap != null) {
+                        AnimationRunnable.this.bitmap.recycle();
+                    }
                 }
 
                 @Override

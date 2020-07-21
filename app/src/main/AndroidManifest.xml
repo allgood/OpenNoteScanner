@@ -22,6 +22,7 @@
         android:label="@string/app_name"
         android:largeHeap="true"
         android:supportsRtl="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.AppCompat">
         <activity
             android:name=".OpenNoteScannerActivity"
@@ -58,7 +59,7 @@
             android:label="@string/settings"
             android:theme="@style/AppTheme" />
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
