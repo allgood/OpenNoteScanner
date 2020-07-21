@@ -71,4 +71,10 @@
     <string name="custom_scan_topic">موضوع سفارشی اسکن</string>
     <string name="scan_topic_dialog_title">لطفا موضوعی را انتخاب کنید</string>
     <string name="skip_scan_topic">عبور کردن از انتخاب موضوع</string>
+    <string name="no_files_selected">پرونده‌ای انتخاب نشده است.</string>
+    <string name="action_pdfexport">برون‌ریزی به PDF</string>
+    <string name="googleplay_donation_summary">از طریق گوگل‌پلی حمایت مالی کنید، این حمایت تمام تبلیغ‌ها را برای یک سال غیرفعال می‌کند.</string>
+    <string name="reward_ad_summary">یک تبلیغ ویدئویی را تا انتها مشاهده کنید، با این کار، مبلغ اندکی به OpenNoteScanner می‌رسد. به عنوان پاداش، تمام تبلیغ‌ها به مدت یک هفته غیر فعال می‌شوند.</string>
+    <string name="reward_ad_title">نمایش یک تبلیغ</string>
+    <string name="privacy_policy">حریم شخصی</string>
 </resources>
