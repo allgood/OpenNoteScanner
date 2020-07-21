@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -34,6 +35,9 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.PdfHelper;
 import com.todobom.opennotescanner.helpers.Utils;
+
+import org.matomo.sdk.Tracker;
+import org.matomo.sdk.extra.TrackHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +63,7 @@ public class GalleryGridActivity extends AppCompatActivity
     private ImageLoader mImageLoader;
     private ImageSize mTargetSize;
     private SharedPreferences mSharedPref;
+    private Tracker tracker;
 
     @Override
     public void onClick(int index) {
@@ -261,6 +266,7 @@ public class GalleryGridActivity extends AppCompatActivity
         });
 
         // MobileAD - Only enabled on Google Play version
+        tracker = ((OpenNoteScannerApplication) GalleryGridActivity.this.getApplication()).getTracker();
         AdView mAdView = findViewById(R.id.adView);
         SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         long rewardedTime = mSharedPref.getLong("rewarded_time" , 0);
@@ -272,6 +278,13 @@ public class GalleryGridActivity extends AppCompatActivity
                 }
             });
             AdRequest adRequest = new AdRequest.Builder().build();
+            mAdView.setAdListener(new AdListener() {
+                @Override
+                public void onAdOpened() {
+                    // Record goal "AdClicked"
+                    TrackHelper.track().event("Ad", "AdClicked").with(tracker);
+                }
+            });
             mAdView.loadAd(adRequest);
         } else {
             ((ViewManager) mAdView.getParent()).removeView(mAdView);

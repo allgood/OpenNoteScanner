@@ -61,7 +61,7 @@ public class OpenNoteScannerApplication extends MatomoApplication {
         mSharedPref.registerOnSharedPreferenceChangeListener( mPreferenceChangeListener );
 
         // When working on an app we don't want to skew tracking results.
-        getTracker().setDryRunTarget(BuildConfig.DEBUG ? Collections.synchronizedList(new ArrayList<Packet>()) : null);
+        // getTracker().setDryRunTarget(BuildConfig.DEBUG ? Collections.synchronizedList(new ArrayList<Packet>()) : null);
 
         // If you want to set a specific userID other than the random UUID token, do it NOW to ensure all future actions use that token.
         // Changing it later will track new events as belonging to a different user.

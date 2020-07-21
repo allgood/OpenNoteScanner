@@ -3,6 +3,7 @@ package com.todobom.opennotescanner;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -22,6 +23,8 @@ import com.android.billingclient.api.SkuDetails;
 import com.android.billingclient.api.SkuDetailsParams;
 import com.android.billingclient.api.SkuDetailsResponseListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdValue;
+import com.google.android.gms.ads.OnPaidEventListener;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
@@ -29,11 +32,15 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 import com.todobom.opennotescanner.helpers.AboutFragment;
 import com.todobom.opennotescanner.helpers.Utils;
 
+import org.matomo.sdk.Tracker;
+import org.matomo.sdk.extra.TrackHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity implements PurchasesUpdatedListener {
@@ -49,6 +56,8 @@ public class SettingsActivity extends AppCompatActivity implements PurchasesUpda
     private ArrayList<String> skuList;
     private SkuDetails skuDetails;
 
+    private Tracker tracker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity implements PurchasesUpda
         ft.replace(android.R.id.content, sf);
         ft.commit();
 
+        tracker = ((OpenNoteScannerApplication) SettingsActivity.this.getApplication()).getTracker();
     }
 
     @Override
@@ -129,6 +139,9 @@ public class SettingsActivity extends AppCompatActivity implements PurchasesUpda
                             SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
 
                             mSharedPref.edit().putLong( "rewarded_time" , System.currentTimeMillis() / 1000L ).commit();
+
+                            // Record goal "Rewarded Ad"
+                            TrackHelper.track().event("Ad", "RewardedAd").with(tracker);
                         }
 
                         @Override
@@ -199,12 +212,24 @@ public class SettingsActivity extends AppCompatActivity implements PurchasesUpda
 
     @Override
     public void onPurchasesUpdated(@NonNull BillingResult billingResult, @Nullable List<Purchase> purchases) {
-        if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK
+        int response = billingResult.getResponseCode();
+        if (response == BillingClient.BillingResponseCode.OK
                 && purchases != null) {
             for (Purchase purchase : purchases) {
                 handlePurchase(purchase);
             }
-        } else if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
+        } else if (response == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+            Purchase.PurchasesResult ownedPurchases = billingClient.queryPurchases("inapp");
+            List<Purchase> owned = ownedPurchases.getPurchasesList();
+            for (Purchase purchase : owned) {
+                int purchaseState = purchase.getPurchaseState();
+                if (purchaseState == Purchase.PurchaseState.PENDING) {
+                    alert(getString(R.string.donation_pending));
+                } else if (purchaseState == Purchase.PurchaseState.PURCHASED) {
+                    handlePurchase(purchase);
+                }
+            }
+        } else if (response == BillingClient.BillingResponseCode.USER_CANCELED) {
             // Handle an error caused by a user cancelling the purchase flow.
         } else {
             // Handle any other error codes.
@@ -224,15 +249,33 @@ public class SettingsActivity extends AppCompatActivity implements PurchasesUpda
         ConsumeResponseListener listener = new ConsumeResponseListener() {
             @Override
             public void onConsumeResponse(BillingResult billingResult, String purchaseToken) {
-                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                int response = billingResult.getResponseCode();
+                if (response == BillingClient.BillingResponseCode.OK) {
+                    // Record goal "Donation"
+                    TrackHelper.track().event("Donation", "GPlayDonation").value(4.99f).with(tracker);
+
                     SharedPreferences mSharedPref = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
                     mSharedPref.edit().putLong( "one_year_donation_time" , System.currentTimeMillis() / 1000L ).commit();
                 }
             }
         };
 
-        billingClient.consumeAsync(consumeParams, listener);
+        int purchaseState = purchase.getPurchaseState();
+        if (purchaseState == Purchase.PurchaseState.PURCHASED) {
+            billingClient.consumeAsync(consumeParams, listener);
+        }
     }
 
+    private void alert(String text) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+        alertDialog.setMessage(text);
+        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, getString(R.string.close),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+        alertDialog.show();
+    }
 
 }
