@@ -1,6 +1,11 @@
 Change Log
 ==========
 
+version 1.0.36 (Google Play only)
+---------------------------------
+
+* From 1.0.36 onwards, On installs from Google Play, Open Note Scanner will show ads on some screens.
+
 version 1.0.35
 --------------
 
