@@ -25,7 +25,7 @@ allprojects {
             name 'Google'
         }
         maven {
-            url  'http://dl.bintray.com/steveliles/maven'
+            url 'https://jitpack.io'
         }
     }
 }

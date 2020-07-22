@@ -36,6 +36,8 @@ Open Note Scanner is available for simplified installation on [Google Play Store
 
 [<img alt="Get it on Google Play" height="60" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" />](https://play.google.com/store/apps/details?id=com.todobom.opennotescanner&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1) [![Get it on F-Droid](https://f-droid.org/wiki/images/0/06/F-Droid-button_get-it-on.png)](https://f-droid.org/repository/browse/?fdid=com.todobom.opennotescanner)
 
+**Disclaimer:** Google Play version is ad-supported.
+
 Binary APK file is available [directly from GitHub in the releases section](https://github.com/ctodobom/OpenNoteScanner/releases) of the project.
 
 Instructions for building
@@ -98,6 +100,8 @@ If you think that any information you obtained here is worth of some money and a
 | Paypal | Bitcoin |
 | ------ | ------- |
 | [![](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4) |  <center> [![](http://api.qrserver.com/v1/create-qr-code/?color=000000&bgcolor=FFFFFF&data=bitcoin%3A1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9&qzone=1&margin=0&size=200x200&ecc=L)](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)<br />[1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)</center> |
+
+In order to fund the development of Open Note Scanner, since version 1.0.36 when downloaded from Google Play store the app will show ads on some screens and will also allow for donation through Google Play in-app purchase. There is no difference on the features available from Google Play version and F-Droid releases.
 
 
 Contributing
