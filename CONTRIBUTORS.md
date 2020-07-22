@@ -21,7 +21,6 @@ Most contributions here are with translations. Please [refer to the Changelog](h
 * [@dellani](https://github.com/dellani) - German update and corrections
 * [@beriain](https://github.com/beriain) - Basque translation
 * [@yzqzss](https://github.com/yzqzss) - Simplified Chinese translation - PR #164
-* [@Symbian9](https://github.com/Symbian9) - Ukrainian translation - PR #173
 * [@zmni](https://github.com/zmni) - Indonesian translation - PR #178
 * [@ChristianWilkie](https://github.com/ChristianWilkie) - some cleanups - PR #180 and #181
 * [@thrillfall](https://github.com/thrillfall) - scan topic on filename - PR #191

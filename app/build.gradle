@@ -38,10 +38,6 @@ android {
 
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.exifinterface:exifinterface:1.1.0'

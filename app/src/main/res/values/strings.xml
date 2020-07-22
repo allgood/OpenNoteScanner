@@ -77,4 +77,6 @@
     <string name="reward_ad_summary">View a Video Ad until it ends, Open Note Scanner will receive a small value. As a reward, all ads from the app will be disabled for one week.</string>
     <string name="reward_ad_title">View an Ad</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="close">Close</string>
+    <string name="donation_pending">Previous donation pending</string>
 </resources>
