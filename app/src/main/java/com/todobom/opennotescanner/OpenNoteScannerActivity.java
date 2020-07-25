@@ -11,6 +11,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.ExifInterface;
@@ -72,6 +73,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -165,6 +167,15 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     private String scanTopic = null;
     private Mat mat;
     private Tracker tracker;
+
+
+    private Camera.AutoFocusMoveCallback autoFocusMoveCallback = new Camera.AutoFocusMoveCallback() {
+        @Override
+        public void onAutoFocusMoving(boolean start, Camera camera) {
+            mFocused = !start;
+            Log.d(TAG, "focusMoving: " + mFocused);
+        }
+    };
 
     public HUDCanvasView getHUD() {
         return mHud;
@@ -632,6 +643,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         //get the number of cameras
         int numberOfCameras = Camera.getNumberOfCameras();
         //for every camera check
+        Log.i(TAG, "Number of available cameras: " + numberOfCameras);
         for (int i = 0; i < numberOfCameras; i++) {
             Camera.CameraInfo info = new Camera.CameraInfo();
             Camera.getCameraInfo(i, info);
@@ -642,6 +654,33 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             cameraId = i;
         }
         return cameraId;
+    }
+
+    public void setFocusParameters() {
+        Camera.Parameters param;
+        param = mCamera.getParameters();
+
+        PackageManager pm = getPackageManager();
+        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
+            try {
+                mCamera.setAutoFocusMoveCallback(autoFocusMoveCallback);
+            } catch (Exception e) {
+                Log.d(TAG, "failed setting AutoFocusMoveCallback");
+            }
+
+            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            final Rect targetFocusRect = new Rect(-500,-500,500,500);
+            List<Camera.Area> focusList = new ArrayList<Camera.Area>();
+            Camera.Area focusArea = new Camera.Area(targetFocusRect, 1000);
+            focusList.add(focusArea);
+            param.setFocusAreas(focusList);
+            param.setMeteringAreas(focusList);
+            mCamera.setParameters(param);
+            Log.d(TAG, "enabling autofocus");
+        } else {
+            mFocused = true;
+            Log.d(TAG, "autofocus not available");
+        }
     }
 
     @Override
@@ -717,13 +756,6 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         }
 
         PackageManager pm = getPackageManager();
-        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
-            param.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-            Log.d(TAG, "enabling autofocus");
-        } else {
-            mFocused = true;
-            Log.d(TAG, "autofocus not available");
-        }
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
             param.setFlashMode(mFlashMode ? Camera.Parameters.FLASH_MODE_TORCH : Camera.Parameters.FLASH_MODE_OFF);
         }
@@ -742,22 +774,11 @@ public class OpenNoteScannerActivity extends AppCompatActivity
             mImageProcessor.setBugRotate(mBugRotate);
         }
 
-        try {
-            mCamera.setAutoFocusMoveCallback(new Camera.AutoFocusMoveCallback() {
-                @Override
-                public void onAutoFocusMoving(boolean start, Camera camera) {
-                    mFocused = !start;
-                    Log.d(TAG, "focusMoving: " + mFocused);
-                }
-            });
-        } catch (Exception e) {
-            Log.d(TAG, "failed setting AutoFocusMoveCallback");
-        }
+        setFocusParameters();
 
         // some devices doesn't call the AutoFocusMoveCallback - fake the
         // focus to true at the start
         mFocused = true;
-
         safeToTakePicture = true;
 
     }
@@ -837,18 +858,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         if (safeToTakePicture) {
             runOnUiThread(resetShutterColor);
             safeToTakePicture = false;
-            mCamera.autoFocus(new Camera.AutoFocusCallback() {
-                @Override
-                public void onAutoFocus(boolean success, Camera camera) {
-                    if (attemptToFocus) {
-                        return;
-                    } else {
-                        attemptToFocus = true;
-                    }
-
-                    camera.takePicture(null, null, mThis);
-                }
-            });
+            mCamera.takePicture(null, null, mThis);
             return true;
         }
         return false;
@@ -858,6 +868,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
     public void onPictureTaken(byte[] data, Camera camera) {
 
         shootSound();
+        setFocusParameters();
 
         android.hardware.Camera.Size pictureSize = camera.getParameters().getPictureSize();
 
