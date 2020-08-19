@@ -67,4 +67,16 @@
     <string name="save_png_summary">Sla definitieve afbeeldingen op in PNG formaat. Merk op dat metadata nog niet wordt ondersteund op PNG, dus sommige functies zullen niet beschikbaar zijn.</string>
     <string name="format_not_supported">Formaat niet ondersteund</string>
     <string name="format_not_supported_message">Afbeelding formaat ondersteunt geen tag</string>
+    
+    <string name="set_scan_topic">Zet scan onderwerp</string>
+    <string name="cancel">Annuleer</string>
+    <string name="custom_scan_topic">Aangepaste scan onderwerp</string>
+    <string name="scan_topic_dialog_title">Geef een onderwerp op</string>
+    <string name="skip_scan_topic">Onderwerp overslaan</string>
+    
+    <string name="no_files_selected">Geen bestand geselecteerd.</string>
+    <string name="action_pdfexport">Exporteren naar PDF</string>
+    <string name="googleplay_donation_summary">Doe een donatie via Google Play, met deze donatie worden alle advertenties van deze app een jaar lang uitgeschakeld</string>
+    <string name="reward_ad_summary">Bekijk een videoadvertentie tot het einde, Open Note Scanner krijgt hiervan een kleine waarde. Als beloning worden alle advertenties van deze app een week lang uitgeschakeld.</string>
+    <string name="reward_ad_title">Bekijk een advertentie</string>
 </resources>

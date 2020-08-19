@@ -1,10 +1,7 @@
 package com.todobom.opennotescanner.helpers;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +12,11 @@ import android.view.Window;
 import com.todobom.opennotescanner.OpenNoteScannerApplication;
 import com.todobom.opennotescanner.R;
 
+import org.matomo.sdk.Tracker;
+import org.matomo.sdk.extra.TrackHelper;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import us.feras.mdv.MarkdownView;
 
 /**
@@ -64,8 +66,8 @@ public class AboutFragment extends DialogFragment {
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_app_subject));
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 
-                ((OpenNoteScannerApplication) v.getContext().getApplicationContext()).getTracker()
-                        .trackScreenView("/shareapp", "Share Application");
+                Tracker tracker = ((OpenNoteScannerApplication) (getActivity().getApplication())).getTracker();
+                TrackHelper.track().screen("/shareapp").title("Share Application").with(tracker);
 
                 startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_app_using)));
             }
@@ -79,16 +81,6 @@ public class AboutFragment extends DialogFragment {
             mRunOnDetach.run();
         }
     }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        ((OpenNoteScannerApplication) activity.getApplication()).getTracker()
-                .trackScreenView("/about", "About Dialog");
-
-    }
-
 
     public void setRunOnDetach( Runnable runOnDetach ) {
         mRunOnDetach = runOnDetach;

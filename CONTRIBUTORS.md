@@ -20,4 +20,11 @@ Most contributions here are with translations. Please [refer to the Changelog](h
 * [@princekelly1](https://github.com/princekelly1) - Contributed FAQ.md file
 * [@dellani](https://github.com/dellani) - German update and corrections
 * [@beriain](https://github.com/beriain) - Basque translation
-* [@yzqzss](https://github.com/yzqzss) - Simplified Chinese translation
+* [@yzqzss](https://github.com/yzqzss) - Simplified Chinese translation - PR #164
+* [@zmni](https://github.com/zmni) - Indonesian translation - PR #178
+* [@ChristianWilkie](https://github.com/ChristianWilkie) - some cleanups - PR #180 and #181
+* [@thrillfall](https://github.com/thrillfall) - scan topic on filename - PR #191
+* [@ahangarha](https://github.com/ahangarha) - Persian Translation - PR #194
+* [@sturkmen72](https://github.com/sturkmen72) - Turkish Translation - PR #195
+* [@yeyeto2788](https://github.com/yeyeto2788) - update on Spanish translation - PR #207
+* [@miclill](https://github.com/miclill) - PDF Export feature - commit 3b48cd24ebdb96fc350f305b239fb185090e62b6

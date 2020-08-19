@@ -56,7 +56,6 @@
     <string name="telegram_summary">Chat about the project on Telegram</string>
     <string name="feedback_and_contributions">Feedback and contributions</string>
     <string name="bitcoin_summary">Donate using Bitcoin cryptocurrency</string>
-    <string name="dogecoin_summary" translatable="false">Wow, such app, many useful</string>
     <string name="paypal_summary">Many credit cards accepted</string>
     <string name="filterModeOn">Image Processor On</string>
     <string name="filterModeOff">Image Processor Off</string>
@@ -67,4 +66,18 @@
     <string name="save_png_summary">Save final images to PNG format. Notice that metadata isn\'t supported yet on PNG, so some features will not be available.</string>
     <string name="format_not_supported">Format not supported</string>
     <string name="format_not_supported_message">Image format doesn\'t support tagging</string>
+    <string name="set_scan_topic">Set scan topic</string>
+    <string name="cancel">Cancel</string>
+    <string name="custom_scan_topic">Custom scan topic</string>
+    <string name="scan_topic_dialog_title">Please provide a topic</string>
+    <string name="skip_scan_topic">Skip Topic</string>
+    <string name="no_files_selected">No files selected.</string>
+    <string name="action_pdfexport">Export to PDF</string>
+    <string name="googleplay_donation_summary">Make a donation using Google Play, this donation will disable all ads from the app for one year</string>
+    <string name="reward_ad_summary">View a Video Ad until it ends, Open Note Scanner will receive a small value. As a reward, all ads from the app will be disabled for one week.</string>
+    <string name="reward_ad_title">View an Ad</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="close">Close</string>
+    <string name="donation_pending">Previous donation pending</string>
+    <string name="custom_scan_topic_summary">Enable setting a custom topic to scan file name</string>
 </resources>

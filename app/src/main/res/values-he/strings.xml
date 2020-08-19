@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
-
     <string name="title_activity_gallery">גלריה</string>
-
     <string name="title_activity_full_image">מציג תמונות שנסרקו</string>
     <string name="images_scanned">תמונות שנסרקו</string>
     <string name="action_share">שיתוף</string>
@@ -63,4 +61,19 @@
     <string name="action_tag">תגית</string>
     <string name="storage_folder">תיקיית אחסון</string>
     <string name="storage_folder_summary">הגדרת מיקום האחסון לקבצים שנסרקו</string>
+    <string name="save_png">שמירה בתור PNG</string>
+    <string name="save_png_summary">שמירת התמונה המוגמרת בתור PNG. נא לשים לב שעדיין אין תמיכה בנתוני על כחלק מ־PNG, לכן, חלק מהתכונות לא תהיינה זמינות.</string>
+    <string name="format_not_supported">אין תמיכה בסוג קובץ זה</string>
+    <string name="format_not_supported_message">אין תמיכה בתיוג בסוג קובץ זה</string>
+    <string name="set_scan_topic">הגדרת נושא סריקה</string>
+    <string name="cancel">ביטול</string>
+    <string name="custom_scan_topic">נושא סריקה מותאם אישית</string>
+    <string name="scan_topic_dialog_title">נא לציין נושא</string>
+    <string name="skip_scan_topic">דילוג על נושא</string>
+    <string name="no_files_selected">לא נבחרו קבצים.</string>
+    <string name="action_pdfexport">ייצוא ל־PDF</string>
+    <string name="googleplay_donation_summary">ניתן לתרום דרך Google Play, תרומה זו תשבית את כל הפרסומות מהיישומון למשך שנה</string>
+    <string name="reward_ad_summary">בצפייה של סרטון פרסומי עד תומו, המיזם Open Note Scanner יקבל סכום קטן. בתמורה, כל הפרסומות שביישומון יושבתו למשך שבוע שלם.</string>
+    <string name="reward_ad_title">צפייה בפרסומת</string>
+    <string name="privacy_policy">מדיניות פרטיות</string>
 </resources>

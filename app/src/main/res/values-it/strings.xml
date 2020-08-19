@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
-
     <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">Galleria</string>
-
     <string name="title_activity_full_image">Visualizzatore immagini acquisite</string>
     <string name="images_scanned">Immagini acquisite</string>
     <string name="action_share">Condividi</string>
@@ -68,4 +66,14 @@
     <string name="save_png_summary">Salva l\'immagine finale in formatoPNG. Notare che i metadati non sono ancora supportati per PNG, quindi alcune funzionalità non saranno disponibili.</string>
     <string name="format_not_supported">Formato non supportato</string>
     <string name="format_not_supported_message">Il formato dell\'immagine non supporta le etichette</string>
+    <string name="set_scan_topic">Imposta il tema dell\'acquisizione</string>
+    <string name="cancel">Annulla</string>
+    <string name="custom_scan_topic">Tema dell\'acquisizione personalizzato</string>
+    <string name="scan_topic_dialog_title">Inserire un tema</string>
+    <string name="skip_scan_topic">Salta il tema</string>
+    <string name="no_files_selected">Nessun file selezionato.</string>
+    <string name="action_pdfexport">Esporta come PDF</string>
+    <string name="googleplay_donation_summary">Fai una donazione usando Google Play, in questo modo verranno disattivati tutti gli annunci presenti nell\'app per un anno.</string>
+    <string name="reward_ad_summary">Visualizza un video di annunci fino alla fine, Open Note Scanner riceverà una piccola donazione. In questo modo, tutti gli annunci presenti nell\'app verranno disattivati per una settimana.</string>
+    <string name="reward_ad_title">Visualizza un annuncio</string>
 </resources>

@@ -1,14 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '28.0.3'
+    compileSdkVersion 29
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 34
-        versionName '1.0.34'
+        targetSdkVersion 29
+        versionCode 36
+        versionName '1.0.36'
     }
     buildTypes {
         release {
@@ -35,22 +38,22 @@ android {
 
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
     testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:27.0.0'
-    implementation 'com.android.support:design:27.0.0'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.zxing:core:3.0.1'
-    implementation 'com.android.support:support-v4:27.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115'
     implementation 'us.feras.mdv:markdownview:1.1.0'
     implementation 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
-    implementation 'org.piwik.sdk:piwik-sdk:0.0.4'
+    implementation 'org.matomo.sdk:tracker:4.1.2'
     implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
+    implementation 'com.itextpdf:kernel:7.1.11'
+    implementation 'com.itextpdf:layout:7.1.11'
+    implementation 'com.itextpdf:io:7.1.11'
 }

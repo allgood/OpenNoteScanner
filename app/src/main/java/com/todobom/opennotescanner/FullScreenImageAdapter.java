@@ -6,7 +6,6 @@ package com.todobom.opennotescanner;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,10 @@ import android.widget.RelativeLayout;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.ortiz.touchview.TouchImageView;
+
 import java.util.ArrayList;
+
+import androidx.viewpager.widget.PagerAdapter;
 
 public class FullScreenImageAdapter extends PagerAdapter {
 

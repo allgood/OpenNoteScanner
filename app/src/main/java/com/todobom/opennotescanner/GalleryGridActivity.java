@@ -3,6 +3,7 @@ package com.todobom.opennotescanner;
 // based on http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,12 +11,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView;
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerViewAdapter;
@@ -30,11 +26,18 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.todobom.opennotescanner.helpers.AboutFragment;
+import com.todobom.opennotescanner.helpers.PdfHelper;
 import com.todobom.opennotescanner.helpers.Utils;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class GalleryGridActivity extends AppCompatActivity
         implements ClickListener, DragSelectRecyclerViewAdapter.SelectionListener {
@@ -43,6 +46,7 @@ public class GalleryGridActivity extends AppCompatActivity
     private MenuItem mShare;
     private MenuItem mTag;
     private MenuItem mDelete;
+    private MenuItem mPdfExport;
     private DragSelectRecyclerView recyclerView;
     private AlertDialog.Builder deleteConfirmBuilder;
     private boolean selectionMode = false;
@@ -70,19 +74,24 @@ public class GalleryGridActivity extends AppCompatActivity
     }
 
     private void setSelectionMode(boolean selectionMode) {
-        if (mShare !=null && mDelete != null ) {
+        if (mShare != null && mDelete != null ) {
             mShare.setVisible(selectionMode);
             //mTag.setVisible(selectionMode);
             mDelete.setVisible(selectionMode);
         }
+
+        if (mPdfExport != null) {
+            mPdfExport.setVisible(selectionMode);
+        }
+
         this.selectionMode = selectionMode;
     }
 
     @Override
     public void onDragSelectionChanged(int i) {
-        Log.d(TAG, "DragSelectionChanged: "+i);
+        Log.d(TAG, "DragSelectionChanged: " + i);
 
-        setSelectionMode(i>0);
+        setSelectionMode(i > 0);
     }
 
 
@@ -97,7 +106,7 @@ public class GalleryGridActivity extends AppCompatActivity
             super();
             mCallback = activity;
 
-            for (String file : files){
+            for (String file : files) {
                 add(file);
             }
 
@@ -105,7 +114,7 @@ public class GalleryGridActivity extends AppCompatActivity
 
         }
 
-        void add(String path){
+        void add(String path) {
             itemList.add(path);
         }
 
@@ -121,13 +130,13 @@ public class GalleryGridActivity extends AppCompatActivity
 
             String filename = itemList.get(position);
 
-            if ( !filename.equals(holder.filename)) {
+            if (!filename.equals(holder.filename)) {
 
                 // remove previous image
                 holder.image.setImageBitmap(null);
 
                 // Load image, decode it to Bitmap and return Bitmap to callback
-                mImageLoader.displayImage("file:///"+filename, holder.image, mTargetSize);
+                mImageLoader.displayImage("file:///" + filename, holder.image, mTargetSize);
 
                 // holder.image.setImageBitmap(decodeSampledBitmapFromUri(filename, 220, 220));
 
@@ -150,7 +159,7 @@ public class GalleryGridActivity extends AppCompatActivity
 
             ArrayList<String> selection = new ArrayList<>();
 
-            for ( Integer i: getSelectedIndices() ) {
+            for (Integer i : getSelectedIndices()) {
                 selection.add(itemList.get(i));
             }
 
@@ -159,7 +168,7 @@ public class GalleryGridActivity extends AppCompatActivity
 
 
         public class ThumbViewHolder extends RecyclerView.ViewHolder
-                implements View.OnClickListener, View.OnLongClickListener{
+                implements View.OnClickListener, View.OnLongClickListener {
 
             public final ImageView image;
             public String filename;
@@ -198,9 +207,6 @@ public class GalleryGridActivity extends AppCompatActivity
 
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 
-        ((OpenNoteScannerApplication) getApplication()).getTracker()
-                .trackScreenView("/GalleryGridActivity", "Gallery");
-
         setContentView(R.layout.activity_gallery);
 
         ActionBar actionBar = getSupportActionBar();
@@ -219,7 +225,7 @@ public class GalleryGridActivity extends AppCompatActivity
         mTargetSize = new ImageSize(220, 220); // result Bitmap will be fit to this size
 
         ArrayList<String> ab = new ArrayList<>();
-        myThumbAdapter = new ThumbAdapter(this, ab );
+        myThumbAdapter = new ThumbAdapter(this, ab);
         // new Utils(getApplicationContext()).getFilePaths(););
 
         recyclerView = (DragSelectRecyclerView) findViewById(R.id.recyclerview);
@@ -270,18 +276,17 @@ public class GalleryGridActivity extends AppCompatActivity
     }
 
     private void deleteImage() {
-        for ( String filePath: myThumbAdapter.getSelectedFiles() ) {
+        for (String filePath : myThumbAdapter.getSelectedFiles()) {
             final File photoFile = new File(filePath);
             if (photoFile.delete()) {
-                Utils.removeImageFromGallery(filePath,this);
-                Log.d(TAG,"Removed file: "+filePath);
+                Utils.removeImageFromGallery(filePath, this);
+                Log.d(TAG, "Removed file: " + filePath);
             }
         }
 
         reloadAdapter();
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -297,6 +302,9 @@ public class GalleryGridActivity extends AppCompatActivity
         mDelete = menu.findItem(R.id.action_delete);
         mDelete.setVisible(false);
 
+        mPdfExport = menu.findItem(R.id.action_pdfexport);
+        mPdfExport.setVisible(false);
+
         invalidateOptionsMenu();
 
         return true;
@@ -309,12 +317,15 @@ public class GalleryGridActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch(id) {
+        switch (id) {
             case android.R.id.home:
                 finish();
                 break;
             case R.id.action_share:
                 shareImages();
+                return true;
+            case R.id.action_pdfexport:
+                pdfExport();
                 return true;
             case R.id.action_tag:
                 break;
@@ -333,6 +344,22 @@ public class GalleryGridActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    public void pdfExport() {
+        String pdfFilePath = PdfHelper.mergeImagesToPdf(getApplicationContext(), myThumbAdapter.getSelectedFiles());
+
+        if (pdfFilePath != null) {
+            try {
+                File file = new File(pdfFilePath);
+                Intent i=new Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(getApplicationContext(),
+                        getPackageName() + ".fileprovider", file));
+                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(i);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getApplicationContext(), "Cant Find Your File", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
     public void shareImages() {
         ArrayList<String> selectedFiles = myThumbAdapter.getSelectedFiles();
 
@@ -341,17 +368,17 @@ public class GalleryGridActivity extends AppCompatActivity
             final Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("image/jpg");
 
-            Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(selectedFiles.get(0)));
+            Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".fileprovider", new File(selectedFiles.get(0)));
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri);
-            Log.d("GalleryGridActivity","uri "+uri);
+            Log.d("GalleryGridActivity", "uri " + uri);
 
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
         } else {
             ArrayList<Uri> filesUris = new ArrayList<>();
             for (String i : myThumbAdapter.getSelectedFiles()) {
-                Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName()+".fileprovider", new File(i));
+                Uri uri = FileProvider.getUriForFile(getApplicationContext(), getPackageName() + ".fileprovider", new File(i));
                 filesUris.add(uri);
-                Log.d("GalleryGridActivity","uri "+uri);
+                Log.d("GalleryGridActivity", "uri " + uri);
             }
 
             final Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
@@ -362,7 +389,6 @@ public class GalleryGridActivity extends AppCompatActivity
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)));
         }
     }
-
 
 
 }

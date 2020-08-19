@@ -68,6 +68,12 @@
                 android:key="storage_folder"
                 android:summary="@string/storage_folder_summary"
                 />
+            <CheckBoxPreference
+                android:title="@string/custom_scan_topic"
+                android:defaultValue="false"
+                android:key="custom_scan_topic"
+                android:summary="@string/custom_scan_topic_summary"
+                />
         </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/feedback_and_contributions"
@@ -137,15 +143,26 @@
                 android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
                 /></Preference>
 
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/action_about"
+        android:persistent="false"
+        android:key="about_pref_category">
+
         <Preference
-            android:title="Dogecoin"
-            android:summary="@string/dogecoin_summary"
-            android:key="donate_dogecoin"
+            android:summary="@string/action_about"
+            android:persistent="false"
+            android:key="about_preference">
+        </Preference>
+
+        <Preference
+            android:summary="@string/privacy_policy"
             android:persistent="false">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9"
-                /></Preference>
+                android:data="https://github.com/ctodobom/OpenNoteScanner/blob/master/PrivacyPolicy.md"
+            /></Preference>
 
     </PreferenceCategory>
 
