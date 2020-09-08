@@ -56,7 +56,7 @@ Comme il s'agit d'une application libre, les contributions sont toujours les bie
 * Naofumi Fukue - traduction japonaise
 * [@ASMfreaK](https://github.com/ASMfreaK) - Traduction en russe
 
-D'autres personnes ont contribué en déposant des [rapports de bugs](https://github.com/ctodobom/OpenNoteScanner/issues) et en fournissant des informations via le [groupe Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Leur aide est appréciée également.
+D'autres personnes ont contribué en déposant des [rapports de bugs](https://github.com/ctodobom/OpenNoteScanner/issues) et en fournissant des informations via le [groupe Telegram](https://t.me/OpenNoteScanner). Leur aide est appréciée également.
 
 ### Code externe
 

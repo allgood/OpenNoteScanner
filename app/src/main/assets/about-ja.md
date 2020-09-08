@@ -58,7 +58,7 @@ Android アプリケーションを作成することは私の主要な仕事で
 * [Yaron Shahrabani](https://github.com/yarons) ヘブライ語翻訳
 * [@Tobaloidee](https://github.com/Tobaloidee) - アイコンデザイン
 
-[問題の報告](https://github.com/ctodobom/OpenNoteScanner/issues) を提出して支援したり [Telegram グループ](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) で情報を提供してくれた他の人々。 彼らの支援も高く評価しています。
+[問題の報告](https://github.com/ctodobom/OpenNoteScanner/issues) を提出して支援したり [Telegram グループ](https://t.me/OpenNoteScanner) で情報を提供してくれた他の人々。 彼らの支援も高く評価しています。
 
 ### 外部コード
 

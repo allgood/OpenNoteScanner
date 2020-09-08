@@ -56,7 +56,7 @@ Wie bei Freier Software üblich, sind Beiträge immer willkommen. Jeder, der Cod
 * Naofumi Fukue - Japanische Übersetzung
 * [@ASMfreaK](https://github.com/ASMfreaK) - Übersetzung ins Russische
 
-Weitere Menschen haben [Fehlermeldungen](https://github.com/ctodobom/OpenNoteScanner/issues) erstellt und Informationen über die [Telegram Gruppe](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) bereitgestellt. Diese Hilfe wird auch sehr geschätzt.
+Weitere Menschen haben [Fehlermeldungen](https://github.com/ctodobom/OpenNoteScanner/issues) erstellt und Informationen über die [Telegram Gruppe](https://t.me/OpenNoteScanner) bereitgestellt. Diese Hilfe wird auch sehr geschätzt.
 
 ### Externer Code
 

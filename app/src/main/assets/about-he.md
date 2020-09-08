@@ -56,7 +56,7 @@
 * נאופומי פוקואה - תרגום ליפנית
 * [@ASMfreaK](https://github.com/ASMfreaK) - תרגום לרוסית
 
-אנשים נוספים סייעו על ידי [דיווח על תקלות](https://github.com/ctodobom/OpenNoteScanner/issues) וגם על ידי שיתוף הבעיה ב[קבוצת הטלגרם](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). עזרתם מוערכת גם כן.
+אנשים נוספים סייעו על ידי [דיווח על תקלות](https://github.com/ctodobom/OpenNoteScanner/issues) וגם על ידי שיתוף הבעיה ב[קבוצת הטלגרם](https://t.me/OpenNoteScanner). עזרתם מוערכת גם כן.
 
 ### קוד חיצוני
 

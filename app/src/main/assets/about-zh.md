@@ -47,7 +47,7 @@
 
 大多数翻译贡献被列在 [CONTRIBUTORS.md file](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) ，代码贡献者被列在 [the Changelog file](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) 和 [the commits history](https://github.com/ctodobom/OpenNoteScanner/commits).
 
-其他提交问题及建议的 [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) 还有tg群中的讨论 [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). 他们的帮助也是值得赞赏！
+其他提交问题及建议的 [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) 还有tg群中的讨论 [Telegram Group](https://t.me/OpenNoteScanner). 他们的帮助也是值得赞赏！
 
 ### 外部代码
 
