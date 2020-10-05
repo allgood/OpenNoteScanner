@@ -65,8 +65,8 @@
     <string name="storage_folder_summary">Définir où seront enregistrées les images numérisées</string>
     <string name="save_png">Enregistrer au format PNG</string>
     <string name="save_png_summary">Enregistrez les images finales au format PNG. Notez que les métadonnées ne sont pas encore prise en charge avec les PNG, donc certaines fonctionnalités ne seront pas disponibles.</string>
-    <string name="format_not_supported">Le format n'est pas prise en charge</string>
-    <string name="format_not_supported_message">Le format de l'image ne prend pas pas en charge le taggage</string>
+    <string name="format_not_supported">Le format n\'est pas prise en charge</string>
+    <string name="format_not_supported_message">Le format de l\'image ne prend pas pas en charge le taggage</string>
     <string name="set_scan_topic">Définir le sujet de la numérisation</string>
     <string name="cancel">Annuler</string>
     <string name="custom_scan_topic">Sujet de la numérisation personnalisé</string>
@@ -74,8 +74,8 @@
     <string name="skip_scan_topic">Ignorer le sujet</string>
     <string name="no_files_selected">Aucun fichier sélectionné.</string>
     <string name="action_pdfexport">Exporter au format PDF</string>
-    <string name="googleplay_donation_summary">Faites un don auprès Google Play, ce don désactivera toutes les publicités de l'application pendant un an</string>
-    <string name="reward_ad_summary">Regarder une publicité vidéo jusqu'à qu'elle se termine, Open Note Scanner recevra une petite valeur. En guise de récompense, toutes les annonces de l'application seront désactivées pendant une semaine.</string>
+    <string name="googleplay_donation_summary">Faites un don auprès Google Play, ce don désactivera toutes les publicités de l\'application pendant un an</string>
+    <string name="reward_ad_summary">Regarder une publicité vidéo jusqu\'à qu\'elle se termine, Open Note Scanner recevra une petite valeur. En guise de récompense, toutes les annonces de l\'application seront désactivées pendant une semaine.</string>
     <string name="reward_ad_title">Regarder une publicité</string>
     <string name="privacy_policy">Politique de confidentialité</string>
     <string name="close">Fermer</string>
