@@ -25,7 +25,6 @@ import us.feras.mdv.MarkdownView;
 public class AboutFragment extends DialogFragment {
 
     private static final String APP_LINK = "https://goo.gl/2JwEPq";
-    private Runnable mRunOnDetach;
 
     public AboutFragment() {
 
@@ -69,17 +68,5 @@ public class AboutFragment extends DialogFragment {
 
             startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_app_using)));
         });
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        if (mRunOnDetach != null) {
-            mRunOnDetach.run();
-        }
-    }
-
-    public void setRunOnDetach( Runnable runOnDetach ) {
-        mRunOnDetach = runOnDetach;
     }
 }
