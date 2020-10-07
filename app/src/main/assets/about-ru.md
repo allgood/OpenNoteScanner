@@ -54,7 +54,7 @@
 * Naofumi Fukue - перевод на японский
 * [@ASMfreaK](https://github.com/ASMfreaK) - перевод на русский
 
-Другие люди помогали, рассказывая о ошибках и внося предложения в разделе [Issue на GitHub](https://github.com/ctodobom/OpenNoteScanner/issues) и [группу в Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Их помощь также ценится.
+Другие люди помогали, рассказывая о ошибках и внося предложения в разделе [Issue на GitHub](https://github.com/ctodobom/OpenNoteScanner/issues) и [группу в Telegram](https://t.me/OpenNoteScanner). Их помощь также ценится.
 
 ### Внешний код
 

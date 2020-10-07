@@ -47,7 +47,7 @@ Açık kaynaklı bir uygulama olarak, sizin katkılarınız her zaman beklenmekt
 
 Tercüme katkılarının çoğu şurada listelenmiştir [CONTRIBUTORS.md file](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) kod katkısında bulunanları[the Changelog dosyasında](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) ve [the commits history](https://github.com/ctodobom/OpenNoteScanner/commits) sayfasında görebilirsiniz.
 
-[Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) ile katkı sağlayan ve [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) aracılığı ile görüş bildiren herkese teşekkürler. Onların da önemli katkıları olmuştur.
+[Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) ile katkı sağlayan ve [Telegram Group](https://t.me/OpenNoteScanner) aracılığı ile görüş bildiren herkese teşekkürler. Onların da önemli katkıları olmuştur.
 
 ### External code
 

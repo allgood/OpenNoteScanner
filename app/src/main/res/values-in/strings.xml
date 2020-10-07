@@ -77,4 +77,7 @@
     <string name="reward_ad_summary">Tonton iklan video sampai selesai, Open Note Scanner akan menerima sedikit imbalan. Sebaga gantinya, semua iklan di dalam aplikasi akan dinonaktifkan selama seminggu.</string>
     <string name="reward_ad_title">Tonton iklan</string>
     <string name="privacy_policy">Kebijakan Privasi</string>
+    <string name="close">Tutup</string>
+    <string name="donation_pending">Donasi sebelumnya menunggu keputusan</string>
+    <string name="custom_scan_topic_summary">Aktifkan pengaturan topik khusus untuk memindai nama berkas</string>
 </resources>

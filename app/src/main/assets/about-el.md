@@ -56,7 +56,7 @@
 * Naofumi Fukue - Ιαπωνική μετάφραση
 * [@ASMfreaK](https://github.com/ASMfreaK) - μετάφραση στα ρωσικά
 
-Άλλοι άνθρωποι έχουν βοηθήσει με την [Αναφορά Θεμάτων](https://github.com/ctodobom/OpenNoteScanner/issues), και έχουν δώσει πληροφορίες μέσω της [Ομάδας του Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Η βοήθειά τους εκτιμάται, επίσης.
+Άλλοι άνθρωποι έχουν βοηθήσει με την [Αναφορά Θεμάτων](https://github.com/ctodobom/OpenNoteScanner/issues), και έχουν δώσει πληροφορίες μέσω της [Ομάδας του Telegram](https://t.me/OpenNoteScanner). Η βοήθειά τους εκτιμάται, επίσης.
 
 ### Εξωτερικός κώδικας
 

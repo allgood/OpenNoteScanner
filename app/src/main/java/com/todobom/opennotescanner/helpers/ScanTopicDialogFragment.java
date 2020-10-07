@@ -35,27 +35,20 @@ public class ScanTopicDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_scan_topic, null);
         alertDialogBuilder.setView(view);
         scanTopic = view.findViewById(R.id.editTextScanTopic);
-        alertDialogBuilder.setPositiveButton(R.string.set_scan_topic, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                SetTopicDialogListener listener = (SetTopicDialogListener) getActivity();
-                listener.onFinishTopicDialog(scanTopic.getText().toString());
-                dismiss();
-                ((Activity) getContext()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
-
-            }
+        alertDialogBuilder.setPositiveButton(R.string.set_scan_topic, (dialog, which) -> {
+            SetTopicDialogListener listener = (SetTopicDialogListener) getActivity();
+            listener.onFinishTopicDialog(scanTopic.getText().toString());
+            dismiss();
+            ((Activity) getContext()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
 
         });
 
-        alertDialogBuilder.setNegativeButton(R.string.skip_scan_topic, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (dialog != null ) {
-                    SetTopicDialogListener listener = (SetTopicDialogListener) getActivity();
-                    listener.onFinishTopicDialog(null);
-                    dialog.dismiss();
-                    ((Activity) getContext()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
-                }
+        alertDialogBuilder.setNegativeButton(R.string.skip_scan_topic, (dialog, which) -> {
+            if (dialog != null ) {
+                SetTopicDialogListener listener = (SetTopicDialogListener) getActivity();
+                listener.onFinishTopicDialog(null);
+                dialog.dismiss();
+                ((Activity) getContext()).getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
             }
         });
 

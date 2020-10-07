@@ -59,7 +59,7 @@ Kode irekiko aplikazio bezala, ekarpenak beti dira ongi etorriak. Edozein kode b
 * [@Tobaloidee](https://github.com/Tobaloidee) - Ikonoaren diseinua
 * [@beriain](https://github.com/beriain) - Euskarazko itzulpena
 
-Beste batzuk [arazo txostenak](https://github.com/ctodobom/OpenNoteScanner/issues) bidaltzen eta [Telegrameko taldea](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg)ren bitartez informazioa emanez lagundu dute. Haien laguntza aintzat hartzekoa da ere.
+Beste batzuk [arazo txostenak](https://github.com/ctodobom/OpenNoteScanner/issues) bidaltzen eta [Telegrameko taldea](https://t.me/OpenNoteScanner)ren bitartez informazioa emanez lagundu dute. Haien laguntza aintzat hartzekoa da ere.
 
 ### Kanpoko kodea
 
