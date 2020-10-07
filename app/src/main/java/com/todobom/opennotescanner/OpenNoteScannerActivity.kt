@@ -54,7 +54,7 @@ import java.util.*
  */
 class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SurfaceHolder.Callback, PictureCallback, PreviewCallback, SetTopicDialogListener {
     private val mHideHandler = Handler()
-    private var mContentView: View? = null
+    private lateinit var mContentView: View
     private val mHidePart2Runnable = Runnable { // Delayed removal of status and navigation bar
 
         // Note that some of these constants are new as of API 16 (Jelly Bean)
@@ -67,11 +67,11 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
                 or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                 or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
     }
-    private var mControlsView: View? = null
+    private lateinit var mControlsView: View
     private val mShowPart2Runnable = Runnable { // Delayed display of UI elements
         val actionBar = actionBar
         actionBar?.show()
-        mControlsView!!.visibility = View.VISIBLE
+        mControlsView.visibility = View.VISIBLE
     }
     private var mVisible = false
     private val mHideRunnable = Runnable { hide() }
@@ -82,18 +82,18 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     private var mImageProcessor: ImageProcessor? = null
     private var mSurfaceHolder: SurfaceHolder? = null
     private var mCamera: Camera? = null
-    private var mThis: OpenNoteScannerActivity? = null
+    private lateinit var mThis: OpenNoteScannerActivity
     private var mFocused = false
     var hUD: HUDCanvasView? = null
         private set
     private var mWaitSpinner: View? = null
-    private var mFabToolbar: FABToolbarLayout? = null
+    private lateinit var mFabToolbar: FABToolbarLayout
     private var mBugRotate = false
-    private var mSharedPref: SharedPreferences? = null
+    private lateinit var mSharedPref: SharedPreferences
     private val mDateFormat = SimpleDateFormat("yyyy:MM:dd HH:mm:ss")
     private var scanTopic: String? = null
     private var mat: Mat? = null
-    private var tracker: Tracker? = null
+    private lateinit var tracker: Tracker
     private val autoFocusMoveCallback = AutoFocusMoveCallback { start, camera ->
         mFocused = !start
         Log.d(TAG, "focusMoving: $mFocused")
@@ -113,7 +113,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         super.onCreate(savedInstanceState)
         mThis = this
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-        if (mSharedPref!!.getBoolean("isFirstRun", true) && !mSharedPref!!.getBoolean("usage_stats", false)) {
+        if (mSharedPref.getBoolean("isFirstRun", true) && !mSharedPref.getBoolean("usage_stats", false)) {
             statsOptInDialog()
         }
         tracker = (application as OpenNoteScannerApplication).tracker
@@ -122,17 +122,17 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         mVisible = true
         mControlsView = findViewById(R.id.fullscreen_content_controls)
         mContentView = findViewById(R.id.surfaceView)
-        hUD = findViewById<View>(R.id.hud) as HUDCanvasView
+        hUD = findViewById(R.id.hud)
         mWaitSpinner = findViewById(R.id.wait_spinner)
 
 
         // Set up the user interaction to manually show or hide the system UI.
-        mContentView!!.setOnClickListener(View.OnClickListener { view: View? -> toggle() })
+        mContentView.setOnClickListener { toggle() }
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val display = windowManager.defaultDisplay
         val size = Point()
         display.getRealSize(size)
-        scanDocButton = findViewById<View>(R.id.scanDocButton) as Button
+        scanDocButton = findViewById<Button>(R.id.scanDocButton)
         scanDocButton!!.setOnClickListener { v: View ->
             if (scanClicked) {
                 requestPicture()
@@ -144,45 +144,45 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
                 v.backgroundTintList = ColorStateList.valueOf(0x7F60FF60)
             }
         }
-        val colorModeButton = findViewById<View>(R.id.colorModeButton) as ImageView
+        val colorModeButton = findViewById<ImageView>(R.id.colorModeButton)
         colorModeButton.setOnClickListener { v: View ->
             colorMode = !colorMode
             (v as ImageView).setColorFilter(if (colorMode) -0x1 else -0x5f0f60)
             sendImageProcessorMessage("colorMode", colorMode)
             Toast.makeText(applicationContext, if (colorMode) R.string.colorMode else R.string.bwMode, Toast.LENGTH_SHORT).show()
         }
-        val filterModeButton = findViewById<View>(R.id.filterModeButton) as ImageView
+        val filterModeButton = findViewById<ImageView>(R.id.filterModeButton)
         filterModeButton.setOnClickListener { v: View ->
             filterMode = !filterMode
             (v as ImageView).setColorFilter(if (filterMode) -0x1 else -0x5f0f60)
             sendImageProcessorMessage("filterMode", filterMode)
             Toast.makeText(applicationContext, if (filterMode) R.string.filterModeOn else R.string.filterModeOff, Toast.LENGTH_SHORT).show()
         }
-        val flashModeButton = findViewById<View>(R.id.flashModeButton) as ImageView
+        val flashModeButton = findViewById<ImageView>(R.id.flashModeButton)
         flashModeButton.setOnClickListener { v: View ->
             mFlashMode = setFlash(!mFlashMode)
             (v as ImageView).setColorFilter(if (mFlashMode) -0x1 else -0x5f0f60)
         }
-        val autoModeButton = findViewById<View>(R.id.autoModeButton) as ImageView
+        val autoModeButton = findViewById<ImageView>(R.id.autoModeButton)
         autoModeButton.setOnClickListener { v: View ->
             autoMode = !autoMode
             (v as ImageView).setColorFilter(if (autoMode) -0x1 else -0x5f0f60)
             Toast.makeText(applicationContext, if (autoMode) R.string.autoMode else R.string.manualMode, Toast.LENGTH_SHORT).show()
         }
-        val settingsButton = findViewById<View>(R.id.settingsButton) as ImageView
+        val settingsButton = findViewById<ImageView>(R.id.settingsButton)
         settingsButton.setOnClickListener { v: View ->
             val intent = Intent(v.context, SettingsActivity::class.java)
             startActivity(intent)
         }
-        val galleryButton = findViewById<View>(R.id.galleryButton) as FloatingActionButton
+        val galleryButton = findViewById<FloatingActionButton>(R.id.galleryButton)
         galleryButton.setOnClickListener { v: View ->
             val intent = Intent(v.context, GalleryGridActivity::class.java)
             startActivity(intent)
         }
-        mFabToolbar = findViewById<View>(R.id.fabtoolbar) as FABToolbarLayout
-        val fabToolbarButton = findViewById<View>(R.id.fabtoolbar_fab) as FloatingActionButton
-        fabToolbarButton.setOnClickListener { v: View? -> mFabToolbar!!.show() }
-        findViewById<View>(R.id.hideToolbarButton).setOnClickListener { v: View? -> mFabToolbar!!.hide() }
+        mFabToolbar = findViewById(R.id.fabtoolbar)
+        val fabToolbarButton = findViewById<FloatingActionButton>(R.id.fabtoolbar_fab)
+        fabToolbarButton.setOnClickListener { mFabToolbar.show() }
+        findViewById<View>(R.id.hideToolbarButton).setOnClickListener { mFabToolbar.hide() }
     }
 
     fun setFlash(stateFlash: Boolean): Boolean {
@@ -218,7 +218,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     fun turnCameraOn() {
-        mSurfaceView = findViewById<View>(R.id.surfaceView) as SurfaceView
+        mSurfaceView = findViewById(R.id.surfaceView)
         mSurfaceHolder = mSurfaceView?.holder
         mSurfaceHolder?.addCallback(this)
         mSurfaceHolder?.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
@@ -274,7 +274,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         // Hide UI first
         val actionBar = actionBar
         actionBar?.hide()
-        mControlsView!!.visibility = View.GONE
+        mControlsView.visibility = View.GONE
         mVisible = false
 
         // Schedule a runnable to remove the status and navigation bar after a delay
@@ -480,22 +480,22 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         }
         val hotAreaWidth = displayWidth / 4
         val hotAreaHeight = previewHeight / 2 - hotAreaWidth
-        val angleNorthWest = findViewById<View>(R.id.nw_angle) as ImageView
+        val angleNorthWest = findViewById<ImageView>(R.id.nw_angle)
         val paramsNW = angleNorthWest.layoutParams as RelativeLayout.LayoutParams
         paramsNW.leftMargin = hotAreaWidth - paramsNW.width
         paramsNW.topMargin = hotAreaHeight - paramsNW.height
         angleNorthWest.layoutParams = paramsNW
-        val angleNorthEast = findViewById<View>(R.id.ne_angle) as ImageView
+        val angleNorthEast = findViewById<ImageView>(R.id.ne_angle)
         val paramsNE = angleNorthEast.layoutParams as RelativeLayout.LayoutParams
         paramsNE.leftMargin = displayWidth - hotAreaWidth
         paramsNE.topMargin = hotAreaHeight - paramsNE.height
         angleNorthEast.layoutParams = paramsNE
-        val angleSouthEast = findViewById<View>(R.id.se_angle) as ImageView
+        val angleSouthEast = findViewById<ImageView>(R.id.se_angle)
         val paramsSE = angleSouthEast.layoutParams as RelativeLayout.LayoutParams
         paramsSE.leftMargin = displayWidth - hotAreaWidth
         paramsSE.topMargin = previewHeight - hotAreaHeight
         angleSouthEast.layoutParams = paramsSE
-        val angleSouthWest = findViewById<View>(R.id.sw_angle) as ImageView
+        val angleSouthWest = findViewById<ImageView>(R.id.sw_angle)
         val paramsSW = angleSouthWest.layoutParams as RelativeLayout.LayoutParams
         paramsSW.leftMargin = hotAreaWidth - paramsSW.width
         paramsSW.topMargin = previewHeight - hotAreaHeight
@@ -510,7 +510,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             param.flashMode = if (mFlashMode) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF
         }
         mCamera!!.setParameters(param)
-        mBugRotate = mSharedPref!!.getBoolean("bug_rotate", false)
+        mBugRotate = mSharedPref.getBoolean("bug_rotate", false)
         if (mBugRotate) {
             mCamera!!.setDisplayOrientation(270)
         } else {
@@ -596,7 +596,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height)
         mat = Mat(Size(pictureSize.width.toDouble(), pictureSize.height.toDouble()), CvType.CV_8U)
         mat!!.put(0, 0, data)
-        if (mSharedPref!!.getBoolean("custom_scan_topic", false)) {
+        if (mSharedPref.getBoolean("custom_scan_topic", false)) {
             val fm = supportFragmentManager
             val scanTopicDialogFragment = ScanTopicDialogFragment()
             scanTopicDialogFragment.show(fm, getString(R.string.scan_topic_dialog_title))
@@ -631,7 +631,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         var isIntent = false
         var fileUri: Uri? = null
         var imgSuffix = ".jpg"
-        if (mSharedPref!!.getBoolean("save_png", false)) {
+        if (mSharedPref.getBoolean("save_png", false)) {
             imgSuffix = ".png"
         }
         if (intent.action == "android.media.action.IMAGE_CAPTURE") {
@@ -645,7 +645,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             }
             isIntent = true
         } else {
-            val folderName = mSharedPref!!.getString("storage_folder", "OpenNoteScanner")
+            val folderName = mSharedPref.getString("storage_folder", "OpenNoteScanner")
             val folder = File(Environment.getExternalStorageDirectory().toString(), "/$folderName")
             if (!folder.exists()) {
                 folder.mkdirs()
@@ -751,13 +751,13 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         statsOptInDialog.setTitle(getString(R.string.stats_optin_title))
         statsOptInDialog.setMessage(getString(R.string.stats_optin_text))
         statsOptInDialog.setPositiveButton(R.string.answer_yes) { dialog: DialogInterface, which: Int ->
-            mSharedPref!!.edit().putBoolean("usage_stats", true).commit()
-            mSharedPref!!.edit().putBoolean("isFirstRun", false).commit()
+            mSharedPref.edit().putBoolean("usage_stats", true).commit()
+            mSharedPref.edit().putBoolean("isFirstRun", false).commit()
             dialog.dismiss()
         }
         statsOptInDialog.setNegativeButton(R.string.answer_no) { dialog: DialogInterface, which: Int ->
-            mSharedPref!!.edit().putBoolean("usage_stats", false).commit()
-            mSharedPref!!.edit().putBoolean("isFirstRun", false).commit()
+            mSharedPref.edit().putBoolean("usage_stats", false).commit()
+            mSharedPref.edit().putBoolean("isFirstRun", false).commit()
             dialog.dismiss()
         }
         statsOptInDialog.setNeutralButton(R.string.answer_later) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
