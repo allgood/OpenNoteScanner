@@ -213,25 +213,18 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                         waitInstallOpenCV.setMessage(R.string.downloading_opencv);
 
                         waitInstallOpenCV.setCancelable(false);
-                        waitInstallOpenCV.setOnCancelListener(new DialogInterface.OnCancelListener() {
-
-                            @Override
-                            public void onCancel(DialogInterface dialog) {
-                                dm.remove(myDownloadReference);
-                                AppContext.unregisterReceiver(onComplete);
-                                dialog.dismiss();
-                                mAskInstallDialog = null;
-                            }
+                        waitInstallOpenCV.setOnCancelListener(dialog1 -> {
+                            dm.remove(myDownloadReference);
+                            AppContext.unregisterReceiver(onComplete);
+                            dialog1.dismiss();
+                            mAskInstallDialog = null;
                         });
 
-                        waitInstallOpenCV.setNegativeButton(R.string.answer_cancel, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dm.remove(myDownloadReference);
-                                AppContext.unregisterReceiver(onComplete);
-                                dialog.dismiss();
-                                mAskInstallDialog = null;
-                            }
+                        waitInstallOpenCV.setNegativeButton(R.string.answer_cancel, (dialog12, which1) -> {
+                            dm.remove(myDownloadReference);
+                            AppContext.unregisterReceiver(onComplete);
+                            dialog12.dismiss();
+                            mAskInstallDialog = null;
                         });
 
                         waitOpenCVDialog = waitInstallOpenCV.create();
@@ -243,13 +236,9 @@ public class CustomOpenCVLoader extends OpenCVLoader {
             }
 
             if (isGooglePlayInstalled(AppContext)) {
-                askInstallOpenCV.setPositiveButton(R.string.googleplay, new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        AppContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=org.opencv.engine")));
-                    }
+                askInstallOpenCV.setPositiveButton(R.string.googleplay, (dialog, which) -> {
+                    dialog.dismiss();
+                    AppContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=org.opencv.engine")));
                 });
             }
 
@@ -258,13 +247,9 @@ public class CustomOpenCVLoader extends OpenCVLoader {
                         + "\n\n" + AppContext.getString(R.string.messageactivateunknown)
                 );
 
-                askInstallOpenCV.setNeutralButton(R.string.activateunknown , new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        AppContext.startActivity(new Intent(android.provider.Settings.ACTION_SECURITY_SETTINGS));
-                    }
+                askInstallOpenCV.setNeutralButton(R.string.activateunknown , (dialog, which) -> {
+                    dialog.dismiss();
+                    AppContext.startActivity(new Intent(Settings.ACTION_SECURITY_SETTINGS));
                 });
             }
 

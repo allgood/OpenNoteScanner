@@ -57,20 +57,17 @@ public class AboutFragment extends DialogFragment {
         window.setGravity(Gravity.CENTER);
 
         View about_shareapp = view.findViewById(R.id.about_shareapp);
-        about_shareapp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String shareBody = getString(R.string.share_app_body) + APP_LINK;
-                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.share_app_subject));
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+        about_shareapp.setOnClickListener(v -> {
+            String shareBody = getString(R.string.share_app_body) + APP_LINK;
+            Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_app_subject));
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
 
-                Tracker tracker = ((OpenNoteScannerApplication) (getActivity().getApplication())).getTracker();
-                TrackHelper.track().screen("/shareapp").title("Share Application").with(tracker);
+            Tracker tracker = ((OpenNoteScannerApplication) (getActivity().getApplication())).getTracker();
+            TrackHelper.track().screen("/shareapp").title("Share Application").with(tracker);
 
-                startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_app_using)));
-            }
+            startActivity(Intent.createChooser(sharingIntent, getString(R.string.share_app_using)));
         });
     }
 

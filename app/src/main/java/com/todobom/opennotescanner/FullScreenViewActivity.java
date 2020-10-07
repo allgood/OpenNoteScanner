@@ -92,22 +92,12 @@ public class FullScreenViewActivity extends AppCompatActivity {
         deleteConfirmBuilder.setTitle(getString(R.string.confirm_title));
         deleteConfirmBuilder.setMessage(getString(R.string.confirm_delete_text));
 
-        deleteConfirmBuilder.setPositiveButton(getString(R.string.answer_yes), new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                deleteImage();
-                dialog.dismiss();
-            }
-
+        deleteConfirmBuilder.setPositiveButton(getString(R.string.answer_yes), (dialog, which) -> {
+            deleteImage();
+            dialog.dismiss();
         });
 
-        deleteConfirmBuilder.setNegativeButton(getString(R.string.answer_no), new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        deleteConfirmBuilder.setNegativeButton(getString(R.string.answer_no), (dialog, which) -> dialog.dismiss());
 
     }
 
@@ -168,12 +158,7 @@ public class FullScreenViewActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle(R.string.format_not_supported);
             builder.setMessage(R.string.format_not_supported_message);
-            builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setPositiveButton(android.R.string.ok, (dialog, which) -> dialog.dismiss());
 
             AlertDialog alerta = builder.create();
             alerta.show();

@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -217,12 +216,7 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
 
         // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
+        mContentView.setOnClickListener(view -> toggle());
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -232,116 +226,79 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         scanDocButton = (Button) findViewById(R.id.scanDocButton);
 
-        scanDocButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                if (scanClicked) {
-                    requestPicture();
-                    scanDocButton.setBackgroundTintList(null);
-                    waitSpinnerVisible();
-                } else {
-                    scanClicked = true;
-                    Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
-                    v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
-                }
+        scanDocButton.setOnClickListener(v -> {
+            if (scanClicked) {
+                requestPicture();
+                scanDocButton.setBackgroundTintList(null);
+                waitSpinnerVisible();
+            } else {
+                scanClicked = true;
+                Toast.makeText(getApplicationContext(), R.string.scanningToast, Toast.LENGTH_LONG).show();
+                v.setBackgroundTintList(ColorStateList.valueOf(0x7F60FF60));
             }
         });
 
         final ImageView colorModeButton = (ImageView) findViewById(R.id.colorModeButton);
 
-        colorModeButton.setOnClickListener(new View.OnClickListener() {
+        colorModeButton.setOnClickListener(v -> {
+            colorMode = !colorMode;
+            ((ImageView) v).setColorFilter(colorMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
-            @Override
-            public void onClick(View v) {
-                colorMode = !colorMode;
-                ((ImageView) v).setColorFilter(colorMode ? 0xFFFFFFFF : 0xFFA0F0A0);
+            sendImageProcessorMessage("colorMode", colorMode);
 
-                sendImageProcessorMessage("colorMode", colorMode);
+            Toast.makeText(getApplicationContext(), colorMode ? R.string.colorMode : R.string.bwMode, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getApplicationContext(), colorMode ? R.string.colorMode : R.string.bwMode, Toast.LENGTH_SHORT).show();
-
-            }
         });
 
         final ImageView filterModeButton = (ImageView) findViewById(R.id.filterModeButton);
 
-        filterModeButton.setOnClickListener(new View.OnClickListener() {
+        filterModeButton.setOnClickListener(v -> {
+            filterMode = !filterMode;
+            ((ImageView) v).setColorFilter(filterMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
-            @Override
-            public void onClick(View v) {
-                filterMode = !filterMode;
-                ((ImageView) v).setColorFilter(filterMode ? 0xFFFFFFFF : 0xFFA0F0A0);
+            sendImageProcessorMessage("filterMode", filterMode);
 
-                sendImageProcessorMessage("filterMode", filterMode);
+            Toast.makeText(getApplicationContext(), filterMode ? R.string.filterModeOn : R.string.filterModeOff, Toast.LENGTH_SHORT).show();
 
-                Toast.makeText(getApplicationContext(), filterMode ? R.string.filterModeOn : R.string.filterModeOff, Toast.LENGTH_SHORT).show();
-
-            }
         });
 
         final ImageView flashModeButton = (ImageView) findViewById(R.id.flashModeButton);
 
-        flashModeButton.setOnClickListener(new View.OnClickListener() {
+        flashModeButton.setOnClickListener(v -> {
+            mFlashMode = setFlash(!mFlashMode);
+            ((ImageView) v).setColorFilter(mFlashMode ? 0xFFFFFFFF : 0xFFA0F0A0);
 
-            @Override
-            public void onClick(View v) {
-                mFlashMode = setFlash(!mFlashMode);
-                ((ImageView) v).setColorFilter(mFlashMode ? 0xFFFFFFFF : 0xFFA0F0A0);
-
-            }
         });
 
 
         final ImageView autoModeButton = (ImageView) findViewById(R.id.autoModeButton);
 
-        autoModeButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                autoMode = !autoMode;
-                ((ImageView) v).setColorFilter(autoMode ? 0xFFFFFFFF : 0xFFA0F0A0);
-                Toast.makeText(getApplicationContext(), autoMode ? R.string.autoMode : R.string.manualMode, Toast.LENGTH_SHORT).show();
-            }
+        autoModeButton.setOnClickListener(v -> {
+            autoMode = !autoMode;
+            ((ImageView) v).setColorFilter(autoMode ? 0xFFFFFFFF : 0xFFA0F0A0);
+            Toast.makeText(getApplicationContext(), autoMode ? R.string.autoMode : R.string.manualMode, Toast.LENGTH_SHORT).show();
         });
 
         final ImageView settingsButton = (ImageView) findViewById(R.id.settingsButton);
 
-        settingsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), SettingsActivity.class);
-                startActivity(intent);
-            }
+        settingsButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), SettingsActivity.class);
+            startActivity(intent);
         });
 
         final FloatingActionButton galleryButton = (FloatingActionButton) findViewById(R.id.galleryButton);
 
-        galleryButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), GalleryGridActivity.class);
-                startActivity(intent);
-            }
+        galleryButton.setOnClickListener(v -> {
+            Intent intent = new Intent(v.getContext(), GalleryGridActivity.class);
+            startActivity(intent);
         });
 
         mFabToolbar = (FABToolbarLayout) findViewById(R.id.fabtoolbar);
 
         FloatingActionButton fabToolbarButton = (FloatingActionButton) findViewById(R.id.fabtoolbar_fab);
-        fabToolbarButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFabToolbar.show();
-            }
-        });
+        fabToolbarButton.setOnClickListener(v -> mFabToolbar.show());
 
-        findViewById(R.id.hideToolbarButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFabToolbar.hide();
-            }
-        });
+        findViewById(R.id.hideToolbarButton).setOnClickListener(v -> mFabToolbar.hide());
 
     }
 
@@ -1176,30 +1133,19 @@ public class OpenNoteScannerActivity extends AppCompatActivity
         statsOptInDialog.setTitle(getString(R.string.stats_optin_title));
         statsOptInDialog.setMessage(getString(R.string.stats_optin_text));
 
-        statsOptInDialog.setPositiveButton(R.string.answer_yes, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mSharedPref.edit().putBoolean("usage_stats", true).commit();
-                mSharedPref.edit().putBoolean("isFirstRun", false).commit();
-                dialog.dismiss();
-            }
+        statsOptInDialog.setPositiveButton(R.string.answer_yes, (dialog, which) -> {
+            mSharedPref.edit().putBoolean("usage_stats", true).commit();
+            mSharedPref.edit().putBoolean("isFirstRun", false).commit();
+            dialog.dismiss();
         });
 
-        statsOptInDialog.setNegativeButton(R.string.answer_no, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mSharedPref.edit().putBoolean("usage_stats", false).commit();
-                mSharedPref.edit().putBoolean("isFirstRun", false).commit();
-                dialog.dismiss();
-            }
+        statsOptInDialog.setNegativeButton(R.string.answer_no, (dialog, which) -> {
+            mSharedPref.edit().putBoolean("usage_stats", false).commit();
+            mSharedPref.edit().putBoolean("isFirstRun", false).commit();
+            dialog.dismiss();
         });
 
-        statsOptInDialog.setNeutralButton(R.string.answer_later, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        statsOptInDialog.setNeutralButton(R.string.answer_later, (dialog, which) -> dialog.dismiss());
 
         statsOptInDialog.create().show();
     }
