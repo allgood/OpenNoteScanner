@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 29
@@ -39,7 +40,6 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-}
 
     splits {
         abi {
@@ -49,6 +49,10 @@ android {
             universalApk false
         }
     }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {

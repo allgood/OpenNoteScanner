@@ -472,7 +472,12 @@ public class OpenNoteScannerActivity extends AppCompatActivity
 
         checkCreatePermissions();
 
-        CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
+        if (OpenCVLoader.initDebug()) {
+            checkResumePermissions();
+        } else {
+            throw new RuntimeException("Failed to initialize OpenCV");
+        }
+        //CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback);
 
         if (mImageThread == null) {
             mImageThread = new HandlerThread("Worker Thread");
