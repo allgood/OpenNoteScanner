@@ -52,7 +52,8 @@ import java.util.*
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, SurfaceHolder.Callback, PictureCallback, PreviewCallback, SetTopicDialogListener {
+class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
+        SurfaceHolder.Callback, PictureCallback, PreviewCallback, SetTopicDialogListener {
     private val mHideHandler = Handler()
     private lateinit var mContentView: View
     private val mHidePart2Runnable = Runnable { // Delayed removal of status and navigation bar
@@ -94,10 +95,6 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     private var scanTopic: String? = null
     private var mat: Mat? = null
     private lateinit var tracker: Tracker
-    private val autoFocusMoveCallback = AutoFocusMoveCallback { start, camera ->
-        mFocused = !start
-        Log.d(TAG, "focusMoving: $mFocused")
-    }
 
     fun setImageProcessorBusy(imageProcessorBusy: Boolean) {
         this.imageProcessorBusy = imageProcessorBusy
@@ -398,7 +395,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
                 currentMaxRes = r
             }
         }
-        val matchAspect = mSharedPref!!.getBoolean("match_aspect", true)
+        val matchAspect = mSharedPref.getBoolean("match_aspect", true)
         if (ratioCurrentMaxRes != null && matchAspect) {
             Log.d(TAG, "Max supported picture resolution with preview aspect ratio: "
                     + ratioCurrentMaxRes.width + "x" + ratioCurrentMaxRes.height)
@@ -432,7 +429,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         val pm = packageManager
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
             try {
-                mCamera!!.setAutoFocusMoveCallback(autoFocusMoveCallback)
+                mCamera!!.setAutoFocusMoveCallback { start, _ ->
+                    mFocused = !start
+                    Log.d(TAG, "focusMoving: $mFocused")
+                }
             } catch (e: Exception) {
                 Log.d(TAG, "failed setting AutoFocusMoveCallback")
             }
