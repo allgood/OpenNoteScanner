@@ -48,7 +48,7 @@
 
 اکثر مشارکت‌کنندگان در ترجمه در [پرونده CONTRIBUTORS.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) و مشارکت‌کنندگان در کدنویسی در  [پرونده تغییرات](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) و  [تاریخچه کامیت‌ها](https://github.com/ctodobom/OpenNoteScanner/commits) فهرست شده‌اند.
 
-سایر افراد از طریق [گزارش مشکلات](https://github.com/ctodobom/OpenNoteScanner/issues) و دادن اطلاعات از طریق [گروه تلگرام](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg) کمک کرده‌اند. از کمک آن‌ها نیز سپاس‌گزاریم.
+سایر افراد از طریق [گزارش مشکلات](https://github.com/ctodobom/OpenNoteScanner/issues) و دادن اطلاعات از طریق [گروه تلگرام](https://t.me/OpenNoteScanner) کمک کرده‌اند. از کمک آن‌ها نیز سپاس‌گزاریم.
 
 ### کدهای خارجی
 این برنامه بدون استفاده از برنامه‌های ارزندهٔ دیگری که توسط جامعه نرم‌افزار آزاد تولید شده‌اند امکان وجود نداشت. تمایل دارم تشکر ویژه خودم را از پدیدآورندگان بخش‌های اساسی‌ای که روی اینترنت یافته و در برنامه از آن‌ها استفاده کرده‌ام ابراز کنم:

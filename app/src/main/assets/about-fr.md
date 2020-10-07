@@ -45,18 +45,9 @@ Remerciements
 
 Comme il s'agit d'une application libre, les contributions sont toujours les bienvenues. Toute personne ayant soumis du code sera listée ici.
 
-* Nicolas Raoul - Corrections langue anglaise
-* Claudio Arseni - Translation en italien
-* Francisco Toca - Translation en espagnole
-* [@nebulon42](https://github.com/nebulon42) - Translation en allemand
-* Ondřej Míchal - Traduction en tchèque
-* [@nigelinux](https://github.com/nigelinux) - Traduction en Chinois traditionnel (zh-rTW)
-* [@nikoss](https://github.com/nikoss) - Traduction en grec
-* [@SkyDragonsz](https://github.com/SkyDragonsz) - traduction en néerlandais
-* Naofumi Fukue - traduction japonaise
-* [@ASMfreaK](https://github.com/ASMfreaK) - Traduction en russe
+La plupart des contributions aux traductions sont dans [CONTRIBUTORS.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) et les contributeurs de code sont dans [CHANGELOG.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) et [l'histoire des commits](https://github.com/ctodobom/OpenNoteScanner/commits).
 
-D'autres personnes ont contribué en déposant des [rapports de bugs](https://github.com/ctodobom/OpenNoteScanner/issues) et en fournissant des informations via le [groupe Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Leur aide est appréciée également.
+D'autres personnes ont contribué en déposant des [rapports de bugs](https://github.com/ctodobom/OpenNoteScanner/issues) et en fournissant des informations via le [groupe Telegram](https://t.me/OpenNoteScanner). Leur aide est appréciée également.
 
 ### Code externe
 

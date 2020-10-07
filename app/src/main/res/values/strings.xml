@@ -79,4 +79,5 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="close">Close</string>
     <string name="donation_pending">Previous donation pending</string>
+    <string name="custom_scan_topic_summary">Enable setting a custom topic to scan file name</string>
 </resources>

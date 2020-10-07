@@ -55,7 +55,7 @@ Vzhledem k tomu, že je aplikace  volně přístupná, příspěvky jsou velmi v
 * Naofumi Fukue - japonský překlad
 * [@ASMfreaK](https://github.com/ASMfreaK) - překlad do ruštiny
 
-Ostatní lidé pomohli [nahlášením problémů](https://github.com/ctodobom/OpenNoteScanner/issues) a poskytnutím informací přes [skupinu na Telegramu](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Jejich pomoc je taktéž velmi ceněna.
+Ostatní lidé pomohli [nahlášením problémů](https://github.com/ctodobom/OpenNoteScanner/issues) a poskytnutím informací přes [skupinu na Telegramu](https://t.me/OpenNoteScanner). Jejich pomoc je taktéž velmi ceněna.
 
 ### Externí kód
 

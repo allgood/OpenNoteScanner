@@ -44,7 +44,7 @@ Agradecimentos
 
 Contribuições com traduções estão listadas no [arquivo CONTRIBUTORS.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md), contribuições de código são creditadas no [arquivo de Changelog](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) e no [histórico de commits](https://github.com/ctodobom/OpenNoteScanner/commits)
 
-Outras pessoas ajudaram enviando [Relatórios de Bugs](https://github.com/ctodobom/OpenNoteScanner/issues) e fornecendo informações pelo [grupo no Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Esta ajuda também é muito apreciada.
+Outras pessoas ajudaram enviando [Relatórios de Bugs](https://github.com/ctodobom/OpenNoteScanner/issues) e fornecendo informações pelo [grupo no Telegram](https://t.me/OpenNoteScanner). Esta ajuda também é muito apreciada.
 
 ### Código de terceiros
 

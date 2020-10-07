@@ -47,7 +47,7 @@ Sebagai aplikasi yang bersumber terbuka, segala jenis kontribusi akan selalu dit
 
 Sebagian besar kontributor terjemahan dicatat dalam [berkas CONTRIBUTORS.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) dan kontributor kode dicatat dalam [berkas Catatan Perubahan](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) dan [riwayat commit](https://github.com/ctodobom/OpenNoteScanner/commits).
 
-Yang lainnya membantu dengan mengirim [Laporan Masalah](https://github.com/ctodobom/OpenNoteScanner/issues) dan info terkait melalui [Grup Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Bantuan mereka sangat saya hargai.
+Yang lainnya membantu dengan mengirim [Laporan Masalah](https://github.com/ctodobom/OpenNoteScanner/issues) dan info terkait melalui [Grup Telegram](https://t.me/OpenNoteScanner). Bantuan mereka sangat saya hargai.
 
 ### Kode eksternal
 

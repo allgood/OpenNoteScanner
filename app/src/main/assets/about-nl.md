@@ -47,7 +47,7 @@ Als open source-applicatie is een bijdrage altijd welkom. Iedereen die een code 
 
 De meeste vertaalbijdragen worden vermeld in het [CONTRIBUTORS.md-bestand](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) en codebijdragers worden vermeld in het [Changelog-bestand](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) en de [commits-geschiedenis](https://github.com/ctodobom/OpenNoteScanner/commits)
 
-Andere mensen hebben geholpen bij het indienen van [Issuerapporten](https://github.com/ctodobom/OpenNoteScanner/issues) en het geven van informatie via de [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Hun hulp wordt ook gewaardeerd.
+Andere mensen hebben geholpen bij het indienen van [Issuerapporten](https://github.com/ctodobom/OpenNoteScanner/issues) en het geven van informatie via de [Telegram Group](https://t.me/OpenNoteScanner). Hun hulp wordt ook gewaardeerd.
 
 ### Externe code
 

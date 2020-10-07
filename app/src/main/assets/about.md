@@ -47,7 +47,7 @@ As an open source application, contribution are always welcome.
 
 Most translations contributions are listed on [CONTRIBUTORS.md file](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md) and code contributors are listed on [the Changelog file](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) and [the commits history](https://github.com/ctodobom/OpenNoteScanner/commits).
 
-Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Their help is appreciated as well.
+Other people helped submitting [Issue Reports](https://github.com/ctodobom/OpenNoteScanner/issues) and giving info through the [Telegram Group](https://t.me/OpenNoteScanner). Their help is appreciated as well.
 
 ### External code
 

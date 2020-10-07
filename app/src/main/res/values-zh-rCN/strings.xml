@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
-    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">图库</string>
     <string name="title_activity_full_image">Scanned Image Viewer</string>
     <string name="images_scanned">已扫描文件</string>
@@ -19,9 +18,10 @@
     <string name="answer_cancel">取消</string>
     <string name="downloading">下载中</string>
     <string name="downloading_opencv">下载 OpenCV Manager</string>
-    <string name="scanningToast">正在扫描文档\n再次点击可直接扫描</string>
+    <string name="scanningToast">正在扫描文档\n
+  再次点击可直接扫描</string>
     <string name="colorMode">彩色模式</string>
-    <string name="bwMode"><![CDATA[B&W mode]]></string>
+    <string name="bwMode">B&amp;W mode</string>
     <string name="autoMode">自动模式</string>
     <string name="manualMode">手动模式</string>
     <string name="share_app">分享这个APP</string>
@@ -41,7 +41,9 @@
     <string name="send_message">反馈信息</string>
     <string name="send_message_summary">反馈信息给开发者</string>
     <string name="stats_optin_title">使用统计</string>
-    <string name="stats_optin_text">是否要向开发者发送匿名使用情况统计信息?\n\n你可以在设置中更改此选项。</string>
+    <string name="stats_optin_text">是否要向开发者发送匿名使用情况统计信息?\n
+  \n
+  你可以在设置中更改此选项。</string>
     <string name="answer_later">以后再说</string>
     <string name="ask_install_opencv">为了正常运行，Open Note Scanner需要OpenCV Manager的服务，而OpenCV Manager尚未安装</string>
     <string name="googleplay">Google Play</string>
@@ -66,4 +68,18 @@
     <string name="save_png_summary">将图像保存为PNG格式。请注意，PNG尚不支持元数据，因此某些功能将不可用。</string>
     <string name="format_not_supported">不支持的格式</string>
     <string name="format_not_supported_message">图像格式不支持标记</string>
+    <string name="set_scan_topic">设置文件名</string>
+    <string name="cancel">取消</string>
+    <string name="custom_scan_topic">自定义文件名</string>
+    <string name="scan_topic_dialog_title">请设置文件名</string>
+    <string name="skip_scan_topic">跳过</string>
+    <string name="no_files_selected">未选择文件</string>
+    <string name="action_pdfexport">导出为PDF</string>
+    <string name="googleplay_donation_summary">使用Google Play进行捐款，此捐款后禁用应用程序的所有广告一年</string>
+    <string name="reward_ad_summary">查看视频广告直到结束，所有广告将被停用一周。</string>
+    <string name="reward_ad_title">观看一个广告</string>
+    <string name="privacy_policy">隐私协议</string>
+    <string name="close">关闭</string>
+    <string name="donation_pending">Previous donation pending</string>
+    <string name="custom_scan_topic_summary">启用自定义文件名</string>
 </resources>
