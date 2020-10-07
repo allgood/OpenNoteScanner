@@ -52,23 +52,17 @@ public class TagEditorFragment extends DialogFragment {
 
             stdTagsButtons[i].setBackgroundTintList(ColorStateList.valueOf( stdTagsState[i] ? 0xFF00E676 : 0xFFa0a0a0 ));
 
-            stdTagsButtons[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int index = getTagIndex(v);
-                    stdTagsState[index] = !stdTagsState[index];
-                    v.setBackgroundTintList(ColorStateList.valueOf( stdTagsState[index] ? 0xFF00E676 : 0xFFa0a0a0 ));
-                }
+            stdTagsButtons[i].setOnClickListener(v -> {
+                int index = getTagIndex(v);
+                stdTagsState[index] = !stdTagsState[index];
+                v.setBackgroundTintList(ColorStateList.valueOf( stdTagsState[index] ? 0xFF00E676 : 0xFFa0a0a0 ));
             });
         }
 
         Button tagDoneButton = (Button) tagEditorView.findViewById(R.id.tag_done);
-        tagDoneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveTags();
-                dismiss();
-            }
+        tagDoneButton.setOnClickListener(v -> {
+            saveTags();
+            dismiss();
         });
 
         return tagEditorView;
