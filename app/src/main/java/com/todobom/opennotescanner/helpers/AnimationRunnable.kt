@@ -23,6 +23,15 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
         return Math.sqrt(Math.pow(a.x - b.x, 2.0) + Math.pow(a.y - b.y, 2.0))
     }
 
+    init {
+        fileName = filename
+        imageSize = document.processed!!.size()
+        if (document.quadrilateral != null) {
+            previewPoints = document.previewPoints
+            previewSize = document.previewSize
+        }
+    }
+
     override fun run() {
         val imageView = activity.findViewById<View>(R.id.scannedAnimation) as ImageView
         val display = activity.windowManager.defaultDisplay
@@ -36,8 +45,11 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
         val imageHeight = imageSize.width
         val params = imageView.layoutParams as RelativeLayout.LayoutParams
         val prevPoints = previewPoints
+        val prevSize = previewSize
 
         if (prevPoints != null) {
+            prevSize!!
+
             val documentLeftHeight = hipotenuse(prevPoints[0], prevPoints[1])
             val documentBottomWidth = hipotenuse(prevPoints[1], prevPoints[2])
             val documentRightHeight = hipotenuse(prevPoints[2], prevPoints[3])
@@ -51,10 +63,10 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
             Log.d(TAG, "prevPoints[3] x=" + prevPoints[3].x + " y=" + prevPoints[3].y)
 
             // ATENTION: again, swap width and height
-            val xRatio = width / previewSize!!.height
-            val yRatio = height / previewSize!!.width
+            val xRatio = width / prevSize.height
+            val yRatio = height / prevSize.width
             params.topMargin = (prevPoints[3].x * yRatio).toInt()
-            params.leftMargin = ((previewSize!!.height - prevPoints[3].y) * xRatio).toInt()
+            params.leftMargin = ((prevSize.height - prevPoints[3].y) * xRatio).toInt()
             params.width = (documentWidth * xRatio).toInt()
             params.height = (documentHeight * yRatio).toInt()
         } else {
@@ -63,6 +75,7 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
             params.width = width / 2
             params.height = height / 2
         }
+
         bitmap = Utils.decodeSampledBitmapFromUri(fileName, params.width, params.height)
         imageView.setImageBitmap(bitmap)
         imageView.visibility = View.VISIBLE
@@ -81,9 +94,7 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
             override fun onAnimationEnd(animation: Animation) {
                 imageView.visibility = View.INVISIBLE
                 imageView.setImageBitmap(null)
-                if (bitmap != null) {
-                    bitmap!!.recycle()
-                }
+                bitmap?.recycle()
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
@@ -93,14 +104,5 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
 
     companion object {
         private const val TAG = "AnimationRunnable"
-    }
-
-    init {
-        fileName = filename
-        imageSize = document.processed!!.size()
-        if (document.quadrilateral != null) {
-            previewPoints = document.previewPoints
-            previewSize = document.previewSize
-        }
     }
 }
