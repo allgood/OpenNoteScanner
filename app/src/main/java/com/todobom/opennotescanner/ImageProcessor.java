@@ -183,9 +183,9 @@ public class ImageProcessor extends Handler {
 
             MatOfPoint c = quad.getContour();
 
-            sd.quadrilateral = quad;
-            sd.previewPoints = mPreviewPoints;
-            sd.previewSize = mPreviewSize;
+            sd.setQuadrilateral(quad);
+            sd.setPreviewPoints(mPreviewPoints);
+            sd.setPreviewSize(mPreviewSize);
 
             doc = fourPointTransform(inputRgba, quad.getPoints());
 
@@ -195,7 +195,10 @@ public class ImageProcessor extends Handler {
         }
 
         enhanceDocument(doc);
-        return sd.setProcessed(doc);
+
+        sd.setProcessed(doc);
+
+        return sd;
     }
 
 
