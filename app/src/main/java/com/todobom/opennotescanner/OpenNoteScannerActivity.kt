@@ -625,7 +625,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     fun saveDocument(scannedDocument: ScannedDocument) {
-        val doc = if (scannedDocument.processed != null) scannedDocument.processed else scannedDocument.original
+        val doc = scannedDocument.processed ?: scannedDocument.original
         val intent = intent
         val fileName: String
         var isIntent = false

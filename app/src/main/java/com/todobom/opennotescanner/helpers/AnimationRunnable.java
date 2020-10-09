@@ -36,11 +36,11 @@ public class AnimationRunnable implements Runnable {
 	public AnimationRunnable(OpenNoteScannerActivity activity, String filename, ScannedDocument document) {
 		this.activity = activity;
 		this.fileName = filename;
-		this.imageSize = document.processed.size();
+		this.imageSize = document.getProcessed().size();
 
-		if (document.quadrilateral != null) {
-			this.previewPoints = document.previewPoints;
-			this.previewSize = document.previewSize;
+		if (document.getQuadrilateral() != null) {
+			this.previewPoints = document.getPreviewPoints();
+			this.previewSize = document.getPreviewSize();
 		}
 	}
 

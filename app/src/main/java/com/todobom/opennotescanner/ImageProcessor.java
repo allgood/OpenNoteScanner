@@ -181,13 +181,13 @@ public class ImageProcessor extends Handler {
 
         if (quad != null) {
 
-            MatOfPoint c = quad.contour;
+            MatOfPoint c = quad.getContour();
 
-            sd.quadrilateral = quad;
-            sd.previewPoints = mPreviewPoints;
-            sd.previewSize = mPreviewSize;
+            sd.setQuadrilateral(quad);
+            sd.setPreviewPoints(mPreviewPoints);
+            sd.setPreviewSize(mPreviewSize);
 
-            doc = fourPointTransform(inputRgba, quad.points);
+            doc = fourPointTransform(inputRgba, quad.getPoints());
 
         } else {
             doc = new Mat( inputRgba.size() , CvType.CV_8UC4 );
@@ -195,7 +195,10 @@ public class ImageProcessor extends Handler {
         }
 
         enhanceDocument(doc);
-        return sd.setProcessed(doc);
+
+        sd.setProcessed(doc);
+
+        return sd;
     }
 
 
@@ -224,8 +227,8 @@ public class ImageProcessor extends Handler {
             double ratio = inputRgba.size().height / 500;
 
             for ( int i=0; i<4 ; i++ ) {
-                int x = Double.valueOf(quad.points[i].x*ratio).intValue();
-                int y = Double.valueOf(quad.points[i].y*ratio).intValue();
+                int x = Double.valueOf(quad.getPoints()[i].x*ratio).intValue();
+                int y = Double.valueOf(quad.getPoints()[i].y*ratio).intValue();
                 if (mBugRotate) {
                     rescaledPoints[(i+2)%4] = new Point( Math.abs(x- mPreviewSize.width), Math.abs(y- mPreviewSize.height));
                 } else {
@@ -237,7 +240,7 @@ public class ImageProcessor extends Handler {
 
             drawDocumentBox(mPreviewPoints, mPreviewSize);
 
-            Log.d(TAG, quad.points[0].toString() + " , " + quad.points[1].toString() + " , " + quad.points[2].toString() + " , " + quad.points[3].toString());
+            Log.d(TAG, quad.getPoints()[0].toString() + " , " + quad.getPoints()[1].toString() + " , " + quad.getPoints()[2].toString() + " , " + quad.getPoints()[3].toString());
 
             return true;
 
