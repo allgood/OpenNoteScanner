@@ -605,8 +605,8 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         issueProcessingOfTakenPicture()
     }
 
-    override fun onFinishTopicDialog(userInputScanTopic: String) {
-        scanTopic = userInputScanTopic
+    override fun onFinishTopicDialog(inputText: String?) {
+        scanTopic = inputText
         issueProcessingOfTakenPicture()
     }
 
