@@ -36,8 +36,8 @@ public class ScannedDocument {
             original.release();
         }
 
-        if (quadrilateral != null && quadrilateral.contour != null) {
-            quadrilateral.contour.release();
+        if (quadrilateral != null && quadrilateral.getContour() != null) {
+            quadrilateral.getContour().release();
         }
     }
 }
