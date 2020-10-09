@@ -23,19 +23,21 @@ import com.todobom.opennotescanner.views.TagEditorFragment
 import java.io.File
 
 class FullScreenViewActivity : AppCompatActivity() {
-    private var utils: Utils? = null
-    private var mAdapter: FullScreenImageAdapter? = null
-    private var mViewPager: ViewPager? = null
-    private var deleteConfirmBuilder: AlertDialog.Builder? = null
-    private var mImageLoader: ImageLoader? = null
-    private var mTargetSize: ImageSize? = null
+    private lateinit var utils: Utils
+    private lateinit var mAdapter: FullScreenImageAdapter
+    private lateinit var mViewPager: ViewPager
+    private lateinit var deleteConfirmBuilder: AlertDialog.Builder
+    private lateinit var mImageLoader: ImageLoader
+    private lateinit var mTargetSize: ImageSize
+
     private var mMaxTexture = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fullscreen_view)
         mViewPager = findViewById<View>(R.id.pager) as ViewPager
-        val actionBar = supportActionBar
-        actionBar!!.setDisplayShowHomeEnabled(true)
+        val actionBar = supportActionBar!!
+        actionBar.setDisplayShowHomeEnabled(true)
         actionBar.setTitle(null)
         actionBar.setDisplayHomeAsUpEnabled(true)
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp)
@@ -46,23 +48,23 @@ class FullScreenViewActivity : AppCompatActivity() {
         // initialize Universal Image Loader
         val config = ImageLoaderConfiguration.Builder(this).build()
         mImageLoader = ImageLoader.getInstance()
-        mImageLoader!!.init(config)
+        mImageLoader.init(config)
         mMaxTexture = maxTextureSize
         Log.d("FullScreenViewActivity", "gl resolution: $mMaxTexture")
         mTargetSize = ImageSize(mMaxTexture, mMaxTexture)
-        loadAdapter()
+        mAdapter = loadAdapter()
 
         // displaying selected image first
-        mViewPager!!.currentItem = position
-        mViewPager!!.addOnPageChangeListener(object : OnPageChangeListener {
+        mViewPager.currentItem = position
+        mViewPager.addOnPageChangeListener(object : OnPageChangeListener {
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
                 Log.d("fullview", "scrolled position $position offset $positionOffset")
-                Log.d("fullview", "pager " + mViewPager!!.currentItem)
+                Log.d("fullview", "pager " + mViewPager.currentItem)
             }
 
             override fun onPageSelected(position: Int) {
                 Log.d("fullview", "selected")
-                Log.d("fullview", "item" + mViewPager!!.currentItem)
+                Log.d("fullview", "item" + mViewPager.currentItem)
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -70,22 +72,23 @@ class FullScreenViewActivity : AppCompatActivity() {
             }
         })
         deleteConfirmBuilder = AlertDialog.Builder(this)
-        deleteConfirmBuilder!!.setTitle(getString(R.string.confirm_title))
-        deleteConfirmBuilder!!.setMessage(getString(R.string.confirm_delete_text))
-        deleteConfirmBuilder!!.setPositiveButton(getString(R.string.answer_yes)) { dialog: DialogInterface, which: Int ->
+        deleteConfirmBuilder.setTitle(getString(R.string.confirm_title))
+        deleteConfirmBuilder.setMessage(getString(R.string.confirm_delete_text))
+        deleteConfirmBuilder.setPositiveButton(getString(R.string.answer_yes)) { dialog: DialogInterface, which: Int ->
             deleteImage()
             dialog.dismiss()
         }
-        deleteConfirmBuilder!!.setNegativeButton(getString(R.string.answer_no)) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
+        deleteConfirmBuilder.setNegativeButton(getString(R.string.answer_no)) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
     }
 
-    private fun loadAdapter() {
-        mViewPager!!.adapter = null
-        mAdapter = FullScreenImageAdapter(this@FullScreenViewActivity,
-                utils!!.filePaths)
-        mAdapter!!.setImageLoader(mImageLoader)
-        mAdapter!!.setMaxTexture(mMaxTexture, mTargetSize)
-        mViewPager!!.adapter = mAdapter
+    private fun loadAdapter(): FullScreenImageAdapter {
+        mViewPager.adapter = null
+        val adapter = FullScreenImageAdapter(this@FullScreenViewActivity, utils.filePaths)
+        adapter.setImageLoader(mImageLoader)
+        adapter.setMaxTexture(mMaxTexture, mTargetSize)
+        mViewPager.adapter = adapter
+
+        return adapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -110,7 +113,7 @@ class FullScreenViewActivity : AppCompatActivity() {
                 return true
             }
             R.id.action_delete -> {
-                deleteConfirmBuilder!!.create().show()
+                deleteConfirmBuilder.create().show()
                 return true
             }
             R.id.action_about -> {
@@ -125,8 +128,8 @@ class FullScreenViewActivity : AppCompatActivity() {
     }
 
     private fun tagImage() {
-        val item = mViewPager!!.currentItem
-        val filePath = mAdapter!!.getPath(item)
+        val item = mViewPager.currentItem
+        val filePath = mAdapter.getPath(item)
         if (filePath.endsWith(".png")) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.format_not_supported)
@@ -144,22 +147,22 @@ class FullScreenViewActivity : AppCompatActivity() {
     }
 
     private fun deleteImage() {
-        val item = mViewPager!!.currentItem
-        val filePath = mAdapter!!.getPath(item)
+        val item = mViewPager.currentItem
+        val filePath = mAdapter.getPath(item)
         val photoFile = File(filePath)
         photoFile.delete()
         removeImageFromGallery(filePath, this)
         loadAdapter()
-        if (0 == mAdapter!!.count) finish()
-        mViewPager!!.currentItem = item
+        if (0 == mAdapter.count) finish()
+        mViewPager.currentItem = item
     }
 
     fun shareImage() {
         val pager = mViewPager
-        val item = pager!!.currentItem
+        val item = pager.currentItem
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "image/jpg"
-        val uri = FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", File(mAdapter!!.getPath(item)))
+        val uri = FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", File(mAdapter.getPath(item)))
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         Log.d("Fullscreen", "uri $uri")
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)))

@@ -57,7 +57,6 @@ object CustomOpenCVLoader {
     }
 
     var onComplete: MyBroadcastReceiver? = null
-    var waitInstallOpenCV: AlertDialog.Builder? = null
     var waitOpenCVDialog: Dialog? = null
     fun initAsync(version: String?, AppContext: Context, callback: LoaderCallbackInterface?): Boolean {
         Version = version
@@ -75,10 +74,12 @@ object CustomOpenCVLoader {
             } catch (e: SettingNotFoundException) {
                 e.printStackTrace()
             }
-            val askInstallOpenCV = AlertDialog.Builder(AppContext)
-            askInstallOpenCV.setTitle(R.string.install_opencv)
-            askInstallOpenCV.setMessage(R.string.ask_install_opencv)
-            askInstallOpenCV.setCancelable(false)
+            val askInstallOpenCV = AlertDialog
+                    .Builder(AppContext)
+                    .setTitle(R.string.install_opencv)
+                    .setMessage(R.string.ask_install_opencv)
+                    .setCancelable(false)
+
             if (isNonPlayAppAllowed) {
                 askInstallOpenCV.setNeutralButton(R.string.githubdownload, object : DialogInterface.OnClickListener {
                     var arch = Build.SUPPORTED_ABIS[0]
@@ -92,25 +93,27 @@ object CustomOpenCVLoader {
                         request.setDestinationUri(Uri.parse(sDest))
                         myDownloadReference = dm.enqueue(request)
                         dialog.dismiss()
-                        waitInstallOpenCV = AlertDialog.Builder(AppContext)
-                        waitInstallOpenCV!!.setTitle(R.string.downloading)
-                        waitInstallOpenCV!!.setMessage(R.string.downloading_opencv)
-                        waitInstallOpenCV!!.setCancelable(false)
-                        waitInstallOpenCV!!.setOnCancelListener { dialog1: DialogInterface ->
-                            dm.remove(myDownloadReference)
-                            AppContext.unregisterReceiver(onComplete)
-                            dialog1.dismiss()
-                            mAskInstallDialog = null
-                        }
-                        waitInstallOpenCV!!.setNegativeButton(R.string.answer_cancel) { dialog12: DialogInterface, which1: Int ->
-                            dm.remove(myDownloadReference)
-                            AppContext.unregisterReceiver(onComplete)
-                            dialog12.dismiss()
-                            mAskInstallDialog = null
-                        }
-                        waitOpenCVDialog = waitInstallOpenCV!!.create().also {
-                            it.show()
-                        }
+                        waitOpenCVDialog = AlertDialog
+                                .Builder(AppContext)
+                                .setTitle(R.string.downloading)
+                                .setMessage(R.string.downloading_opencv)
+                                .setCancelable(false)
+                                .setOnCancelListener { dialog1: DialogInterface ->
+                                    dm.remove(myDownloadReference)
+                                    AppContext.unregisterReceiver(onComplete)
+                                    dialog1.dismiss()
+                                    mAskInstallDialog = null
+                                }
+                                .setNegativeButton(R.string.answer_cancel) { dialog12: DialogInterface, which1: Int ->
+                                    dm.remove(myDownloadReference)
+                                    AppContext.unregisterReceiver(onComplete)
+                                    dialog12.dismiss()
+                                    mAskInstallDialog = null
+                                }
+                                .create()
+                                .also {
+                                    it.show()
+                                }
                     }
                 })
             }
@@ -153,8 +156,7 @@ object CustomOpenCVLoader {
                 if (cursor.moveToFirst()) {
                     // get the status of the download
                     val columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
-                    val status = cursor.getInt(columnIndex)
-                    when (status) {
+                    when (val status = cursor.getInt(columnIndex)) {
                         DownloadManager.STATUS_SUCCESSFUL -> {
                             val downloadFileLocalUri = cursor.getString(cursor.getColumnIndex(DownloadManager.COLUMN_LOCAL_URI))
                             val apkFile: File

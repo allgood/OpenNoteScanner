@@ -9,7 +9,7 @@ import com.todobom.opennotescanner.helpers.AboutFragment
 import com.todobom.opennotescanner.helpers.Utils.Companion.isPackageInstalled
 
 class SettingsActivity : AppCompatActivity() {
-    private var sf: SettingsFragment? = null
+    private lateinit var sf: SettingsFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
@@ -22,15 +22,15 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val aboutPreference = sf!!.findPreference("about_preference")
+        val aboutPreference = sf.findPreference("about_preference")
         aboutPreference.onPreferenceClickListener = OnPreferenceClickListener { preference: Preference? ->
             val fm = supportFragmentManager
             val aboutDialog = AboutFragment()
             aboutDialog.show(fm, "about_view")
             true
         }
-        val donateCategory = sf!!.findPreference("donate_pref_category") as PreferenceCategory
-        val bitcoinPref = sf!!.findPreference("donate_bitcoin")
+        val donateCategory = sf.findPreference("donate_pref_category") as PreferenceCategory
+        val bitcoinPref = sf.findPreference("donate_bitcoin")
         if (bitcoinPref != null && !isPackageInstalled(this, "de.schildbach.wallet")) {
             donateCategory.removePreference(bitcoinPref)
         }
