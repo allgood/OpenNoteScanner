@@ -16,24 +16,25 @@ class ScanTopicDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val alertDialogBuilder = AlertDialog.Builder(activity!!)
+        val activity = activity!!
+        val listener = activity as SetTopicDialogListener
+
+        val alertDialogBuilder = AlertDialog.Builder(activity)
         alertDialogBuilder.setTitle(R.string.set_scan_topic)
-        val inflater = activity!!.layoutInflater
+        val inflater = activity.layoutInflater
         val view = inflater.inflate(R.layout.dialog_scan_topic, null)
         alertDialogBuilder.setView(view)
         val scanTopic = view.findViewById<EditText>(R.id.editTextScanTopic)
-        alertDialogBuilder.setPositiveButton(R.string.set_scan_topic) { dialog: DialogInterface?, which: Int ->
-            val listener = activity as SetTopicDialogListener?
-            listener!!.onFinishTopicDialog(scanTopic.text.toString())
+        alertDialogBuilder.setPositiveButton(R.string.set_scan_topic) { _: DialogInterface?, _: Int ->
+            listener.onFinishTopicDialog(scanTopic.text.toString())
             dismiss()
-            (context as Activity?)!!.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
+            activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
         }
-        alertDialogBuilder.setNegativeButton(R.string.skip_scan_topic) { dialog: DialogInterface?, which: Int ->
+        alertDialogBuilder.setNegativeButton(R.string.skip_scan_topic) { dialog: DialogInterface?, _: Int ->
             if (dialog != null) {
-                val listener = activity as SetTopicDialogListener?
-                listener!!.onFinishTopicDialog(null)
+                listener.onFinishTopicDialog(null)
                 dialog.dismiss()
-                (context as Activity?)!!.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
+                activity.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
             }
         }
         return alertDialogBuilder.create()
