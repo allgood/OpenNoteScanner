@@ -330,7 +330,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             mImageThread!!.start()
         }
         if (mImageProcessor == null) {
-            mImageProcessor = ImageProcessor(mImageThread!!.looper, Handler(), this)
+            mImageProcessor = ImageProcessor(mImageThread!!.looper, this)
         }
         setImageProcessorBusy(false)
     }
