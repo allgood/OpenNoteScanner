@@ -40,13 +40,13 @@ public class TagEditorFragment extends DialogFragment {
         View tagEditorView = inflater.inflate(R.layout.tageditor_view, container);
         getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
 
-        stdTagsButtons[0] = (ImageView) tagEditorView.findViewById(R.id.buttonRocket);
-        stdTagsButtons[1] = (ImageView) tagEditorView.findViewById(R.id.buttonGift);
-        stdTagsButtons[2] = (ImageView) tagEditorView.findViewById(R.id.buttonTv);
-        stdTagsButtons[3] = (ImageView) tagEditorView.findViewById(R.id.buttonBell);
-        stdTagsButtons[4] = (ImageView) tagEditorView.findViewById(R.id.buttonGame);
-        stdTagsButtons[5] = (ImageView) tagEditorView.findViewById(R.id.buttonStar);
-        stdTagsButtons[6] = (ImageView) tagEditorView.findViewById(R.id.buttonMagnet);
+        stdTagsButtons[0] = tagEditorView.findViewById(R.id.buttonRocket);
+        stdTagsButtons[1] = tagEditorView.findViewById(R.id.buttonGift);
+        stdTagsButtons[2] = tagEditorView.findViewById(R.id.buttonTv);
+        stdTagsButtons[3] = tagEditorView.findViewById(R.id.buttonBell);
+        stdTagsButtons[4] = tagEditorView.findViewById(R.id.buttonGame);
+        stdTagsButtons[5] = tagEditorView.findViewById(R.id.buttonStar);
+        stdTagsButtons[6] = tagEditorView.findViewById(R.id.buttonMagnet);
 
         for ( int i=0 ; i<7 ; i++ ) {
 
@@ -59,7 +59,7 @@ public class TagEditorFragment extends DialogFragment {
             });
         }
 
-        Button tagDoneButton = (Button) tagEditorView.findViewById(R.id.tag_done);
+        Button tagDoneButton = tagEditorView.findViewById(R.id.tag_done);
         tagDoneButton.setOnClickListener(v -> {
             saveTags();
             dismiss();
