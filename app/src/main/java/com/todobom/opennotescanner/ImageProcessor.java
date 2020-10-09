@@ -28,6 +28,7 @@ import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.helpers.Utils;
 import com.todobom.opennotescanner.views.HUDCanvasView;
 
+import org.jetbrains.annotations.NonNls;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -45,6 +46,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by allgood on 05/03/16.
@@ -423,6 +426,7 @@ public class ImageProcessor extends Handler {
         src.put(0,0,d);
     }
 
+    @NonNull
     private Mat fourPointTransform( Mat src , Point[] pts ) {
 
         double ratio = src.size().height / 500;

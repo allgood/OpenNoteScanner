@@ -11,14 +11,8 @@ class ScannedDocument(val original: Mat) {
     var previewSize: Size? = null
 
     fun release() {
-        if (processed != null) {
-            processed!!.release()
-        }
-
+        processed?.release()
         original.release()
-
-        if (quadrilateral != null) {
-            quadrilateral!!.contour.release()
-        }
+        quadrilateral?.contour?.release()
     }
 }
