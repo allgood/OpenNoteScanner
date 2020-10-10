@@ -11,26 +11,12 @@ import com.todobom.opennotescanner.R
 import org.opencv.core.Point
 import org.opencv.core.Size
 
-class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename: String?, document: ScannedDocument) : Runnable {
-    private val imageSize: Size
-    private var previewPoints: Array<Point>? = null
-    var previewSize: Size? = null
-    var fileName: String? = null
-    var width = 0
-    var height = 0
+class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename: String, document: ScannedDocument) : Runnable {
+    private val imageSize: Size = document.processed!!.size()
+    private val previewPoints: Array<Point>? = if(document.quadrilateral != null) document.previewPoints else null
+    private val previewSize: Size? = if(document.quadrilateral != null) document.previewSize else null
+    private val fileName: String = filename
     private var bitmap: Bitmap? = null
-    fun hipotenuse(a: Point, b: Point): Double {
-        return Math.sqrt(Math.pow(a.x - b.x, 2.0) + Math.pow(a.y - b.y, 2.0))
-    }
-
-    init {
-        fileName = filename
-        imageSize = document.processed!!.size()
-        if (document.quadrilateral != null) {
-            previewPoints = document.previewPoints
-            previewSize = document.previewSize
-        }
-    }
 
     override fun run() {
         val imageView = activity.findViewById<View>(R.id.scannedAnimation) as ImageView
@@ -104,5 +90,10 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
 
     companion object {
         private const val TAG = "AnimationRunnable"
+
+        @JvmStatic
+        fun hipotenuse(a: Point, b: Point): Double {
+            return Math.sqrt(Math.pow(a.x - b.x, 2.0) + Math.pow(a.y - b.y, 2.0))
+        }
     }
 }
