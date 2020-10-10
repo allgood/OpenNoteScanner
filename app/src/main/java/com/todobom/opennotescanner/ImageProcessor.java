@@ -19,7 +19,6 @@ import com.google.zxing.LuminanceSource;
 import com.google.zxing.NotFoundException;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.Result;
-import com.google.zxing.ResultPoint;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.multi.qrcode.QRCodeMultiReader;
 import com.todobom.opennotescanner.helpers.OpenNoteMessage;
@@ -29,6 +28,7 @@ import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.helpers.Utils;
 import com.todobom.opennotescanner.views.HUDCanvasView;
 
+import org.jetbrains.annotations.NonNls;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -47,28 +47,26 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
+import androidx.annotation.NonNull;
+
 /**
  * Created by allgood on 05/03/16.
  */
 public class ImageProcessor extends Handler {
 
     private static final String TAG = "ImageProcessor";
-    private final Handler mUiHandler;
     private final OpenNoteScannerActivity mMainActivity;
     private boolean mBugRotate;
     private boolean colorMode=false;
     private boolean filterMode=true;
-    private double colorGain = 1.5;       // contrast
-    private double colorBias = 0;         // bright
-    private int colorThresh = 110;        // threshold
+    private static final double colorGain = 1.5;       // contrast
+    private static final double colorBias = 0;         // bright
+    private static final int colorThresh = 110;        // threshold
     private Size mPreviewSize;
     private Point[] mPreviewPoints;
-    private ResultPoint[] qrResultPoints;
 
-
-    public ImageProcessor ( Looper looper , Handler uiHandler , OpenNoteScannerActivity mainActivity ) {
+    public ImageProcessor(Looper looper, OpenNoteScannerActivity mainActivity) {
         super(looper);
-        mUiHandler = uiHandler;
         mMainActivity = mainActivity;
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
@@ -119,7 +117,6 @@ public class ImageProcessor extends Handler {
                 Log.d(TAG, "QR Code valid: " + result.getText());
                 qrOk = true;
                 currentQR = qrText;
-                qrResultPoints = result.getResultPoints();
                 break;
             } else {
                 Log.d(TAG, "QR Code ignored: " + result.getText());
@@ -320,20 +317,9 @@ public class ImageProcessor extends Handler {
 
         Point[] result = { null , null , null , null };
 
-        Comparator<Point> sumComparator = new Comparator<Point>() {
-            @Override
-            public int compare(Point lhs, Point rhs) {
-                return Double.valueOf(lhs.y + lhs.x).compareTo(rhs.y + rhs.x);
-            }
-        };
+        Comparator<Point> sumComparator = (lhs, rhs) -> Double.valueOf(lhs.y + lhs.x).compareTo(rhs.y + rhs.x);
 
-        Comparator<Point> diffComparator = new Comparator<Point>() {
-
-            @Override
-            public int compare(Point lhs, Point rhs) {
-                return Double.valueOf(lhs.y - lhs.x).compareTo(rhs.y - rhs.x);
-            }
-        };
+        Comparator<Point> diffComparator = (lhs, rhs) -> Double.valueOf(lhs.y - lhs.x).compareTo(rhs.y - rhs.x);
 
         // top-left corner = minimal sum
         result[0] = Collections.min(srcPoints, sumComparator);
@@ -440,11 +426,10 @@ public class ImageProcessor extends Handler {
         src.put(0,0,d);
     }
 
+    @NonNull
     private Mat fourPointTransform( Mat src , Point[] pts ) {
 
         double ratio = src.size().height / 500;
-        int height = Double.valueOf(src.size().height / ratio).intValue();
-        int width = Double.valueOf(src.size().width / ratio).intValue();
 
         Point tl = pts[0];
         Point tr = pts[1];
@@ -506,13 +491,7 @@ public class ImageProcessor extends Handler {
 
         hierarchy.release();
 
-        Collections.sort(contours, new Comparator<MatOfPoint>() {
-
-            @Override
-            public int compare(MatOfPoint lhs, MatOfPoint rhs) {
-                return Double.valueOf(Imgproc.contourArea(rhs)).compareTo(Imgproc.contourArea(lhs));
-            }
-        });
+        Collections.sort(contours, (lhs, rhs) -> Double.valueOf(Imgproc.contourArea(rhs)).compareTo(Imgproc.contourArea(lhs)));
 
         resizedImage.release();
         grayImage.release();
@@ -552,8 +531,7 @@ public class ImageProcessor extends Handler {
         Result[] results = {};
         try {
             results = qrCodeMultiReader.decodeMultiple(bitmap);
-        }
-        catch (NotFoundException e) {
+        } catch (NotFoundException e) {
         }
 
         return results;
