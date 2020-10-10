@@ -37,12 +37,12 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
     private var mTag: MenuItem? = null
     private var mDelete: MenuItem? = null
     private var mPdfExport: MenuItem? = null
-    private var recyclerView: DragSelectRecyclerView? = null
-    private var deleteConfirmBuilder: AlertDialog.Builder? = null
+    private lateinit var recyclerView: DragSelectRecyclerView
+    private lateinit var deleteConfirmBuilder: AlertDialog.Builder
     private var selectionMode = false
-    private var mImageLoader: ImageLoader? = null
-    private var mTargetSize: ImageSize? = null
-    private var mSharedPref: SharedPreferences? = null
+    private lateinit var mImageLoader: ImageLoader
+    private lateinit var mTargetSize: ImageSize
+    private lateinit var mSharedPref: SharedPreferences
     override fun onClick(index: Int) {
         if (selectionMode) {
             myThumbAdapter!!.toggleSelected(index)
@@ -57,7 +57,7 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
         if (!selectionMode) {
             setSelectionMode(true)
         }
-        recyclerView!!.setDragSelectActive(true, index)
+        recyclerView.setDragSelectActive(true, index)
     }
 
     private fun setSelectionMode(selectionMode: Boolean) {
@@ -98,7 +98,7 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
                 holder.image.setImageBitmap(null)
 
                 // Load image, decode it to Bitmap and return Bitmap to callback
-                mImageLoader!!.displayImage("file:///$filename", holder.image, mTargetSize)
+                mImageLoader.displayImage("file:///$filename", holder.image, mTargetSize)
 
                 // holder.image.setImageBitmap(decodeSampledBitmapFromUri(filename, 220, 220));
                 holder.filename = filename
@@ -168,31 +168,31 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
         actionBar.setHomeAsUpIndicator(R.drawable.ic_arrow_back_24dp)
         val config = ImageLoaderConfiguration.Builder(this).build()
         mImageLoader = ImageLoader.getInstance()
-        mImageLoader!!.init(config)
+        mImageLoader.init(config)
         mTargetSize = ImageSize(220, 220) // result Bitmap will be fit to this size
         val ab = ArrayList<String>()
         myThumbAdapter = ThumbAdapter(this, ab)
         // new Utils(getApplicationContext()).getFilePaths(););
         recyclerView = findViewById<View>(R.id.recyclerview) as DragSelectRecyclerView
-        recyclerView!!.layoutManager = GridLayoutManager(this, 3)
-        recyclerView!!.setAdapter(myThumbAdapter)
+        recyclerView.layoutManager = GridLayoutManager(this, 3)
+        recyclerView.setAdapter(myThumbAdapter)
         deleteConfirmBuilder = AlertDialog.Builder(this)
-        deleteConfirmBuilder!!.setTitle(getString(R.string.confirm_title))
-        deleteConfirmBuilder!!.setMessage(getString(R.string.confirm_delete_multiple_text))
-        deleteConfirmBuilder!!.setPositiveButton(getString(R.string.answer_yes)) { dialog: DialogInterface, which: Int ->
+        deleteConfirmBuilder.setTitle(getString(R.string.confirm_title))
+        deleteConfirmBuilder.setMessage(getString(R.string.confirm_delete_multiple_text))
+        deleteConfirmBuilder.setPositiveButton(getString(R.string.answer_yes)) { dialog: DialogInterface, which: Int ->
             deleteImage()
             dialog.dismiss()
         }
-        deleteConfirmBuilder!!.setNegativeButton(getString(R.string.answer_no)) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
+        deleteConfirmBuilder.setNegativeButton(getString(R.string.answer_no)) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
     }
 
     private fun reloadAdapter() {
-        recyclerView!!.setAdapter(null)
+        recyclerView.setAdapter(null)
 
         // ArrayList<String> ab = new ArrayList<>();
         myThumbAdapter = ThumbAdapter(this, Utils(applicationContext).filePaths)
-        recyclerView!!.setAdapter(myThumbAdapter)
-        recyclerView!!.invalidate()
+        recyclerView.setAdapter(myThumbAdapter)
+        recyclerView.invalidate()
         setSelectionMode(false)
     }
 
@@ -248,7 +248,7 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
             R.id.action_tag -> {
             }
             R.id.action_delete -> {
-                deleteConfirmBuilder!!.create().show()
+                deleteConfirmBuilder.create().show()
                 return true
             }
             R.id.action_about -> {
