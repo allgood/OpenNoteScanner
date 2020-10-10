@@ -78,16 +78,16 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     private val mHideRunnable = Runnable { hide() }
     private var _shootMP: MediaPlayer? = null
     private var safeToTakePicture = false
-    private var scanDocButton: Button? = null
-    private var mImageThread: HandlerThread? = null
-    private var mImageProcessor: ImageProcessor? = null
+    private lateinit var scanDocButton: Button
+    private lateinit var mImageThread: HandlerThread
+    private lateinit var mImageProcessor: ImageProcessor
     private var mSurfaceHolder: SurfaceHolder? = null
     private var mCamera: Camera? = null
     private lateinit var mThis: OpenNoteScannerActivity
     private var mFocused = false
     var hUD: HUDCanvasView? = null
         private set
-    private var mWaitSpinner: View? = null
+    private lateinit var mWaitSpinner: View
     private lateinit var mFabToolbar: FABToolbarLayout
     private var mBugRotate = false
     private lateinit var mSharedPref: SharedPreferences
@@ -130,10 +130,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         val size = Point()
         display.getRealSize(size)
         scanDocButton = findViewById<Button>(R.id.scanDocButton)
-        scanDocButton!!.setOnClickListener { v: View ->
+        scanDocButton.setOnClickListener { v: View ->
             if (scanClicked) {
                 requestPicture()
-                scanDocButton!!.backgroundTintList = null
+                scanDocButton.backgroundTintList = null
                 waitSpinnerVisible()
             } else {
                 scanClicked = true
@@ -184,10 +184,12 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     fun setFlash(stateFlash: Boolean): Boolean {
         val pm = packageManager
+        val camera = mCamera ?: return false
+
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-            val par = mCamera!!.parameters
+            val par = camera.parameters
             par.flashMode = if (stateFlash) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF
-            mCamera!!.parameters = par
+            camera.parameters = par
             Log.d(TAG, "flash: " + if (stateFlash) "on" else "off")
             return stateFlash
         }
@@ -215,11 +217,13 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     fun turnCameraOn() {
-        mSurfaceView = findViewById(R.id.surfaceView)
-        mSurfaceHolder = mSurfaceView?.holder
-        mSurfaceHolder?.addCallback(this)
-        mSurfaceHolder?.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
-        mSurfaceView!!.visibility = SurfaceView.VISIBLE
+        mSurfaceView = findViewById<SurfaceView>(R.id.surfaceView).also { surfaceView ->
+            mSurfaceHolder = surfaceView.holder.also { holder ->
+                holder.addCallback(this)
+                holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
+            }
+            surfaceView.visibility = SurfaceView.VISIBLE
+        }
     }
 
     fun enableCameraView() {
@@ -325,22 +329,19 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         }
         checkCreatePermissions()
         CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback)
-        if (mImageThread == null) {
-            mImageThread = HandlerThread("Worker Thread")
-            mImageThread!!.start()
-        }
-        if (mImageProcessor == null) {
-            mImageProcessor = ImageProcessor(mImageThread!!.looper, this)
-        }
+        //TODO these should go in the variable's creation
+        mImageThread = HandlerThread("Worker Thread")
+        mImageThread.start()
+        mImageProcessor = ImageProcessor(mImageThread.looper, this)
         setImageProcessorBusy(false)
     }
 
     fun waitSpinnerVisible() {
-        runOnUiThread { mWaitSpinner!!.visibility = View.VISIBLE }
+        runOnUiThread { mWaitSpinner.visibility = View.VISIBLE }
     }
 
     fun waitSpinnerInvisible() {
-        runOnUiThread { mWaitSpinner!!.visibility = View.GONE }
+        runOnUiThread { mWaitSpinner.visibility = View.GONE }
     }
 
     private var mSurfaceView: SurfaceView? = null
@@ -359,12 +360,17 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     val resolutionList: List<Camera.Size>
-        get() = mCamera!!.parameters.supportedPreviewSizes
+        get() {
+            val camera = mCamera ?: return emptyList()
+            return camera.parameters.supportedPreviewSizes
+        }
     val maxPreviewResolution: Camera.Size?
         get() {
+            val camera = mCamera ?: return null
+
             var maxWidth = 0
             var curRes: Camera.Size? = null
-            mCamera!!.lock()
+            camera.lock()
             for (r in resolutionList) {
                 if (r.width > maxWidth) {
                     Log.d(TAG, "supported preview resolution: " + r.width + "x" + r.height)
@@ -375,7 +381,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             return curRes
         }
     val pictureResolutionList: List<Camera.Size>
-        get() = mCamera!!.parameters.supportedPictureSizes
+        get() {
+            val camera = mCamera ?: return emptyList()
+            return camera.parameters.supportedPictureSizes
+        }
 
     fun getMaxPictureResolution(previewRatio: Float): Camera.Size? {
         var maxPixels = 0
@@ -424,12 +433,12 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     fun setFocusParameters() {
-        val param: Camera.Parameters
-        param = mCamera!!.parameters
+        val camera = mCamera ?: return
+        val param: Camera.Parameters = camera.parameters
         val pm = packageManager
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
             try {
-                mCamera!!.setAutoFocusMoveCallback { start, _ ->
+                camera.setAutoFocusMoveCallback { start, _ ->
                     mFocused = !start
                     Log.d(TAG, "focusMoving: $mFocused")
                 }
@@ -443,7 +452,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             focusList.add(focusArea)
             param.focusAreas = focusList
             param.meteringAreas = focusList
-            mCamera!!.parameters = param
+            camera.parameters = param
             Log.d(TAG, "enabling autofocus")
         } else {
             mFocused = true
@@ -452,15 +461,16 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        mCamera = try {
+        val camera = try {
             val cameraId = findBestCamera()
-            Camera.open(cameraId)
+            Camera.open(cameraId) as Camera
         } catch (e: RuntimeException) {
-            System.err.println(e)
             return
         }
+        mCamera = camera
+
         val param: Camera.Parameters
-        param = mCamera!!.getParameters()
+        param = camera.getParameters()
         val pSize = maxPreviewResolution
         param.setPreviewSize(pSize!!.width, pSize.height)
         val previewRatio = pSize.width.toFloat() / pSize.height
@@ -471,12 +481,14 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         val displayHeight = Math.max(size.y, size.x)
         val displayRatio = displayHeight.toFloat() / displayWidth
         var previewHeight = displayHeight
-        if (displayRatio > previewRatio) {
-            val surfaceParams = mSurfaceView!!.layoutParams
+        val surfaceView = mSurfaceView
+        val ud = hUD
+        if (displayRatio > previewRatio && surfaceView != null && ud != null) {
+            val surfaceParams = surfaceView.layoutParams
             previewHeight = (size.y.toFloat() / displayRatio * previewRatio).toInt()
             surfaceParams.height = previewHeight
-            mSurfaceView!!.layoutParams = surfaceParams
-            hUD!!.layoutParams.height = previewHeight
+            surfaceView.layoutParams = surfaceParams
+            ud.layoutParams.height = previewHeight
         }
         val hotAreaWidth = displayWidth / 4
         val hotAreaHeight = previewHeight / 2 - hotAreaWidth
@@ -509,16 +521,15 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
             param.flashMode = if (mFlashMode) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF
         }
-        mCamera!!.setParameters(param)
+        camera.setParameters(param)
         mBugRotate = mSharedPref.getBoolean("bug_rotate", false)
         if (mBugRotate) {
-            mCamera!!.setDisplayOrientation(270)
+            camera.setDisplayOrientation(270)
         } else {
-            mCamera!!.setDisplayOrientation(90)
+            camera.setDisplayOrientation(90)
         }
-        if (mImageProcessor != null) {
-            mImageProcessor!!.setBugRotate(mBugRotate)
-        }
+        mImageProcessor.setBugRotate(mBugRotate)
+
         setFocusParameters()
 
         // some devices doesn't call the AutoFocusMoveCallback - fake the
@@ -532,25 +543,26 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     private fun refreshCamera() {
+        val camera = mCamera ?: return
+
         try {
-            mCamera!!.stopPreview()
+            camera.stopPreview()
         } catch (e: Exception) {
         }
         try {
-            mCamera!!.setPreviewDisplay(mSurfaceHolder)
-            mCamera!!.startPreview()
-            mCamera!!.setPreviewCallback(this)
+            camera.setPreviewDisplay(mSurfaceHolder)
+            camera.startPreview()
+            camera.setPreviewCallback(this)
         } catch (e: Exception) {
         }
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
-        if (mCamera != null) {
-            mCamera!!.stopPreview()
-            mCamera!!.setPreviewCallback(null)
-            mCamera!!.release()
-            mCamera = null
-        }
+        val camera = mCamera ?: return
+        camera.stopPreview()
+        camera.setPreviewCallback(null)
+        camera.release()
+        mCamera = null
     }
 
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
@@ -574,16 +586,18 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     private inner class ResetShutterColor : Runnable {
         override fun run() {
-            scanDocButton!!.backgroundTintList = null
+            scanDocButton.backgroundTintList = null
         }
     }
 
     private val resetShutterColor = ResetShutterColor()
     fun requestPicture(): Boolean {
+        val camera = mCamera ?: return false
+
         if (safeToTakePicture) {
             runOnUiThread(resetShutterColor)
             safeToTakePicture = false
-            mCamera!!.takePicture(null, null, mThis)
+            camera.takePicture(null, null, mThis)
             return true
         }
         return false
@@ -594,8 +608,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         setFocusParameters()
         val pictureSize = camera.parameters.pictureSize
         Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height)
-        mat = Mat(Size(pictureSize.width.toDouble(), pictureSize.height.toDouble()), CvType.CV_8U)
-        mat!!.put(0, 0, data)
+        mat = Mat(Size(pictureSize.width.toDouble(), pictureSize.height.toDouble()), CvType.CV_8U).also {
+            it.put(0, 0, data)
+        }
+
         if (mSharedPref.getBoolean("custom_scan_topic", false)) {
             val fm = supportFragmentManager
             val scanTopicDialogFragment = ScanTopicDialogFragment()
@@ -619,9 +635,9 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     fun sendImageProcessorMessage(messageText: String, obj: Any?) {
         Log.d(TAG, "sending message to ImageProcessor: " + messageText + " - " + obj.toString())
-        val msg = mImageProcessor!!.obtainMessage()
+        val msg = mImageProcessor.obtainMessage()
         msg.obj = OpenNoteMessage(messageText, obj)
-        mImageProcessor!!.sendMessage(msg)
+        mImageProcessor.sendMessage(msg)
     }
 
     fun saveDocument(scannedDocument: ScannedDocument) {
@@ -669,12 +685,12 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        if (isIntent) {
+        if (isIntent && fileUri != null) {
             var inputStream: InputStream? = null
             var realOutputStream: OutputStream? = null
             try {
                 inputStream = FileInputStream(fileName)
-                realOutputStream = this.contentResolver.openOutputStream(fileUri!!)
+                realOutputStream = this.contentResolver.openOutputStream(fileUri)
                 // Transfer bytes from in to out
                 val buffer = ByteArray(1024)
                 var len: Int
