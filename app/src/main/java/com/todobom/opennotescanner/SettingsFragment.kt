@@ -38,7 +38,7 @@ class SettingsFragment : PreferenceFragment(), OnSharedPreferenceChangeListener 
         updatePreference(findPreference(key), key)
     }
 
-    private fun updatePreference(preference: Preference?, key: String) {
+    private fun updatePreference(preference: Preference?, key: String?) {
         if (preference == null) return
         if (preference is ListPreference) {
             val listPreference = preference
