@@ -81,4 +81,7 @@
     <string name="close">Fermer</string>
     <string name="donation_pending">Don précédent en attente</string>
     <string name="custom_scan_topic_summary">Activer la personnalisation du sujet pour le nom du fichier de la numérisation</string>
+    <string name="standard_tags">Étiquettes</string>
+    <string name="done">Terminé</string>
+    <string name="scan_topic_placeholder">Fournir un sujet</string>
 </resources>

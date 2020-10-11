@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Standard Tags:"
+            android:text="@string/standard_tags"
             android:id="@+id/textView"
             android:layout_gravity="left|top" />
 
@@ -86,7 +86,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="@string/done"
             android:id="@+id/tag_done"
             android:layout_alignEnd="@+id/linearLayout"
             android:layout_alignLeft="@+id/linearLayout"

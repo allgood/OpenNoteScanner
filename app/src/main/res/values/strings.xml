@@ -80,4 +80,7 @@
     <string name="close">Close</string>
     <string name="donation_pending">Previous donation pending</string>
     <string name="custom_scan_topic_summary">Enable setting a custom topic to scan file name</string>
+    <string name="standard_tags">Standard tags</string>
+    <string name="done">Done</string>
+    <string name="scan_topic_placeholder">Please provide a topic</string>
 </resources>

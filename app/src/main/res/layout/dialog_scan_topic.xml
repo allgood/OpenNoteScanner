@@ -10,7 +10,7 @@
         android:id="@+id/editTextScanTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="please provide a scan topic"
+        android:hint="@string/scan_topic_placeholder"
         android:inputType="text"
         android:padding="15dp"/>
 
