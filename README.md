@@ -135,7 +135,7 @@ License
 
 Copyright 2016 - Claudemir Todo Bom
 
-Software licensed under the GPL version 2 available in GPLv3.TXT and
+Software licensed under the GPL version 3 available in GPLv3.TXT and
 online on http://www.gnu.org/licenses/gpl.txt.
 
 Use parts from other developers, sometimes with small changes,
