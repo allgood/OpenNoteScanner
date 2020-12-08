@@ -76,4 +76,11 @@
     <string name="googleplay_donation_summary">Google Play kullanarak bağış yapın, programı bir yıl reklamsız kullanın</string>
     <string name="reward_ad_summary">Open Note Scanner\'a küçük bir katkı sağlamak için bir reklam vidyosunu sonuna kadar izleyin. Programı bir hafta reklamsız olarak kullanabileceksiniz.</string>
     <string name="reward_ad_title">Reklam izle</string>
+    <string name="privacy_policy">Gizlilik Politikası</string>
+    <string name="close">Kapat</string>
+    <string name="donation_pending">Önceki bağış beklemede</string>
+    <string name="custom_scan_topic_summary">Dosya adını taramak için özel bir konu ayarlamayı etkinleştirin</string>
+    <string name="standard_tags">Standart etiketler</string>
+    <string name="done">Bitti</string>
+    <string name="scan_topic_placeholder">Lütfen bir konu girin</string>
 </resources>
