@@ -28,3 +28,5 @@ Most contributions here are with translations. Please [refer to the Changelog](h
 * [@sturkmen72](https://github.com/sturkmen72) - Turkish Translation - PR #195
 * [@yeyeto2788](https://github.com/yeyeto2788) - update on Spanish translation - PR #207
 * [@miclill](https://github.com/miclill) - PDF Export feature - commit 3b48cd24ebdb96fc350f305b239fb185090e62b6
+* [@shoddysheep](https://github.com/shoddysheep) - Danish translation - PR #259
+* [@PatrykMis](https://github.com/PatrykMis) - Polish translation - PR #264
