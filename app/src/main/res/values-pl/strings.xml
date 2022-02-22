@@ -12,7 +12,7 @@
     <string name="confirm_delete_multiple_text">Czy chcesz usunąć wybrane obrazy?</string>
     <string name="share_snackbar">Udostępnij obrazy przez</string>
     <string name="action_about">O programie</string>
-    <string name="about_filename">about.md</string>
+    <string name="about_filename">about-pl.md</string>
     <string name="install_opencv">Zainstaluj OpenCV Manager</string>
     <string name="confirm_install_opencv">Czy chcesz pobrać OpenCV Manager z GitHub?</string>
     <string name="answer_cancel">Anuluj</string>
