@@ -45,22 +45,22 @@ repositories {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    implementation "androidx.core:core-ktx:+"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "androidx.core:core-ktx:1.3.2"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation 'androidx.exifinterface:exifinterface:1.3.0'
-    testImplementation 'junit:junit:4.13'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.2.1'
-    implementation 'com.google.zxing:core:3.0.1'
+    implementation 'androidx.exifinterface:exifinterface:1.3.3'
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115'
     implementation 'us.feras.mdv:markdownview:1.1.0'
     implementation 'com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections'
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
     implementation 'org.matomo.sdk:tracker:4.1.2'
-    implementation 'com.github.MikeOrtiz:TouchImageView:1.4.0'
-    implementation 'com.itextpdf:kernel:7.1.11'
-    implementation 'com.itextpdf:layout:7.1.11'
-    implementation 'com.itextpdf:io:7.1.11'
+    implementation 'com.github.MikeOrtiz:TouchImageView:3.0.6'
+    implementation 'com.itextpdf:kernel:7.1.13'
+    implementation 'com.itextpdf:layout:7.1.13'
+    implementation 'com.itextpdf:io:7.1.13'
 }
