@@ -12,7 +12,7 @@
     <string name="answer_yes">Ja</string>
     <string name="answer_no">Nee</string>
     <string name="confirm_delete_multiple_text">Wilt u de gescande afbeelding verwijderen?</string>
-    <string name="share_snackbar">Afbeeldingen delen ...</string>
+    <string name="share_snackbar">Afbeeldingen delen …</string>
     <string name="action_about">Over de toepassing</string>
     <string name="about_filename">about-nl.md</string>
     <string name="install_opencv">Installeer OpenCV Manager</string>
@@ -26,7 +26,7 @@
     <string name="autoMode">Automatische modus</string>
     <string name="manualMode">Handmatige modus</string>
     <string name="share_app">Deel deze app</string>
-    <string name="share_app_using">Link delen ...</string>
+    <string name="share_app_using">Link delen …</string>
     <string name="share_app_body">"Bekijk deze fantastische app! Een app dat toestaat om met uw camera notities, tekeningen en documenten te scannen:"</string>
     <string name="share_app_subject">Fantastische app om notities en documenten te scannen</string>
     <string name="settings">Instellingen</string>

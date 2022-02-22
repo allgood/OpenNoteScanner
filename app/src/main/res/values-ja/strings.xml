@@ -12,7 +12,7 @@
     <string name="answer_yes">はい</string>
     <string name="answer_no">いいえ</string>
     <string name="confirm_delete_multiple_text">スキャンした画像を削除しますか?</string>
-    <string name="share_snackbar">画像を共有...</string>
+    <string name="share_snackbar">画像を共有…</string>
     <string name="action_about">アプリについて</string>
     <string name="about_filename">about-ja.md</string>
     <string name="install_opencv">OpenCV Manager をインストール</string>
@@ -26,7 +26,7 @@
     <string name="autoMode">自動モード</string>
     <string name="manualMode">手動モード</string>
     <string name="share_app">このアプリを共有</string>
-    <string name="share_app_using">リンクを共有...</string>
+    <string name="share_app_using">リンクを共有…</string>
     <string name="share_app_body">"メモ、図面、文書をカメラでスキャンするこの素晴らしいアプリを見てください: "</string>
     <string name="share_app_subject">メモや文書をスキャンする素晴らしいアプリ</string>
     <string name="settings">設定</string>

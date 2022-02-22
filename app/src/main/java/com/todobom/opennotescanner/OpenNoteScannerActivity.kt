@@ -13,7 +13,6 @@ import android.graphics.Rect
 import android.hardware.Camera
 import android.hardware.Camera.*
 import android.media.AudioManager
-import android.media.ExifInterface
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
@@ -28,6 +27,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.exifinterface.media.ExifInterface
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
