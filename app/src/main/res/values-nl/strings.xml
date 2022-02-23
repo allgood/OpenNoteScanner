@@ -79,4 +79,11 @@
     <string name="googleplay_donation_summary">Doe een donatie via Google Play, met deze donatie worden alle advertenties van deze app een jaar lang uitgeschakeld</string>
     <string name="reward_ad_summary">Bekijk een videoadvertentie tot het einde, Open Note Scanner krijgt hiervan een kleine waarde. Als beloning worden alle advertenties van deze app een week lang uitgeschakeld.</string>
     <string name="reward_ad_title">Bekijk een advertentie</string>
+    <string name="privacy_policy">Privacybeleid</string>
+    <string name="close">Sluiten</string>
+    <string name="donation_pending">Vorige donatie in behandeling</string>
+    <string name="custom_scan_topic_summary">Schakel het instellen van een aangepast onderwerp in om de bestandsnaam te scannen</string>
+    <string name="standard_tags">Standaardtags</string>
+    <string name="done">Klaar</string>
+    <string name="scan_topic_placeholder">Geef een onderwerp op</string>
 </resources>

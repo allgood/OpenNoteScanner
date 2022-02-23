@@ -75,4 +75,11 @@
     <string name="googleplay_donation_summary">Fai una donazione usando Google Play, in questo modo verranno disattivati tutti gli annunci presenti nell\'app per un anno.</string>
     <string name="reward_ad_summary">Visualizza un video di annunci fino alla fine, Open Note Scanner riceverà una piccola donazione. In questo modo, tutti gli annunci presenti nell\'app verranno disattivati per una settimana.</string>
     <string name="reward_ad_title">Visualizza un annuncio</string>
+    <string name="privacy_policy">Informativa sulla privacy</string>
+    <string name="close">Chiudi</string>
+    <string name="donation_pending">Donazione precedente in attesa</string>
+    <string name="custom_scan_topic_summary">Abilita l\'impostazione di un argomento personalizzato per la scansione del nome del file</string>
+    <string name="standard_tags">Tag standard</string>
+    <string name="done">Fatto</string>
+    <string name="scan_topic_placeholder">Fornisci un argomento</string>
 </resources>

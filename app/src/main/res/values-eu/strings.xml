@@ -67,4 +67,21 @@
     <string name="save_png_summary">Amaierako irudiak PNG formatuan gorde. Jakin ezazu metadatuak ez direla momentuz onartzen PNGan, beraz ezaugarri batzuk ez dira eskuragarri egongo.</string>
     <string name="format_not_supported">Formatu ez onartua</string>
     <string name="format_not_supported_message">Irudiaren formatuak ez du etiketatzea onartzen</string>
+    <string name="set_scan_topic">Ezarri eskaneatzeko gaia</string>
+        <string name="cancel">Utzi</string>
+        <string name="custom_scan_topic">Eskaneatzeko gai pertsonalizatua</string>
+        <string name="scan_topic_dialog_title">Mesedez, eman gai bat</string>
+        <string name="skip_scan_topic">Saltatu gaia</string>
+        <string name="no_files_selected">Ez da fitxategirik hautatu.</string>
+        <string name="action_pdfexport">Esportatu PDFra</string>
+        <string name="googleplay_donation_summary">Egin dohaintza Google Play erabiliz, dohaintza honek aplikazioko iragarki guztiak desgaituko ditu urtebetez</string>
+        <string name="reward_ad_summary">Ikusi bideo-iragarkia amaitu arte, Open Note Scanner balio txiki bat jasoko du. Sari gisa, astebetez desgaituko dira aplikazioko iragarki guztiak.</string>
+        <string name="reward_ad_title">Ikusi iragarki bat</string>
+        <string name="privacy_policy">Pribatutasun-politika</string>
+        <string name="close">Itxi</string>
+        <string name="donation_pending">Aurreko dohaintza zain</string>
+        <string name="custom_scan_topic_summary">Gaitu gai pertsonalizatu bat ezartzea fitxategiaren izena eskaneatzeko</string>
+        <string name="standard_tags">Etiketa estandarrak</string>
+        <string name="done">Eginda</string>
+    <string name="scan_topic_placeholder">Mesedez, eman gai bat</string>
 </resources>

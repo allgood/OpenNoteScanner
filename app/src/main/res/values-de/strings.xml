@@ -77,4 +77,10 @@
     <string name="reward_ad_summary">Schauen Sie eine Video Anzeige bis zum Ende um für eine Woche keine weitere Anzeigen gezeigt zu bekommen.</string>
     <string name="reward_ad_title">Schauen Sie eine Anzeige</string>
     <string name="privacy_policy">Datenschutzrichtlinie</string>
+    <string name="close">Schließen</string>
+    <string name="donation_pending">Vorherige Spende ausstehend</string>
+    <string name="custom_scan_topic_summary">Aktivieren Sie die Einstellung eines benutzerdefinierten Themas zum Scannen des Dateinamens</string>
+    <string name="standard_tags">Standard-Tags</string>
+    <string name="done">Fertig</string>
+    <string name="scan_topic_placeholder">Bitte geben Sie ein Thema an</string>
 </resources>

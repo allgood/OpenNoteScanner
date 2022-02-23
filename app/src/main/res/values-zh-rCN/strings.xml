@@ -80,6 +80,9 @@
     <string name="reward_ad_title">观看一个广告</string>
     <string name="privacy_policy">隐私协议</string>
     <string name="close">关闭</string>
-    <string name="donation_pending">Previous donation pending</string>
+    <string name="donation_pending">之前的捐赠待处理</string>
     <string name="custom_scan_topic_summary">启用自定义文件名</string>
+    <string name="standard_tags">标准标签</string>
+    <string name="done">完成</string>
+    <string name="scan_topic_placeholder">请提供主题</string>
 </resources>

@@ -78,5 +78,8 @@
     <string name="privacy_policy">സ്വകാര്യതാനയം</string>
     <string name="close">അടയ്‌ക്കുക</string>
     <string name="donation_pending">മുമ്പത്തെ സംഭാവന തീർപ്പുകൽപ്പിച്ചിട്ടില്ല</string>
-    <string name="custom_scan_topic_summary">Enable setting a custom topic to scan file name</string>
+    <string name="custom_scan_topic_summary">ഫയലിന്റെ പേര് സ്കാൻ ചെയ്യുന്നതിന് ഒരു ഇഷ്‌ടാനുസൃത വിഷയം സജ്ജീകരിക്കുന്നത് പ്രവർത്തനക്ഷമമാക്കുക</string>
+    <string name="standard_tags">സാധാരണ ടാഗുകൾ</string>
+    <string name="done">പൂർത്തിയായി</string>
+    <string name="scan_topic_placeholder">ദയവായി ഒരു വിഷയം നൽകുക</string>
 </resources>

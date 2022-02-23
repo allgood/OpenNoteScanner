@@ -68,4 +68,20 @@
         <string name="format_not_supported">Формат не поддерживается</string>
         <string name="format_not_supported_message">Формат изображения не поддерживает теги</string>
     <string name="set_scan_topic">Установить тему сканирования</string>
+    <string name="cancel">Отмена</string>
+        <string name="custom_scan_topic">Выборочная тема сканирования</string>
+        <string name="scan_topic_dialog_title">Укажите тему</string>
+        <string name="skip_scan_topic">Пропустить тему</string>
+        <string name="no_files_selected">Файлы не выбраны.</string>
+        <string name="action_pdfexport">Экспорт в PDF</string>
+        <string name="googleplay_donation_summary">Сделайте пожертвование с помощью Google Play, это пожертвование отключит всю рекламу в приложении на один год.</string>
+        <string name="reward_ad_summary">Просмотр видеообъявления до его окончания, Open Note Scanner получит небольшое значение. В качестве награды вся реклама в приложении будет отключена на одну неделю.</string>
+        <string name="reward_ad_title">Посмотреть объявление</string>
+        <string name="privacy_policy">Политика конфиденциальности</string>
+        <string name="close">Закрывать</string>
+        <string name="donation_pending">Ожидается предыдущее пожертвование</string>
+        <string name="custom_scan_topic_summary">Включить настройку пользовательской темы для сканирования имени файла</string>
+        <string name="standard_tags">Стандартные теги</string>
+        <string name="done">Сделанный</string>
+    <string name="scan_topic_placeholder">Укажите тему</string>
 </resources>

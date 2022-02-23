@@ -68,4 +68,20 @@
     <string name="format_not_supported">Formát není podporován</string>
     <string name="format_not_supported_message">Formát obrázku nepodporuje značkování</string>
     <string name="set_scan_topic">Nastavit téma skenování</string>
+    <string name="cancel">zrušení</string>
+        <string name="custom_scan_topic">Téma vlastního skenování</string>
+        <string name="scan_topic_dialog_title">Zadejte téma</string>
+        <string name="skip_scan_topic">Přeskočit téma</string>
+        <string name="no_files_selected">Nejsou vybrány žádné soubory.</string>
+        <string name="action_pdfexport">Export do PDF</string>
+        <string name="googleplay_donation_summary">Přispějte pomocí Google Play, tento dar deaktivuje všechny reklamy z aplikace na jeden rok</string>
+        <string name="reward_ad_summary">Zobrazte videoreklamu, dokud neskončí, Open Note Scanner obdrží malou hodnotu. Jako odměnu budou všechny reklamy z aplikace na jeden týden deaktivovány.</string>
+        <string name="reward_ad_title">Zobrazit inzerát</string>
+        <string name="privacy_policy">Zásady ochrany osobních údajů</string>
+        <string name="close">Zavřít</string>
+        <string name="donation_pending">Předchozí dar čeká na vyřízení</string>
+        <string name="custom_scan_topic_summary">Povolit nastavení vlastního tématu pro skenování názvu souboru</string>
+        <string name="standard_tags">Standardní značky</string>
+        <string name="done">Hotovo</string>
+    <string name="scan_topic_placeholder">Zadejte téma</string>
 </resources>
