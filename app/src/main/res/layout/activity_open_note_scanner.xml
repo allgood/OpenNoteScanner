@@ -91,7 +91,7 @@
             android:layout_alignParentRight="true"
             android:backgroundTint="#A060FF60"
             android:tint="#ffffff"/>
--
+
         <ImageView
             android:layout_width="32dp"
             android:layout_height="32dp"
@@ -172,7 +172,7 @@
                     android:gravity="center"
                     android:enabled="true"
                     android:focusableInTouchMode="false"
-                    android:tint="#a0f0a0"/>
+                    app:tint="#a0f0a0"/>
 
                 <ImageView
                     android:id="@+id/filterModeButton"
@@ -184,7 +184,7 @@
                     android:gravity="center"
                     android:enabled="true"
                     android:focusableInTouchMode="false"
-                    android:tint="#ffffff"/>
+                    app:tint="#ffffff"/>
 
                 <ImageView
                     android:id="@+id/flashModeButton"
@@ -195,7 +195,7 @@
                     android:src="@drawable/ic_flash_on_24dp"
                     android:gravity="center"
                     android:enabled="true"
-                    android:tint="#a0f0a0"/>
+                    app:tint="#a0f0a0"/>
 
                 <ImageView
                     android:id="@+id/autoModeButton"
@@ -206,7 +206,7 @@
                     android:src="@drawable/ic_find_in_page"
                     android:gravity="center"
                     android:enabled="true"
-                    android:tint="#a0f0a0"/>
+                    app:tint="#a0f0a0"/>
 
                 <ImageView
                     android:id="@+id/settingsButton"
@@ -217,7 +217,7 @@
                     android:src="@drawable/ic_settings"
                     android:gravity="center"
                     android:enabled="true"
-                    android:tint="#ffffff"/>
+                    app:tint="#ffffff"/>
 
                 <ImageView
                     android:id="@+id/hideToolbarButton"
@@ -228,7 +228,7 @@
                     android:src="@drawable/abc_ic_clear_material"
                     android:gravity="center"
                     android:enabled="true"
-                    android:tint="#ffffff"/>
+                    app:tint="#ffffff"/>
 
             </LinearLayout>
 

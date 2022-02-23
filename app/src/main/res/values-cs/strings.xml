@@ -63,4 +63,9 @@
     <string name="action_tag">Štítek</string>
     <string name="storage_folder">Složka uložiště</string>
     <string name="storage_folder_summary">Určuje, kde budou naskenované soubory uloženy</string>
+    <string name="save_png">Uložit do formátu PNG</string>
+    <string name="save_png_summary">Uložte finální obrázky do formátu PNG. Všimněte si, že u PNG zatím nejsou podporována metadata, takže některé funkce nebudou dostupné.</string>
+    <string name="format_not_supported">Formát není podporován</string>
+    <string name="format_not_supported_message">Formát obrázku nepodporuje značkování</string>
+    <string name="set_scan_topic">Nastavit téma skenování</string>
 </resources>

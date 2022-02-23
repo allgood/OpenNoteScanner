@@ -63,4 +63,9 @@
     <string name="action_tag">Тэг</string>
     <string name="storage_folder">Каталог хранения</string>
     <string name="storage_folder_summary">Указывает место хранения отсканированных файлов</string>
+        <string name="save_png">Сохранить в формате PNG</string>
+        <string name="save_png_summary">Сохраните окончательные изображения в формате PNG. Обратите внимание, что метаданные пока не поддерживаются в формате PNG, поэтому некоторые функции будут недоступны.</string>
+        <string name="format_not_supported">Формат не поддерживается</string>
+        <string name="format_not_supported_message">Формат изображения не поддерживает теги</string>
+    <string name="set_scan_topic">Установить тему сканирования</string>
 </resources>

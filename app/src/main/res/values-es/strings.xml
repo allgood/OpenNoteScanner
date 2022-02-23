@@ -34,7 +34,7 @@
     <string name="match_aspect">Mantener relacción de aspecto</string>
     <string name="match_aspect_summary">Muchos dispositivos tienen una relación de aspecto diferente del previo, esta configuración elige la más alta resolución de imagen que tiene la misma relación con el previo.</string>
     <string name="bug_rotate">Rotar imagen 180º</string>
-    <string name="bug_rotate_summary">Algunos dispositivos tienen la camara bocabajo, esta configuración ajusta todo para que esté correcto</string>
+    <string name="bug_rotate_summary">Algunos dispositivos tienen la cámara bocabajo, esta configuración ajusta todo para que esté correcto</string>
     <string name="usage_stats">Estadísticas de uso</string>
     <string name="usage_stats_summary">Enviar diversas estadísticas de uso al desarrollador. No se enviarán datos con contenido</string>
     <string name="send_message">Enviar mensaje</string>
@@ -46,7 +46,7 @@
     <string name="googleplay">Google Play</string>
     <string name="githubdownload">Descarga directa</string>
     <string name="activateunknown">Ir a las configuraciones</string>
-    <string name="messageactivateunknown">Google Play no está disponible e instalar desde origenes desconocidos está desactivado, por favor ve a la configuración y activalo.</string>
+    <string name="messageactivateunknown">Google Play no está disponible e instalar desde orígenes desconocidos está desactivado, por favor ve a la configuración y activalo.</string>
     <string name="github_project">Proyecto en GitHub</string>
     <string name="github_project_summary">Esta aplicación es de código abierto, puedes ayudar a mejorarlo con comentarios, reportando errores, compartiendo código y traducciones a traves de la página del proyecto en Github</string>
     <string name="donate">Págame un café</string>
@@ -70,9 +70,9 @@
     <string name="custom_scan_topic">Etiqueta personalizada</string>
     <string name="scan_topic_dialog_title">Por favor asigna una etiqueta</string>
     <string name="skip_scan_topic">Saltar etiqueta</string>
-    <string name="no_files_selected">Ningun archivo seleccionado.</string>
+    <string name="no_files_selected">Ningún archivo seleccionado.</string>
     <string name="action_pdfexport">Exportar a PDF</string>
     <string name="googleplay_donation_summary">Has una donacion a traves de Google Play, esta donacion quitara los anuncios por un año.</string>
-    <string name="reward_ad_summary">Reproduce un video hasta que termine, Open Note Scanner will recibira un monto infimo por hacerlo. Como premio, todos los anuncios sera deshabilitados por una semana.</string>
+    <string name="reward_ad_summary">Reproduce un video hasta que termine, Open Note Scanner will recibira un monto infimo por hacerlo. Como premio, todos los anuncios será deshabilitados por una semana.</string>
     <string name="reward_ad_title">Ver un anuncio</string>
 </resources>

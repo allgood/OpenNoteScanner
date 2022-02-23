@@ -13,7 +13,6 @@ import android.graphics.Rect
 import android.hardware.Camera
 import android.hardware.Camera.*
 import android.media.AudioManager
-import android.media.ExifInterface
 import android.media.MediaPlayer
 import android.net.Uri
 import android.os.*
@@ -28,6 +27,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.exifinterface.media.ExifInterface
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
@@ -767,13 +767,13 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         statsOptInDialog.setTitle(getString(R.string.stats_optin_title))
         statsOptInDialog.setMessage(getString(R.string.stats_optin_text))
         statsOptInDialog.setPositiveButton(R.string.answer_yes) { dialog: DialogInterface, which: Int ->
-            mSharedPref.edit().putBoolean("usage_stats", true).commit()
-            mSharedPref.edit().putBoolean("isFirstRun", false).commit()
+            mSharedPref.edit().putBoolean("usage_stats", true).apply()
+            mSharedPref.edit().putBoolean("isFirstRun", false).apply()
             dialog.dismiss()
         }
         statsOptInDialog.setNegativeButton(R.string.answer_no) { dialog: DialogInterface, which: Int ->
-            mSharedPref.edit().putBoolean("usage_stats", false).commit()
-            mSharedPref.edit().putBoolean("isFirstRun", false).commit()
+            mSharedPref.edit().putBoolean("usage_stats", false).apply()
+            mSharedPref.edit().putBoolean("isFirstRun", false).apply()
             dialog.dismiss()
         }
         statsOptInDialog.setNeutralButton(R.string.answer_later) { dialog: DialogInterface, which: Int -> dialog.dismiss() }

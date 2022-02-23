@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Open Note Scanner</string>
-    <string name="title_activity_open_note_scanner" translatable="false">Open Note Scanner</string>
     <string name="title_activity_gallery">نگارخانه</string>
     <string name="title_activity_full_image">نمایش‌گر تصاویر اسکن شده</string>
     <string name="images_scanned">تصاویر اسکن شده</string>
