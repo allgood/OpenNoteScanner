@@ -80,4 +80,7 @@
     <string name="close">Fechar</string>
     <string name="donation_pending">Doação anterior pendente</string>
     <string name="custom_scan_topic_summary">Habilita a definição de um tópico personalizado para o nome do arquivo</string>
+    <string name="standard_tags">Tags padrão</string>
+    <string name="done">Concluído</string>
+    <string name="scan_topic_placeholder">Forneça um tópico</string>
 </resources>

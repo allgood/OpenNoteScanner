@@ -76,4 +76,10 @@
     <string name="reward_ad_summary">בצפייה של סרטון פרסומי עד תומו, המיזם Open Note Scanner יקבל סכום קטן. בתמורה, כל הפרסומות שביישומון יושבתו למשך שבוע שלם.</string>
     <string name="reward_ad_title">צפייה בפרסומת</string>
     <string name="privacy_policy">מדיניות פרטיות</string>
+    <string name="close">סגור</string>
+    <string name="donation_pending">תרומה קודמת בהמתנה</string>
+    <string name="custom_scan_topic_summary">אפשר הגדרת נושא מותאם אישית לסריקת שם קובץ</string>
+    <string name="standard_tags">תגים סטנדרטיים</string>
+    <string name="done">בוצע</string>
+    <string name="scan_topic_placeholder">אנא ספק נושא</string>
 </resources>

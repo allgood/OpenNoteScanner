@@ -79,4 +79,7 @@
     <string name="close">Tutup</string>
     <string name="donation_pending">Donasi sebelumnya menunggu keputusan</string>
     <string name="custom_scan_topic_summary">Aktifkan pengaturan topik khusus untuk memindai nama berkas</string>
+    <string name="standard_tags">Tag standar</string>
+    <string name="done">Selesai</string>
+    <string name="scan_topic_placeholder">Harap berikan topik</string>
 </resources>

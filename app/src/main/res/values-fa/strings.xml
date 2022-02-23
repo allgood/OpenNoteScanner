@@ -76,4 +76,10 @@
     <string name="reward_ad_summary">یک تبلیغ ویدئویی را تا انتها مشاهده کنید، با این کار، مبلغ اندکی به OpenNoteScanner می‌رسد. به عنوان پاداش، تمام تبلیغ‌ها به مدت یک هفته غیر فعال می‌شوند.</string>
     <string name="reward_ad_title">نمایش یک تبلیغ</string>
     <string name="privacy_policy">حریم شخصی</string>
+    <string name="close">بستن</string>
+    <string name="donation_pending">کمک مالی قبلی در انتظار</string>
+    <string name="custom_scan_topic_summary">فعال کردن تنظیم موضوع سفارشی برای اسکن نام فایل</string>
+    <string name="standard_tags">برچسب‌های استاندارد</string>
+    <string name="done">انجام شد</string>
+    <string name="scan_topic_placeholder">لطفاً موضوعی را ارائه دهید</string>
 </resources>

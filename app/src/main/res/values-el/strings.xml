@@ -67,4 +67,21 @@
     <string name="save_png_summary">Αποθήκευση της τελικής εικόνας σε μορφή ΠιΕνΤζί. Έχε υπόψη σου, πως η ΠιΕνΤζί, για την ώρα, δεν υποστηρίζει μεταδεδομένα. Κατά συνέπεια, κάποια χαρακτηριστικά δεν θα είναι διαθέσιμα.</string>
     <string name="format_not_supported">Δεν υποστηρίζεται αυτή η μορφή</string>
     <string name="format_not_supported_message">Αυτή η μορφή εικόνας δεν υποστηρίζει τις καρτέλες</string>
+    <string name="set_scan_topic">Ορισμός θέματος σάρωσης</string>
+    <string name="cancel">Ματαίωση</string>
+        <string name="custom_scan_topic">Θέμα προσαρμοσμένης σάρωσης</string>
+        <string name="scan_topic_dialog_title">Δώστε ένα θέμα</string>
+        <string name="skip_scan_topic">Παράλειψη θέματος</string>
+        <string name="no_files_selected">Δεν επιλέχθηκαν αρχεία.</string>
+        <string name="action_pdfexport">Εξαγωγή σε PDF</string>
+        <string name="googleplay_donation_summary">Κάντε μια δωρεά χρησιμοποιώντας το Google Play, αυτή η δωρεά θα απενεργοποιήσει όλες τις διαφημίσεις από την εφαρμογή για ένα χρόνο</string>
+        <string name="reward_ad_summary">Προβάλετε μια διαφήμιση βίντεο μέχρι να τελειώσει, το Open Note Scanner θα λάβει μια μικρή τιμή. Ως ανταμοιβή, όλες οι διαφημίσεις από την εφαρμογή θα απενεργοποιηθούν για μία εβδομάδα.</string>
+        <string name="reward_ad_title">Προβολή αγγελίας</string>
+        <string name="privacy_policy">Πολιτική Απορρήτου</string>
+        <string name="close">Κλείσε</string>
+        <string name="donation_pending">Προηγούμενη δωρεά σε εκκρεμότητα</string>
+        <string name="custom_scan_topic_summary">Ενεργοποιήστε τη ρύθμιση ενός προσαρμοσμένου θέματος για τη σάρωση του ονόματος αρχείου</string>
+        <string name="standard_tags">Τυπικές ετικέτες</string>
+        <string name="done">Ολοκληρώθηκε</string>
+    <string name="scan_topic_placeholder">Δώστε ένα θέμα</string>
 </resources>

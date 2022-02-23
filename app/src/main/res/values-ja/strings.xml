@@ -67,4 +67,21 @@
     <string name="save_png_summary">最終的に画像を PNG 形式で保存します。 PNG 上のメタデータはまだサポートしていないため、一部の機能が利用できないことがあります。</string>
     <string name="format_not_supported">形式がサポートされていません</string>
     <string name="format_not_supported_message">画像形式でタグ付けがサポートされていません</string>
+    <string name="set_scan_topic">スキャントピックを設定する</string>
+        <string name="cancel">キャンセル</string>
+        <string name="custom_scan_topic">カスタムスキャントピック</string>
+        <string name="scan_topic_dialog_title">トピックを提供してください</string>
+        <string name="skip_scan_topic">トピックをスキップ</string>
+        <string name="no_files_selected">ファイルが選択されていません。</string>
+        <string name="action_pdfexport">PDFにエクスポート</string>
+        <string name="googleplay_donation_summary">Google Playを使用して寄付を行います。この寄付により、アプリからのすべての広告が1年間無効になります</string>
+        <string name="reward_ad_summary">動画広告を最後まで表示すると、Open NoteScannerは小さな値を受け取ります。 報酬として、アプリのすべての広告が1週間無効になります。</string>
+        <string name="reward_ad_title">広告を見る</string>
+        <string name="privacy_policy">プライバシーポリシー</string>
+        <string name="close">選ぶ</string>
+        <string name="donation_pending">以前の寄付は保留中</string>
+        <string name="custom_scan_topic_summary">ファイル名をスキャンするカスタムトピックの設定を有効にする</string>
+        <string name="standard_tags">標準タグ</string>
+        <string name="done">終わり</string>
+    <string name="scan_topic_placeholder">トピックを提供してください</string>
 </resources>
