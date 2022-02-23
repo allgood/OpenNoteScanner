@@ -767,13 +767,13 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         statsOptInDialog.setTitle(getString(R.string.stats_optin_title))
         statsOptInDialog.setMessage(getString(R.string.stats_optin_text))
         statsOptInDialog.setPositiveButton(R.string.answer_yes) { dialog: DialogInterface, which: Int ->
-            mSharedPref.edit().putBoolean("usage_stats", true).commit()
-            mSharedPref.edit().putBoolean("isFirstRun", false).commit()
+            mSharedPref.edit().putBoolean("usage_stats", true).apply()
+            mSharedPref.edit().putBoolean("isFirstRun", false).apply()
             dialog.dismiss()
         }
         statsOptInDialog.setNegativeButton(R.string.answer_no) { dialog: DialogInterface, which: Int ->
-            mSharedPref.edit().putBoolean("usage_stats", false).commit()
-            mSharedPref.edit().putBoolean("isFirstRun", false).commit()
+            mSharedPref.edit().putBoolean("usage_stats", false).apply()
+            mSharedPref.edit().putBoolean("isFirstRun", false).apply()
             dialog.dismiss()
         }
         statsOptInDialog.setNeutralButton(R.string.answer_later) { dialog: DialogInterface, which: Int -> dialog.dismiss() }
