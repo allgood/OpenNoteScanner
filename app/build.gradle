@@ -62,5 +62,5 @@ dependencies {
     implementation 'com.github.MikeOrtiz:TouchImageView:3.1.1'
     implementation 'com.itextpdf:kernel:7.2.1'
     implementation 'com.itextpdf:layout:7.2.1'
-    implementation 'com.itextpdf:io:7.1.13'
+    implementation 'com.itextpdf:io:7.2.1'
 }
