@@ -59,7 +59,7 @@ dependencies {
     implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
     implementation 'com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943'
     implementation 'org.matomo.sdk:tracker:4.1.2'
-    implementation 'com.github.MikeOrtiz:TouchImageView:3.1.1'
+    implementation 'com.github.MikeOrtiz:TouchImageView:3.2.0'
     implementation 'com.itextpdf:kernel:7.2.1'
     implementation 'com.itextpdf:layout:7.2.1'
     implementation 'com.itextpdf:io:7.2.1'
