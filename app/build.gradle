@@ -7,6 +7,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
@@ -42,6 +45,7 @@ repositories {
     mavenCentral()
 }
 
+def itextpdf_version = '7.2.2'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
