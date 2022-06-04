@@ -29,6 +29,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_open_note_scanner"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/FullscreenTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,6 +47,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_gallery"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

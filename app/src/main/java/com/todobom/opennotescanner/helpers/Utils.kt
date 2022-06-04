@@ -193,7 +193,7 @@ class Utils(
         }
 
         @JvmStatic
-        fun isPackageInstalled(context: Context, packagename: String?): Boolean {
+        fun isPackageInstalled(context: Context, packagename: String): Boolean {
             val pm = context.packageManager
             var app_installed = false
             app_installed = try {

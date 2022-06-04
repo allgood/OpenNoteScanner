@@ -1,6 +1,5 @@
 package com.todobom.opennotescanner.views
 
-import android.app.Activity
 import android.content.res.ColorStateList
 import android.media.ExifInterface
 import android.os.Bundle
@@ -62,29 +61,29 @@ class TagEditorFragment : DialogFragment() {
     private fun loadTags() {
         var exif: ExifInterface? = null
         try {
-            exif = ExifInterface(filePath)
+            exif = ExifInterface(filePath!!)
         } catch (e: IOException) {
             e.printStackTrace()
         }
         val userComment = exif!!.getAttribute("UserComment")
         for (i in 0..6) {
-            stdTagsState[i] = userComment.contains("<" + stdTags[i] + ">")
+            stdTagsState[i] = userComment!!.contains("<" + stdTags[i] + ">")
         }
     }
 
     private fun saveTags() {
         var exif: ExifInterface? = null
         try {
-            exif = ExifInterface(filePath)
+            exif = ExifInterface(filePath!!)
         } catch (e: IOException) {
             e.printStackTrace()
         }
         var userComment = exif!!.getAttribute("UserComment")
         for (i in 0..6) {
-            if (stdTagsState[i] && !userComment.contains("<" + stdTags[i] + ">")) {
+            if (stdTagsState[i] && !userComment!!.contains("<" + stdTags[i] + ">")) {
                 userComment += "<" + stdTags[i] + ">"
-            } else if (!stdTagsState[i] && userComment.contains("<" + stdTags[i] + ">")) {
-                userComment.replace("<" + stdTags[i] + ">".toRegex(), "")
+            } else if (!stdTagsState[i] && userComment!!.contains("<" + stdTags[i] + ">")) {
+                userComment!!.replace("<" + stdTags[i] + ">".toRegex(), "")
             }
         }
         exif.setAttribute("UserComment", userComment)

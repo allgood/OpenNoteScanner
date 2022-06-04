@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdk 31
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -13,7 +13,7 @@ android {
     defaultConfig {
         applicationId "com.todobom.opennotescanner"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdk 31
         versionCode 36
         versionName '1.0.36'
     }
