@@ -60,7 +60,7 @@ dependencies {
     implementation("com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections")
     implementation("com.github.nostra13:Android-Universal-Image-Loader:v1.9.5")
     implementation("com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943")
-    implementation("org.matomo.sdk:tracker:4.1.2")
+    implementation("com.github.matomo-org:matomo-sdk-android:4.1.4")
     implementation("com.github.MikeOrtiz:TouchImageView:3.2.0")
 
     val itextpdf_version = "7.2.2"
