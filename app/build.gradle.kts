@@ -48,7 +48,7 @@ dependencies {
     implementation(fileTree(mapOf("include" to listOf("*.jar"), "dir" to "libs")))
 
     implementation("androidx.core:core-ktx:1.8.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")
 
     implementation("androidx.exifinterface:exifinterface:1.3.3")
     testImplementation("junit:junit:4.13.2")
