@@ -1,6 +1,7 @@
 package com.todobom.opennotescanner
 
 import android.os.Bundle
+import android.preference.ListPreference
 import android.preference.Preference
 import android.preference.Preference.OnPreferenceClickListener
 import android.preference.PreferenceCategory
@@ -34,5 +35,17 @@ class SettingsActivity : AppCompatActivity() {
         if (bitcoinPref != null && !isPackageInstalled(this, "de.schildbach.wallet")) {
             donateCategory.removePreference(bitcoinPref)
         }
+
+        val pageFormatPreference: ListPreference = sf.findPreference("document_page_format") as ListPreference
+        val customPageWidth = sf.findPreference("custom_pageformat_width")
+        val customPageHeight = sf.findPreference("custom_pageformat_height")
+
+        pageFormatPreference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+            customPageWidth.setEnabled(newValue.equals("0.0001"))
+            customPageHeight.setEnabled(newValue.equals("0.0001"))
+            true
+        }
+        customPageWidth.setEnabled(pageFormatPreference.value.equals("0.0001"))
+        customPageHeight.setEnabled(pageFormatPreference.value.equals("0.0001"))
     }
 }

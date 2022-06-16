@@ -6,7 +6,6 @@ import android.graphics.Paint
 import android.graphics.drawable.shapes.Shape
 import android.util.AttributeSet
 import android.view.View
-import java.util.*
 
 /**
  * Draw an array of shapes on a canvas
@@ -14,6 +13,8 @@ import java.util.*
  * @author <Claudemir Todo Bom> http://todobom.com
 </Claudemir> */
 class HUDCanvasView : View {
+    private var detectedShape: HUDShape? = null
+    private var documentBoxShape: HUDShape? = null
     private val shapes = ArrayList<HUDShape>()
 
     constructor(context: Context?) : super(context) {}
@@ -44,18 +45,29 @@ class HUDCanvasView : View {
         val paddingBottom = paddingBottom
         val contentWidth = width - paddingLeft - paddingRight
         val contentHeight = height - paddingTop - paddingBottom
-        for (s in shapes) {
-            s.shape.resize(contentWidth.toFloat(), contentHeight.toFloat())
-            s.draw(canvas)
+        if (documentBoxShape != null) {
+            documentBoxShape!!.shape.resize(contentWidth.toFloat(), contentHeight.toFloat())
+            documentBoxShape!!.draw(canvas)
+        }
+        if (detectedShape != null) {
+            detectedShape!!.shape.resize(contentWidth.toFloat(), contentHeight.toFloat())
+            detectedShape!!.draw(canvas)
         }
     }
 
-    fun addShape(shape: Shape, paint: Paint, border: Paint?) {
-        val hudShape = HUDShape(shape, paint, border)
-        shapes.add(hudShape)
+    fun setDetectedShape(shape: Shape, paint: Paint, border: Paint?) {
+        detectedShape = HUDShape(shape, paint, border)
+    }
+
+    fun setDocumentBoxShape(shape: Shape?, paint: Paint?, border: Paint?) {
+        if (shape == null) {
+            documentBoxShape = null;
+            return;
+        }
+        documentBoxShape = HUDShape(shape, paint!!, border)
     }
 
     fun clear() {
-        shapes.clear()
+        detectedShape = null
     }
 }

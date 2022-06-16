@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="DocumentFormatsNames">
+        <item>@string/pageformat_disabled</item>
+        <item>@string/pageformat_iso</item>
+        <item>@string/pageformat_halfletter</item>
+        <item>@string/pageformat_letter</item>
+        <item>@string/pageformat_custom</item>
+    </string-array>
+    <string-array name="DocumentFormats">
+        <item>0</item>
+        <item>1.4142</item>
+        <item>1.5455</item>
+        <item>1.2941</item>
+        <item>0.0001</item>
+    </string-array>
+</resources>

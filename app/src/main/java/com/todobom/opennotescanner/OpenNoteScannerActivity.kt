@@ -3,6 +3,7 @@ package com.todobom.opennotescanner
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,7 +11,7 @@ import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Point
 import android.graphics.Rect
-import android.hardware.Camera
+import android.hardware.*
 import android.hardware.Camera.*
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -53,7 +54,8 @@ import java.util.*
  * status bar and navigation/system bar) with user interaction.
  */
 class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-        SurfaceHolder.Callback, PictureCallback, PreviewCallback, SetTopicDialogListener {
+        SurfaceHolder.Callback, PictureCallback, PreviewCallback, SetTopicDialogListener, SensorEventListener {
+    var mDocumentAspectRatio: Double = 0.0
     private val mHideHandler = Handler()
     private lateinit var mContentView: View
     private val mHidePart2Runnable = Runnable { // Delayed removal of status and navigation bar
@@ -96,6 +98,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     private var mat: Mat? = null
     private lateinit var tracker: Tracker
 
+    private lateinit var sensorManager: SensorManager
+    lateinit var accelerometerReading: FloatArray
+    lateinit var magnetometerReading: FloatArray
+
     fun setImageProcessorBusy(imageProcessorBusy: Boolean) {
         this.imageProcessorBusy = imageProcessorBusy
     }
@@ -108,6 +114,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     private var attemptToFocus = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        accelerometerReading = FloatArray(3);
+        magnetometerReading = FloatArray(3);
+
         mThis = this
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         if (mSharedPref.getBoolean("isFirstRun", true) && !mSharedPref.getBoolean("usage_stats", false)) {
@@ -122,6 +132,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         hUD = findViewById(R.id.hud)
         mWaitSpinner = findViewById(R.id.wait_spinner)
 
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener { toggle() }
@@ -232,6 +243,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         }
     }
 
+    @SuppressLint("MissingSuperCall")
     override fun onRequestPermissionsResult(requestCode: Int,
                                             permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
@@ -317,6 +329,24 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     public override fun onResume() {
         super.onResume()
+
+        sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also { accelerometer ->
+            sensorManager.registerListener(
+                    this,
+                    accelerometer,
+                    SensorManager.SENSOR_DELAY_NORMAL,
+                    SensorManager.SENSOR_DELAY_UI
+            )
+        }
+        sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD)?.also { magneticField ->
+            sensorManager.registerListener(
+                    this,
+                    magneticField,
+                    SensorManager.SENSOR_DELAY_NORMAL,
+                    SensorManager.SENSOR_DELAY_UI
+            )
+        }
+
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN
                 or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -357,6 +387,9 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     public override fun onDestroy() {
         super.onDestroy()
         // FIXME: check disableView()
+
+        // Don't receive any more updates from either sensor.
+        sensorManager.unregisterListener(this)
     }
 
     val resolutionList: List<Camera.Size>
@@ -490,27 +523,46 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             surfaceView.layoutParams = surfaceParams
             ud.layoutParams.height = previewHeight
         }
-        val hotAreaWidth = displayWidth / 4
-        val hotAreaHeight = previewHeight / 2 - hotAreaWidth
+        val hotAreaSpaceWidth: Int
+        val hotAreaSpaceHeight: Int
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val docPageFormat: String? = sharedPref.getString("document_page_format", "0")
+        this.mDocumentAspectRatio = 0.0
+        if (docPageFormat == "0.0001") {
+            val customPageWidth: Float = sharedPref.getString("custom_pageformat_width", "0")!!.toFloat()
+            val customPageHeight: Float = sharedPref.getString("custom_pageformat_height", "0")!!.toFloat()
+            if (customPageWidth > 0 && customPageHeight > 0) {
+                this.mDocumentAspectRatio = (customPageHeight / customPageWidth).toDouble()
+            }
+        } else {
+            this.mDocumentAspectRatio = docPageFormat!!.toFloat().toDouble()
+        }
+
+        var hotArea = Utils.getHotArea(pSize.width, pSize.height, this)
+
+        hotAreaSpaceWidth = hotArea!![1]
+        hotAreaSpaceHeight = hotArea!![0]
+
         val angleNorthWest = findViewById<ImageView>(R.id.nw_angle)
         val paramsNW = angleNorthWest.layoutParams as RelativeLayout.LayoutParams
-        paramsNW.leftMargin = hotAreaWidth - paramsNW.width
-        paramsNW.topMargin = hotAreaHeight - paramsNW.height
+        paramsNW.leftMargin = hotAreaSpaceWidth - paramsNW.width
+        paramsNW.topMargin = hotAreaSpaceHeight - paramsNW.height
         angleNorthWest.layoutParams = paramsNW
         val angleNorthEast = findViewById<ImageView>(R.id.ne_angle)
         val paramsNE = angleNorthEast.layoutParams as RelativeLayout.LayoutParams
-        paramsNE.leftMargin = displayWidth - hotAreaWidth
-        paramsNE.topMargin = hotAreaHeight - paramsNE.height
+        paramsNE.leftMargin = displayWidth - hotAreaSpaceWidth
+        paramsNE.topMargin = hotAreaSpaceHeight - paramsNE.height
         angleNorthEast.layoutParams = paramsNE
         val angleSouthEast = findViewById<ImageView>(R.id.se_angle)
         val paramsSE = angleSouthEast.layoutParams as RelativeLayout.LayoutParams
-        paramsSE.leftMargin = displayWidth - hotAreaWidth
-        paramsSE.topMargin = previewHeight - hotAreaHeight
+        paramsSE.leftMargin = displayWidth - hotAreaSpaceWidth
+        paramsSE.topMargin = previewHeight - hotAreaSpaceHeight
         angleSouthEast.layoutParams = paramsSE
         val angleSouthWest = findViewById<ImageView>(R.id.sw_angle)
         val paramsSW = angleSouthWest.layoutParams as RelativeLayout.LayoutParams
-        paramsSW.leftMargin = hotAreaWidth - paramsSW.width
-        paramsSW.topMargin = previewHeight - hotAreaHeight
+        paramsSW.leftMargin = hotAreaSpaceWidth - paramsSW.width
+        paramsSW.topMargin = previewHeight - hotAreaSpaceHeight
         angleSouthWest.layoutParams = paramsSW
         val maxRes = getMaxPictureResolution(previewRatio)
         if (maxRes != null) {
@@ -790,5 +842,19 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         private const val MY_PERMISSIONS_REQUEST_WRITE = 3
         private const val RESUME_PERMISSIONS_REQUEST_CAMERA = 11
         private const val TAG = "OpenNoteScannerActivity"
+    }
+
+    // Get readings from accelerometer and magnetometer. To simplify calculations,
+    // consider storing these readings as unit vectors.
+    override fun onSensorChanged(event: SensorEvent) {
+        if (event.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            System.arraycopy(event.values, 0, accelerometerReading, 0, accelerometerReading.size)
+        } else if (event.sensor.type == Sensor.TYPE_MAGNETIC_FIELD) {
+            System.arraycopy(event.values, 0, magnetometerReading, 0, magnetometerReading.size)
+        }
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        // TODO("Not yet implemented")
     }
 }

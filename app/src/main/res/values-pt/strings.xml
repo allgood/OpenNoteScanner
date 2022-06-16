@@ -83,4 +83,10 @@
     <string name="standard_tags">Tags padrão</string>
     <string name="done">Concluído</string>
     <string name="scan_topic_placeholder">Forneça um tópico</string>
+    <string name="document_page_format">Formato da Página</string>
+    <string name="pageformat_iso">ISO (a4, a5 e outros)</string>
+    <string name="pageformat_halfletter">US Meia Carta (Rocketbook)</string>
+    <string name="pageformat_letter">US Carta</string>
+    <string name="pageformat_disabled">Desabilitado</string>
+    <string name="pageformat_custom">Personalizado</string>
 </resources>

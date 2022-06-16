@@ -11,6 +11,7 @@ import android.os.Environment
 import android.preference.PreferenceManager
 import android.provider.MediaStore
 import android.view.WindowManager
+import com.todobom.opennotescanner.OpenNoteScannerActivity
 import java.io.File
 import java.util.*
 import java.util.regex.Pattern
@@ -49,7 +50,7 @@ class Utils(
                         val filePath = listFiles[i].absolutePath
 
                         // check for supported file extension
-                        if (IsSupportedFile(filePath)) {
+                        if (isSupportedFile(filePath)) {
                             // Add image path to array list
                             filePaths.add(filePath)
                         }
@@ -64,10 +65,10 @@ class Utils(
      *
      * @returns boolean
      */
-    private fun IsSupportedFile(filePath: String): Boolean {
+    private fun isSupportedFile(filePath: String): Boolean {
         val ext = filePath.substring(filePath.lastIndexOf(".") + 1,
                 filePath.length)
-        return if (AppConstant.FILE_EXTN.contains(ext.toLowerCase(Locale.getDefault()))) true else false
+        return AppConstant.FILE_EXTN.contains(ext.toLowerCase(Locale.getDefault()))
     }// Older device
 
     /*
@@ -204,6 +205,83 @@ class Utils(
                 false
             }
             return app_installed
+        }
+
+
+        @JvmStatic
+        fun getDocumentArea(width: Int, height: Int, mainActivity: OpenNoteScannerActivity): IntArray? {
+            val documentArea = IntArray(4)
+
+            // attention: axis are swapped
+            val imageRatio = width.toFloat() / height.toFloat()
+            val bottomPos: Int
+            val topPos: Int
+            val leftPos: Int
+            val rightPos: Int
+
+            var documentAspectRatio = mainActivity.mDocumentAspectRatio
+
+            if (documentAspectRatio == 0.0) {
+                throw Exception("do not use getDocumentArea without an aspect ratio")
+            } else if (imageRatio >= documentAspectRatio) {
+                val documentWidth: Float = (height - height/10).toFloat()
+                val documentHeight: Float = (documentWidth.toFloat() * documentAspectRatio).toFloat()
+
+                topPos = height / 20
+                bottomPos = height - topPos
+                leftPos = ((width - documentHeight) / 2).toInt()
+                rightPos = width - leftPos
+            } else {
+                val documentHeight: Float = (width - width/5).toFloat()
+                val documentWidth: Float = (documentHeight / documentAspectRatio).toFloat()
+
+                leftPos = width/10
+                rightPos = width - leftPos
+                topPos = ((height - documentWidth) / 2).toInt()
+                bottomPos = height - topPos
+            }
+
+            documentArea[0] = leftPos
+            documentArea[1] = topPos
+            documentArea[2] = rightPos
+            documentArea[3] = bottomPos
+            return documentArea
+        }
+
+        @JvmStatic
+        fun getHotArea(width: Int, height: Int, mainActivity: OpenNoteScannerActivity): IntArray? {
+            var hotArea = IntArray(4)
+
+            // attention: axis are swapped
+            val imageRatio = width.toFloat() / height.toFloat()
+            val bottomPos: Int
+            val topPos: Int
+            val leftPos: Int
+            val rightPos: Int
+
+            var documentAspectRatio = mainActivity.mDocumentAspectRatio
+
+            if (documentAspectRatio == 0.0) {
+                val baseMeasure = height / 4
+                bottomPos = height - baseMeasure
+                topPos = baseMeasure
+                leftPos = width / 2 - baseMeasure
+                rightPos = width / 2 + baseMeasure
+                hotArea[0] = leftPos
+                hotArea[1] = topPos
+                hotArea[2] = rightPos
+                hotArea[3] = bottomPos
+                return hotArea
+            }
+
+            hotArea = Utils.getDocumentArea(width, height, mainActivity)!!
+            val hotOffset = height/10
+
+            hotArea[0] += hotOffset
+            hotArea[1] += hotOffset
+            hotArea[2] -= hotOffset
+            hotArea[3] -= hotOffset
+            return hotArea;
         }
     }
 

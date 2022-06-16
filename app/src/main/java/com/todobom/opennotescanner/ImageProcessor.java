@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.shapes.PathShape;
+import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -28,7 +29,6 @@ import com.todobom.opennotescanner.helpers.ScannedDocument;
 import com.todobom.opennotescanner.helpers.Utils;
 import com.todobom.opennotescanner.views.HUDCanvasView;
 
-import org.jetbrains.annotations.NonNls;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -65,12 +65,26 @@ public class ImageProcessor extends Handler {
     private Size mPreviewSize;
     private Point[] mPreviewPoints;
 
+    private double mDocumentAspectRatio;
+
     public ImageProcessor(Looper looper, OpenNoteScannerActivity mainActivity) {
         super(looper);
         mMainActivity = mainActivity;
 
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mainActivity);
         mBugRotate = sharedPref.getBoolean("bug_rotate",false);
+
+        String docPageFormat = sharedPref.getString("document_page_format", "0");
+        mDocumentAspectRatio = 0;
+        if (docPageFormat.equals("0.0001")) {
+            Float customPageWidth = Float.parseFloat(sharedPref.getString("custom_pageformat_width" , "0" ));
+            Float customPageHeight = Float.parseFloat(sharedPref.getString("custom_pageformat_height" , "0" ));
+            if (customPageWidth > 0 && customPageHeight > 0) {
+                mDocumentAspectRatio = customPageHeight / customPageWidth;
+            }
+        } else {
+            mDocumentAspectRatio = Float.parseFloat(docPageFormat);
+        }
     }
 
     public void handleMessage ( Message msg ) {
@@ -216,6 +230,7 @@ public class ImageProcessor extends Handler {
 
         mPreviewPoints = null;
         mPreviewSize = inputRgba.size();
+        drawDocumentArea(mPreviewSize);
 
         if (quad != null) {
 
@@ -250,6 +265,73 @@ public class ImageProcessor extends Handler {
 
     }
 
+    private void drawDocumentArea(Size stdSize) {
+        HUDCanvasView hud = mMainActivity.getHUD();
+
+        if (mDocumentAspectRatio == 0) {
+            hud.setDocumentBoxShape(null, null, null);
+            return;
+        }
+
+        /* SAVING TO USE ON ANOTHER PLACE * /
+
+        final float[] rotationMatrix = new float[9];
+        SensorManager.getRotationMatrix(rotationMatrix, null,
+                mMainActivity.accelerometerReading, mMainActivity.magnetometerReading);
+
+        // Express the updated rotation matrix as three orientation angles.
+        final float[] orientationAngles = new float[3];
+        SensorManager.getOrientation(rotationMatrix, orientationAngles);
+
+        // Pitch will vary from -1,57 (full vertical) to 0 (full horizontal) to +1,57 (upside down)
+        float pitch = 0; // orientationAngles[1]; // for now, ignore inclination
+
+        // force 0 to 45 degrees
+        if (pitch < -0.78) {
+            pitch = (float) -0.78;
+        } else if (pitch > 0) {
+            pitch = 0;
+        }
+
+        /*   */
+
+        // ATTENTION: axis are swapped
+        float previewWidth = (float) stdSize.height;
+        float previewHeight = (float) stdSize.width;
+
+        Path path = new Path();
+
+        path.moveTo( 0 ,0 );
+        path.lineTo( previewWidth , 0 );
+        path.lineTo( previewWidth, previewHeight  );
+        path.lineTo( 0, previewHeight );
+        path.close();
+
+        float previewAspectRatio = previewHeight/previewWidth;
+
+        int[] documentArea = Utils.getDocumentArea((int) previewHeight, (int) previewWidth, mMainActivity);
+
+        path.moveTo( documentArea[1] , documentArea[0] );
+        path.lineTo( documentArea[1] , documentArea[2] );
+        path.lineTo( documentArea[3] , documentArea[2] );
+        path.lineTo( documentArea[3] , documentArea[0] );
+        path.close();
+
+        path.setFillType(Path.FillType.EVEN_ODD);
+
+        PathShape newBox = new PathShape(path , previewWidth , previewHeight);
+
+        Paint paint = new Paint();
+        paint.setColor(Color.argb(64, 255, 255, 255));
+
+        Paint border = new Paint();
+        border.setColor(Color.argb( 32, 255, 255, 255));
+        border.setStrokeWidth(5);
+
+        hud.setDocumentBoxShape(newBox, paint, border);
+        mMainActivity.invalidateHUD();
+    }
+
     private void drawDocumentBox(Point[] points, Size stdSize) {
 
         Path path = new Path();
@@ -257,7 +339,6 @@ public class ImageProcessor extends Handler {
         HUDCanvasView hud = mMainActivity.getHUD();
 
         // ATTENTION: axis are swapped
-
         float previewWidth = (float) stdSize.height;
         float previewHeight = (float) stdSize.width;
 
@@ -277,10 +358,8 @@ public class ImageProcessor extends Handler {
         border.setStrokeWidth(5);
 
         hud.clear();
-        hud.addShape(newBox, paint, border);
+        hud.setDetectedShape(newBox, paint, border);
         mMainActivity.invalidateHUD();
-
-
     }
 
     private Quadrilateral getQuadrilateral( ArrayList<MatOfPoint> contours , Size srcSize ) {
@@ -302,7 +381,7 @@ public class ImageProcessor extends Handler {
             if (points.length == 4) {
                 Point[] foundPoints = sortPoints(points);
 
-                if (insideArea(foundPoints, size)) {
+                if (insideHotArea(foundPoints, size)) {
                     return new Quadrilateral( c , foundPoints );
                 }
             }
@@ -336,23 +415,15 @@ public class ImageProcessor extends Handler {
         return result;
     }
 
-    private boolean insideArea(Point[] rp, Size size) {
+    private boolean insideHotArea(Point[] rp, Size size) {
 
-        int width = Double.valueOf(size.width).intValue();
-        int height = Double.valueOf(size.height).intValue();
-        int baseMeasure = height/4;
-
-        int bottomPos = height-baseMeasure;
-        int topPos = baseMeasure;
-        int leftPos = width/2-baseMeasure;
-        int rightPos = width/2+baseMeasure;
+        int[] hotArea = Utils.getHotArea((int) size.width, (int) size.height, this.mMainActivity);
 
         return (
-                rp[0].x <= leftPos && rp[0].y <= topPos
-                        && rp[1].x >= rightPos && rp[1].y <= topPos
-                        && rp[2].x >= rightPos && rp[2].y >= bottomPos
-                        && rp[3].x <= leftPos && rp[3].y >= bottomPos
-
+                rp[0].x <= hotArea[0] && rp[0].y <= hotArea[1]
+                        && rp[1].x >= hotArea[2] && rp[1].y <= hotArea[1]
+                        && rp[2].x >= hotArea[2] && rp[2].y >= hotArea[3]
+                        && rp[3].x <= hotArea[0] && rp[3].y >= hotArea[3]
         );
     }
 
@@ -365,7 +436,7 @@ public class ImageProcessor extends Handler {
             Mat copy = new Mat(src.size(), CvType.CV_8UC3);
             src.copyTo(copy);
 
-            Imgproc.adaptiveThreshold(mask,mask,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY_INV,15,15);
+            Imgproc.adaptiveThreshold(mask,mask,255,Imgproc.ADAPTIVE_THRESH_MEAN_C,Imgproc.THRESH_BINARY_INV,225,15);
 
             src.setTo(new Scalar(255,255,255));
             copy.copyTo(src,mask);
@@ -378,7 +449,7 @@ public class ImageProcessor extends Handler {
         } else if (!colorMode) {
             Imgproc.cvtColor(src,src,Imgproc.COLOR_RGBA2GRAY);
             if (filterMode) {
-                Imgproc.adaptiveThreshold(src, src, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 15, 15);
+                Imgproc.adaptiveThreshold(src, src, 255, Imgproc.ADAPTIVE_THRESH_MEAN_C, Imgproc.THRESH_BINARY, 225, 15);
             }
         }
     }

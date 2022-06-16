@@ -83,4 +83,10 @@
     <string name="standard_tags">Standard tags</string>
     <string name="done">Done</string>
     <string name="scan_topic_placeholder">Please provide a topic</string>
+    <string name="document_page_format">Document Page Format</string>
+    <string name="pageformat_iso">ISO (a4, a5 and others)</string>
+    <string name="pageformat_halfletter">US Half Letter (Rocketbook)</string>
+    <string name="pageformat_letter">US Letter</string>
+    <string name="pageformat_disabled">Disabled</string>
+    <string name="pageformat_custom">Custom</string>
 </resources>

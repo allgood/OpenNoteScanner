@@ -49,6 +49,27 @@
                 android:key="match_aspect"
                 android:summary="@string/match_aspect_summary"
                 />
+            <ListPreference
+                android:title="@string/document_page_format"
+                android:defaultValue="0"
+                android:key="document_page_format"
+                android:entries="@array/DocumentFormatsNames"
+                android:entryValues="@array/DocumentFormats"
+                />
+            <EditTextPreference
+                android:name="custom_pageformat_width"
+                android:title="Custom Page Width"
+                android:defaultValue="0"
+                android:inputType="numberDecimal"
+                android:digits="0123456789."
+                android:key="custom_pageformat_width" />
+            <EditTextPreference
+                android:name="custom_pageformat_height"
+                android:title="Custom Page Height"
+                android:defaultValue="0"
+                android:inputType="numberDecimal"
+                android:digits="0123456789."
+                android:key="custom_pageformat_height" />
             <CheckBoxPreference
                 android:title="@string/save_png"
                 android:defaultValue="false"

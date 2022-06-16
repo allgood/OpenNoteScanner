@@ -124,34 +124,33 @@
             android:id="@+id/fabtoolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:showDuration="600"
+            app:containerId="@+id/fabtoolbar_container"
+            app:fabId="@+id/fabtoolbar_fab"
+            app:fabToolbarId="@+id/fabtoolbar_toolbar"
+            app:fadeInFraction="0.2"
             app:hideDuration="200"
             app:horizontalMargin="30dp"
-            app:verticalMargin="30dp"
-            app:fadeInFraction="0.2"
-            app:fabId="@+id/fabtoolbar_fab"
-            app:containerId="@+id/fabtoolbar_container"
-            app:fabToolbarId="@+id/fabtoolbar_toolbar">
+            app:showDuration="600"
+            app:verticalMargin="30dp">
 
             <RelativeLayout
                 android:id="@id/fabtoolbar_container"
                 android:layout_width="match_parent"
-                android:layout_alignParentTop="true"
                 android:layout_height="70dp"
-                >
+                android:layout_alignParentTop="true">
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@id/fabtoolbar_fab"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:fabSize="mini"
-                    app:borderWidth="0dp"
-                    app:elevation="0sp"
-                    android:src="@drawable/abc_ic_menu_overflow_material"
                     android:layout_alignParentRight="true"
                     android:backgroundTint="#A060FF60"
+                    android:rotation="90"
+                    android:src="@drawable/abc_ic_menu_overflow_material"
                     android:tint="#ffffff"
-                    android:rotation="90"/>
+                    app:borderWidth="0dp"
+                    app:elevation="0sp"
+                    app:fabSize="mini" />
 
             </RelativeLayout>
 
@@ -167,68 +166,68 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_palette"
-                    android:gravity="center"
                     android:enabled="true"
                     android:focusableInTouchMode="false"
-                    app:tint="#a0f0a0"/>
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_palette"
+                    app:tint="#a0f0a0" />
 
                 <ImageView
                     android:id="@+id/filterModeButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_photo_filter_white_24dp"
-                    android:gravity="center"
                     android:enabled="true"
                     android:focusableInTouchMode="false"
-                    app:tint="#ffffff"/>
+                    android:gravity="center"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_photo_filter_white_24dp"
+                    app:tint="#ffffff" />
 
                 <ImageView
                     android:id="@+id/flashModeButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:enabled="true"
+                    android:gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_flash_on_24dp"
-                    android:gravity="center"
-                    android:enabled="true"
-                    app:tint="#a0f0a0"/>
+                    app:tint="#a0f0a0" />
 
                 <ImageView
                     android:id="@+id/autoModeButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:enabled="true"
+                    android:gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_find_in_page"
-                    android:gravity="center"
-                    android:enabled="true"
-                    app:tint="#a0f0a0"/>
+                    app:tint="#a0f0a0" />
 
                 <ImageView
                     android:id="@+id/settingsButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:enabled="true"
+                    android:gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_settings"
-                    android:gravity="center"
-                    android:enabled="true"
-                    app:tint="#ffffff"/>
+                    app:tint="#ffffff" />
 
                 <ImageView
                     android:id="@+id/hideToolbarButton"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:enabled="true"
+                    android:gravity="center"
                     android:scaleType="centerInside"
                     android:src="@drawable/abc_ic_clear_material"
-                    android:gravity="center"
-                    android:enabled="true"
-                    app:tint="#ffffff"/>
+                    app:tint="#ffffff" />
 
             </LinearLayout>
 
