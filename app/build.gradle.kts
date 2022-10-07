@@ -58,7 +58,7 @@ dependencies {
     implementation("com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115")
     implementation("us.feras.mdv:markdownview:1.1.0")
     implementation("com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections")
-    implementation("com.github.nostra13:Android-Universal-Image-Loader:v1.9.5")
+    implementation("com.github.allgood:Android-Universal-Image-Loader:717a00c")
     implementation("com.github.ctodobom:FabToolbar:3c5f0e0ff1b6d5089e20b7da7157a604075ae943")
     implementation("com.github.matomo-org:matomo-sdk-android:4.1.4")
     implementation("com.github.MikeOrtiz:TouchImageView:3.2.0")
