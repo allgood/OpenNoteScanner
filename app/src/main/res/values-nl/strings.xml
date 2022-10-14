@@ -86,4 +86,11 @@
     <string name="standard_tags">Standaardtags</string>
     <string name="done">Klaar</string>
     <string name="scan_topic_placeholder">Geef een onderwerp op</string>
+
+    <string name="document_page_format">Document papier formaat</string>
+    <string name="pageformat_iso">ISO (A4, A5 en andere)</string>
+    <string name="pageformat_halfletter">Amerikaanse halve letter (Rocketbook)</string>
+    <string name="pageformat_letter">Amerikaanse letter</string>
+    <string name="pageformat_disabled">Uitgeschakeld</string>
+    <string name="pageformat_custom">Aangepast</string>
 </resources>
