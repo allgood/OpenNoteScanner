@@ -1,7 +1,7 @@
 package com.todobom.opennotescanner.views
 
 import android.content.res.ColorStateList
-import android.media.ExifInterface
+import androidx.exifinterface.media.ExifInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
