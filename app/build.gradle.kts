@@ -63,7 +63,7 @@ dependencies {
     implementation("com.github.matomo-org:matomo-sdk-android:4.1.4")
     implementation("com.github.MikeOrtiz:TouchImageView:3.2.0")
 
-    val itextpdf_version = "7.2.3"
+    val itextpdf_version = "7.2.4"
     implementation("com.itextpdf:kernel:$itextpdf_version")
     implementation("com.itextpdf:layout:$itextpdf_version")
     implementation("com.itextpdf:io:$itextpdf_version")
