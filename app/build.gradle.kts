@@ -51,10 +51,10 @@ dependencies {
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.20")
 
-    implementation("androidx.exifinterface:exifinterface:1.3.4")
+    implementation("androidx.exifinterface:exifinterface:1.3.5")
     testImplementation("junit:junit:4.13.2")
     implementation("androidx.appcompat:appcompat:1.5.1")
-    implementation("androidx.fragment:fragment-ktx:1.5.3")
+    implementation("androidx.fragment:fragment-ktx:1.5.4")
     implementation("com.google.android.material:material:1.6.1")
     implementation("com.google.zxing:core:3.5.0")
     implementation("com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115")
