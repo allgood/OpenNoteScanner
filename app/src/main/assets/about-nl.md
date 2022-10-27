@@ -9,7 +9,7 @@ Deze applicatie biedt een snelle manier om handgeschreven notities en tekeningen
 Licentie
 -------
 
-Deze applicatie is beschikbaar gemaakt via de [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt). Broncode is [beschikbaar op GitHub](http://github.com/ctodobom/OpenNoteScanner).
+Deze applicatie is beschikbaar gemaakt via de [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt). Broncode is beschikbaar op [GitHub](https://github.com/ctodobom/OpenNoteScanner).
 
 Donaties
 ---------
@@ -20,7 +20,7 @@ Als je denkt dat deze applicatie of een van mijn bijdragen wat geld waard is en 
 
 [Doneer via Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
 
-**LET OP:** Link naar cryptocoins werkt alleen als u de app voor die munt hebt geïnstalleerd!
+**LET OP:** Link naar cryptocoins werkt alleen als er een app voor die munt geïnstalleerd staat!
 
 [Doneer via Bitcoin](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
 
@@ -32,7 +32,7 @@ Onderdelen en vereisten van derden
 
 Binaire builds bevatten code van deze externe projecten:
 
-* [OpenCV Library voor Android](http://www.opencv.org)
+* [OpenCV Library voor Android](https://www.opencv.org)
 * [MarkdownView van Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
 * [TouchImageView van Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
 * [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
