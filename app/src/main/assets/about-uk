@@ -1,0 +1,57 @@
+Про додаток Open Note Scanner
+=============================
+
+**© 20XX [Claudemir Todo Bom](http://todobom.com)**
+
+Додаток надає швидкий спосіб сканування і збереження рукописних нотаток, малюнків, а також чеків та інших документів. Він підтримує способи автоматичного захвату зображень на [спеціально оформлених бланках](https://github.com/ctodobom/OpenNoteScanner/raw/master/Page%20Templates/A4%20with%202%20pages.pdf).
+
+Ліцензія
+--------
+Додаток розповсюжується на умовах [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt). Джерельний код доступний на [GitHub](http://github.com/ctodobom/OpenNoteScanner).
+
+Пожертви
+--------
+
+Створення додатків для Android - не моя основна работа. Я створив цей додаток з цікавості і через те, що існує купа схожих додатків, але жоден з них не є додатком с відкритим кодом.
+
+Якщо ви думаете, що цей додаток чи будь-який інший внесок у відкрите програмне забезпечення вартий якоїсь кількості грошей і ви готові заплатити мені, то ви можете це зробити шляхом пожертв через Paypal, Bitcoin или Dogecoin.
+
+[Пожертвувати через Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X6XHVCPMRQEL4)
+
+**Увага:** Посилання на криптовалюту працює лише в разі якщо у вас встановлений відповідний додаток:
+
+[Пожертвувати через Bitcoin](bitcoin:1H5tqKZoWdqkR54PGe9w67EzBnLXHBFmt9)
+
+[Пожертвувати через Dogecoin](dogecoin:DFBaP724XR3rfs9wFahBd353yFkgkqatvd)
+
+
+Частини з других джерел та залежності
+-------------------------------------
+
+Бінарні збірки включають код з наступних зовнішних проектів:
+
+* [Бібліотека OpenCV для Android](http://www.opencv.org)
+* [MarkdownView від Feras Alnatsheh](https://github.com/falnatsheh/MarkdownView)
+* [TouchImageView від Mike Ortiz](https://github.com/MikeOrtiz/TouchImageView)
+* [Drag Select Recycler View](https://github.com/afollestad/drag-select-recyclerview)
+* [Android Universal Image Loader від Sergey Tarasevich](https://github.com/nostra13/Android-Universal-Image-Loader)
+
+Подяки
+------
+
+### Співавтори
+
+Так як це - додаток з відкритим джерельним кодом, доповнення і покращення завжди вітаються. 
+
+Більшість внесків у переклад перераховані у [файлі CONTRIBUTORS.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CONTRIBUTORS.md), а  внески у код перераховані у [файлі CHANGELOG.md](https://github.com/ctodobom/OpenNoteScanner/blob/master/CHANGELOG.md) та [історії коммітів](https://github.com/ctodobom/OpenNoteScanner/commits).
+
+Інші люди допомогали повідомляючи про помилки і пропонуючи покращення в розділі [Issue на GitHub](https://github.com/ctodobom/OpenNoteScanner/issues) та [групі в Telegram](https://telegram.me/joinchat/CGzsxQgjl8CyAZNrTG0qZg). Їх допомога також ціниться.
+
+### Зовнішний код
+
+Створення цього додатку було б неможливим без чудових матеріалів, створених спільнотою. Я б хотів окремо подякувати авторам важливих речей, які я прочитав в Інтернеті і використав у коді:
+
+* [Android-er / GridView code sample](http://android-er.blogspot.com.br/2012/07/gridview-loading-photos-from-sd-card.html)
+* [Android Hive / Full Screen Image pager](http://www.androidhive.info/2013/09/android-fullscreen-image-slider-with-swipe-and-pinch-zoom-gestures/)
+* [Adrian Rosebrock from pyimagesearch.com for the excellent tutorial on how to handle the images](http://www.pyimagesearch.com/2014/09/01/build-kick-ass-mobile-document-scanner-just-5-minutes/)
+* [Gabriele Mariotti / On how to implement sections in the RecyclerView](https://gist.github.com/gabrielemariotti/e81e126227f8a4bb339c)
