@@ -9,7 +9,13 @@ OpenCV is licensed under (3- clause BSD) for educational and commercial use.
 
 **Q**. How do I scan documents with OpenNoteScanner?
 
-**A**. Place your phone over the document to be scanned, Click the **camera icon** at the base of the app, once to scan the document and click again to capture the scanned document.
+**A**. These are the steps to scan a document:
+
+1. Place your phone over the document to be scanned and point the camera at the document.
+2. Point the camera so that all of the four corner markers on the screen is placed inside the document.
+3. Click the **camera icon** at the base of the app.
+4. The app will try to detect the document. When the document is detected the app will show an outline around it on the camera screen and a photo will be taken.
+5. Click on the **Image icon** at the top right corner of the screen to view your scanned documents.
 
 **Q**. Why doesn't the app detect my document? I point the camera at the document and press the trigger button but nothing happens.
 
