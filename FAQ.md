@@ -11,6 +11,18 @@ OpenCV is licensed under (3- clause BSD) for educational and commercial use.
 
 **A**. Place your phone over the document to be scanned, Click the **camera icon** at the base of the app, once to scan the document and click again to capture the scanned document.
 
+**Q**. Why doesn't the app detect my document? I point the camera at the document and press the trigger button but nothing happens.
+
+**A**. Here are a few things that might be wrong:
+
+* You might have activated Automatic Mode. In Automatic Mode the document must contain a custom QR code that triggers detection. Switch to Manual Mode by pressing the **Automatic Mode icon**  in the toolbar.
+
+* Make sure that the contrast between the document and the background is high enough. For example, if the page color is white then the background should be as dark as possible.
+
+* Try to scan with the camera flash activated for better lighting. Activate the flash by tapping the **flash icon** in the toolbar.
+
+* Make sure that all of the four corner markers on the camera screen is placed inside the document.
+
 **Q**. Where do I find my captured documents?
 
 **A**. Click on the **Image icon** at the top right corner of the screen, here you can view your scanned documents from the app.
