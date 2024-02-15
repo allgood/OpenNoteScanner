@@ -13,6 +13,12 @@ After the page is detected, it compensates any perspective from the image adjust
 
 It is also possible to launch the application from any other application that asks for a picture, just make sure that there is no default application associated with this action.
 
+Usage
+-----
+
+See the [FAQ](FAQ.md).
+
+
 Screenshots
 -----------
 
