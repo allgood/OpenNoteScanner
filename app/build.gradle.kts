@@ -56,7 +56,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.5.1")
     implementation("androidx.fragment:fragment-ktx:1.5.4")
     implementation("com.google.android.material:material:1.6.1")
-    implementation("com.google.zxing:core:3.5.0")
+    implementation("com.google.zxing:core:3.5.1")
     implementation("com.github.ctodobom:OpenCV-3.1.0-Android:9e00ee4218ca0c9e60a905c9f09bf499f9dc5115")
     implementation("us.feras.mdv:markdownview:1.1.0")
     implementation("com.github.ctodobom:drag-select-recyclerview:0.3.4.ctodobom.sections")
