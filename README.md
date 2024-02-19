@@ -32,7 +32,7 @@ Requirements
 
 Because of the version of OpenCV that is used in the project it needs to run on Android 5.0 (lollipop) or newer.
 
-In order to capture and manipulate images Open Note Scanner depends on having the OpenCV Manager application installed. If not installed Open Note Scanner will ask to download it from https://github.com/ctodobom/OpenCV-3.1.0-Android or from Google Play Store.
+In order to capture and manipulate images Open Note Scanner depends on having the OpenCV Manager application installed. If not installed Open Note Scanner will ask to download it from https://github.com/allgood/opencv/releases/tag/3.1.0 ([source here](https://github.com/allgood/OpenCV-3.1.0-Android)) or from Google Play Store.
 
 
 How to Install
