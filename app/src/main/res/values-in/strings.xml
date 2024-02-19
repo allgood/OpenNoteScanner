@@ -82,4 +82,10 @@
     <string name="standard_tags">Tag standar</string>
     <string name="done">Selesai</string>
     <string name="scan_topic_placeholder">Harap berikan topik</string>
+    <string name="document_page_format">Format Halaman Dokumen</string>
+    <string name="pageformat_iso">ISO (a4, a5 dan lainnya)</string>
+    <string name="pageformat_halfletter">US Half Letter (Rocketbook)</string>
+    <string name="pageformat_letter">US Letter</string>
+    <string name="pageformat_disabled">Nonaktif</string>
+    <string name="pageformat_custom">Khusus</string>
 </resources>
