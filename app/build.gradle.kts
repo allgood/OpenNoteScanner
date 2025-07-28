@@ -10,6 +10,14 @@ android {
     buildFeatures {
         buildConfig = true
     }
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            isUniversalApk = true
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -19,8 +27,9 @@ android {
         applicationId = "com.todobom.opennotescanner"
         minSdk = 21
         targetSdk = 36
-        versionCode = 36
-        versionName = "1.0.36"
+        versionCode = 37
+        versionNameSuffix = "alpha"
+        versionName = "1.0.37"
     }
     buildTypes {
         getByName("release") {
