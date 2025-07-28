@@ -1,6 +1,7 @@
 package com.todobom.opennotescanner.helpers
 
 import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import android.view.View
 import android.view.animation.*
@@ -10,12 +11,12 @@ import com.todobom.opennotescanner.OpenNoteScannerActivity
 import com.todobom.opennotescanner.R
 import org.opencv.core.Point
 import org.opencv.core.Size
+import kotlin.coroutines.coroutineContext
 
-class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename: String, document: ScannedDocument) : Runnable {
+class AnimationRunnable(private val activity: OpenNoteScannerActivity, private val imageUri: Uri, document: ScannedDocument) : Runnable {
     private val imageSize: Size = document.processed!!.size()
     private val previewPoints: Array<Point>? = if(document.quadrilateral != null) document.previewPoints else null
     private val previewSize: Size? = if(document.quadrilateral != null) document.previewSize else null
-    private val fileName: String = filename
     private var bitmap: Bitmap? = null
 
     override fun run() {
@@ -62,7 +63,7 @@ class AnimationRunnable(private val activity: OpenNoteScannerActivity, filename:
             params.height = height / 2
         }
 
-        bitmap = Utils.decodeSampledBitmapFromUri(fileName, params.width, params.height)
+        bitmap = Utils.decodeSampledBitmapFromUri(activity, imageUri, params.width, params.height)
         imageView.setImageBitmap(bitmap)
         imageView.visibility = View.VISIBLE
         val translateAnimation = TranslateAnimation(

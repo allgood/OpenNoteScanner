@@ -8,7 +8,8 @@ import androidx.fragment.app.DialogFragment
 import com.todobom.opennotescanner.OpenNoteScannerApplication
 import com.todobom.opennotescanner.R
 import org.matomo.sdk.extra.TrackHelper
-import us.feras.mdv.MarkdownView
+import io.noties.markwon.Markwon
+import android.widget.TextView
 
 class AboutFragment : DialogFragment() {
     override fun onCreateView(
@@ -27,8 +28,17 @@ class AboutFragment : DialogFragment() {
         val activity = activity ?: return
         val window = dialog?.window ?: return
 
-        val markdownView = view.findViewById<MarkdownView>(R.id.about_markdown)
-        markdownView.loadMarkdownFile("file:///android_asset/" + getString(R.string.about_filename))
+        val markdownView = view.findViewById<TextView>(R.id.about_markdown)
+        val markwon = Markwon.create(activity)
+        
+        // Load markdown content from assets
+        try {
+            val inputStream = activity.assets.open(getString(R.string.about_filename))
+            val markdownContent = inputStream.bufferedReader().use { it.readText() }
+            markwon.setMarkdown(markdownView, markdownContent)
+        } catch (e: Exception) {
+            markdownView.text = "Error loading about content"
+        }
         val size = Point()
         activity.windowManager.defaultDisplay.getRealSize(size)
         window.setLayout((size.x * 0.9).toInt(), (size.y * 0.9).toInt())

@@ -34,7 +34,7 @@ class SettingsFragment : PreferenceFragment(), OnSharedPreferenceChangeListener 
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         updatePreference(findPreference(key), key)
     }
 

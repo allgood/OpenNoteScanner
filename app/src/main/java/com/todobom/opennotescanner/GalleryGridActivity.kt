@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.afollestad.dragselectrecyclerview.DragSelectRecyclerView
@@ -77,11 +78,10 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
         setSelectionMode(i > 0)
     }
 
-    inner class ThumbAdapter(activity: GalleryGridActivity?, files: ArrayList<String>) : DragSelectRecyclerViewAdapter<ThumbViewHolder>() {
-        private val mCallback: ClickListener?
-        var itemList = ArrayList<String>()
-        fun add(path: String) {
-            itemList.add(path)
+    inner class ThumbAdapter(val activity: GalleryGridActivity?, val fileUris: ArrayList<Uri>) : DragSelectRecyclerViewAdapter<ThumbViewHolder>() {
+
+        init {
+            setSelectionListener(activity)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ThumbViewHolder {
@@ -91,17 +91,17 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
 
         override fun onBindViewHolder(holder: ThumbViewHolder, position: Int) {
             super.onBindViewHolder(holder, position) // this line is important!
-            val filename = itemList[position]
-            if (filename != holder.filename) {
+            val fileUri = fileUris[position]
+            if (fileUri != holder.fileUri) {
 
                 // remove previous image
                 holder.image.setImageBitmap(null)
 
                 // Load image, decode it to Bitmap and return Bitmap to callback
-                mImageLoader.displayImage("file:///$filename", holder.image, mTargetSize)
+                mImageLoader.displayImage(fileUri.toString(), holder.image, mTargetSize)
 
                 // holder.image.setImageBitmap(decodeSampledBitmapFromUri(filename, 220, 220));
-                holder.filename = filename
+                holder.fileUri = fileUri
             }
             if (isIndexSelected(position)) {
                 holder.image.setColorFilter(Color.argb(140, 0, 255, 0))
@@ -111,29 +111,29 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
         }
 
         override fun getItemCount(): Int {
-            return itemList.size
+            return fileUris.size
         }
 
-        val selectedFiles: ArrayList<String>
+        val selectedFiles: ArrayList<Uri>
             get() {
-                val selection = ArrayList<String>()
+                val selection = ArrayList<Uri>()
                 for (i in selectedIndices) {
-                    selection.add(itemList[i!!])
+                    selection.add(fileUris[i])
                 }
                 return selection
             }
 
         inner class ThumbViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, OnLongClickListener {
             val image: ImageView
-            var filename: String? = null
+            var fileUri: Uri? = null
             override fun onClick(v: View) {
                 // Forwards to the adapter's constructor callback
-                mCallback?.onClick(adapterPosition)
+                activity?.onClick(adapterPosition)
             }
 
             override fun onLongClick(v: View): Boolean {
                 // Forwards to the adapter's constructor callback
-                mCallback?.onLongClick(adapterPosition)
+                activity?.onLongClick(adapterPosition)
                 return true
             }
 
@@ -145,18 +145,10 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
                 this.itemView.setOnLongClickListener(this)
             }
         }
-
-        // Constructor takes click listener callback
-        init {
-            mCallback = activity
-            for (file in files) {
-                add(file)
-            }
-            setSelectionListener(activity)
-        }
     }
 
     var myThumbAdapter: ThumbAdapter? = null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mSharedPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -170,7 +162,7 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
         mImageLoader = ImageLoader.getInstance()
         mImageLoader.init(config)
         mTargetSize = ImageSize(220, 220) // result Bitmap will be fit to this size
-        val ab = ArrayList<String>()
+        val ab = ArrayList<Uri>()
         myThumbAdapter = ThumbAdapter(this, ab)
         // new Utils(getApplicationContext()).getFilePaths(););
         recyclerView = findViewById<View>(R.id.recyclerview) as DragSelectRecyclerView
@@ -189,8 +181,7 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
     private fun reloadAdapter() {
         recyclerView.setAdapter(null)
 
-        // ArrayList<String> ab = new ArrayList<>();
-        myThumbAdapter = ThumbAdapter(this, Utils(applicationContext).filePaths)
+        myThumbAdapter = ThumbAdapter(this, Utils(applicationContext).fileUris)
         recyclerView.setAdapter(myThumbAdapter)
         recyclerView.invalidate()
         setSelectionMode(false)
@@ -203,11 +194,8 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
 
     private fun deleteImage() {
         for (filePath in myThumbAdapter!!.selectedFiles) {
-            val photoFile = File(filePath)
-            if (photoFile.delete()) {
-                removeImageFromGallery(filePath, this)
-                Log.d(TAG, "Removed file: $filePath")
-            }
+            removeImageFromGallery(filePath, this)
+            Log.d(TAG, "Removed file: $filePath")
         }
         reloadAdapter()
     }
@@ -263,14 +251,24 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
     }
 
     fun pdfExport() {
-        val pdfFilePath = mergeImagesToPdf(applicationContext, myThumbAdapter!!.selectedFiles)
-        if (pdfFilePath != null) {
+        var pdfFileUri = mergeImagesToPdf(applicationContext, myThumbAdapter!!.selectedFiles)
+        if (pdfFileUri != null) {
+            if (pdfFileUri.scheme == "file") {
+                // if pdf was written pre Android Q we need a FileProvider to allow access
+                // if MediaStore was used, the Uri can be shared and permissions are set up already
+                // not a fan of this, maybe should revert usage of MediaStore
+                pdfFileUri = FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", File(pdfFileUri.path!!))
+            } else if (pdfFileUri.scheme != "content") {
+                // unrecognized type
+                Log.e(TAG, "Unsupported URI scheme in PDF Export: ${pdfFileUri.scheme}")
+                return
+            }
+
             try {
-                val file = File(pdfFilePath)
-                val i = Intent(Intent.ACTION_VIEW, FileProvider.getUriForFile(applicationContext,
-                        "$packageName.fileprovider", file))
-                i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                startActivity(i)
+                startActivity(Intent(Intent.ACTION_VIEW).apply {
+                    setDataAndType(pdfFileUri, "application/pdf")
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                })
             } catch (e: ActivityNotFoundException) {
                 Toast.makeText(applicationContext, "Cant Find Your File", Toast.LENGTH_LONG).show()
             }
@@ -282,20 +280,28 @@ class GalleryGridActivity : AppCompatActivity(), ClickListener, DragSelectRecycl
         if (selectedFiles.size == 1) {
             /* Only one scanned document selected: ACTION_SEND intent */
             val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "image/jpg"
-            val uri = FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", File(selectedFiles[0]))
-            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-            Log.d("GalleryGridActivity", "uri $uri")
+            val shareUri = if (selectedFiles[0].scheme == "file") {
+                FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", selectedFiles[0].toFile())
+            } else {
+                selectedFiles[0]
+            }
+            shareIntent.type = this.contentResolver.getType(shareUri)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, shareUri)
+            Log.d("GalleryGridActivity", "uri $shareUri")
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)))
         } else {
             val filesUris = ArrayList<Uri>()
-            for (i in myThumbAdapter!!.selectedFiles) {
-                val uri = FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", File(i))
-                filesUris.add(uri)
-                Log.d("GalleryGridActivity", "uri $uri")
+            for (selectedUri in myThumbAdapter!!.selectedFiles) {
+                val shareUri = if (selectedFiles[0].scheme == "file") {
+                    FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", selectedUri.toFile())
+                } else {
+                    selectedUri
+                }
+                filesUris.add(shareUri)
+                Log.d("GalleryGridActivity", "uri $shareUri")
             }
             val shareIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
-            shareIntent.type = "image/jpg"
+            shareIntent.type = "image/jpg" // TODO: check mimetype
             shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, filesUris)
             startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)))
         }

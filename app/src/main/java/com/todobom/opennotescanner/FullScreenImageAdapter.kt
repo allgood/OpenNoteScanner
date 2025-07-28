@@ -2,6 +2,7 @@ package com.todobom.opennotescanner
 
 import android.app.Activity
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,13 +18,13 @@ import java.util.*
 */
 class FullScreenImageAdapter(
         private val _activity: Activity,
-        private val _imagePaths: ArrayList<String>
+        private val _imageUris: ArrayList<Uri>
 ) : PagerAdapter() {
     private var maxTexture = 0
     private var mImageLoader: ImageLoader? = null
     private var mTargetSize: ImageSize? = null
     override fun getCount(): Int {
-        return _imagePaths.size
+        return _imageUris.size
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -37,7 +38,7 @@ class FullScreenImageAdapter(
         val viewLayout = inflater.inflate(R.layout.layout_fullscreen_image, container,
                 false)
         imgDisplay = viewLayout.findViewById<View>(R.id.imgDisplay) as TouchImageView
-        val imagePath = _imagePaths[position]
+        val imageUri = _imageUris[position]
         /*
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
@@ -62,13 +63,13 @@ class FullScreenImageAdapter(
         */
 
         // imgDisplay.setImageBitmap(bitmap);
-        mImageLoader!!.displayImage("file:///$imagePath", imgDisplay, mTargetSize)
+        mImageLoader!!.displayImage(imageUri.toString(), imgDisplay, mTargetSize)
         container.addView(viewLayout)
         return viewLayout
     }
 
-    fun getPath(position: Int): String {
-        return _imagePaths[position]
+    fun getUri(position: Int): Uri {
+        return _imageUris[position]
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

@@ -1,18 +1,22 @@
 package com.todobom.opennotescanner.helpers
 
-import android.content.ContentValues
+import android.content.ContentUris
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
+import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.provider.MediaStore
+import android.util.Log
 import android.view.WindowManager
 import com.todobom.opennotescanner.OpenNoteScannerActivity
 import java.io.File
+import java.io.InputStream
 import java.util.*
 import java.util.regex.Pattern
 import javax.microedition.khronos.egl.EGL10
@@ -24,74 +28,64 @@ class Utils(
 ) {
     private val mSharedPref: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(_context)
 
-    /*
-       * Reading file paths from SDCard
-       */
-    val filePaths: ArrayList<String>
+    val fileUris: ArrayList<Uri>
         get() {
-            val filePaths = ArrayList<String>()
-            val directory = File(
-                    Environment.getExternalStorageDirectory()
-                            .toString() + File.separator + mSharedPref.getString("storage_folder", "OpenNoteScanner"))
+            val imageUris = ArrayList<Uri>()
+            val collection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL)
+            } else {
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            }
 
-            // check for directory
-            if (directory.isDirectory) {
-                // getting list of file paths
-                val listFiles = directory.listFiles()
-                Arrays.sort(listFiles) { f1, f2 -> f2.name.compareTo(f1.name) }
+            val projection = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.DATA // For pre-Q compatibility and direct paths, FIXME: switch to only URI
+            )
 
-                // Check for count
-                if (listFiles.size > 0) {
+            val appFolderName = mSharedPref.getString("storage_folder", "OpenNoteScanner")
+            val selection = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                "${MediaStore.Images.Media.RELATIVE_PATH} LIKE ?"
+            } else {
+                "${MediaStore.Images.Media.DATA} LIKE ?"
+            }
+            val selectionArgs = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // post-Q, partial path matching
+                arrayOf("%${Environment.DIRECTORY_PICTURES}/$appFolderName/%")
+            } else {
+                // pre-Q, direct path matching
+                val legacyPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).absolutePath +
+                        File.separator + appFolderName
+                arrayOf("$legacyPath/%")
+            }
 
-                    // loop through all files
-                    for (i in listFiles.indices) {
+            // Sort order
+            val sortOrder = "${MediaStore.Images.Media.DATE_MODIFIED} DESC" // Or DATE_ADDED, DISPLAY_NAME ASC
 
-                        // get file path
-                        val filePath = listFiles[i].absolutePath
-
-                        // check for supported file extension
-                        if (isSupportedFile(filePath)) {
-                            // Add image path to array list
-                            filePaths.add(filePath)
-                        }
-                    }
+            _context.contentResolver.query(
+                collection,
+                projection,
+                selection,
+                selectionArgs,
+                sortOrder
+            )?.use { cursor ->
+                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(idColumn)
+                    val contentUri: Uri = ContentUris.withAppendedId(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        id
+                    )
+                    imageUris.add(contentUri)
                 }
             }
-            return filePaths
-        }
-
-    /*
-     * Check supported file extensions
-     *
-     * @returns boolean
-     */
-    private fun isSupportedFile(filePath: String): Boolean {
-        val ext = filePath.substring(filePath.lastIndexOf(".") + 1,
-                filePath.length)
-        return AppConstant.FILE_EXTN.contains(ext.toLowerCase(Locale.getDefault()))
-    }// Older device
-
-    /*
-       * getting screen width
-       */
-    val screenWidth: Int
-        get() {
-            val columnWidth: Int
-            val wm = _context
-                    .getSystemService(Context.WINDOW_SERVICE) as WindowManager
-            val display = wm.defaultDisplay
-            val point = Point()
-            try {
-                display.getSize(point)
-            } catch (ignore: NoSuchMethodError) { // Older device
-                point.x = display.width
-                point.y = display.height
-            }
-            columnWidth = point.x
-            return columnWidth
+            return imageUris
         }
 
     companion object {
+
+        private const val TAG = "OpenNoteScanner-Utils"
+
         @JvmStatic
         val maxTextureSize: Int
             get() {
@@ -133,7 +127,7 @@ class Utils(
             }
 
         @JvmStatic
-        fun isMatch(s: String?, pattern: String?): Boolean {
+        fun isMatch(s: String, pattern: String): Boolean {
             return try {
                 val patt = Pattern.compile(pattern)
                 val matcher = patt.matcher(s)
@@ -143,20 +137,34 @@ class Utils(
             }
         }
 
-        fun decodeSampledBitmapFromUri(path: String?, reqWidth: Int, reqHeight: Int): Bitmap? {
-            var bm: Bitmap? = null
-            // First decode with inJustDecodeBounds=true to check dimensions
-            val options = BitmapFactory.Options()
-            options.inJustDecodeBounds = true
-            BitmapFactory.decodeFile(path, options)
+        fun decodeSampledBitmapFromUri(context: Context, uri: Uri, reqWidth: Int, reqHeight: Int): Bitmap? {
+            var inputStream: InputStream? = null
+            try {
+                // First decode with inJustDecodeBounds=true to check dimensions
+                val options = BitmapFactory.Options()
+                options.inJustDecodeBounds = true
+                inputStream = context.contentResolver.openInputStream(uri)
+                if (inputStream == null) {
+                    Log.e(TAG, "decodeSampledBitmapFromUri: Could not open InputStream for URI: $uri")
+                    return null
+                }
+                BitmapFactory.decodeStream(inputStream, null, options)
+                inputStream.close()
 
-            // Calculate inSampleSize
-            options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
+                // calculate downsample factor
+                options.inSampleSize = calculateInSampleSize(options, reqWidth, reqHeight)
 
-            // Decode bitmap with inSampleSize set
-            options.inJustDecodeBounds = false
-            bm = BitmapFactory.decodeFile(path, options)
-            return bm
+                options.inJustDecodeBounds = false
+                inputStream = context.contentResolver.openInputStream(uri)
+                if (inputStream == null) {
+                    Log.e(TAG, "decodeSampledBitmapFromUri: Could not reopen InputStream for URI: $uri")
+                    return null
+                }
+                val bitmap = BitmapFactory.decodeStream(inputStream, null, options)
+                return bitmap
+            } finally {
+                inputStream?.close()
+            }
         }
 
         fun calculateInSampleSize(
@@ -176,35 +184,29 @@ class Utils(
             return inSampleSize
         }
 
-        fun addImageToGallery(filePath: String?, context: Context) {
-            val values = ContentValues()
-            values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            values.put(MediaStore.MediaColumns.DATA, filePath)
-            context.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
-        }
-
         @JvmStatic
-        fun removeImageFromGallery(filePath: String, context: Context) {
-            context.contentResolver.delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    MediaStore.Images.Media.DATA
-                            + "='"
-                            + filePath
-                            + "'", null)
+        fun removeImageFromGallery(fileUri: Uri, context: Context) {
+            try {
+                val rowsDeleted = context.contentResolver.delete(fileUri, null, null)
+                if (rowsDeleted == 0) {
+                    Log.w(TAG, "Nothing deleted for: $fileUri")
+                }
+            } catch (e: SecurityException) {
+                // we should have permissions
+                e.printStackTrace()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         @JvmStatic
         fun isPackageInstalled(context: Context, packagename: String): Boolean {
-            val pm = context.packageManager
-            var app_installed = false
-            app_installed = try {
-                val info = pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES)
-                val label = info.applicationInfo.loadLabel(pm) as String
-                label != null
-            } catch (e: PackageManager.NameNotFoundException) {
+            return try {
+                context.packageManager.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES)
+                true
+            } catch (_: PackageManager.NameNotFoundException) {
                 false
             }
-            return app_installed
         }
 
 

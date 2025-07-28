@@ -3,18 +3,19 @@ package com.todobom.opennotescanner
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.ImageFormat
 import android.graphics.Point
 import android.graphics.Rect
 import android.hardware.*
 import android.hardware.Camera.*
 import android.media.AudioManager
-import android.media.MediaPlayer
+import android.media.MediaActionSound
 import android.net.Uri
 import android.os.*
 import android.preference.PreferenceManager
@@ -26,22 +27,22 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.exifinterface.media.ExifInterface
 import com.github.fafaldo.fabtoolbar.widget.FABToolbarLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.permissionx.guolindev.PermissionX
 import com.todobom.opennotescanner.helpers.*
 import com.todobom.opennotescanner.helpers.ScanTopicDialogFragment.SetTopicDialogListener
 import com.todobom.opennotescanner.views.HUDCanvasView
 import org.matomo.sdk.Tracker
 import org.matomo.sdk.extra.TrackHelper
-import org.opencv.android.BaseLoaderCallback
 import org.opencv.android.OpenCVLoader
 import org.opencv.core.Core
 import org.opencv.core.CvType
 import org.opencv.core.Mat
+import org.opencv.core.MatOfByte
+import org.opencv.core.MatOfInt
 import org.opencv.core.Size
 import org.opencv.imgcodecs.Imgcodecs
 import org.opencv.imgproc.Imgproc
@@ -78,7 +79,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
     private var mVisible = false
     private val mHideRunnable = Runnable { hide() }
-    private var _shootMP: MediaPlayer? = null
+    private var mediaActionSound: MediaActionSound? = null
     private var safeToTakePicture = false
     private lateinit var scanDocButton: Button
     private lateinit var mImageThread: HandlerThread
@@ -194,37 +195,46 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     fun setFlash(stateFlash: Boolean): Boolean {
-        val pm = packageManager
         val camera = mCamera ?: return false
 
-        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-            val par = camera.parameters
-            par.flashMode = if (stateFlash) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF
-            camera.parameters = par
+        val flashModes = camera.parameters.supportedFlashModes
+        if (flashModes != null && flashModes.contains(Camera.Parameters.FLASH_MODE_TORCH)) {
+            val parameters = camera.parameters
+            parameters.flashMode = if (stateFlash) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF
+            camera.parameters = parameters
             Log.d(TAG, "flash: " + if (stateFlash) "on" else "off")
             return stateFlash
         }
+
+        Log.d(TAG, "flash not available")
         return false
     }
 
-    private fun checkResumePermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),
-                    RESUME_PERMISSIONS_REQUEST_CAMERA)
+    private fun grantPermissions() {
+        val permissionsToRequest = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // new version will use MediaStore or SAF, does not need permissions
+            listOf(Manifest.permission.CAMERA)
         } else {
-            enableCameraView()
+            // TODO: can we move this to use SAF / MediaStore too ?
+            listOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
         }
-    }
 
-    private fun checkCreatePermissions() {
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                    MY_PERMISSIONS_REQUEST_WRITE)
-        }
+        PermissionX.init(this)
+            .permissions(permissionsToRequest)
+            .onExplainRequestReason { scope, deniedList ->
+                scope.showRequestReasonDialog(deniedList, getString(R.string.permission_explain_request_reason_all), getString(R.string.ok))
+            }
+            .onForwardToSettings { scope, deniedList ->
+                scope.showForwardToSettingsDialog(deniedList, getString(R.string.permission_forward_reason_all), getString(R.string.ok))
+            }
+            .explainReasonBeforeRequest()
+            .request { allGranted, _, deniedList ->
+                if (allGranted) {
+                    enableCameraView()
+                } else {
+                    // PermissionX will always prompt or redirect to settings if permissions are not granted.
+                }
+            }
     }
 
     fun turnCameraOn() {
@@ -240,29 +250,6 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     fun enableCameraView() {
         if (mSurfaceView == null) {
             turnCameraOn()
-        }
-    }
-
-    @SuppressLint("MissingSuperCall")
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
-        when (requestCode) {
-            CREATE_PERMISSIONS_REQUEST_CAMERA -> {
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    turnCameraOn()
-                }
-            }
-            RESUME_PERMISSIONS_REQUEST_CAMERA -> {
-
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.size > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    enableCameraView()
-                }
-            }
         }
     }
 
@@ -313,22 +300,10 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         mHideHandler.postDelayed(mHideRunnable, delayMillis.toLong())
     }
 
-    private val mLoaderCallback: BaseLoaderCallback = object : BaseLoaderCallback(this) {
-        override fun onManagerConnected(status: Int) {
-            when (status) {
-                SUCCESS -> {
-                    checkResumePermissions()
-                }
-                else -> {
-                    Log.d(TAG, "opencvstatus: $status")
-                    super.onManagerConnected(status)
-                }
-            }
-        }
-    }
-
     public override fun onResume() {
         super.onResume()
+
+        grantPermissions()
 
         sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)?.also { accelerometer ->
             sensorManager.registerListener(
@@ -357,8 +332,15 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         for (build in Build.SUPPORTED_ABIS) {
             Log.d(TAG, "myBuild $build")
         }
-        checkCreatePermissions()
-        CustomOpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, this, mLoaderCallback)
+
+        if (OpenCVLoader.initLocal()) {
+            Log.i(TAG, "OpenCV loaded successfully");
+        } else {
+            Log.e(TAG, "OpenCV initialization failed!");
+            (Toast.makeText(this, "OpenCV initialization failed!", Toast.LENGTH_LONG)).show();
+            return;
+        }
+
         //TODO these should go in the variable's creation
         mImageThread = HandlerThread("Worker Thread")
         mImageThread.start()
@@ -390,6 +372,9 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
         // Don't receive any more updates from either sensor.
         sensorManager.unregisterListener(this)
+
+        mediaActionSound?.release()
+        mediaActionSound = null
     }
 
     val resolutionList: List<Camera.Size>
@@ -467,30 +452,37 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     fun setFocusParameters() {
         val camera = mCamera ?: return
-        val param: Camera.Parameters = camera.parameters
-        val pm = packageManager
-        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_AUTOFOCUS)) {
-            try {
-                camera.setAutoFocusMoveCallback { start, _ ->
-                    mFocused = !start
-                    Log.d(TAG, "focusMoving: $mFocused")
-                }
-            } catch (e: Exception) {
-                Log.d(TAG, "failed setting AutoFocusMoveCallback")
-            }
-            param.focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE
+
+        val parameters = camera.parameters
+        val supportedFocusModes = camera.parameters.getSupportedFocusModes()
+        if (supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
+            parameters.focusMode = Camera.Parameters.FOCUS_MODE_AUTO
+        } else if (supportedFocusModes != null && supportedFocusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+            // fallback
+            parameters.focusMode = Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE
             val targetFocusRect = Rect(-500, -500, 500, 500)
             val focusList: MutableList<Camera.Area> = ArrayList()
             val focusArea = Camera.Area(targetFocusRect, 1000)
             focusList.add(focusArea)
-            param.focusAreas = focusList
-            param.meteringAreas = focusList
-            camera.parameters = param
-            Log.d(TAG, "enabling autofocus")
+            parameters.focusAreas = focusList
+            parameters.meteringAreas = focusList
         } else {
             mFocused = true
             Log.d(TAG, "autofocus not available")
+            return
         }
+
+        try {
+            camera.setAutoFocusMoveCallback { start, _ ->
+                mFocused = !start
+                Log.d(TAG, "focusMoving: $mFocused")
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "failed setting AutoFocusMoveCallback")
+        }
+
+        Log.d(TAG, "enabling autofocus")
+        camera.parameters = parameters
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
@@ -502,8 +494,8 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         }
         mCamera = camera
 
-        val param: Camera.Parameters
-        param = camera.getParameters()
+        val param  = camera.getParameters()
+        param.pictureFormat = ImageFormat.JPEG
         val pSize = maxPreviewResolution
         param.setPreviewSize(pSize!!.width, pSize.height)
         val previewRatio = pSize.width.toFloat() / pSize.height
@@ -539,7 +531,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             this.mDocumentAspectRatio = docPageFormat!!.toFloat().toDouble()
         }
 
-        var hotArea = Utils.getHotArea(pSize.width, pSize.height, this)
+        val hotArea = Utils.getHotArea(pSize.width, pSize.height, this)
 
         hotAreaSpaceWidth = hotArea!![1]
         hotAreaSpaceHeight = hotArea!![0]
@@ -569,10 +561,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
             param.setPictureSize(maxRes.width, maxRes.height)
             Log.d(TAG, "max supported picture resolution: " + maxRes.width + "x" + maxRes.height)
         }
-        val pm = packageManager
-        if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)) {
-            param.flashMode = if (mFlashMode) Camera.Parameters.FLASH_MODE_TORCH else Camera.Parameters.FLASH_MODE_OFF
-        }
+
         camera.setParameters(param)
         mBugRotate = mSharedPref.getBoolean("bug_rotate", false)
         if (mBugRotate) {
@@ -619,7 +608,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     override fun onPreviewFrame(data: ByteArray, camera: Camera) {
         val pictureSize = camera.parameters.previewSize
-        Log.d(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height
+        Log.v(TAG, "onPreviewFrame - received image " + pictureSize.width + "x" + pictureSize.height
                 + " focused: " + mFocused + " imageprocessor: " + if (imageProcessorBusy) "busy" else "available")
         if (mFocused && !imageProcessorBusy) {
             setImageProcessorBusy(true)
@@ -649,7 +638,11 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
         if (safeToTakePicture) {
             runOnUiThread(resetShutterColor)
             safeToTakePicture = false
-            camera.takePicture(null, null, mThis)
+            try {
+                camera.takePicture(null, null, mThis)
+            }  catch (_: java.lang.Exception) {
+                Log.e(TAG, "failed to take picture")
+            }
             return true
         }
         return false
@@ -658,19 +651,41 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     override fun onPictureTaken(data: ByteArray, camera: Camera) {
         shootSound()
         setFocusParameters()
-        val pictureSize = camera.parameters.pictureSize
-        Log.d(TAG, "onPictureTaken - received image " + pictureSize.width + "x" + pictureSize.height)
-        mat = Mat(Size(pictureSize.width.toDouble(), pictureSize.height.toDouble()), CvType.CV_8U).also {
-            it.put(0, 0, data)
+        Log.d(TAG, "onPictureTaken - received ${data.size} bytes")
+
+        val encodedMat = MatOfByte(*data) // or MatOfByte(data)
+        val decodedMat: Mat
+        try {
+            decodedMat = Imgcodecs.imdecode(encodedMat, Imgcodecs.IMREAD_UNCHANGED)
+            if (decodedMat.empty()) {
+                Log.e(TAG, "Failed to decode image from data byte array.")
+                refreshCamera() // Or some other error recovery
+                safeToTakePicture = true
+                return
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception while decoding image: ${e.message}")
+            refreshCamera()
+            safeToTakePicture = true
+            return
+        } finally {
+            encodedMat.release() // Release the temporary MatOfByte
         }
+
+        Log.d(TAG, "Decoded image: ${decodedMat.width()}x${decodedMat.height()}, type: ${CvType.typeToString(decodedMat.type())}")
+
+        // Store the decoded Mat to be used by issueProcessingOfTakenPicture
+        mat = decodedMat
 
         if (mSharedPref.getBoolean("custom_scan_topic", false)) {
             val fm = supportFragmentManager
             val scanTopicDialogFragment = ScanTopicDialogFragment()
             scanTopicDialogFragment.show(fm, getString(R.string.scan_topic_dialog_title))
-            return
+            // Note: if custom_scan_topic is true, issueProcessingOfTakenPicture
+            // will be called later by onFinishTopicDialog. 'this.mat' must hold the decoded image.
+        } else {
+            issueProcessingOfTakenPicture()
         }
-        issueProcessingOfTakenPicture()
     }
 
     override fun onFinishTopicDialog(inputText: String?) {
@@ -686,7 +701,7 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
     }
 
     fun sendImageProcessorMessage(messageText: String, obj: Any?) {
-        Log.d(TAG, "sending message to ImageProcessor: " + messageText + " - " + obj.toString())
+        Log.v(TAG, "sending message to ImageProcessor: $messageText - $obj")
         val msg = mImageProcessor.obtainMessage()
         msg.obj = OpenNoteMessage(messageText, obj)
         mImageProcessor.sendMessage(msg)
@@ -694,119 +709,201 @@ class OpenNoteScannerActivity : AppCompatActivity(), NavigationView.OnNavigation
 
     fun saveDocument(scannedDocument: ScannedDocument) {
         val doc = scannedDocument.processed ?: scannedDocument.original
+
         val intent = intent
-        val fileName: String
-        var isIntent = false
-        var fileUri: Uri? = null
-        var imgSuffix = ".jpg"
-        if (mSharedPref.getBoolean("save_png", false)) {
-            imgSuffix = ".png"
-        }
-        if (intent.action == "android.media.action.IMAGE_CAPTURE") {
-            fileUri = intent.getParcelableExtra<Parcelable>(MediaStore.EXTRA_OUTPUT) as Uri
-            Log.d(TAG, "intent uri: $fileUri")
-            fileName = try {
-                File.createTempFile("onsFile", imgSuffix, this.cacheDir).path
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            }
-            isIntent = true
+        val isIntentCapture = intent.action == "android.media.action.IMAGE_CAPTURE"
+        val outputUriFromIntent = if (isIntentCapture) {
+            intent.getParcelableExtra<Uri>(MediaStore.EXTRA_OUTPUT)
         } else {
-            val folderName = mSharedPref.getString("storage_folder", "OpenNoteScanner")
-            val folder = File(Environment.getExternalStorageDirectory().toString(), "/$folderName")
-            if (!folder.exists()) {
-                folder.mkdirs()
-                Log.d(TAG, "wrote: created folder " + folder.path)
-            }
-            fileName = createFileName(imgSuffix, folderName)
-        }
-        val endDoc = Mat(java.lang.Double.valueOf(doc.size().width).toInt(),
-                java.lang.Double.valueOf(doc.size().height).toInt(), CvType.CV_8UC4)
-        Core.flip(doc.t(), endDoc, 1)
-        Imgcodecs.imwrite(fileName, endDoc)
-        endDoc.release()
-        try {
-            val exif = ExifInterface(fileName)
-            exif.setAttribute("UserComment", "Generated using Open Note Scanner")
-            val nowFormatted = mDateFormat.format(Date().time)
-            exif.setAttribute(ExifInterface.TAG_DATETIME, nowFormatted)
-            exif.setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED, nowFormatted)
-            exif.setAttribute("Software", "OpenNoteScanner " + BuildConfig.VERSION_NAME + " https://goo.gl/2JwEPq")
-            exif.saveAttributes()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        if (isIntent && fileUri != null) {
-            var inputStream: InputStream? = null
-            var realOutputStream: OutputStream? = null
-            try {
-                inputStream = FileInputStream(fileName)
-                realOutputStream = this.contentResolver.openOutputStream(fileUri)
-                // Transfer bytes from in to out
-                val buffer = ByteArray(1024)
-                var len: Int
-                while (inputStream.read(buffer).also { len = it } > 0) {
-                    realOutputStream!!.write(buffer, 0, len)
-                }
-            } catch (e: FileNotFoundException) {
-                e.printStackTrace()
-                return
-            } catch (e: IOException) {
-                e.printStackTrace()
-                return
-            } finally {
-                try {
-                    inputStream!!.close()
-                    realOutputStream!!.close()
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-            }
-        }
-        Log.d(TAG, "wrote: $fileName")
-        if (isIntent) {
-            File(fileName).delete()
-            setResult(RESULT_OK, intent)
-            finish()
-        } else {
-            animateDocument(fileName, scannedDocument)
-            Utils.addImageToGallery(fileName, this)
+            null
         }
 
-        // Record goal "PictureTaken"
-        TrackHelper.track().event("Picture", "PictureTaken").with(tracker)
-        refreshCamera()
-    }
+        val imageSuffix = if (mSharedPref.getBoolean("save_png", false)) ".png" else ".jpg"
+        val mimeType = if (imageSuffix == ".png") "image/png" else "image/jpeg"
 
-    private fun createFileName(imgSuffix: String, folderName: String?): String {
-        var fileName: String
-        fileName = (Environment.getExternalStorageDirectory().toString()
-                + "/" + folderName + "/")
+        val encodingParams = MatOfInt()
+        if (imageSuffix == ".jpg") {
+            encodingParams.fromArray(Imgcodecs.IMWRITE_JPEG_QUALITY, mSharedPref.getInt("jpeg_quality", 95)) // Example: get quality from prefs
+        } else {
+            encodingParams.fromArray(Imgcodecs.IMWRITE_PNG_COMPRESSION, mSharedPref.getInt("png_compression", 6)) // Example: get compression from prefs
+        }
+
+        val timeStamp = SimpleDateFormat("yyyyMMdd-HHmmss", Locale.getDefault()).format(Date())
+        var displayName = "DOC-$timeStamp$imageSuffix"
         if (scanTopic != null) {
-            fileName += "$scanTopic-"
+            displayName = "$scanTopic-$displayName"
         }
-        fileName += ("DOC-"
-                + SimpleDateFormat("yyyyMMdd-HHmmss").format(Date())
-                + imgSuffix)
-        return fileName
+        val customFolderName = mSharedPref.getString("storage_folder", "OpenNoteScanner") ?: "OpenNoteScanner"
+
+        var savedFileUri: Uri? = null
+        var preQFilePath: String? = null // pre android Q file path
+
+        try {
+            // if intent has no target uri, we just handle it as if it was a normal document scanned from the app
+            if (isIntentCapture && outputUriFromIntent != null) {
+                // this does not create any MediaStore entries, caller has to do that
+                // I also need to find the use case of calling the app via an intent, to better understand how to handle this case
+                savedFileUri = outputUriFromIntent
+            } else {
+                // Saving to gallery (MediaStore)
+                val contentValues = ContentValues().apply {
+                    put(MediaStore.MediaColumns.DISPLAY_NAME, displayName)
+                    put(MediaStore.MediaColumns.MIME_TYPE, mimeType)
+                }
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    contentValues.put(MediaStore.MediaColumns.IS_PENDING, 1) // Mark as pending until written
+                    if (customFolderName.isNotBlank()) {
+                        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + File.separator + customFolderName)
+                    } else {
+                        contentValues.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_PICTURES)
+                    }
+                    val imageCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+                    savedFileUri = contentResolver.insert(imageCollection, contentValues)
+                } else {
+                    val picturesDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+                    val targetDir = if (customFolderName.isNotBlank()) {
+                        File(picturesDir, customFolderName)
+                    } else {
+                        picturesDir
+                    }
+
+                    if (!targetDir.exists()) {
+                        if (!targetDir.mkdirs()) {
+                            Log.e(TAG, "Failed to create directory: ${targetDir.absolutePath}")
+                            // Fallback to default pictures directory if folder creation fails
+                            preQFilePath = File(picturesDir, displayName).absolutePath
+                        } else {
+                            preQFilePath = File(targetDir, displayName).absolutePath
+                        }
+                    } else {
+                        preQFilePath = File(targetDir, displayName).absolutePath
+                    }
+                    contentValues.put(MediaStore.Images.Media.DATA, preQFilePath)
+                    // For pre-Q, insert into the legacy external content URI
+                    savedFileUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                }
+            }
+
+            if (savedFileUri == null) {
+                // insert failed
+                if (isIntentCapture) {
+                    setResult(RESULT_CANCELED)
+                    finish()
+                }
+                return
+            }
+
+            savedFileUri.let { uri ->
+                contentResolver.openOutputStream(uri)?.use { out ->
+                    val endDoc = Mat()
+                    Core.flip(doc.t(), endDoc, 1)
+
+                    // Convert Mat to byte array
+                    val matOfByte = org.opencv.core.MatOfByte()
+                    val successEncode = Imgcodecs.imencode(imageSuffix, endDoc, matOfByte, encodingParams)
+                    endDoc.release() // Release the temporary transformed Mat
+
+                    if (!successEncode) {
+                        throw IOException("Failed to encode Mat to $imageSuffix")
+                    }
+                    val imageBytes = matOfByte.toArray()
+                    matOfByte.release()
+
+                    out.write(imageBytes)
+                    Log.d(TAG, "Successfully wrote image data.")
+                } ?: throw IOException("Failed to open created Media File.")
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !isIntentCapture) {
+                val updateDetails = ContentValues().apply {
+                    put(MediaStore.MediaColumns.IS_PENDING, 0) // Mark as complete
+                }
+                contentResolver.update(savedFileUri, updateDetails, null, null)
+            }
+
+            if (mimeType == "image/jpeg") {
+                try {
+                    contentResolver.openFileDescriptor(savedFileUri, "rw")?.use { pfd ->
+                        val exif = ExifInterface(pfd.fileDescriptor)
+                        val nowFormatted = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date()) // Using a more EXIF-friendly date format
+                        exif.setAttribute(ExifInterface.TAG_DATETIME, nowFormatted)
+                        exif.setAttribute(ExifInterface.TAG_DATETIME_ORIGINAL, nowFormatted)
+                        exif.setAttribute(ExifInterface.TAG_DATETIME_DIGITIZED, nowFormatted)
+                        exif.setAttribute(ExifInterface.TAG_SOFTWARE, "OpenNoteScanner " + BuildConfig.VERSION_NAME + " https://goo.gl/2JwEPq")
+                        exif.setAttribute("UserComment", "Generated using Open Note Scanner")
+                        exif.saveAttributes()
+                        Log.d(TAG, "Exif data written to MediaStore URI.")
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error writing Exif to MediaStore URI: ${e.message}", e)
+                }
+            }
+
+            if (isIntentCapture) {
+                if (outputUriFromIntent != null) {
+                    setResult(RESULT_OK, intent)
+                } else {
+                    setResult(RESULT_OK)
+                }
+                finish()
+            } else {
+                Log.d(TAG, "Document saved to MediaStore: $savedFileUri")
+                animateDocument(savedFileUri, scannedDocument)
+
+                TrackHelper.track().event("Picture", "PictureTaken").with(tracker)
+                refreshCamera()
+            }
+
+        } catch (e: Exception) {
+            Log.e(TAG, "Error saving document: ${e.message}", e)
+            if (savedFileUri != null) {
+                try {
+                    contentResolver.delete(savedFileUri, null, null)
+                    Log.w(TAG, "Attempted to delete MediaStore entry due to error: $savedFileUri")
+                    // For Pre-Q, if preQFilePath is not null, also attempt to delete the physical file
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q && preQFilePath != null) {
+                        val physicalFile = File(preQFilePath)
+                        if (physicalFile.exists()) {
+                            if (physicalFile.delete()) {
+                                Log.w(TAG, "Deleted physical file (pre-Q) due to error: $preQFilePath")
+                            } else {
+                                Log.e(TAG, "Failed to delete physical file (pre-Q) due to error: $preQFilePath")
+                            }
+                        }
+                    }
+                } catch (deleteEx: Exception) {
+                    Log.e(TAG, "Error during cleanup of MediaStore entry or file: ${deleteEx.message}")
+                }
+            }
+            if (isIntentCapture) {
+                setResult(RESULT_CANCELED)
+                finish()
+            } else {
+                // TODO: show error
+                refreshCamera()
+            }
+        } finally {
+            encodingParams.release()
+        }
     }
 
-    private fun animateDocument(filename: String, quadrilateral: ScannedDocument) {
-        val runnable = AnimationRunnable(this, filename, quadrilateral)
+    private fun animateDocument(documentUri: Uri, quadrilateral: ScannedDocument) {
+        val runnable = AnimationRunnable(this, documentUri, quadrilateral)
         runOnUiThread(runnable)
     }
 
     private fun shootSound() {
-        val meng = getSystemService(AUDIO_SERVICE) as AudioManager
-        val volume = meng.getStreamVolume(AudioManager.STREAM_NOTIFICATION)
+        val am = getSystemService(AUDIO_SERVICE) as AudioManager
+        val volume = am.getStreamVolume(AudioManager.STREAM_NOTIFICATION)
         if (volume != 0) {
-            if (_shootMP == null) {
-                _shootMP = MediaPlayer.create(this, Uri.parse("file:///system/media/audio/ui/camera_click.ogg"))
+            if (mediaActionSound == null) {
+                mediaActionSound = MediaActionSound()
+                // Optional: Preload the sound for faster playback the first time.
+                // This is useful if you call shootSound frequently.
+                // mediaActionSound?.load(MediaActionSound.SHUTTER_CLICK)
             }
-            if (_shootMP != null) {
-                _shootMP!!.start()
-            }
+            mediaActionSound?.play(MediaActionSound.SHUTTER_CLICK)
         }
     }
 

@@ -89,4 +89,7 @@
     <string name="pageformat_letter">US Letter</string>
     <string name="pageformat_disabled">Disabled</string>
     <string name="pageformat_custom">Custom</string>
+    <string name="permission_explain_request_reason_all">Open Note Scanner requires these permissions to function</string>
+    <string name="permission_forward_reason_all">Open Note Scanner requires access to the Camera and Storage to run</string>
+    <string name="ok">Ok</string>
 </resources>

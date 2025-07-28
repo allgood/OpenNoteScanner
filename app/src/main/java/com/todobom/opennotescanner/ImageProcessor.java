@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.shapes.PathShape;
-import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -37,7 +36,6 @@ import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
@@ -77,8 +75,8 @@ public class ImageProcessor extends Handler {
         String docPageFormat = sharedPref.getString("document_page_format", "0");
         mDocumentAspectRatio = 0;
         if (docPageFormat.equals("0.0001")) {
-            Float customPageWidth = Float.parseFloat(sharedPref.getString("custom_pageformat_width" , "0" ));
-            Float customPageHeight = Float.parseFloat(sharedPref.getString("custom_pageformat_height" , "0" ));
+            float customPageWidth = Float.parseFloat(sharedPref.getString("custom_pageformat_width" , "0" ));
+            float customPageHeight = Float.parseFloat(sharedPref.getString("custom_pageformat_height" , "0" ));
             if (customPageWidth > 0 && customPageHeight > 0) {
                 mDocumentAspectRatio = customPageHeight / customPageWidth;
             }
@@ -95,7 +93,7 @@ public class ImageProcessor extends Handler {
 
             String command = obj.getCommand();
 
-            Log.d(TAG, "Message Received: " + command + " - " + obj.getObj().toString() );
+            Log.v(TAG, "Message Received: " + command + " - " + obj.getObj().toString() );
 
             if ( command.equals("previewFrame")) {
                 processPreviewFrame((PreviewFrame) obj.getObj());
@@ -123,7 +121,7 @@ public class ImageProcessor extends Handler {
         }
 
         boolean qrOk = false;
-        String currentQR=null;
+        String currentQR = null;
 
         for (Result result: results) {
             String qrText = result.getText();
@@ -140,10 +138,10 @@ public class ImageProcessor extends Handler {
         boolean autoMode = previewFrame.isAutoMode();
         boolean previewOnly = previewFrame.isPreviewOnly();
 
+        // request picture if document is detected and either scan button is clicked and not in auto mode or qr code is detected in auto mode
+        // FIXME: consider simplifying this. isPreviewOnly contains isAutoMode, e.g if autoMode is true, isPreviewOnly will always be false
         if ( detectPreviewDocument(frame) && ( (!autoMode && !previewOnly ) || ( autoMode && qrOk ) ) ) {
-
             mMainActivity.waitSpinnerVisible();
-
             mMainActivity.requestPicture();
 
             if (qrOk) {
@@ -154,22 +152,17 @@ public class ImageProcessor extends Handler {
 
         frame.release();
         mMainActivity.setImageProcessorBusy(false);
-
     }
 
     public void processPicture( Mat picture ) {
-
-        Mat img = Imgcodecs.imdecode(picture, Imgcodecs.CV_LOAD_IMAGE_UNCHANGED);
-        picture.release();
-
-        Log.d(TAG, "processPicture - imported image " + img.size().width + "x" + img.size().height);
+        Log.d(TAG, "processPicture - imported image " + picture.size().width + "x" + picture.size().height);
 
         if (mBugRotate) {
-            Core.flip(img, img, 1 );
-            Core.flip(img, img, 0 );
+            Core.flip(picture, picture, 1 );
+            Core.flip(picture, picture, 0 );
         }
 
-        ScannedDocument doc = detectDocument(img);
+        ScannedDocument doc = detectDocument(picture);
         mMainActivity.saveDocument(doc);
 
         doc.release();
@@ -252,7 +245,7 @@ public class ImageProcessor extends Handler {
 
             drawDocumentBox(mPreviewPoints, mPreviewSize);
 
-            Log.d(TAG, quad.getPoints()[0].toString() + " , " + quad.getPoints()[1].toString() + " , " + quad.getPoints()[2].toString() + " , " + quad.getPoints()[3].toString());
+//            Log.d(TAG, quad.getPoints()[0].toString() + " , " + quad.getPoints()[1].toString() + " , " + quad.getPoints()[2].toString() + " , " + quad.getPoints()[3].toString());
 
             return true;
 

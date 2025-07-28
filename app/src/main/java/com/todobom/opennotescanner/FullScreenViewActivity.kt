@@ -1,15 +1,19 @@
 package com.todobom.opennotescanner
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.webkit.MimeTypeMap
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.nostra13.universalimageloader.core.ImageLoader
@@ -20,7 +24,6 @@ import com.todobom.opennotescanner.helpers.Utils
 import com.todobom.opennotescanner.helpers.Utils.Companion.maxTextureSize
 import com.todobom.opennotescanner.helpers.Utils.Companion.removeImageFromGallery
 import com.todobom.opennotescanner.views.TagEditorFragment
-import java.io.File
 
 class FullScreenViewActivity : AppCompatActivity() {
     private lateinit var utils: Utils
@@ -83,7 +86,7 @@ class FullScreenViewActivity : AppCompatActivity() {
 
     private fun loadAdapter(): FullScreenImageAdapter {
         mViewPager.adapter = null
-        val adapter = FullScreenImageAdapter(this@FullScreenViewActivity, utils.filePaths)
+        val adapter = FullScreenImageAdapter(this@FullScreenViewActivity, utils.fileUris)
         adapter.setImageLoader(mImageLoader)
         adapter.setMaxTexture(mMaxTexture, mTargetSize)
         mViewPager.adapter = adapter
@@ -127,10 +130,20 @@ class FullScreenViewActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun isPng(context: Context, uri: Uri): Boolean {
+        // First try MIME type
+        val type = context.contentResolver.getType(uri)
+        if (type == "image/png") return true
+
+        // Fallback: try extension
+        val extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
+        return extension.equals("png", ignoreCase = true)
+    }
+
     private fun tagImage() {
         val item = mViewPager.currentItem
-        val filePath = mAdapter.getPath(item)
-        if (filePath.endsWith(".png")) {
+        val fileUri = mAdapter.getUri(item)
+        if (isPng(this, fileUri)) {
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.format_not_supported)
             builder.setMessage(R.string.format_not_supported_message)
@@ -139,32 +152,30 @@ class FullScreenViewActivity : AppCompatActivity() {
             alerta.show()
             return
         }
-        val fm = supportFragmentManager
-        val tagEditorDialog = TagEditorFragment()
-        tagEditorDialog.setFilePath(filePath)
-        tagEditorDialog.setRunOnDetach { }
-        tagEditorDialog.show(fm, "tageditor_view")
+        val tagEditorDialog = TagEditorFragment(fileUri)
+        tagEditorDialog.show(supportFragmentManager, "tageditor_view")
     }
 
     private fun deleteImage() {
         val item = mViewPager.currentItem
-        val filePath = mAdapter.getPath(item)
-        val photoFile = File(filePath)
-        photoFile.delete()
-        removeImageFromGallery(filePath, this)
+        val fileUri = mAdapter.getUri(item)
+        removeImageFromGallery(fileUri, this)
         loadAdapter()
         if (0 == mAdapter.count) finish()
         mViewPager.currentItem = item
     }
 
     fun shareImage() {
-        val pager = mViewPager
-        val item = pager.currentItem
+        val uri = mAdapter.getUri(mViewPager.currentItem)
         val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "image/jpg"
-        val uri = FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", File(mAdapter.getPath(item)))
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        Log.d("Fullscreen", "uri $uri")
+        val shareUri = if (uri.scheme == "file") {
+            FileProvider.getUriForFile(applicationContext, "$packageName.fileprovider", uri.toFile())
+        } else {
+            uri
+        }
+        shareIntent.type = this.contentResolver.getType(shareUri)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, shareUri)
+        Log.d("Fullscreen", "uri $shareUri")
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_snackbar)))
     }
 }
